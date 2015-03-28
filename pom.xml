@@ -9,5 +9,6 @@
     <modules>
         <module>jooq-scala</module>
 	<module>row-change-event-channel</module>
+	<module>row-change-event-adapter</module>
     </modules>
 </project>
