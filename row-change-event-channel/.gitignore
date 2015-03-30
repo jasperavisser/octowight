@@ -1,0 +1,7 @@
+/.cache
+/.classpath
+/override.properties
+/.project
+/.settings/
+/target/
+/target-ide/
