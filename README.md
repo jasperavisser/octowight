@@ -1,6 +1,13 @@
 # octowight
 Just playing around with Scala, Spring, Docker
 
+## Required
+
+Add this line to /etc/init/docker.conf
+DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
+http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
+
+
 ## TODO
 Choose how to run IT
     Containers for
@@ -15,7 +22,9 @@ Choose how to run IT
     fig-it.yml
 
 Choose & configure image for
-    PostgreSQL
+    PostgreSQL (layer on top to initialize database for IT)
+        https://registry.hub.docker.com/_/postgres/
+        docker run -v "${MY_POSTGRES_DATA}":/var/lib/postgresql/data -d postgres
     Zookeeper
     Kafka broker
     Redis
