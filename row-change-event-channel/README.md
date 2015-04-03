@@ -1,5 +1,9 @@
 # INTRO
 
+http://www.quora.com/Which-one-is-better-for-durable-messaging-with-good-query-features-RabbitMQ-or-Kafka
+
+# INTRO
+
 TODO: http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
 
 ## Choices
@@ -11,14 +15,14 @@ TODO: http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
   - CON: Much less documentation on the internet
   - CON: Doesn't work well with jmockit
   - CON: Less knowledge inside PV
-  - CON: 
+  - CON:
 - Do we use jOOQ over Hibernate?
   - PRO: Easy to read query syntax
   - PRO: Better performance on JOIN queries
   - PRO:
   - CON: More difficult DMO modelling
   - CON: Less knowledge inside PV
-  - CON: 
+  - CON:
 - Do we use Play or Akka over Spring?
   - PRO: Better integration with Scala
   - PRO: Reactive programming is cool
@@ -59,7 +63,7 @@ Consume events
 For each event
     For each resource R of which it is a component (simple lookup on KVS)
         Publish R.isDirty
-    
+
 ## Resource API
 
 On GET patient/{id}
@@ -71,4 +75,3 @@ On GET patient/{id}
         Store in cache
     Else
         Fetch from cache
-    

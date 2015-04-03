@@ -7,7 +7,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @Configuration
-//@ComponentScan(basePackages = Array("nl.haploid.event.channel"))
 @EnableScheduling
 class AppConfiguration {
 
