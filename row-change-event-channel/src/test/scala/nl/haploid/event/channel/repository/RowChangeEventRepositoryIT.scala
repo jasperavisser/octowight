@@ -1,15 +1,13 @@
 package nl.haploid.event.channel.repository
 
-//@RunWith(classOf[SpringJUnit4ClassRunner])
-//@ContextConfiguration(classes = Array(classOf[AppConfiguration], classOf[PostgresConfiguration]))
-class RowChangeEventRepositoryIT {
-//
-//	@Autowired
-//	val repository : RowChangeEventRepository = null
-//
-//	@Test
-//	def testFindAll : Unit = {
-//		val events = repository.findAll
-//		Assert.assertNotNull(events)
-//	}
+import nl.haploid.event.channel.AbstractIT
+import org.springframework.beans.factory.annotation.Autowired
+
+class RowChangeEventRepositoryIT extends AbstractIT {
+
+  @Autowired val repository: RowChangeEventRepository = null
+
+  "Row change event repository" should "find all events" in {
+    repository.findAll should not be null
+  }
 }

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @Configuration
 @EnableJpaRepositories(basePackages = Array("nl.haploid.event.channel.repository"))
 @EnableTransactionManagement
+// TODO: Does not load override.properties in IT! (not that it really should, anyway)
 @PropertySources(value = Array(new PropertySource(value = Array("file:./override.properties"), ignoreResourceNotFound = true)))
 class PostgresConfiguration {
 
