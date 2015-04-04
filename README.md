@@ -25,7 +25,10 @@ http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api
 #### What about ITs inside the project?
 * Run with failsafe plugin?
 	* Start up requisite servers
+	* https://docs.docker.com/reference/api/remote_api_client_libraries/
 	* Set environment variables
+	* Docker spring configuration annotation provider thingy (to docker inspect and connect to database)
+	* http://scottfrederick.cfapps.io/blog/2012/05/22/Custom-PropertySource-in-Spring-3.1---Part-1
 * Run in container?
 	* Add module directory to a container that can run mvn
 	* Build container

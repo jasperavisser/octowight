@@ -88,6 +88,12 @@
 			<version>${easymock.version}</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.github.docker-java</groupId>
+            <artifactId>docker-java</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<repositories>
