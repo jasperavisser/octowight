@@ -3,4 +3,5 @@
 /.project
 /.settings/
 /data/
+/override.properties
 /target/
