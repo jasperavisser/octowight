@@ -20,30 +20,12 @@
         <easymock.version>3.3.1</easymock.version>
         <grizzled-slf4j.version>1.0.2</grizzled-slf4j.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
-        <scala.version>2.11.6</scala.version>
-        <scala-maven.version>3.2.0</scala-maven.version>
-        <scalatest.version>2.2.4</scalatest.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.clapper</groupId>
-            <artifactId>grizzled-slf4j_2.11</artifactId>
-            <version>${grizzled-slf4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.scala</groupId>
-            <artifactId>spring-scala_2.11</artifactId>
-            <version>1.0.0.BUILD-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>postgresql</groupId>
@@ -77,20 +59,20 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>1.16</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
-            <version>${scalatest.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>${easymock.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -126,8 +108,8 @@
     </pluginRepositories>
 
     <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
 
             <!-- Allow running project with 'mvn spring-boot:run' -->
@@ -136,36 +118,34 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Allow maven to compile scala code -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>${scala-maven.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <configuration>
-                            <args>
-                                <arg>-dependencyfile</arg>
-                                <arg>${project.build.directory}/.scala_dependencies</arg>
-                            </args>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Disable IT during test phase -->
+            <!-- Run unit tests during test phase -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/*IT*.java</exclude>
+                        <exclude>**/*IT.java</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <!-- Run ITs in verify phase -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Put all dependencies in target/lib/ directory -->
@@ -206,29 +186,6 @@
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>
-
-            <!-- Run tests with maven -->
-            <plugin>
-                <groupId>org.scalatest</groupId>
-                <artifactId>scalatest-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <reportsDirectory>${project.build.directory}/scalatest-reports</reportsDirectory>
-                    <junitxml>.</junitxml>
-                    <forkMode>never</forkMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <tagsToInclude>FastTest</tagsToInclude>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
