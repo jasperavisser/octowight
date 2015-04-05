@@ -15,23 +15,22 @@ import scala.collection.JavaConverters._
 @Configuration
 class ContainerizedPostgresConfiguration extends PostgresConfiguration with Logging {
 
-  val IMAGE_NAME = "haploid/postgres:latest"
-  val CONTAINER_NAME: String = "postgres_it"
-
   @Value("${DOCKER_HOST}") val dockerHost: String = null
 
   @Autowired val docker: DockerClient = null
 
-  override val port: Int = 5432
+  override val port = 5432
   override val username = "postgres"
   override val database = "postgres"
+  val imageName = "postgres:9.2"
+  val containerName = "postgres_it"
 
   override def hostname = dockerHost.replaceAll("^.*?(\\d+[.]\\d+[.]\\d+[.]\\d+).*?$", "$1")
 
   def startContainer = {
     val exposedPort = ExposedPort.tcp(port)
-    val container = docker.createContainerCmd(IMAGE_NAME)
-      .withName(CONTAINER_NAME)
+    val container = docker.createContainerCmd(imageName)
+      .withName(containerName)
       .withExposedPorts(exposedPort)
       .exec
     val portBindings = new Ports(exposedPort, Ports.Binding(port))
@@ -51,7 +50,7 @@ class ContainerizedPostgresConfiguration extends PostgresConfiguration with Logg
       .withShowAll(true)
       .exec
       .asScala
-      .filter(c => c.getNames.contains("/%s".format(CONTAINER_NAME)))
+      .filter(c => c.getNames.contains("/%s".format(containerName)))
     containers
       .filter(c => docker.inspectContainerCmd(c.getId).exec.getState.isRunning)
       .foreach(c => docker.stopContainerCmd(c.getId).exec)

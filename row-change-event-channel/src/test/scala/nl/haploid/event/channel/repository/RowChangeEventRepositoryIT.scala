@@ -6,14 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired
 class RowChangeEventRepositoryIT extends AbstractIT {
 
   // TODO: make tests run with maven
-  // TODO: provide setup for database
 
   @Autowired val repository: RowChangeEventRepository = null
 
   setup
 
-  "Row change event repository" should "find all events" in {
+  "Row change event repository" should "be injected" in {
     repository should not be null
-    repository.findAll should not be null
+  }
+
+  "Row change event repository" should "find all events" in {
+    val event = new RowChangeEvent
+    event.tableName = "bob"
+    event.rowId = 123
+    repository.save(event)
+    repository.findAll should have length 1
   }
 }

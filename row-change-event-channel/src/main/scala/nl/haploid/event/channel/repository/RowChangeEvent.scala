@@ -1,13 +1,14 @@
 package nl.haploid.event.channel.repository
 
-import javax.persistence.{Column, Entity, GeneratedValue, GenerationType, Id, Table}
+import javax.persistence._
 
 @Entity
-@Table(name = "row_change_events", schema = "projectx")
+@Table(name = "row_change_events", schema = "octowight")
 class RowChangeEvent {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @SequenceGenerator(name = "event_sequence", schema = "octowight")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   var id: Long = _
 
   @Column(name = "table_name")
