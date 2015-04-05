@@ -1,6 +1,6 @@
 package nl.haploid.event.channel.repository
 
-import nl.haploid.event.channel.AbstractIT
+import nl.haploid.event.channel.{AbstractIT, SlowTest}
 import org.springframework.beans.factory.annotation.Autowired
 
 class RowChangeEventRepositoryIT extends AbstractIT {
@@ -11,11 +11,11 @@ class RowChangeEventRepositoryIT extends AbstractIT {
 
   setup
 
-  "Row change event repository" should "be injected" in {
+  "Row change event repository" should "be injected" taggedAs (SlowTest) in {
     repository should not be null
   }
 
-  "Row change event repository" should "find all events" in {
+  "Row change event repository" should "find all events" taggedAs (SlowTest) in {
     val event = new RowChangeEvent
     event.tableName = "bob"
     event.rowId = 123
