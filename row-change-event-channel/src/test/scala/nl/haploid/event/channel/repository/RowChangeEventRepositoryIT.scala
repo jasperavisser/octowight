@@ -2,9 +2,11 @@ package nl.haploid.event.channel.repository
 
 import nl.haploid.event.channel.AbstractIT
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.TestContextManager
 
 class RowChangeEventRepositoryIT extends AbstractIT {
+
+  // TODO: make tests run with maven
+  // TODO: provide setup for database
 
   @Autowired val repository: RowChangeEventRepository = null
 

@@ -4,7 +4,7 @@ import javax.persistence.EntityManagerFactory
 import javax.sql.DataSource
 
 import com.jolbox.bonecp.BoneCPDataSource
-import org.slf4j.LoggerFactory
+import grizzled.slf4j.Logging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.{Bean, Configuration, PropertySource, PropertySources}
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableJpaRepositories(basePackages = Array("nl.haploid.event.channel.repository"))
 @EnableTransactionManagement
 @PropertySources(value = Array(new PropertySource(value = Array("file:./override.properties"), ignoreResourceNotFound = true)))
-class PostgresConfiguration {
-
-  val log = LoggerFactory.getLogger(getClass)
+class PostgresConfiguration extends Logging {
 
   @Value("${postgres.hostname}") val _hostname: String = null
   @Value("${postgres.port}") val port: Int = 5432
@@ -36,7 +34,7 @@ class PostgresConfiguration {
     dataSource.setJdbcUrl(jdbcUrl)
     dataSource.setUsername(username)
     dataSource.setPassword(username)
-    log.debug("Will connect to %s as %s".format(jdbcUrl, username))
+    debug("Will connect to %s as %s".format(jdbcUrl, username))
     dataSource
   }
 

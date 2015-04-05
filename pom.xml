@@ -7,8 +7,6 @@
     <version>1.0</version>
     <name>octowight</name>
     <modules>
-        <module>jooq-scala</module>
 	<module>row-change-event-channel</module>
-	<module>row-change-event-adapter</module>
     </modules>
 </project>
