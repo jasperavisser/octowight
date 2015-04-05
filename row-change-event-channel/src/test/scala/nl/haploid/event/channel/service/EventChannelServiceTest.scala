@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class EventChannelServiceTest extends FlatSpec with EasyMockSugar with Matchers {
 
-  "Event channel service" should "transfer events from repository into topic" taggedAs (FastTest) in {
+  "Event channel service" should "transfer events from repository into topic" taggedAs FastTest in {
     val mockRepository = mock[RowChangeEventRepository]
     val service = new EventChannelService(mockRepository)
     val expectedEvents = new util.ArrayList[RowChangeEvent]

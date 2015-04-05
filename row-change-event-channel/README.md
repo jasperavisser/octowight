@@ -14,7 +14,11 @@ TODO: http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
   - CON: Harder to debug
   - CON: Much less documentation on the internet
   - CON: Doesn't work well with jmockit
+  - CON: scalatest integration with maven; hard to split unit/IT
+  - CON: scalatest integration with IDE/jenkins
+  - CON: scalatest ... is just not junit yet
   - CON: Less knowledge inside PV
+  - CON: end result looks like java anyway :(
   - CON:
 - Do we use jOOQ over Hibernate?
   - PRO: Easy to read query syntax

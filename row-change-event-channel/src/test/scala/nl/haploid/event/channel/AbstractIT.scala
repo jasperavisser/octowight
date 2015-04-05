@@ -21,9 +21,13 @@ abstract class AbstractIT extends FlatSpec with ShouldMatchers with Logging {
 
   def initializeDatabase = ScriptUtils.executeSqlScript(dataSource.getConnection, new ClassPathResource("/initialize-database.sql", getClass))
 
+  var isSetup = false
+
   def setup = {
-    new TestContextManager(this.getClass).prepareTestInstance(this)
-    initializeDatabase
+    if (!isSetup) {
+      new TestContextManager(this.getClass).prepareTestInstance(this)
+      initializeDatabase
+    }
   }
 }
 
