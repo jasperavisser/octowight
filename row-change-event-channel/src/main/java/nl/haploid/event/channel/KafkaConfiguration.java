@@ -2,6 +2,7 @@ package nl.haploid.event.channel;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,10 +11,10 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfiguration {
 
-    // TODO @Value("${kafka.hostname}")
+    @Value("${kafka.hostname:localhost}")
     private String hostname;
 
-    // TODO @Value("${kafka.port}")
+    @Value("${kafka.port:9092}")
     private int port;
 
     public String getHostname() {

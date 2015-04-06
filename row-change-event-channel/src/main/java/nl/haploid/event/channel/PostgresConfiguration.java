@@ -26,16 +26,16 @@ public class PostgresConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Value("${postgres.hostname}")
+    @Value("${postgres.hostname:localhost}")
     private String hostname;
 
-    @Value("${postgres.port}")
+    @Value("${postgres.port:5432}")
     private int port;
 
-    @Value("${postgres.username}")
+    @Value("${postgres.username:postgres}")
     private String username;
 
-    @Value("${postgres.database}")
+    @Value("${postgres.database:postgres}")
     private String database;
 
     protected String getHostname() {

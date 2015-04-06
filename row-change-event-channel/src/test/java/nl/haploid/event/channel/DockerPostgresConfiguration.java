@@ -1,9 +1,6 @@
 package nl.haploid.event.channel;
 
-import com.github.dockerjava.api.model.Binds;
-import com.github.dockerjava.api.model.Container;
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.Ports;
+import com.github.dockerjava.api.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -11,6 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"nl.haploid.event.channel.repository"})
@@ -51,9 +49,10 @@ public class DockerPostgresConfiguration extends PostgresConfiguration {
     public void startContainer() throws InterruptedException {
         final Container container = dockerService.getContainerByName(CONTAINER_NAME);
         if (container == null || !dockerService.isRunning(container)) {
+            final Ports ports = new Ports(ExposedPort.tcp(getPort()), Ports.Binding(getPort()));
             final Binds binds = new Binds();
-            final Ports ports = new Ports(ExposedPort.tcp(PORT), Ports.Binding(PORT));
-            dockerService.startContainer(IMAGE_NAME, CONTAINER_NAME, ports, binds);
+            final Links links = new Links();
+            dockerService.startContainer(IMAGE_NAME, CONTAINER_NAME, ports, binds, links, new ArrayList<String>());
             Thread.sleep(POSTGRES_STARTUP_DELAY_MS);
         }
     }

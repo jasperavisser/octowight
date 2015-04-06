@@ -15,29 +15,33 @@ import java.util.Map;
 @Service
 public class DockerService {
 
-    @Value("${DOCKER_HOST}")
-    private String host;
+    @Value("${DOCKER_HOST_IP}")
+    private String hostIp;
 
     @Autowired
     private DockerClient docker;
 
     public String getHostname() {
-        return host.replaceAll("^.*?(\\d+[.]\\d+[.]\\d+[.]\\d+).*?$", "$1");
+        return hostIp;
     }
 
-    public String startContainer(final String image, final String name,
-                                 final Ports ports, final Binds binds) {
+    // TODO: or just start up dependencies on CLI; easy to do with fig, much less testing code
+
+    public String startContainer(final String image, final String name, final Ports ports,
+                                 final Binds binds, final Links links, final List<String> envs) {
         final CreateContainerCmd createContainer = docker.createContainerCmd(image)
                 .withName(name);
         for (final Map.Entry<ExposedPort, Ports.Binding[]> entry : ports.getBindings().entrySet()) {
             createContainer.withExposedPorts(entry.getKey());
         }
+        // TODO: envs
         final CreateContainerResponse container = createContainer.exec();
         final String id = container.getId();
         final StartContainerCmd startContainer = docker.startContainerCmd(id);
         for (Bind bind : binds.getBinds()) {
             startContainer.withBinds(bind);
         }
+        // TODO: links
         startContainer
                 .withPortBindings(ports)
                 .exec();
