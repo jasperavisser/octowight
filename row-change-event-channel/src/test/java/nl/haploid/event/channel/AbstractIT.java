@@ -2,7 +2,6 @@ package nl.haploid.event.channel;
 
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,9 +12,8 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @ContextConfiguration(
-        classes = {AppConfiguration.class, DockerConfiguration.class, ContainerizedPostgresConfiguration.class},
+        classes = {TestConfiguration.class, DockerConfiguration.class, DockerPostgresConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
-@ComponentScan
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -32,6 +30,7 @@ public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContex
     public void setup() throws SQLException {
         if (!isSetup) {
             initializeDatabase();
+            isSetup = true;
         }
     }
 }

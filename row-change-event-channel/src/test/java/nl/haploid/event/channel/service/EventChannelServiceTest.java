@@ -24,7 +24,7 @@ public class EventChannelServiceTest {
     private KafkaProducer<String, String> kafkaProducer;
 
     @Test
-    public void testQueueRowChangeEvents() {
+    public void testQueueRowChangeEvents() throws Exception {
         final List<RowChangeEvent> expectedEvents = new ArrayList<RowChangeEvent>();
         expectedEvents.add(new RowChangeEvent());
         new Expectations() {

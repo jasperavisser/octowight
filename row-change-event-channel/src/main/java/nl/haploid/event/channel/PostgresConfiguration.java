@@ -38,19 +38,31 @@ public class PostgresConfiguration {
     @Value("${postgres.database}")
     private String database;
 
-    public String getHostname() {
+    protected String getHostname() {
         return hostname;
+    }
+
+    protected int getPort() {
+        return port;
+    }
+
+    protected String getUsername() {
+        return username;
+    }
+
+    protected String getDatabase() {
+        return database;
     }
 
     @Bean
     public DataSource dataSource() {
         final BoneCPDataSource dataSource = new BoneCPDataSource();
         dataSource.setDriverClass("org.postgresql.Driver");
-        String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", getHostname(), port, database);
+        String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", getHostname(), getPort(), getDatabase());
         dataSource.setJdbcUrl(jdbcUrl);
-        dataSource.setUsername(username);
-        dataSource.setPassword(username);
-        log.debug(String.format("Will connect to %s as %s", jdbcUrl, username));
+        dataSource.setUsername(getUsername());
+        dataSource.setPassword(getUsername());
+        log.debug(String.format("Will connect to %s as %s", jdbcUrl, getUsername()));
         return dataSource;
     }
 
