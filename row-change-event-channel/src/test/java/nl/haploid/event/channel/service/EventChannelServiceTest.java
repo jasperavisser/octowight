@@ -3,6 +3,7 @@ package nl.haploid.event.channel.service;
 import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Tested;
+import nl.haploid.event.channel.TestData;
 import nl.haploid.event.channel.repository.RowChangeEvent;
 import nl.haploid.event.channel.repository.RowChangeEventRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -23,17 +24,22 @@ public class EventChannelServiceTest {
     @Injectable
     private KafkaProducer<String, String> kafkaProducer;
 
+    @Injectable
+    private JsonService jsonService;
+
     @Test
     public void testQueueRowChangeEvents() throws Exception {
         final List<RowChangeEvent> expectedEvents = new ArrayList<RowChangeEvent>();
-        expectedEvents.add(new RowChangeEvent());
+        expectedEvents.add(TestData.rowChangeEvent());
+        expectedEvents.add(TestData.rowChangeEvent());
+        expectedEvents.add(TestData.rowChangeEvent());
         new Expectations() {
             {
                 mockRepository.findAll();
                 times = 1;
                 result = expectedEvents;
                 kafkaProducer.send((ProducerRecord<String, String>) any);
-                times = 1;
+                times = 3;
                 mockRepository.delete(expectedEvents);
                 times = 1;
             }

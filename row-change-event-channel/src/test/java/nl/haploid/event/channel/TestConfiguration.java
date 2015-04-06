@@ -8,8 +8,9 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @ComponentScan(excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PostgresConfiguration.class),
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AppConfiguration.class)
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AppConfiguration.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = KafkaConfiguration.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PostgresConfiguration.class)
 })
 public class TestConfiguration {
 

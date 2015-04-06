@@ -12,7 +12,8 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @ContextConfiguration(
-        classes = {TestConfiguration.class, DockerConfiguration.class, DockerPostgresConfiguration.class},
+        classes = {TestConfiguration.class, DockerConfiguration.class,
+                DockerKafkaConfiguration.class, DockerPostgresConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 

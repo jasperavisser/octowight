@@ -1,4 +1,4 @@
-drop schema if exists octowight;
+drop schema if exists octowight cascade;
 
 create schema octowight;
 

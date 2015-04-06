@@ -49,7 +49,6 @@ public class DockerPostgresConfiguration extends PostgresConfiguration {
 
     @PostConstruct
     public void startContainer() throws InterruptedException {
-        // TODO: make configurable to re-use container
         final Container container = dockerService.getContainerByName(CONTAINER_NAME);
         if (container == null || !dockerService.isRunning(container)) {
             final Binds binds = new Binds();
@@ -63,7 +62,7 @@ public class DockerPostgresConfiguration extends PostgresConfiguration {
     public void stopContainer() {
         final Container container = dockerService.getContainerByName(CONTAINER_NAME);
         if (container != null) {
-            dockerService.stopContainer(container);
+            // TODO: dockerService.stopContainer(container);
         }
     }
 }
