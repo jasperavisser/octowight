@@ -3,12 +3,14 @@
 #export DOCKER_HOST_IP="127.0.0.1"
 #export DOCKER_TLS_VERIFY="1"
 
-export DOCKER_CERT_PATH="/Users/haploid/.boot2docker/certs/boot2docker-vm"
-export DOCKER_HOST="tcp://192.168.59.103:2376"
-export DOCKER_HOST_IP="192.168.59.103"
-export DOCKER_TLS_VERIFY="1"
+if [[ -n "$(which boot2docker)" ]]; then
+    . $(boot2docker shellinit)
+fi
 
-# TODO: see http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
+export DOCKER_HOST_IP="192.168.59.103"
+
+# TODO: http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
+# https://github.com/wouterd/docker-maven-plugin
 
 # http://wurstmeister.github.io/kafka-docker/
 # http://kafka.apache.org/documentation.html#quickstart

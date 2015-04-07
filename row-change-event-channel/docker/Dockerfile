@@ -8,6 +8,6 @@ ENV postgres.port 5432
 ENV postgres.username pgsql
 ENV postgres.database portavita
 
-ADD app /app
+#ADD app /app
 
 ENTRYPOINT ["java", "-cp", "/app/*", "nl.haploid.event.channel.App"]
