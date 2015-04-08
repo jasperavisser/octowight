@@ -211,7 +211,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/script/</workingDirectory>
+                            <workingDirectory>${project.basedir}/src/test/script/</workingDirectory>
                             <executable>bash</executable>
                             <arguments>
                                 <argument>start-it-containers.sh</argument>
@@ -225,7 +225,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/script/</workingDirectory>
+                            <workingDirectory>${project.basedir}/src/test/script/</workingDirectory>
                             <executable>bash</executable>
                             <arguments>
                                 <argument>stop-it-containers.sh</argument>
