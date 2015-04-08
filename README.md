@@ -3,10 +3,12 @@ Just playing around with Scala, Spring, Docker
 
 ## Required
 
+FOR greadlink:
+brew install coreutils
+
 Add this line to /etc/init/docker.conf
 DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
 http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
-
 
 ## TODO
 

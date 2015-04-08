@@ -198,72 +198,40 @@
                 </configuration>
             </plugin>
 
+            <!-- Start containers with dependencies during IT -->
             <plugin>
-                <groupId>net.wouterdanes.docker</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>3.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.3.2</version>
                 <executions>
                     <execution>
-                        <id>build</id>
+                        <id>start-it-containers</id>
+                        <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>build-images</goal>
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <images>
-                                <image>
-                                    <id>row_change_event_channel</id>
-                                    <dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
-                                    <keep>true</keep>
-                                    <nameAndTag>haploid/row-change-event-channel:${project.version}</nameAndTag>
-                                    <artifacts>
-                                        <artifact>
-                                            <file>${project.build.directory}/${project.build.finalName}.jar</file>
-                                            <dest>/app</dest>
-                                        </artifact>
-                                        <artifact>
-                                            <file>${project.build.directory}/lib</file>
-                                            <dest>/app</dest>
-                                        </artifact>
-                                    </artifacts>
-                                </image>
-                            </images>
+                            <workingDirectory>${project.basedir}/src/main/script/</workingDirectory>
+                            <executable>bash</executable>
+                            <arguments>
+                                <argument>start-it-containers.sh</argument>
+                            </arguments>
                         </configuration>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>start</id>-->
-                        <!--<configuration>-->
-                            <!--<containers>-->
-                                <!--<container>-->
-                                    <!--<id>Debian</id>-->
-                                    <!--<image>debian:wheezy</image>-->
-                                <!--</container>-->
-                                <!--<container>-->
-                                    <!--<id>BusyBox</id>-->
-                                    <!--<image>busybox</image>-->
-                                    <!--<hostname>busyhost</hostname>-->
-                                <!--</container>-->
-                                <!--<container>-->
-                                    <!--<id>cache</id>-->
-                                    <!--<image>nginx</image>-->
-                                <!--</container>-->
-                            <!--</containers>-->
-                        <!--</configuration>-->
-                        <!--<goals>-->
-                            <!--<goal>start-containers</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>stop</id>-->
-                        <!--<goals>-->
-                            <!--<goal>stop-containers</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>verify</id>-->
-                        <!--<goals>-->
-                            <!--<goal>verify</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
+                    <execution>
+                        <id>stop-it-containers</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/src/main/script/</workingDirectory>
+                            <executable>bash</executable>
+                            <arguments>
+                                <argument>stop-it-containers.sh</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
