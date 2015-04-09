@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>nl.haploid</groupId>
-    <artifactId>row-change-event-channel</artifactId>
+    <artifactId>new-resource-detector</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -21,6 +21,9 @@
         <jmockit.version>1.16</jmockit.version>
         <kafka.version>0.8.2.1</kafka.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+        <scala.version>2.10.0</scala.version>
+        <yammer-metrics.version>2.2.0</yammer-metrics.version>
+        <zkclient.version>0.3</zkclient.version>
     </properties>
 
     <dependencies>
@@ -61,8 +64,34 @@
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
+            <artifactId>kafka_2.10</artifactId>
             <version>${kafka.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>${zkclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yammer.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${yammer-metrics.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -174,7 +203,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.0.21</version>
                 <configuration>
-                    <imageName>row-change-event-channel</imageName>
+                    <imageName>new-resource-detector</imageName>
                     <baseImage>java7</baseImage>
                     <dockerDirectory>docker</dockerDirectory>
                     <resources>

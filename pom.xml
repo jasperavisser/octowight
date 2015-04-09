@@ -2,11 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>nl.haploid.octowight</groupId>
-    <artifactId>aggregator</artifactId>
+    <artifactId>octowight</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <name>octowight</name>
     <modules>
 	<module>row-change-event-channel</module>
+	<module>new-resource-detector</module>
     </modules>
 </project>
