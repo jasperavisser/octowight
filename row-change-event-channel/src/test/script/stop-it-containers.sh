@@ -1,4 +1,6 @@
 #!/bin/bash
+READLINK=$(which readlink greadlink | head -n1)
+cd "$(dirname "$("${READLINK}" -f "$0")")"
 
 function removeContainer {
     local name=$1

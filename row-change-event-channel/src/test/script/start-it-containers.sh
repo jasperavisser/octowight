@@ -1,5 +1,6 @@
 #!/bin/bash
-cd "$(dirname "$(greadlink -f "$0")")"
+READLINK=$(which readlink greadlink | head -n1)
+cd "$(dirname "$("${READLINK}" -f "$0")")"
 
 POSTGRES_NAME="postgres-it"
 ZOOKEEPER_NAME="zookeeper-it"
