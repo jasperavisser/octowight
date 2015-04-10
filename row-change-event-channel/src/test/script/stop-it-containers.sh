@@ -1,5 +1,5 @@
 #!/bin/bash
-READLINK=$(which readlink greadlink | head -n1)
+READLINK=$(which greadlink readlink | head -n1)
 cd "$(dirname "$("${READLINK}" -f "$0")")"
 
 function removeContainer {
