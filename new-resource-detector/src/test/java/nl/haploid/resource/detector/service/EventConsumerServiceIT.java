@@ -1,6 +1,6 @@
-package nl.haploid.resource.detector;
+package nl.haploid.resource.detector.service;
 
-import nl.haploid.resource.detector.service.EventConsumerService;
+import nl.haploid.resource.detector.AbstractIT;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.Assert;

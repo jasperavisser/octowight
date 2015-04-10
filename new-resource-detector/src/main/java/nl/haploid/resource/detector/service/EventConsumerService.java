@@ -25,13 +25,18 @@ public class EventConsumerService {
     private ConsumerConnector kafkaConsumer;
 
     public String consumeSingleEvent() {
-        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
-        final KafkaStream<byte[], byte[]> stream = streamsPerTopic.get(topic).get(0);
+        final KafkaStream<byte[], byte[]> stream = createStream(topic);
         final ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
         final String message = new String(iterator.next().message());
         log.debug(String.format("Consumed message: %s", message));
         return message;
+    }
+
+    protected KafkaStream<byte[], byte[]> createStream(final String topic) {
+        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
+        topicCountMap.put(topic, 1);
+        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
+        System.out.println("shouldn't be here");
+        return streamsPerTopic.get(this.topic).get(0);
     }
 }
