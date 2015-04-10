@@ -10,12 +10,11 @@
     * Push to kafka (resourceType, resourceId) 
 
 ## TODO (detailed)
-~~App~~
-~~AppConfiguration~~
-~~PostgresConfiguration~~
-~~KafkaConfiguration~~
 RedisConfiguration
 EventConsumerService
+ResourceDetectService 
+    -> multiple ResourceDetectors, probably a hashmap of sets of detectors per tableName
 
 ## TODO (experimental)
 Maybe spring integration anyway?
+Feature toggle whether to spin down containers

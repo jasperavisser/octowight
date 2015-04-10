@@ -10,6 +10,8 @@ import org.junit.rules.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -34,5 +36,18 @@ public class EventConsumerServiceIT extends AbstractIT {
         kafkaProducer.send(record).get();
         final String actualMessage = service.consumeSingleEvent();
         Assert.assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testConsumeMultipleEvents() throws InterruptedException, ExecutionException {
+        final String message1 = UUID.randomUUID().toString();
+        final String message2 = UUID.randomUUID().toString();
+        final List<String> expectedMessages = Arrays.asList(message1, message2);
+        final ProducerRecord<String, String> record1 = new ProducerRecord<String, String>(topic, message1);
+        final ProducerRecord<String, String> record2 = new ProducerRecord<String, String>(topic, message2);
+        kafkaProducer.send(record1).get();
+        kafkaProducer.send(record2).get();
+        final List<String> actualMessages = service.consumeMultipleEvents();
+        Assert.assertEquals(expectedMessages, actualMessages);
     }
 }

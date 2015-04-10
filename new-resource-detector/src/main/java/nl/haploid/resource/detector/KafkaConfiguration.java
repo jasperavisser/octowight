@@ -2,6 +2,7 @@ package nl.haploid.resource.detector;
 
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
+import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -12,10 +13,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 @Configuration
 public class KafkaConfiguration {
+
     @Value("${kafka.hostname:localhost}")
     private String hostname;
 
@@ -54,7 +59,18 @@ public class KafkaConfiguration {
         properties.put("zookeeper.sync.time.ms", "200");
         properties.put("auto.commit.interval.ms", "1000");
         properties.put("auto.offset.reset", "smallest");
+        properties.put("consumer.timeout.ms", "1000");
         return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
+    }
+
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public KafkaStream<byte[], byte[]> kafkaStream(final ConsumerConnector kafkaConsumer, final @Value("${kafka.topic}") String topic) {
+        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
+        topicCountMap.put(topic, 1);
+        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
+        System.out.println("shouldn't be here");
+        return streamsPerTopic.get(topic).get(0);
     }
 
     @Bean
