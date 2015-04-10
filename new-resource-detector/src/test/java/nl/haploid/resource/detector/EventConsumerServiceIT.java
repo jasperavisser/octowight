@@ -10,6 +10,9 @@ import org.junit.rules.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+
 public class EventConsumerServiceIT extends AbstractIT {
 
     @Autowired
@@ -22,14 +25,13 @@ public class EventConsumerServiceIT extends AbstractIT {
     private String topic;
 
     @Rule
-    public Timeout globalTimeout = new Timeout(100000);
+    public Timeout globalTimeout = new Timeout(10000);
 
     @Test
-    public void testStuff() throws InterruptedException {
-        final String expectedMessage = "binding of isaac";
+    public void testConsumeSingleEvent() throws InterruptedException, ExecutionException {
+        final String expectedMessage = UUID.randomUUID().toString();
         final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, expectedMessage);
-        kafkaProducer.send(record);
-        Thread.sleep(2000);
+        kafkaProducer.send(record).get();
         final String actualMessage = service.consumeSingleEvent();
         Assert.assertEquals(expectedMessage, actualMessage);
     }

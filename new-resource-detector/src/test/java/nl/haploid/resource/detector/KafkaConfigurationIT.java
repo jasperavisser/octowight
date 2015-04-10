@@ -5,6 +5,7 @@ import kafka.javaapi.consumer.ConsumerConnector;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,14 +16,14 @@ public class KafkaConfigurationIT extends AbstractIT {
     @Autowired
     private ConsumerConnector kafkaConsumer;
 
+    @Value("${kafka.topic}")
+    private String topic;
+
     @Test
-    public void testNothing() {
-
-        // TODO: we should probably have a producer to really test this
-
+    public void testCreateMessageStreams() {
         Assert.assertNotNull(kafkaConsumer);
         final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put("test", new Integer(1));
+        topicCountMap.put(topic, 1);
         final Map<String, List<KafkaStream<byte[], byte[]>>> streams = kafkaConsumer.createMessageStreams(topicCountMap);
         Assert.assertNotNull(streams);
     }

@@ -18,9 +18,14 @@ public class TestConfiguration {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
         final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        configurer.setProperties(getTestProperties());
+        return configurer;
+    }
+
+    private static Properties getTestProperties() {
         final Properties properties = new Properties();
         final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
-        final String topic = "test1234"; //UUID.randomUUID().toString();
+        final String topic = UUID.randomUUID().toString();
         properties.setProperty("postgres.hostname", dockerHostIp);
         properties.setProperty("postgres.port", "5432");
         properties.setProperty("postgres.database", "postgres");
@@ -28,7 +33,6 @@ public class TestConfiguration {
         properties.setProperty("kafka.topic", topic);
         properties.setProperty("kafka.hostname", dockerHostIp);
         properties.setProperty("zookeeper.hostname", dockerHostIp);
-        configurer.setProperties(properties);
-        return configurer;
+        return properties;
     }
 }

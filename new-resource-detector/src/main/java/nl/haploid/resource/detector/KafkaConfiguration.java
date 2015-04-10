@@ -7,8 +7,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import java.util.Properties;
 
@@ -42,20 +44,22 @@ public class KafkaConfiguration {
         return zookeeperPort;
     }
 
-    @Bean
+    @Bean(destroyMethod = "shutdown")
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public ConsumerConnector kafkaConsumer() {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.put("zookeeper.connect", String.format("%s:%d", getZookeeperHostname(), getZookeeperPort()));
         properties.put("group.id", "1");
         properties.put("zookeeper.session.timeout.ms", "400");
         properties.put("zookeeper.sync.time.ms", "200");
         properties.put("auto.commit.interval.ms", "1000");
+        properties.put("auto.offset.reset", "smallest");
         return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
     }
 
     @Bean
     public KafkaProducer<String, String> kafkaProducer() {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, String.format("%s:%d", getHostname(), getPort()));
         properties.put(ProducerConfig.RETRIES_CONFIG, "3");
         properties.put(ProducerConfig.ACKS_CONFIG, "all");
