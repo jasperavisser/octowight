@@ -27,6 +27,7 @@ public class TestConfiguration {
         properties.setProperty("postgres.username", "postgres");
         properties.setProperty("kafka.topic", topic);
         properties.setProperty("kafka.hostname", dockerHostIp);
+        properties.setProperty("zookeeper.hostname", dockerHostIp);
         configurer.setProperties(properties);
         return configurer;
     }

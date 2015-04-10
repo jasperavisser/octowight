@@ -25,10 +25,11 @@ public class EventConsumerServiceIT extends AbstractIT {
     public Timeout globalTimeout = new Timeout(100000);
 
     @Test
-    public void testStuff() {
+    public void testStuff() throws InterruptedException {
         final String expectedMessage = "binding of isaac";
         final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, expectedMessage);
         kafkaProducer.send(record);
+        Thread.sleep(2000);
         final String actualMessage = service.consumeSingleEvent();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
