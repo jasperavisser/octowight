@@ -38,7 +38,5 @@ public class App {
                 .collect(Collectors.toList());
         // TODO: detect resources
         // TODO: commit offsets
-        // TODO: we expect to have only 1 consumer at the same time
-        // TODO: but we want to be able to reset it (shutdown, get new one) during IT
     }
 }
