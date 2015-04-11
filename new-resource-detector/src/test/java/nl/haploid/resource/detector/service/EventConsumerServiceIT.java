@@ -30,16 +30,16 @@ public class EventConsumerServiceIT extends AbstractIT {
     public Timeout globalTimeout = new Timeout(10000);
 
     @Test
-    public void testConsumeSingleEvent() throws InterruptedException, ExecutionException {
+    public void testConsumeSingleMessage() throws InterruptedException, ExecutionException {
         final String expectedMessage = UUID.randomUUID().toString();
         final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, expectedMessage);
         kafkaProducer.send(record).get();
-        final String actualMessage = service.consumeSingleEvent();
+        final String actualMessage = service.consumeSingleMessage();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
-    public void testConsumeMultipleEvents() throws InterruptedException, ExecutionException {
+    public void testConsumeMultipleMessages() throws InterruptedException, ExecutionException {
         final String message1 = UUID.randomUUID().toString();
         final String message2 = UUID.randomUUID().toString();
         final List<String> expectedMessages = Arrays.asList(message1, message2);
@@ -47,7 +47,7 @@ public class EventConsumerServiceIT extends AbstractIT {
         final ProducerRecord<String, String> record2 = new ProducerRecord<String, String>(topic, message2);
         kafkaProducer.send(record1).get();
         kafkaProducer.send(record2).get();
-        final List<String> actualMessages = service.consumeMultipleEvents();
+        final List<String> actualMessages = service.consumeMultipleMessages(expectedMessages.size() + 1);
         Assert.assertEquals(expectedMessages, actualMessages);
     }
 }

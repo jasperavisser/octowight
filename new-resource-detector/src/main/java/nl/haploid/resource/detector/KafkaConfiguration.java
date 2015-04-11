@@ -22,10 +22,10 @@ import java.util.Properties;
 public class KafkaConfiguration {
 
     @Value("${kafka.hostname:localhost}")
-    private String hostname;
+    private String kafkaHostname;
 
     @Value("${kafka.port:9092}")
-    private int port;
+    private int kafkaPort;
 
     @Value("${zookeeper.hostname:localhost}")
     private String zookeeperHostname;
@@ -33,12 +33,12 @@ public class KafkaConfiguration {
     @Value("${zookeeper.port:2181}")
     private int zookeeperPort;
 
-    public String getHostname() {
-        return hostname;
+    public String getKafkaHostname() {
+        return kafkaHostname;
     }
 
-    public int getPort() {
-        return port;
+    public int getKafkaPort() {
+        return kafkaPort;
     }
 
     public String getZookeeperHostname() {
@@ -47,6 +47,13 @@ public class KafkaConfiguration {
 
     public int getZookeeperPort() {
         return zookeeperPort;
+    }
+
+    public KafkaStream<byte[], byte[]> createStream(final ConsumerConnector kafkaConsumer, final String topic) {
+        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
+        topicCountMap.put(topic, 1);
+        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
+        return streamsPerTopic.get(topic).get(0);
     }
 
     @Bean(destroyMethod = "shutdown")
@@ -64,19 +71,9 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public KafkaStream<byte[], byte[]> kafkaStream(final ConsumerConnector kafkaConsumer, final @Value("${kafka.topic}") String topic) {
-        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
-        System.out.println("shouldn't be here");
-        return streamsPerTopic.get(topic).get(0);
-    }
-
-    @Bean
     public KafkaProducer<String, String> kafkaProducer() {
         final Properties properties = new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, String.format("%s:%d", getHostname(), getPort()));
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, String.format("%s:%d", getKafkaHostname(), getKafkaPort()));
         properties.put(ProducerConfig.RETRIES_CONFIG, "3");
         properties.put(ProducerConfig.ACKS_CONFIG, "all");
         properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");

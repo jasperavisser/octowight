@@ -7,24 +7,21 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class KafkaConfigurationIT extends AbstractIT {
 
     @Autowired
     private ConsumerConnector kafkaConsumer;
 
+    @Autowired
+    private KafkaConfiguration kafkaConfiguration;
+
     @Value("${kafka.topic}")
     private String topic;
 
     @Test
-    public void testCreateMessageStreams() {
+    public void testCreateStream() {
         Assert.assertNotNull(kafkaConsumer);
-        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streams = kafkaConsumer.createMessageStreams(topicCountMap);
-        Assert.assertNotNull(streams);
+        final KafkaStream<byte[], byte[]> stream = kafkaConfiguration.createStream(kafkaConsumer, topic);
+        Assert.assertNotNull(stream);
     }
 }

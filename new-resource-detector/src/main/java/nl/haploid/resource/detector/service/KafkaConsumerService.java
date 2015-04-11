@@ -33,6 +33,7 @@ public class KafkaConsumerService {
     // TODO: solution was to make this service wrap around consumer & streams
     // TODO: with a method to reset (shutdown consumer and make a new one)
     // TODO: it was something i thought of while thinking of how to IT huxtable resource detector
+    // TODO: ah yes, commitOffsets
 
     private ConsumerConnector kafkaConsumer() {
         final Properties properties = new Properties();
@@ -44,13 +45,5 @@ public class KafkaConsumerService {
         properties.put("auto.offset.reset", "smallest");
         properties.put("consumer.timeout.ms", "1000");
         return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
-    }
-
-    private KafkaStream<byte[], byte[]> kafkaStream(final ConsumerConnector kafkaConsumer, final String topic) {
-        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
-        System.out.println("shouldn't be here");
-        return streamsPerTopic.get(topic).get(0);
     }
 }

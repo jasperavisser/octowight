@@ -36,11 +36,6 @@ public class EventChannelService {
     @Autowired
     private JsonService jsonService;
 
-    @Scheduled(fixedRate = 500)
-    public void poll() throws ExecutionException, InterruptedException, IOException {
-        queueRowChangeEvents();
-    }
-
     @Transactional
     public int queueRowChangeEvents() throws ExecutionException, InterruptedException, IOException {
         final List<RowChangeEventDmo> eventDmos = repository.findAll();
