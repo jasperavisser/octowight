@@ -4,9 +4,9 @@ import nl.haploid.event.RowChangeEvent;
 import nl.haploid.event.channel.repository.RowChangeEventDmo;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DmoMessageMapperService {
@@ -19,12 +19,9 @@ public class DmoMessageMapperService {
         return event;
     }
 
-    // TODO: would be much shorter in java8 :)
     public List<RowChangeEvent> map(final Collection<RowChangeEventDmo> eventDmos) {
-        final List<RowChangeEvent> events = new ArrayList<RowChangeEvent>();
-        for (RowChangeEventDmo eventDmo : eventDmos) {
-            events.add(map(eventDmo));
-        }
-        return events;
+        return eventDmos.stream()
+                .map(dmo -> this.map(dmo))
+                .collect(Collectors.toList());
     }
 }

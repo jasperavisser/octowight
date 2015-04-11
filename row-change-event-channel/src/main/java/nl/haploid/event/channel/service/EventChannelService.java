@@ -9,15 +9,14 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 @Service
 public class EventChannelService {
@@ -46,21 +45,31 @@ public class EventChannelService {
         return events.size();
     }
 
-    protected List<RecordMetadata> produceEvents(final List<RowChangeEvent> events) throws ExecutionException, InterruptedException, IOException {
-        final List<Future<RecordMetadata>> futures = new ArrayList<Future<RecordMetadata>>();
-        for (final RowChangeEvent event : events) {
-            futures.add(produceEvent(event));
-        }
-        final List<RecordMetadata> results = new ArrayList<RecordMetadata>();
-        for (final Future<RecordMetadata> future : futures) {
-            results.add(future.get());
-        }
-        return results;
+    protected List<RecordMetadata> produceEvents(final List<RowChangeEvent> events) throws ExecutionException, InterruptedException {
+        final List<Future<RecordMetadata>> futures = events.stream()
+                .map(this::produceEvent)
+                .collect(Collectors.toList());
+        return futures.stream()
+                .map(this::resolveFuture)
+                .collect(Collectors.toList());
     }
 
-    protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) throws IOException {
+    private RecordMetadata resolveFuture(Future<RecordMetadata> future) {
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Could not resolve future; message may not have been produced!", e);
+        }
+    }
+
+    protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) {
         final String topic = "test";
-        final String message = jsonService.toString(event);
+        final String message;
+        try {
+            message = jsonService.toString(event);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to convert event to JSON!", e);
+        }
         final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, message);
         return kafkaProducer.send(record);
     }
