@@ -3,6 +3,7 @@ package nl.haploid.event.channel.service;
 import mockit.Injectable;
 import mockit.StrictExpectations;
 import mockit.Tested;
+import nl.haploid.event.JsonMapper;
 import nl.haploid.event.RowChangeEvent;
 import nl.haploid.event.channel.TestData;
 import nl.haploid.event.channel.repository.RowChangeEventDmo;
@@ -29,7 +30,7 @@ public class EventChannelServiceTest {
     private DmoMessageMapperService mapperService;
 
     @Injectable
-    private JsonService jsonService;
+    private JsonMapper jsonService;
 
     @Test
     public void testQueueRowChangeEvents() throws Exception {

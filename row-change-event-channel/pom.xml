@@ -19,7 +19,6 @@
         <maven.compiler.testSource>1.8</maven.compiler.testSource>
         <encoding>UTF-8</encoding>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
-        <jackson-mapper.version>1.9.13</jackson-mapper.version>
         <jmockit.version>1.16</jmockit.version>
         <kafka.version>0.8.2.1</kafka.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>

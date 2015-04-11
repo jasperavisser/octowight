@@ -1,5 +1,6 @@
 package nl.haploid.event.channel.service;
 
+import nl.haploid.event.JsonMapper;
 import nl.haploid.event.RowChangeEvent;
 import nl.haploid.event.channel.repository.RowChangeEventDmo;
 import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
@@ -33,7 +34,7 @@ public class EventChannelService {
     private DmoMessageMapperService mapperService;
 
     @Autowired
-    private JsonService jsonService;
+    private JsonMapper jsonMapper;
 
     @Transactional
     public int queueRowChangeEvents() throws ExecutionException, InterruptedException, IOException {
@@ -63,13 +64,8 @@ public class EventChannelService {
     }
 
     protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) {
-        final String topic = "test";
-        final String message;
-        try {
-            message = jsonService.toString(event);
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to convert event to JSON!", e);
-        }
+        final String topic = "test"; // TODO: test?
+        final String message = jsonMapper.toString(event);
         final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, message);
         return kafkaProducer.send(record);
     }

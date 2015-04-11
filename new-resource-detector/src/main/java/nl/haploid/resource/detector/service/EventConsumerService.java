@@ -42,21 +42,21 @@ public class EventConsumerService {
         final List<String> messages = new ArrayList<String>();
         for (int n = 0; n < batchSize; n++) {
             try {
-                final String message = new String(iterator.next().message());
-                messages.add(message);
+                messages.add(nextMessage(iterator));
             } catch (ConsumerTimeoutException e) {
                 break;
             }
         }
-        // TODO: parse message (here or in separate service?)
         return messages;
     }
 
     public String consumeSingleMessage() {
-        final ConsumerIterator<byte[], byte[]> iterator = getStream().iterator();
+        return nextMessage(getStream().iterator());
+    }
+
+    private String nextMessage(ConsumerIterator<byte[], byte[]> iterator) {
         final String message = new String(iterator.next().message());
         log.debug(String.format("Consumed message: %s", message));
-        // TODO: parse message (here or in separate service?)
         return message;
     }
 }
