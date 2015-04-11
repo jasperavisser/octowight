@@ -19,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"nl.haploid.resource.detector.repository"})
+@EnableJpaRepositories(basePackages = {"nl.haploid.resource.detector.service.repository"})
 @EnableTransactionManagement
 @PropertySources(value = {@PropertySource(value = "file:./override.properties", ignoreResourceNotFound = true)})
 public class PostgresConfiguration {
@@ -73,7 +73,7 @@ public class PostgresConfiguration {
         vendorAdapter.setShowSql(true);
         final LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("nl.haploid.resource.detector.repository");
+        factory.setPackagesToScan("nl.haploid.resource.detector.service.repository");
         factory.setDataSource(dataSource);
         factory.afterPropertiesSet();
         return factory.getObject();

@@ -12,14 +12,14 @@ import java.util.List;
 public class RowChangeEventRepositoryIT extends AbstractIT {
 
     @Autowired
-    private RowChangeEventRepository repository;
+    private RowChangeEventDmoRepository repository;
 
     @Test
     @Transactional
     public void testFindAll() {
-        final RowChangeEvent event = TestData.rowChangeEvent();
+        final RowChangeEventDmo event = TestData.rowChangeEventDmo();
         repository.saveAndFlush(event);
-        final List<RowChangeEvent> events = repository.findAll();
+        final List<RowChangeEventDmo> events = repository.findAll();
         Assert.assertEquals(1, events.size());
     }
 }

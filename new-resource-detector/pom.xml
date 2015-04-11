@@ -141,8 +141,6 @@
     </pluginRepositories>
 
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
 
             <!-- Allow running project with 'mvn spring-boot:run' -->

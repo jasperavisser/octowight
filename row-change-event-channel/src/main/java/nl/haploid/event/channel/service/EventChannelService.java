@@ -1,7 +1,8 @@
 package nl.haploid.event.channel.service;
 
-import nl.haploid.event.channel.repository.RowChangeEvent;
-import nl.haploid.event.channel.repository.RowChangeEventRepository;
+import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.channel.repository.RowChangeEventDmo;
+import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -24,10 +25,13 @@ public class EventChannelService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private RowChangeEventRepository repository;
+    private RowChangeEventDmoRepository repository;
 
     @Autowired
     private KafkaProducer<String, String> kafkaProducer;
+
+    @Autowired
+    private DmoMessageMapperService mapperService;
 
     @Autowired
     private JsonService jsonService;
@@ -39,10 +43,11 @@ public class EventChannelService {
 
     @Transactional
     public int queueRowChangeEvents() throws ExecutionException, InterruptedException, IOException {
-        final List<RowChangeEvent> events = repository.findAll();
-        log.debug(String.format("Found %d row change events", events.size()));
+        final List<RowChangeEventDmo> eventDmos = repository.findAll();
+        log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
+        final List<RowChangeEvent> events = mapperService.map(eventDmos);
         produceEvents(events);
-        repository.delete(events);
+        repository.delete(eventDmos);
         return events.size();
     }
 

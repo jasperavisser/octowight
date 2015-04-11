@@ -1,11 +1,12 @@
 package nl.haploid.event.channel.service;
 
-import mockit.Expectations;
 import mockit.Injectable;
+import mockit.StrictExpectations;
 import mockit.Tested;
+import nl.haploid.event.RowChangeEvent;
 import nl.haploid.event.channel.TestData;
-import nl.haploid.event.channel.repository.RowChangeEvent;
-import nl.haploid.event.channel.repository.RowChangeEventRepository;
+import nl.haploid.event.channel.repository.RowChangeEventDmo;
+import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.Test;
@@ -19,28 +20,38 @@ public class EventChannelServiceTest {
     private EventChannelService service;
 
     @Injectable
-    private RowChangeEventRepository mockRepository;
+    private RowChangeEventDmoRepository mockRepository;
 
     @Injectable
     private KafkaProducer<String, String> kafkaProducer;
+
+    @Injectable
+    private DmoMessageMapperService mapperService;
 
     @Injectable
     private JsonService jsonService;
 
     @Test
     public void testQueueRowChangeEvents() throws Exception {
+        final List<RowChangeEventDmo> expectedEventDmos = new ArrayList<RowChangeEventDmo>();
+        expectedEventDmos.add(TestData.rowChangeEventDmo());
+        expectedEventDmos.add(TestData.rowChangeEventDmo());
+        expectedEventDmos.add(TestData.rowChangeEventDmo());
         final List<RowChangeEvent> expectedEvents = new ArrayList<RowChangeEvent>();
         expectedEvents.add(TestData.rowChangeEvent());
         expectedEvents.add(TestData.rowChangeEvent());
         expectedEvents.add(TestData.rowChangeEvent());
-        new Expectations() {
+        new StrictExpectations() {
             {
                 mockRepository.findAll();
+                times = 1;
+                result = expectedEventDmos;
+                mapperService.map(expectedEventDmos);
                 times = 1;
                 result = expectedEvents;
                 kafkaProducer.send((ProducerRecord<String, String>) any);
                 times = 3;
-                mockRepository.delete(expectedEvents);
+                mockRepository.delete(expectedEventDmos);
                 times = 1;
             }
         };

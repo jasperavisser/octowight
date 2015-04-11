@@ -1,9 +1,10 @@
 package nl.haploid.event.channel.service;
 
+import nl.haploid.event.RowChangeEvent;
 import nl.haploid.event.channel.AbstractIT;
 import nl.haploid.event.channel.TestData;
-import nl.haploid.event.channel.repository.RowChangeEvent;
-import nl.haploid.event.channel.repository.RowChangeEventRepository;
+import nl.haploid.event.channel.repository.RowChangeEventDmo;
+import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,12 +21,12 @@ public class EventChannelServiceIT extends AbstractIT {
     private EventChannelService service;
 
     @Autowired
-    private RowChangeEventRepository repository;
+    private RowChangeEventDmoRepository repository;
 
     @Test
     @Transactional
     public void testQueueRowChangeEvents() throws Exception {
-        final RowChangeEvent event = TestData.rowChangeEvent();
+        final RowChangeEventDmo event = TestData.rowChangeEventDmo();
         repository.saveAndFlush(event);
         final int expectedCount = 1;
         final int actualCount = service.queueRowChangeEvents();

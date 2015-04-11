@@ -2,9 +2,10 @@ package nl.haploid.event.channel.repository;
 
 import javax.persistence.*;
 
+// TODO: rename to Dmo
 @Entity
 @Table(name = "row_change_events", schema = "octowight")
-public class RowChangeEvent {
+public class RowChangeEventDmo {
 
     @Id
     @SequenceGenerator(name = "event_sequence", schema = "octowight")
