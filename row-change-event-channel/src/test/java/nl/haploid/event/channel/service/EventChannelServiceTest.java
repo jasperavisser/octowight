@@ -27,7 +27,7 @@ public class EventChannelServiceTest {
     private KafkaProducer<String, String> kafkaProducer;
 
     @Injectable
-    private DmoMessageMapperService mapperService;
+    private DmoToMessageMapperService mapperService;
 
     @Injectable
     private JsonMapper jsonService;
@@ -42,20 +42,18 @@ public class EventChannelServiceTest {
         expectedEvents.add(TestData.rowChangeEvent());
         expectedEvents.add(TestData.rowChangeEvent());
         expectedEvents.add(TestData.rowChangeEvent());
-        new StrictExpectations() {
-            {
-                mockRepository.findAll();
-                times = 1;
-                result = expectedEventDmos;
-                mapperService.map(expectedEventDmos);
-                times = 1;
-                result = expectedEvents;
-                kafkaProducer.send((ProducerRecord<String, String>) any);
-                times = 3;
-                mockRepository.delete(expectedEventDmos);
-                times = 1;
-            }
-        };
+        new StrictExpectations() {{
+            mockRepository.findAll();
+            times = 1;
+            result = expectedEventDmos;
+            mapperService.map(expectedEventDmos);
+            times = 1;
+            result = expectedEvents;
+            kafkaProducer.send((ProducerRecord<String, String>) any);
+            times = 3;
+            mockRepository.delete(expectedEventDmos);
+            times = 1;
+        }};
         service.queueRowChangeEvents();
     }
 }

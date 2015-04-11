@@ -31,7 +31,7 @@ public class EventChannelService {
     private KafkaProducer<String, String> kafkaProducer;
 
     @Autowired
-    private DmoMessageMapperService mapperService;
+    private DmoToMessageMapperService mapperService;
 
     @Autowired
     private JsonMapper jsonMapper;

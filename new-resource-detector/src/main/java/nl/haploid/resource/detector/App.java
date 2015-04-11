@@ -36,6 +36,7 @@ public class App {
         final List<RowChangeEvent> events = messages.stream()
                 .map(m -> jsonMapper.parse(m, RowChangeEvent.class))
                 .collect(Collectors.toList());
+        // TODO: group events by table
         // TODO: detect resources
         // TODO: commit offsets
     }

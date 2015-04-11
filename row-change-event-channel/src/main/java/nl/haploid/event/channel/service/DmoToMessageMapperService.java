@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DmoMessageMapperService {
+public class DmoToMessageMapperService {
 
     public RowChangeEvent map(final RowChangeEventDmo eventDmo) {
         final RowChangeEvent event = new RowChangeEvent();
