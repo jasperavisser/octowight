@@ -3,6 +3,8 @@ package nl.haploid.resource.detector;
 import nl.haploid.event.JsonMapper;
 import nl.haploid.event.RowChangeEvent;
 import nl.haploid.resource.detector.service.EventConsumerService;
+import nl.haploid.resource.detector.service.Resource;
+import nl.haploid.resource.detector.service.ResourceDetectorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +26,9 @@ public class App {
     private EventConsumerService consumerService;
 
     @Autowired
+    private ResourceDetectorsService detectorsService;
+
+    @Autowired
     private JsonMapper jsonMapper;
 
     public static void main(String[] args) {
@@ -33,11 +38,16 @@ public class App {
     @Scheduled(fixedRate = 500)
     public void poll() {
         final List<String> messages = consumerService.consumeMultipleMessages(batchSize);
-        final List<RowChangeEvent> events = messages.stream()
-                .map(m -> jsonMapper.parse(m, RowChangeEvent.class))
+        final List<Resource> resources = messages.stream()
+                .map(message -> jsonMapper.parse(message, RowChangeEvent.class))
+                .collect(Collectors.groupingBy(event -> event.getTableName()))
+                .entrySet().stream()
+                .map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
+                .flatMap(resourceList -> resourceList.stream())
                 .collect(Collectors.toList());
-        // TODO: group events by table
-        // TODO: detect resources
+
+        // TODO: filter existing resources
+        // TODO: publish resources
         // TODO: commit offsets
     }
 }
