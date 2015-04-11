@@ -1,5 +1,6 @@
 package nl.haploid.event.channel;
 
+import nl.haploid.event.JsonMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,5 +27,10 @@ public class TestConfiguration {
         properties.setProperty("kafka.hostname", dockerHostIp);
         configurer.setProperties(properties);
         return configurer;
+    }
+
+    @Bean
+    public JsonMapper jsonMapper() {
+        return new JsonMapper();
     }
 }

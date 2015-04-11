@@ -115,37 +115,6 @@
     <build>
         <plugins>
 
-            <!-- Compile with whatever JDK we like -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <configuration>
-                            <showDeprecation>true</showDeprecation>
-                            <showWarnings>true</showWarnings>
-                            <compilerArguments>
-                                <source>${maven.compiler.target}</source>
-                                <target>${maven.compiler.source}</target>
-                            </compilerArguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <configuration>
-                            <showDeprecation>true</showDeprecation>
-                            <showWarnings>true</showWarnings>
-                            <compilerArguments>
-                                <source>${maven.compiler.testTarget}</source>
-                                <target>${maven.compiler.testSource}</target>
-                            </compilerArguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Allow running project with 'mvn spring-boot:run' -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>

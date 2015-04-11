@@ -28,11 +28,6 @@ public class HuxtableResourceDetectorServiceIT extends AbstractIT {
         repository.saveAndFlush(huxtable1);
         repository.saveAndFlush(huxtable2);
 
-        // TODO: before we get here, we should define what an "event" is that can be filtered
-        // TODO: is it a RowChangeEvent? -> then we need a library
-            // lib: RowChangeEvent + Jackson (so tiny)
-        // TODO: then parse JSONs from consumer into event objects
-        // TODO: filteredEvents = service.filterResources(events);
-        // TODO: assert that filtered list contains 1
+        // TODO: more!
     }
 }
