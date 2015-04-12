@@ -3,6 +3,7 @@ package nl.haploid.resource.detector.service;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.ConsumerTimeoutException;
 import kafka.consumer.KafkaStream;
+import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.message.MessageAndMetadata;
 import mockit.*;
 import org.junit.Test;
@@ -81,5 +82,17 @@ public class EventConsumerServiceTest {
 		}};
 		final List<String> actualMessages = consumerService.consumeMessages(expectedMessages.size() + 1);
 		assertEquals(expectedMessages, actualMessages);
+	}
+
+	@Test
+	public void testCommit(final @Mocked ConsumerConnector kafkaConsumer) {
+		new StrictExpectations(consumerService) {{
+			consumerService.getKafkaConsumer();
+			times = 1;
+			result = kafkaConsumer;
+			kafkaConsumer.commitOffsets();
+			times = 1;
+		}};
+		consumerService.commit();
 	}
 }

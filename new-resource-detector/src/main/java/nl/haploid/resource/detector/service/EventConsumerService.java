@@ -13,7 +13,7 @@ import java.util.stream.StreamSupport;
 @Service
 public class EventConsumerService {
 
-	@Value("${kafka.topic}") // TODO: kafka.topic.events
+	@Value("${kafka.topic.events}")
 	private String topic;
 
 	@Autowired
@@ -30,7 +30,7 @@ public class EventConsumerService {
 		return stream.get();
 	}
 
-	private ConsumerConnector getKafkaConsumer() {
+	protected ConsumerConnector getKafkaConsumer() {
 		if (kafkaConsumer == null) {
 			kafkaConsumer = ThreadLocal.withInitial(this.consumerFactoryService::createKafkaConsumer);
 		}
@@ -57,7 +57,7 @@ public class EventConsumerService {
 				.collect(Collectors.toList());
 	}
 
-	// TODO: test
+	// TODO: IT
 	public void commit() {
 		getKafkaConsumer().commitOffsets();
 	}
