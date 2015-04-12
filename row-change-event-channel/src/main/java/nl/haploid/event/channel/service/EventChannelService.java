@@ -22,50 +22,50 @@ import java.util.stream.Collectors;
 @Service
 public class EventChannelService {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private RowChangeEventDmoRepository repository;
+	@Autowired
+	private RowChangeEventDmoRepository repository;
 
-    @Autowired
-    private KafkaProducer<String, String> kafkaProducer;
+	@Autowired
+	private KafkaProducer<String, String> kafkaProducer;
 
-    @Autowired
-    private DmoToMessageMapperService mapperService;
+	@Autowired
+	private DmoToMessageMapperService mapperService;
 
-    @Autowired
-    private JsonMapper jsonMapper;
+	@Autowired
+	private JsonMapper jsonMapper;
 
-    @Transactional
-    public int queueRowChangeEvents() throws ExecutionException, InterruptedException, IOException {
-        final List<RowChangeEventDmo> eventDmos = repository.findAll();
-        log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
-        final List<RowChangeEvent> events = mapperService.map(eventDmos);
-        produceEvents(events);
-        repository.delete(eventDmos);
-        return events.size();
-    }
+	@Transactional
+	public int queueRowChangeEvents() throws ExecutionException, InterruptedException, IOException {
+		final List<RowChangeEventDmo> eventDmos = repository.findAll();
+		log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
+		final List<RowChangeEvent> events = mapperService.map(eventDmos);
+		produceEvents(events);
+		repository.delete(eventDmos);
+		return events.size();
+	}
 
-    protected List<RecordMetadata> produceEvents(final List<RowChangeEvent> events) throws ExecutionException, InterruptedException {
-        return events.stream()
-                .map(this::produceEvent)
-                .collect(Collectors.toList()).stream()
-                .map(this::resolveFuture)
-                .collect(Collectors.toList());
-    }
+	protected List<RecordMetadata> produceEvents(final List<RowChangeEvent> events) throws ExecutionException, InterruptedException {
+		return events.stream()
+				.map(this::produceEvent)
+				.collect(Collectors.toList()).stream()
+				.map(this::resolveFuture)
+				.collect(Collectors.toList());
+	}
 
-    private RecordMetadata resolveFuture(Future<RecordMetadata> future) {
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Could not resolve future; message may not have been produced!", e);
-        }
-    }
+	private RecordMetadata resolveFuture(Future<RecordMetadata> future) {
+		try {
+			return future.get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException("Could not resolve future; message may not have been produced!", e);
+		}
+	}
 
-    protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) {
-        final String topic = "test"; // TODO: test?
-        final String message = jsonMapper.toString(event);
-        final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
-        return kafkaProducer.send(record);
-    }
+	protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) {
+		final String topic = "test"; // TODO: test?
+		final String message = jsonMapper.toString(event);
+		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
+		return kafkaProducer.send(record);
+	}
 }

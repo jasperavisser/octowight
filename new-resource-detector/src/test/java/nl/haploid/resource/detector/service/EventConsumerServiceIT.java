@@ -18,38 +18,38 @@ import static org.junit.Assert.assertEquals;
 
 public class EventConsumerServiceIT extends AbstractIT {
 
-    @Autowired
-    private EventConsumerService service;
+	@Autowired
+	private EventConsumerService service;
 
-    @Autowired
-    private KafkaProducer<String, String> kafkaProducer;
+	@Autowired
+	private KafkaProducer<String, String> kafkaProducer;
 
-    @Rule
-    public Timeout globalTimeout = new Timeout(10000);
+	@Rule
+	public Timeout globalTimeout = new Timeout(10000);
 
-    @Test
-    public void testConsumeMessage() throws InterruptedException, ExecutionException {
-        final String topic = TestData.topic();
-        service.setTopic(topic);
-        final String expectedMessage = UUID.randomUUID().toString();
-        final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
-        kafkaProducer.send(record).get();
-        final String actualMessage = service.consumeMessage();
-        assertEquals(expectedMessage, actualMessage);
-    }
+	@Test
+	public void testConsumeMessage() throws InterruptedException, ExecutionException {
+		final String topic = TestData.topic();
+		service.setTopic(topic);
+		final String expectedMessage = UUID.randomUUID().toString();
+		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
+		kafkaProducer.send(record).get();
+		final String actualMessage = service.consumeMessage();
+		assertEquals(expectedMessage, actualMessage);
+	}
 
-    @Test
-    public void testConsumeMessages() throws InterruptedException, ExecutionException {
-        final String topic = TestData.topic();
-        service.setTopic(topic);
-        final String message1 = UUID.randomUUID().toString();
-        final String message2 = UUID.randomUUID().toString();
-        final List<String> expectedMessages = Arrays.asList(message1, message2);
-        final ProducerRecord<String, String> record1 = new ProducerRecord<>(topic, message1);
-        final ProducerRecord<String, String> record2 = new ProducerRecord<>(topic, message2);
-        kafkaProducer.send(record1).get();
-        kafkaProducer.send(record2).get();
-        final List<String> actualMessages = service.consumeMessages(expectedMessages.size() + 1);
-        assertEquals(expectedMessages, actualMessages);
-    }
+	@Test
+	public void testConsumeMessages() throws InterruptedException, ExecutionException {
+		final String topic = TestData.topic();
+		service.setTopic(topic);
+		final String message1 = UUID.randomUUID().toString();
+		final String message2 = UUID.randomUUID().toString();
+		final List<String> expectedMessages = Arrays.asList(message1, message2);
+		final ProducerRecord<String, String> record1 = new ProducerRecord<>(topic, message1);
+		final ProducerRecord<String, String> record2 = new ProducerRecord<>(topic, message2);
+		kafkaProducer.send(record1).get();
+		kafkaProducer.send(record2).get();
+		final List<String> actualMessages = service.consumeMessages(expectedMessages.size() + 1);
+		assertEquals(expectedMessages, actualMessages);
+	}
 }

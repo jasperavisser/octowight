@@ -19,35 +19,35 @@ import static org.junit.Assert.assertNotNull;
 
 public class EventChannelServiceIT extends AbstractIT {
 
-    @Autowired
-    private EventChannelService service;
+	@Autowired
+	private EventChannelService service;
 
-    @Autowired
-    private RowChangeEventDmoRepository repository;
+	@Autowired
+	private RowChangeEventDmoRepository repository;
 
-    @Test
-    @Transactional
-    public void testQueueRowChangeEvents() throws Exception {
-        final RowChangeEventDmo event = TestData.rowChangeEventDmo();
-        repository.saveAndFlush(event);
-        final int expectedCount = 1;
-        final int actualCount = service.queueRowChangeEvents();
-        assertEquals(expectedCount, actualCount);
-    }
+	@Test
+	@Transactional
+	public void testQueueRowChangeEvents() throws Exception {
+		final RowChangeEventDmo event = TestData.rowChangeEventDmo();
+		repository.saveAndFlush(event);
+		final int expectedCount = 1;
+		final int actualCount = service.queueRowChangeEvents();
+		assertEquals(expectedCount, actualCount);
+	}
 
-    @Test
-    public void testProduceEvent() throws Exception {
-        final RowChangeEvent event = TestData.rowChangeEvent();
-        final Future<RecordMetadata> future = service.produceEvent(event);
-        assertNotNull(future.get());
-    }
+	@Test
+	public void testProduceEvent() throws Exception {
+		final RowChangeEvent event = TestData.rowChangeEvent();
+		final Future<RecordMetadata> future = service.produceEvent(event);
+		assertNotNull(future.get());
+	}
 
-    @Test
-    public void testProduceEvents() throws Exception {
-        final RowChangeEvent event = TestData.rowChangeEvent();
-        final List<RecordMetadata> results = service.produceEvents(Arrays.asList(event));
-        final int expectedCount = 1;
-        final int actualCount = results.size();
-        assertEquals(expectedCount, actualCount);
-    }
+	@Test
+	public void testProduceEvents() throws Exception {
+		final RowChangeEvent event = TestData.rowChangeEvent();
+		final List<RecordMetadata> results = service.produceEvents(Arrays.asList(event));
+		final int expectedCount = 1;
+		final int actualCount = results.size();
+		assertEquals(expectedCount, actualCount);
+	}
 }

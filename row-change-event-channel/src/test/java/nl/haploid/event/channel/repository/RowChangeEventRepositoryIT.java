@@ -12,15 +12,15 @@ import static org.junit.Assert.assertEquals;
 
 public class RowChangeEventRepositoryIT extends AbstractIT {
 
-    @Autowired
-    private RowChangeEventDmoRepository repository;
+	@Autowired
+	private RowChangeEventDmoRepository repository;
 
-    @Test
-    @Transactional
-    public void testFindAll() {
-        final RowChangeEventDmo event = TestData.rowChangeEventDmo();
-        repository.saveAndFlush(event);
-        final List<RowChangeEventDmo> events = repository.findAll();
-        assertEquals(1, events.size());
-    }
+	@Test
+	@Transactional
+	public void testFindAll() {
+		final RowChangeEventDmo event = TestData.rowChangeEventDmo();
+		repository.saveAndFlush(event);
+		final List<RowChangeEventDmo> events = repository.findAll();
+		assertEquals(1, events.size());
+	}
 }

@@ -24,65 +24,65 @@ import javax.sql.DataSource;
 @PropertySources(value = {@PropertySource(value = "file:./override.properties", ignoreResourceNotFound = true)})
 public class PostgresConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Value("${postgres.hostname:localhost}")
-    private String hostname;
+	@Value("${postgres.hostname:localhost}")
+	private String hostname;
 
-    @Value("${postgres.port:5432}")
-    private int port;
+	@Value("${postgres.port:5432}")
+	private int port;
 
-    @Value("${postgres.username:postgres}")
-    private String username;
+	@Value("${postgres.username:postgres}")
+	private String username;
 
-    @Value("${postgres.database:postgres}")
-    private String database;
+	@Value("${postgres.database:postgres}")
+	private String database;
 
-    protected String getHostname() {
-        return hostname;
-    }
+	protected String getHostname() {
+		return hostname;
+	}
 
-    protected int getPort() {
-        return port;
-    }
+	protected int getPort() {
+		return port;
+	}
 
-    protected String getUsername() {
-        return username;
-    }
+	protected String getUsername() {
+		return username;
+	}
 
-    protected String getDatabase() {
-        return database;
-    }
+	protected String getDatabase() {
+		return database;
+	}
 
-    @Bean
-    public DataSource dataSource() {
-        final BoneCPDataSource dataSource = new BoneCPDataSource();
-        dataSource.setDriverClass("org.postgresql.Driver");
-        String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", getHostname(), getPort(), getDatabase());
-        dataSource.setJdbcUrl(jdbcUrl);
-        dataSource.setUsername(getUsername());
-        dataSource.setPassword(getUsername());
-        log.debug(String.format("Will connect to %s as %s", jdbcUrl, getUsername()));
-        return dataSource;
-    }
+	@Bean
+	public DataSource dataSource() {
+		final BoneCPDataSource dataSource = new BoneCPDataSource();
+		dataSource.setDriverClass("org.postgresql.Driver");
+		String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", getHostname(), getPort(), getDatabase());
+		dataSource.setJdbcUrl(jdbcUrl);
+		dataSource.setUsername(getUsername());
+		dataSource.setPassword(getUsername());
+		log.debug(String.format("Will connect to %s as %s", jdbcUrl, getUsername()));
+		return dataSource;
+	}
 
-    @Bean
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
-        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
-        vendorAdapter.setShowSql(true);
-        final LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("nl.haploid.resource.detector.service.repository");
-        factory.setDataSource(dataSource);
-        factory.afterPropertiesSet();
-        return factory.getObject();
-    }
+	@Bean
+	public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
+		final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		vendorAdapter.setGenerateDdl(true);
+		vendorAdapter.setShowSql(true);
+		final LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+		factory.setJpaVendorAdapter(vendorAdapter);
+		factory.setPackagesToScan("nl.haploid.resource.detector.service.repository");
+		factory.setDataSource(dataSource);
+		factory.afterPropertiesSet();
+		return factory.getObject();
+	}
 
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        final JpaTransactionManager manager = new JpaTransactionManager();
-        manager.setEntityManagerFactory(entityManagerFactory);
-        return manager;
-    }
+	@Bean
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		final JpaTransactionManager manager = new JpaTransactionManager();
+		manager.setEntityManagerFactory(entityManagerFactory);
+		return manager;
+	}
 }

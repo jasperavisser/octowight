@@ -17,43 +17,43 @@ import java.util.List;
 
 public class EventChannelServiceTest {
 
-    @Tested
-    private EventChannelService service;
+	@Tested
+	private EventChannelService service;
 
-    @Injectable
-    private RowChangeEventDmoRepository mockRepository;
+	@Injectable
+	private RowChangeEventDmoRepository mockRepository;
 
-    @Injectable
-    private KafkaProducer<String, String> kafkaProducer;
+	@Injectable
+	private KafkaProducer<String, String> kafkaProducer;
 
-    @Injectable
-    private DmoToMessageMapperService mapperService;
+	@Injectable
+	private DmoToMessageMapperService mapperService;
 
-    @Injectable
-    private JsonMapper jsonService;
+	@Injectable
+	private JsonMapper jsonService;
 
-    @Test
-    public void testQueueRowChangeEvents() throws Exception {
-        final List<RowChangeEventDmo> expectedEventDmos = new ArrayList<>();
-        expectedEventDmos.add(TestData.rowChangeEventDmo());
-        expectedEventDmos.add(TestData.rowChangeEventDmo());
-        expectedEventDmos.add(TestData.rowChangeEventDmo());
-        final List<RowChangeEvent> expectedEvents = new ArrayList<>();
-        expectedEvents.add(TestData.rowChangeEvent());
-        expectedEvents.add(TestData.rowChangeEvent());
-        expectedEvents.add(TestData.rowChangeEvent());
-        new StrictExpectations() {{
-            mockRepository.findAll();
-            times = 1;
-            result = expectedEventDmos;
-            mapperService.map(expectedEventDmos);
-            times = 1;
-            result = expectedEvents;
-            kafkaProducer.send((ProducerRecord<String, String>) any);
-            times = 3;
-            mockRepository.delete(expectedEventDmos);
-            times = 1;
-        }};
-        service.queueRowChangeEvents();
-    }
+	@Test
+	public void testQueueRowChangeEvents() throws Exception {
+		final List<RowChangeEventDmo> expectedEventDmos = new ArrayList<>();
+		expectedEventDmos.add(TestData.rowChangeEventDmo());
+		expectedEventDmos.add(TestData.rowChangeEventDmo());
+		expectedEventDmos.add(TestData.rowChangeEventDmo());
+		final List<RowChangeEvent> expectedEvents = new ArrayList<>();
+		expectedEvents.add(TestData.rowChangeEvent());
+		expectedEvents.add(TestData.rowChangeEvent());
+		expectedEvents.add(TestData.rowChangeEvent());
+		new StrictExpectations() {{
+			mockRepository.findAll();
+			times = 1;
+			result = expectedEventDmos;
+			mapperService.map(expectedEventDmos);
+			times = 1;
+			result = expectedEvents;
+			kafkaProducer.send((ProducerRecord<String, String>) any);
+			times = 3;
+			mockRepository.delete(expectedEventDmos);
+			times = 1;
+		}};
+		service.queueRowChangeEvents();
+	}
 }

@@ -11,24 +11,24 @@ import java.util.stream.Collectors;
 @Service
 public class ResourceDetectorsService {
 
-    @Autowired
-    private List<ResourceDetector> detectors;
+	@Autowired
+	private List<ResourceDetector> detectors;
 
-    protected List<ResourceDetector> getDetectors() {
-        return detectors;
-    }
+	protected List<ResourceDetector> getDetectors() {
+		return detectors;
+	}
 
-    public List<ResourceDetector> getDetectorsForTable(final String tableName) {
-        return this.getDetectors().stream()
-                .filter(d -> d.getTableNames().contains(tableName))
-                .collect(Collectors.toList());
-    }
+	public List<ResourceDetector> getDetectorsForTable(final String tableName) {
+		return this.getDetectors().stream()
+				.filter(d -> d.getTableNames().contains(tableName))
+				.collect(Collectors.toList());
+	}
 
-    // TODO: test/IT
-    public List<ResourceDescriptor> detectResources(final String tableName, final List<RowChangeEvent> events) {
-        return getDetectorsForTable(tableName).stream()
-                .map(d -> d.detect(events))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-    }
+	// TODO: test/IT
+	public List<ResourceDescriptor> detectResources(final String tableName, final List<RowChangeEvent> events) {
+		return getDetectorsForTable(tableName).stream()
+				.map(d -> d.detect(events))
+				.flatMap(Collection::stream)
+				.collect(Collectors.toList());
+	}
 }

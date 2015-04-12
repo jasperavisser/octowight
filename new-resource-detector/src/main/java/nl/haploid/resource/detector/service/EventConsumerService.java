@@ -13,60 +13,60 @@ import java.util.stream.StreamSupport;
 @Service
 public class EventConsumerService {
 
-    @Value("${kafka.topic}") // TODO: kafka.topic.events
-    private String topic;
+	@Value("${kafka.topic}") // TODO: kafka.topic.events
+	private String topic;
 
-    @Autowired
-    private KafkaConsumerFactoryService consumerFactoryService;
+	@Autowired
+	private KafkaConsumerFactoryService consumerFactoryService;
 
-    private ThreadLocal<ConsumerConnector> kafkaConsumer;
+	private ThreadLocal<ConsumerConnector> kafkaConsumer;
 
-    private ThreadLocal<KafkaStream<byte[], byte[]>> stream;
+	private ThreadLocal<KafkaStream<byte[], byte[]>> stream;
 
-    protected KafkaStream<byte[], byte[]> getStream() {
-        if (stream == null) {
-            stream = ThreadLocal.withInitial(() -> this.consumerFactoryService.createStream(getKafkaConsumer(), getTopic()));
-        }
-        return stream.get();
-    }
+	protected KafkaStream<byte[], byte[]> getStream() {
+		if (stream == null) {
+			stream = ThreadLocal.withInitial(() -> this.consumerFactoryService.createStream(getKafkaConsumer(), getTopic()));
+		}
+		return stream.get();
+	}
 
-    private ConsumerConnector getKafkaConsumer() {
-        if (kafkaConsumer == null) {
-            kafkaConsumer = ThreadLocal.withInitial(this.consumerFactoryService::createKafkaConsumer);
-        }
-        return kafkaConsumer.get();
-    }
+	private ConsumerConnector getKafkaConsumer() {
+		if (kafkaConsumer == null) {
+			kafkaConsumer = ThreadLocal.withInitial(this.consumerFactoryService::createKafkaConsumer);
+		}
+		return kafkaConsumer.get();
+	}
 
-    private String getTopic() {
-        return topic;
-    }
+	private String getTopic() {
+		return topic;
+	}
 
-    protected void setTopic(final String topic) {
-        this.topic = topic;
-        reset();
-    }
+	protected void setTopic(final String topic) {
+		this.topic = topic;
+		reset();
+	}
 
-    public String consumeMessage() {
-        return new String(getStream().iterator().next().message());
-    }
+	public String consumeMessage() {
+		return new String(getStream().iterator().next().message());
+	}
 
-    public List<String> consumeMessages(final int batchSize) {
-        return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
-                .limit(batchSize)
-                .map(messageAndMetadata -> new String(messageAndMetadata.message()))
-                .collect(Collectors.toList());
-    }
+	public List<String> consumeMessages(final int batchSize) {
+		return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
+				.limit(batchSize)
+				.map(messageAndMetadata -> new String(messageAndMetadata.message()))
+				.collect(Collectors.toList());
+	}
 
-    // TODO: test
-    public void commit() {
-        getKafkaConsumer().commitOffsets();
-    }
+	// TODO: test
+	public void commit() {
+		getKafkaConsumer().commitOffsets();
+	}
 
-    protected void reset() {
-        if (kafkaConsumer != null) {
-            kafkaConsumer.get().shutdown();
-        }
-        kafkaConsumer = null;
-        stream = null;
-    }
+	protected void reset() {
+		if (kafkaConsumer != null) {
+			kafkaConsumer.get().shutdown();
+		}
+		kafkaConsumer = null;
+		stream = null;
+	}
 }

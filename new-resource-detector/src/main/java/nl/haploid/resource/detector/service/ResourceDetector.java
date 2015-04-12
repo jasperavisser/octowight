@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ResourceDetector {
 
-    Collection<String> getTableNames();
+	Collection<String> getTableNames();
 
-    List<ResourceDescriptor> detect(final List<RowChangeEvent> events);
+	List<ResourceDescriptor> detect(final List<RowChangeEvent> events);
 }

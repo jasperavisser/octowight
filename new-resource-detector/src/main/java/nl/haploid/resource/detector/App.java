@@ -20,43 +20,43 @@ import java.util.stream.Collectors;
 @EnableAutoConfiguration
 public class App {
 
-    @Value("${kafka.batch.size:100}")
-    private int batchSize;
+	@Value("${kafka.batch.size:100}")
+	private int batchSize;
 
-    @Autowired
-    private EventConsumerService consumerService;
+	@Autowired
+	private EventConsumerService consumerService;
 
-    @Autowired
-    private ResourceDetectorsService detectorsService;
+	@Autowired
+	private ResourceDetectorsService detectorsService;
 
-    @Autowired
-    private ResourceRegistryService registryService;
+	@Autowired
+	private ResourceRegistryService registryService;
 
-    @Autowired
-    private ResourceProducerService producerService;
+	@Autowired
+	private ResourceProducerService producerService;
 
-    @Autowired
-    private JsonMapper jsonMapper;
+	@Autowired
+	private JsonMapper jsonMapper;
 
-    public static void main(String[] args) {
-        SpringApplication.run(App.class);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(App.class);
+	}
 
-    // TODO: unit test/IT
-    @Scheduled(fixedRate = 500)
-    public void poll() {
-        consumerService.consumeMessages(batchSize).stream()
-                .map(message -> jsonMapper.parse(message, RowChangeEvent.class))
-                .collect(Collectors.groupingBy(RowChangeEvent::getTableName))
-                .entrySet().stream()
-                .map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
-                .flatMap(Collection::stream)
-                .filter(registryService::excludeExistingResources)
-                .map(registryService::registerNewResource)
-                .map(producerService::publishResourceDescriptor)
-                .collect(Collectors.toList()).stream()
-                .map(producerService::resolveFuture)
-                .collect(Collectors.toList());
-        consumerService.commit();
-    }
+	// TODO: unit test/IT
+	@Scheduled(fixedRate = 500)
+	public void poll() {
+		consumerService.consumeMessages(batchSize).stream()
+				.map(message -> jsonMapper.parse(message, RowChangeEvent.class))
+				.collect(Collectors.groupingBy(RowChangeEvent::getTableName))
+				.entrySet().stream()
+				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
+				.flatMap(Collection::stream)
+				.filter(registryService::excludeExistingResources)
+				.map(registryService::registerNewResource)
+				.map(producerService::publishResourceDescriptor)
+				.collect(Collectors.toList()).stream()
+				.map(producerService::resolveFuture)
+				.collect(Collectors.toList());
+		consumerService.commit();
+	}
 }

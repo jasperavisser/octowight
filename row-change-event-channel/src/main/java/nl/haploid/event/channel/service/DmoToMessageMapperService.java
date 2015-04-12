@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 @Service
 public class DmoToMessageMapperService {
 
-    public RowChangeEvent map(final RowChangeEventDmo eventDmo) {
-        final RowChangeEvent event = new RowChangeEvent();
-        event.setId(eventDmo.getId());
-        event.setRowId(eventDmo.getRowId());
-        event.setTableName(eventDmo.getTableName());
-        return event;
-    }
+	public RowChangeEvent map(final RowChangeEventDmo eventDmo) {
+		final RowChangeEvent event = new RowChangeEvent();
+		event.setId(eventDmo.getId());
+		event.setRowId(eventDmo.getRowId());
+		event.setTableName(eventDmo.getTableName());
+		return event;
+	}
 
-    public List<RowChangeEvent> map(final Collection<RowChangeEventDmo> eventDmos) {
-        return eventDmos.stream()
-                .map(this::map)
-                .collect(Collectors.toList());
-    }
+	public List<RowChangeEvent> map(final Collection<RowChangeEventDmo> eventDmos) {
+		return eventDmos.stream()
+				.map(this::map)
+				.collect(Collectors.toList());
+	}
 }

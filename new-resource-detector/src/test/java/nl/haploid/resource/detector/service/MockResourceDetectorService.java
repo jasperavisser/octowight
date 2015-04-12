@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public class MockResourceDetectorService implements ResourceDetector {
 
-    @Override
-    public Collection<String> getTableNames() {
-        return null;
-    }
+	@Override
+	public Collection<String> getTableNames() {
+		return null;
+	}
 
-    @Override
-    public List<ResourceDescriptor> detect(List<RowChangeEvent> events) {
-        return null;
-    }
+	@Override
+	public List<ResourceDescriptor> detect(List<RowChangeEvent> events) {
+		return null;
+	}
 }

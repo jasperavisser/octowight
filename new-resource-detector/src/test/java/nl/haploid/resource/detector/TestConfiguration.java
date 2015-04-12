@@ -12,36 +12,36 @@ import java.util.UUID;
 
 @Configuration
 @ComponentScan(excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AppConfiguration.class)
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AppConfiguration.class)
 })
 public class TestConfiguration {
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        configurer.setProperties(getTestProperties());
-        return configurer;
-    }
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+		final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+		configurer.setProperties(getTestProperties());
+		return configurer;
+	}
 
-    // TODO: bah, so duplication
-    @Bean
-    public JsonMapper jsonMapper() {
-        return new JsonMapper();
-    }
+	// TODO: bah, so duplication
+	@Bean
+	public JsonMapper jsonMapper() {
+		return new JsonMapper();
+	}
 
-    private static Properties getTestProperties() {
-        final Properties properties = new Properties();
-        final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
-        final String topic = UUID.randomUUID().toString();
-        properties.setProperty("postgres.hostname", dockerHostIp);
-        properties.setProperty("postgres.port", "5432");
-        properties.setProperty("postgres.database", "postgres");
-        properties.setProperty("postgres.username", "postgres");
-        properties.setProperty("redis.hostname", dockerHostIp);
-        properties.setProperty("kafka.topic", topic);
-        properties.setProperty("kafka.hostname", dockerHostIp);
-        properties.setProperty("kafka.consumer.timeout.ms", "2500");
-        properties.setProperty("zookeeper.hostname", dockerHostIp);
-        return properties;
-    }
+	private static Properties getTestProperties() {
+		final Properties properties = new Properties();
+		final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
+		final String topic = UUID.randomUUID().toString();
+		properties.setProperty("postgres.hostname", dockerHostIp);
+		properties.setProperty("postgres.port", "5432");
+		properties.setProperty("postgres.database", "postgres");
+		properties.setProperty("postgres.username", "postgres");
+		properties.setProperty("redis.hostname", dockerHostIp);
+		properties.setProperty("kafka.topic", topic);
+		properties.setProperty("kafka.hostname", dockerHostIp);
+		properties.setProperty("kafka.consumer.timeout.ms", "2500");
+		properties.setProperty("zookeeper.hostname", dockerHostIp);
+		return properties;
+	}
 }

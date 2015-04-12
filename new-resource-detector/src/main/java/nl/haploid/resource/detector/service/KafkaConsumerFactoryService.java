@@ -14,18 +14,18 @@ import java.util.Map;
 @Service
 public class KafkaConsumerFactoryService {
 
-    @Autowired
-    private ConsumerConfig consumerConfig;
+	@Autowired
+	private ConsumerConfig consumerConfig;
 
-    // TODO: test
-    public ConsumerConnector createKafkaConsumer() {
-        return Consumer.createJavaConsumerConnector(consumerConfig);
-    }
+	// TODO: test
+	public ConsumerConnector createKafkaConsumer() {
+		return Consumer.createJavaConsumerConnector(consumerConfig);
+	}
 
-    public KafkaStream<byte[], byte[]> createStream(final ConsumerConnector kafkaConsumer, final String topic) {
-        final Map<String, Integer> topicCountMap = new HashMap<>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
-        return streamsPerTopic.get(topic).get(0);
-    }
+	public KafkaStream<byte[], byte[]> createStream(final ConsumerConnector kafkaConsumer, final String topic) {
+		final Map<String, Integer> topicCountMap = new HashMap<>();
+		topicCountMap.put(topic, 1);
+		final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
+		return streamsPerTopic.get(topic).get(0);
+	}
 }

@@ -14,15 +14,15 @@ import java.util.concurrent.ExecutionException;
 @EnableAutoConfiguration
 public class App {
 
-    @Autowired
-    private EventChannelService service;
+	@Autowired
+	private EventChannelService service;
 
-    public static void main(String[] args) {
-        SpringApplication.run(App.class);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(App.class);
+	}
 
-    @Scheduled(fixedRate = 500)
-    public void poll() throws ExecutionException, InterruptedException, IOException {
-        service.queueRowChangeEvents();
-    }
+	@Scheduled(fixedRate = 500)
+	public void poll() throws ExecutionException, InterruptedException, IOException {
+		service.queueRowChangeEvents();
+	}
 }

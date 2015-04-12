@@ -12,26 +12,26 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @ContextConfiguration(
-        classes = {TestConfiguration.class, KafkaConfiguration.class, PostgresConfiguration.class},
-        loader = AnnotationConfigContextLoader.class)
+		classes = {TestConfiguration.class, KafkaConfiguration.class, PostgresConfiguration.class},
+		loader = AnnotationConfigContextLoader.class)
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private DataSource dataSource;
 
-    private static boolean isSetup = false;
+	private static boolean isSetup = false;
 
-    public void initializeDatabase() throws SQLException {
-        final ClassPathResource resource = new ClassPathResource("/initialize-database.sql", getClass());
-        ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
-    }
+	public void initializeDatabase() throws SQLException {
+		final ClassPathResource resource = new ClassPathResource("/initialize-database.sql", getClass());
+		ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
+	}
 
-    @Before
-    public void setup() throws SQLException {
-        if (!isSetup) {
-            initializeDatabase();
-            isSetup = true;
-        }
-    }
+	@Before
+	public void setup() throws SQLException {
+		if (!isSetup) {
+			initializeDatabase();
+			isSetup = true;
+		}
+	}
 }
 

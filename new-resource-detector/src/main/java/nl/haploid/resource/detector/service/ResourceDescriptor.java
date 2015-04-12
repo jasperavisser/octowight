@@ -2,47 +2,47 @@ package nl.haploid.resource.detector.service;
 
 public class ResourceDescriptor {
 
-    private Long resourceId;
+	private Long resourceId;
 
-    private String resourceType;
+	private String resourceType;
 
-    private Long rowId;
+	private Long rowId;
 
-    private String tableName; // TODO: in this context, do we speak of tables/rows?
+	private String tableName; // TODO: in this context, do we speak of tables/rows?
 
-    public String getKey() {
-        return String.format("%s/%s->%s", getTableName(), getRowId(), getResourceType());
-    }
+	public String getKey() {
+		return String.format("%s/%s->%s", getTableName(), getRowId(), getResourceType());
+	}
 
-    public Long getResourceId() {
-        return resourceId;
-    }
+	public Long getResourceId() {
+		return resourceId;
+	}
 
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
-    }
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
 
-    public String getResourceType() {
-        return resourceType;
-    }
+	public String getResourceType() {
+		return resourceType;
+	}
 
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
+	}
 
-    public Long getRowId() {
-        return rowId;
-    }
+	public Long getRowId() {
+		return rowId;
+	}
 
-    public void setRowId(Long rowId) {
-        this.rowId = rowId;
-    }
+	public void setRowId(Long rowId) {
+		this.rowId = rowId;
+	}
 
-    public String getTableName() {
-        return tableName;
-    }
+	public String getTableName() {
+		return tableName;
+	}
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 }
