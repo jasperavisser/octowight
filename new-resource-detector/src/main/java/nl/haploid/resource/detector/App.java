@@ -5,6 +5,7 @@ import nl.haploid.event.RowChangeEvent;
 import nl.haploid.resource.detector.service.EventConsumerService;
 import nl.haploid.resource.detector.service.ResourceDescriptor;
 import nl.haploid.resource.detector.service.ResourceDetectorsService;
+import nl.haploid.resource.detector.service.ResourceRegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -30,6 +31,9 @@ public class App {
     private ResourceDetectorsService detectorsService;
 
     @Autowired
+    private ResourceRegistryService registryService;
+
+    @Autowired
     private JsonMapper jsonMapper;
 
     public static void main(String[] args) {
@@ -44,11 +48,13 @@ public class App {
                 .entrySet().stream()
                 .map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
                 .flatMap(Collection::stream)
+                .filter(registryService::filterResource)
+                .map(registryService::registerResource)
                 .collect(Collectors.toList());
 
-        // TODO: filter existing resources (redis, look up tableName + rowId + resourceType)
         // TODO: Assumption: each row represents no more than 1 resource of any given type
         // TODO: Assumption: each row can represent resources of multiple types
+
         // TODO: publish resources
         // TODO: commit offsets
     }

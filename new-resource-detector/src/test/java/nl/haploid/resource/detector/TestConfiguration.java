@@ -1,5 +1,6 @@
 package nl.haploid.resource.detector;
 
+import nl.haploid.event.JsonMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,12 @@ public class TestConfiguration {
         final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         configurer.setProperties(getTestProperties());
         return configurer;
+    }
+
+    // TODO: bah, so duplication
+    @Bean
+    public JsonMapper jsonMapper() {
+        return new JsonMapper();
     }
 
     private static Properties getTestProperties() {

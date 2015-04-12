@@ -13,6 +13,7 @@ fi
 
 # Pull requisite images
 docker pull postgres:9.2
+docker pull redis:3.0
 docker pull wurstmeister/kafka:0.8.2.0
 docker pull wurstmeister/zookeeper
 

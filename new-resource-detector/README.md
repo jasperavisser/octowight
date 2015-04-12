@@ -25,3 +25,4 @@ ResourceDetectService
 ## TODO (experimental)
 Maybe spring integration anyway?
 Feature toggle whether to spin down containers
+Shared parent pom.xml (at the very least with dependency management)

@@ -10,10 +10,12 @@ function removeContainer {
 }
 
 POSTGRES_NAME="postgres-it"
+REDIS_NAME="redis-it"
 ZOOKEEPER_NAME="zookeeper-it"
 KAFKA_BROKER_NAME="kafka-broker-it"
 
 # Remove containers
 removeContainer ${POSTGRES_NAME}
+removeContainer ${REDIS_NAME}
 removeContainer ${KAFKA_BROKER_NAME}
 removeContainer ${ZOOKEEPER_NAME}
