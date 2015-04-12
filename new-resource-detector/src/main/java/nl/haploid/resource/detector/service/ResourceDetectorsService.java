@@ -24,7 +24,6 @@ public class ResourceDetectorsService {
 				.collect(Collectors.toList());
 	}
 
-	// TODO: test/IT
 	public List<ResourceDescriptor> detectResources(final String tableName, final List<RowChangeEvent> events) {
 		return getDetectorsForTable(tableName).stream()
 				.map(d -> d.detect(events))

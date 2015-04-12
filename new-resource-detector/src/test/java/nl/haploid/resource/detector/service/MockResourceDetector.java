@@ -1,13 +1,13 @@
 package nl.haploid.resource.detector.service;
 
 import nl.haploid.event.RowChangeEvent;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 
-@Service
-public class MockResourceDetectorService implements ResourceDetector {
+@Component
+public class MockResourceDetector implements ResourceDetector {
 
 	@Override
 	public Collection<String> getTableNames() {
@@ -15,7 +15,7 @@ public class MockResourceDetectorService implements ResourceDetector {
 	}
 
 	@Override
-	public List<ResourceDescriptor> detect(List<RowChangeEvent> events) {
+	public List<ResourceDescriptor> detect(final List<RowChangeEvent> events) {
 		return null;
 	}
 }

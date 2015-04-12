@@ -4,6 +4,8 @@ import mockit.Injectable;
 import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
+import nl.haploid.event.RowChangeEvent;
+import nl.haploid.resource.detector.TestData;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -39,5 +41,23 @@ public class ResourceDetectorsServiceTest {
 		}};
 		final List<ResourceDetector> actualDetectors = service.getDetectorsForTable(tableName);
 		assertEquals(expectedDetectors, actualDetectors);
+	}
+
+	@Test
+	public void testDetectResources(final @Mocked ResourceDetector mockDetector) {
+		final RowChangeEvent event1 = TestData.rowChangeEvent("draper");
+		final RowChangeEvent event2 = TestData.rowChangeEvent("pryce");
+		final List<RowChangeEvent> events = Arrays.asList(event1, event2);
+		final List<ResourceDescriptor> expectedDescriptors = Arrays.asList(TestData.resourceDescriptor(null));
+		new StrictExpectations(service) {{
+			service.getDetectorsForTable("draper");
+			times = 1;
+			result = Arrays.asList(mockDetector);
+			mockDetector.detect(events);
+			times = 1;
+			result = expectedDescriptors;
+		}};
+		final List<ResourceDescriptor> actualDescriptors = service.detectResources("draper", events);
+		assertEquals(expectedDescriptors, actualDescriptors);
 	}
 }

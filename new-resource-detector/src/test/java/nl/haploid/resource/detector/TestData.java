@@ -1,5 +1,6 @@
 package nl.haploid.resource.detector;
 
+import nl.haploid.event.RowChangeEvent;
 import nl.haploid.resource.detector.service.ResourceDescriptor;
 
 import java.util.Random;
@@ -22,5 +23,13 @@ public class TestData {
 
 	public static String topic() {
 		return UUID.randomUUID().toString();
+	}
+
+	public static RowChangeEvent rowChangeEvent(final String tableName) {
+		final RowChangeEvent event = new RowChangeEvent();
+		event.setId(nextLong());
+		event.setRowId(nextLong());
+		event.setTableName(tableName);
+		return event;
 	}
 }
