@@ -1,6 +1,7 @@
 package nl.haploid.resource.detector.service;
 
 import nl.haploid.event.JsonMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,12 @@ public class ResourceRegistryService {
     }
 
     public ResourceDescriptor registerNewResource(final ResourceDescriptor descriptor) {
-        // TODO: clone descriptor before mutating it
         final String key = createResourceKey(descriptor);
-        descriptor.setResourceId(getNextId());
-        redis.boundHashOps(EXISTING_RESOURCE_KEY).put(key, Long.toString(descriptor.getResourceId()));
-        return descriptor;
+        final ResourceDescriptor registeredDescriptor = new ResourceDescriptor();
+        BeanUtils.copyProperties(descriptor, registeredDescriptor);
+        registeredDescriptor.setResourceId(getNextId());
+        redis.boundHashOps(EXISTING_RESOURCE_KEY).put(key, Long.toString(registeredDescriptor.getResourceId()));
+        return registeredDescriptor;
     }
 
     protected long getNextId() {

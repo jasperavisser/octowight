@@ -3,10 +3,8 @@ package nl.haploid.resource.detector.service;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.ConsumerTimeoutException;
 import kafka.consumer.KafkaStream;
-import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.message.MessageAndMetadata;
 import mockit.*;
-import nl.haploid.resource.detector.KafkaConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,10 +19,7 @@ public class EventConsumerServiceTest {
     private EventConsumerService consumerService;
 
     @Injectable
-    private ConsumerConnector kafkaConsumer;
-
-    @Injectable
-    private KafkaConfiguration kafkaConfiguration;
+    private KafkaConsumerFactoryService consumerFactoryService;
 
     @Test
     public void testConsumeMessage(final @Mocked KafkaStream<byte[], byte[]> stream,

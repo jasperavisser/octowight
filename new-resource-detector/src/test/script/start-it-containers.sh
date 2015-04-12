@@ -2,6 +2,11 @@
 READLINK=$(which greadlink readlink | head -n1)
 cd "$(dirname "$("${READLINK}" -f "$0")")"
 
+[[ -n "${PERSIST_IT_CONTAINERS}" ]] && {
+    echo "*** Will not restart containers"
+    exit
+}
+
 POSTGRES_NAME="postgres-it"
 REDIS_NAME="redis-it"
 ZOOKEEPER_NAME="zookeeper-it"

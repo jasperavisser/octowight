@@ -23,6 +23,9 @@ public class KafkaConfiguration {
     @Value("${kafka.port:9092}")
     private int kafkaPort;
 
+    @Value("${kafka.consumer.timeout.ms:200}")
+    private Integer consumerTimeoutMs;
+
     @Value("${zookeeper.hostname:localhost}")
     private String zookeeperHostname;
 
@@ -47,7 +50,12 @@ public class KafkaConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public ConsumerConnector kafkaConsumer() {
+    public ConsumerConnector kafkaConsumer(final ConsumerConfig consumerConfig) {
+        return Consumer.createJavaConsumerConnector(consumerConfig);
+    }
+
+    @Bean
+    public ConsumerConfig consumerConfig() {
         final Properties properties = new Properties();
         properties.put("zookeeper.connect", String.format("%s:%d", getZookeeperHostname(), getZookeeperPort()));
         properties.put("group.id", "1");
@@ -55,8 +63,8 @@ public class KafkaConfiguration {
         properties.put("zookeeper.sync.time.ms", "200");
         properties.put("auto.commit.enable", "false");
         properties.put("auto.offset.reset", "smallest");
-        properties.put("consumer.timeout.ms", "200");
-        return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
+        properties.put("consumer.timeout.ms", consumerTimeoutMs.toString());
+        return new ConsumerConfig(properties);
     }
 
     @Bean

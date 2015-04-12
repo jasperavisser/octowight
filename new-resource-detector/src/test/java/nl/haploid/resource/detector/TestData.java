@@ -3,6 +3,7 @@ package nl.haploid.resource.detector;
 import nl.haploid.resource.detector.service.ResourceDescriptor;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class TestData {
 
@@ -17,5 +18,9 @@ public class TestData {
         descriptor.setRowId(nextLong());
         descriptor.setTableName("draper");
         return descriptor;
+    }
+
+    public static String topic() {
+        return UUID.randomUUID().toString();
     }
 }

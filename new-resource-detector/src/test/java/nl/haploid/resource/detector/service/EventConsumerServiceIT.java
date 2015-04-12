@@ -1,6 +1,7 @@
 package nl.haploid.resource.detector.service;
 
 import nl.haploid.resource.detector.AbstractIT;
+import nl.haploid.resource.detector.TestData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.Assert;
@@ -23,14 +24,13 @@ public class EventConsumerServiceIT extends AbstractIT {
     @Autowired
     private KafkaProducer<String, String> kafkaProducer;
 
-    @Value("${kafka.topic}")
-    private String topic;
-
     @Rule
     public Timeout globalTimeout = new Timeout(10000);
 
     @Test
     public void testConsumeMessage() throws InterruptedException, ExecutionException {
+        final String topic = TestData.topic();
+        service.setTopic(topic);
         final String expectedMessage = UUID.randomUUID().toString();
         final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
         kafkaProducer.send(record).get();
@@ -40,6 +40,8 @@ public class EventConsumerServiceIT extends AbstractIT {
 
     @Test
     public void testConsumeMessages() throws InterruptedException, ExecutionException {
+        final String topic = TestData.topic();
+        service.setTopic(topic);
         final String message1 = UUID.randomUUID().toString();
         final String message2 = UUID.randomUUID().toString();
         final List<String> expectedMessages = Arrays.asList(message1, message2);

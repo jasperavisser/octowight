@@ -2,43 +2,52 @@ package nl.haploid.resource.detector.service;
 
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
-import nl.haploid.resource.detector.KafkaConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class EventConsumerService {
 
-    @Value("${kafka.topic}")
+    @Value("${kafka.topic}") // TODO: kafka.topic.events
     private String topic;
 
     @Autowired
-    private ConsumerConnector kafkaConsumer;
+    private KafkaConsumerFactoryService consumerFactoryService;
 
-    @Autowired
-    private KafkaConfiguration kafkaConfiguration;
+    private ThreadLocal<ConsumerConnector> kafkaConsumer;
 
-    private KafkaStream<byte[], byte[]> stream;
+    private ThreadLocal<KafkaStream<byte[], byte[]>> stream;
 
     protected KafkaStream<byte[], byte[]> getStream() {
         if (stream == null) {
-            stream = createStream();
+            stream = ThreadLocal.withInitial(() -> this.consumerFactoryService.createStream(getKafkaConsumer(), getTopic()));
         }
-        return stream;
+        return stream.get();
     }
 
-    private KafkaStream<byte[], byte[]> createStream() {
-        final Map<String, Integer> topicCountMap = new HashMap<>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
-        return streamsPerTopic.get(topic).get(0);
+    private ConsumerConnector getKafkaConsumer() {
+        if (kafkaConsumer == null) {
+            kafkaConsumer = ThreadLocal.withInitial(this.consumerFactoryService::createKafkaConsumer);
+        }
+        return kafkaConsumer.get();
+    }
+
+    private String getTopic() {
+        return topic;
+    }
+
+    protected void setTopic(final String topic) {
+        this.topic = topic;
+        reset();
+    }
+
+    public String consumeMessage() {
+        return new String(getStream().iterator().next().message());
     }
 
     public List<String> consumeMessages(final int batchSize) {
@@ -48,11 +57,16 @@ public class EventConsumerService {
                 .collect(Collectors.toList());
     }
 
-    public String consumeMessage() {
-        return new String(getStream().iterator().next().message());
+    // TODO: test
+    public void commit() {
+        getKafkaConsumer().commitOffsets();
     }
 
-    public void commit() {
-        kafkaConsumer.commitOffsets();
+    protected void reset() {
+        if (kafkaConsumer != null) {
+            kafkaConsumer.get().shutdown();
+        }
+        kafkaConsumer = null;
+        stream = null;
     }
 }

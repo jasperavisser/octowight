@@ -45,9 +45,9 @@ public class ResourceRegistryServiceIT extends AbstractIT {
     @Test
     public void testRegisterNewResource() {
         final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
-        final String key = service.createResourceKey(descriptor);
         final Long expectedId = INITIAL_ID + 1;
         final ResourceDescriptor actualDescriptor = service.registerNewResource(descriptor);
+        final String key = service.createResourceKey(descriptor);
         Assert.assertNotNull(actualDescriptor);
         Assert.assertEquals(expectedId, actualDescriptor.getResourceId());
         final String value = redis.<String, String>boundHashOps(ResourceRegistryService.EXISTING_RESOURCE_KEY).get(key);
