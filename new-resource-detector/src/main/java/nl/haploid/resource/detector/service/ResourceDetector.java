@@ -9,6 +9,5 @@ public interface ResourceDetector {
 
     Collection<String> getTableNames();
 
-    // TODO: return "resource" objects
-    List<Resource> detect(final List<RowChangeEvent> events);
+    List<ResourceDescriptor> detect(final List<RowChangeEvent> events);
 }

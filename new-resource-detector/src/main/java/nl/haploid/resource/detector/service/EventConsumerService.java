@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -27,9 +29,16 @@ public class EventConsumerService {
 
     protected KafkaStream<byte[], byte[]> getStream() {
         if (stream == null) {
-            stream = kafkaConfiguration.createStream(kafkaConsumer, topic);
+            stream = createStream();
         }
         return stream;
+    }
+
+    private KafkaStream<byte[], byte[]> createStream() {
+        final Map<String, Integer> topicCountMap = new HashMap<>();
+        topicCountMap.put(topic, 1);
+        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
+        return streamsPerTopic.get(topic).get(0);
     }
 
     public List<String> consumeMultipleMessages(final int batchSize) {

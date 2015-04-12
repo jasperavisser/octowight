@@ -15,7 +15,7 @@ public class MockResourceDetectorService implements ResourceDetector {
     }
 
     @Override
-    public List<Resource> detect(List<RowChangeEvent> events) {
+    public List<ResourceDescriptor> detect(List<RowChangeEvent> events) {
         return null;
     }
 }

@@ -32,7 +32,7 @@ public class EventConsumerServiceIT extends AbstractIT {
     @Test
     public void testConsumeSingleMessage() throws InterruptedException, ExecutionException {
         final String expectedMessage = UUID.randomUUID().toString();
-        final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, expectedMessage);
+        final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
         kafkaProducer.send(record).get();
         final String actualMessage = service.consumeSingleMessage();
         Assert.assertEquals(expectedMessage, actualMessage);
@@ -43,8 +43,8 @@ public class EventConsumerServiceIT extends AbstractIT {
         final String message1 = UUID.randomUUID().toString();
         final String message2 = UUID.randomUUID().toString();
         final List<String> expectedMessages = Arrays.asList(message1, message2);
-        final ProducerRecord<String, String> record1 = new ProducerRecord<String, String>(topic, message1);
-        final ProducerRecord<String, String> record2 = new ProducerRecord<String, String>(topic, message2);
+        final ProducerRecord<String, String> record1 = new ProducerRecord<>(topic, message1);
+        final ProducerRecord<String, String> record2 = new ProducerRecord<>(topic, message2);
         kafkaProducer.send(record1).get();
         kafkaProducer.send(record2).get();
         final List<String> actualMessages = service.consumeMultipleMessages(expectedMessages.size() + 1);

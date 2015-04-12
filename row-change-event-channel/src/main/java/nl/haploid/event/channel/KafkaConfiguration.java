@@ -37,6 +37,6 @@ public class KafkaConfiguration {
         properties.put(ProducerConfig.BLOCK_ON_BUFFER_FULL_CONFIG, true);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        return new KafkaProducer<String, String>(properties);
+        return new KafkaProducer<>(properties);
     }
 }

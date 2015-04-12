@@ -34,11 +34,11 @@ public class EventChannelServiceTest {
 
     @Test
     public void testQueueRowChangeEvents() throws Exception {
-        final List<RowChangeEventDmo> expectedEventDmos = new ArrayList<RowChangeEventDmo>();
+        final List<RowChangeEventDmo> expectedEventDmos = new ArrayList<>();
         expectedEventDmos.add(TestData.rowChangeEventDmo());
         expectedEventDmos.add(TestData.rowChangeEventDmo());
         expectedEventDmos.add(TestData.rowChangeEventDmo());
-        final List<RowChangeEvent> expectedEvents = new ArrayList<RowChangeEvent>();
+        final List<RowChangeEvent> expectedEvents = new ArrayList<>();
         expectedEvents.add(TestData.rowChangeEvent());
         expectedEvents.add(TestData.rowChangeEvent());
         expectedEvents.add(TestData.rowChangeEvent());

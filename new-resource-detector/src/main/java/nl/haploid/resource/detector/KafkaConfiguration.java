@@ -49,13 +49,6 @@ public class KafkaConfiguration {
         return zookeeperPort;
     }
 
-    public KafkaStream<byte[], byte[]> createStream(final ConsumerConnector kafkaConsumer, final String topic) {
-        final Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put(topic, 1);
-        final Map<String, List<KafkaStream<byte[], byte[]>>> streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap);
-        return streamsPerTopic.get(topic).get(0);
-    }
-
     @Bean(destroyMethod = "shutdown")
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public ConsumerConnector kafkaConsumer() {
@@ -81,6 +74,6 @@ public class KafkaConfiguration {
         properties.put(ProducerConfig.BLOCK_ON_BUFFER_FULL_CONFIG, true);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        return new KafkaProducer<String, String>(properties);
+        return new KafkaProducer<>(properties);
     }
 }

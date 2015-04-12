@@ -12,14 +12,14 @@ public class TestData {
     public static RowChangeEvent rowChangeEvent() {
         final RowChangeEvent event = new RowChangeEvent();
         event.setTableName(TABLE_NAME);
-        event.setRowId(Long.valueOf(new Random().nextInt()));
+        event.setRowId((long) new Random().nextInt());
         return event;
     }
 
     public static RowChangeEventDmo rowChangeEventDmo() {
         final RowChangeEventDmo event = new RowChangeEventDmo();
         event.setTableName(TABLE_NAME);
-        event.setRowId(Long.valueOf(new Random().nextInt()));
+        event.setRowId((long) new Random().nextInt());
         return event;
     }
 }

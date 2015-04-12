@@ -3,7 +3,7 @@ package nl.haploid.resource.detector;
 import nl.haploid.event.JsonMapper;
 import nl.haploid.event.RowChangeEvent;
 import nl.haploid.resource.detector.service.EventConsumerService;
-import nl.haploid.resource.detector.service.Resource;
+import nl.haploid.resource.detector.service.ResourceDescriptor;
 import nl.haploid.resource.detector.service.ResourceDetectorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,16 +38,17 @@ public class App {
 
     @Scheduled(fixedRate = 500)
     public void poll() {
-        final List<String> messages = consumerService.consumeMultipleMessages(batchSize);
-        final List<Resource> resources = messages.stream()
+        final List<ResourceDescriptor> resourceDescriptors = consumerService.consumeMultipleMessages(batchSize).stream()
                 .map(message -> jsonMapper.parse(message, RowChangeEvent.class))
-                .collect(Collectors.groupingBy(event -> event.getTableName()))
+                .collect(Collectors.groupingBy(RowChangeEvent::getTableName))
                 .entrySet().stream()
                 .map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
-                .flatMap(resourceList -> resourceList.stream())
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        // TODO: filter existing resources
+        // TODO: filter existing resources (redis, look up tableName + rowId + resourceType)
+        // TODO: Assumption: each row represents no more than 1 resource of any given type
+        // TODO: Assumption: each row can represent resources of multiple types
         // TODO: publish resources
         // TODO: commit offsets
     }

@@ -4,6 +4,7 @@ import nl.haploid.event.RowChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,10 +25,10 @@ public class ResourceDetectorsService {
     }
 
     // TODO: test/IT
-    public List<Resource> detectResources(final String tableName, final List<RowChangeEvent> events) {
+    public List<ResourceDescriptor> detectResources(final String tableName, final List<RowChangeEvent> events) {
         return getDetectorsForTable(tableName).stream()
                 .map(d -> d.detect(events))
-                .flatMap(r -> r.stream())
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 }

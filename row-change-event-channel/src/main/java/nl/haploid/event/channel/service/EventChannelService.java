@@ -66,7 +66,7 @@ public class EventChannelService {
     protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) {
         final String topic = "test"; // TODO: test?
         final String message = jsonMapper.toString(event);
-        final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, message);
+        final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
         return kafkaProducer.send(record);
     }
 }

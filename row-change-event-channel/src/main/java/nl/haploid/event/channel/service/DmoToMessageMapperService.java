@@ -21,7 +21,7 @@ public class DmoToMessageMapperService {
 
     public List<RowChangeEvent> map(final Collection<RowChangeEventDmo> eventDmos) {
         return eventDmos.stream()
-                .map(dmo -> this.map(dmo))
+                .map(this::map)
                 .collect(Collectors.toList());
     }
 }
