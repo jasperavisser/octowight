@@ -1,23 +1,18 @@
 package nl.haploid.resource.detector.service;
 
-import kafka.consumer.ConsumerIterator;
-import kafka.consumer.ConsumerTimeoutException;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import nl.haploid.resource.detector.KafkaConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class EventConsumerService {
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Value("${kafka.topic}")
     private String topic;
@@ -38,25 +33,13 @@ public class EventConsumerService {
     }
 
     public List<String> consumeMultipleMessages(final int batchSize) {
-        final ConsumerIterator<byte[], byte[]> iterator = getStream().iterator();
-        final List<String> messages = new ArrayList<String>();
-        for (int n = 0; n < batchSize; n++) {
-            try {
-                messages.add(nextMessage(iterator));
-            } catch (ConsumerTimeoutException e) {
-                break;
-            }
-        }
-        return messages;
+        return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
+                .limit(batchSize)
+                .map(messageAndMetadata -> new String(messageAndMetadata.message()))
+                .collect(Collectors.toList());
     }
 
     public String consumeSingleMessage() {
-        return nextMessage(getStream().iterator());
-    }
-
-    private String nextMessage(ConsumerIterator<byte[], byte[]> iterator) {
-        final String message = new String(iterator.next().message());
-        log.debug(String.format("Consumed message: %s", message));
-        return message;
+        return new String(getStream().iterator().next().message());
     }
 }
