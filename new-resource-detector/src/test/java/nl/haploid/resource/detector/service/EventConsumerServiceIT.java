@@ -4,17 +4,17 @@ import nl.haploid.resource.detector.AbstractIT;
 import nl.haploid.resource.detector.TestData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.Assert.assertEquals;
 
 public class EventConsumerServiceIT extends AbstractIT {
 
@@ -35,7 +35,7 @@ public class EventConsumerServiceIT extends AbstractIT {
         final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
         kafkaProducer.send(record).get();
         final String actualMessage = service.consumeMessage();
-        Assert.assertEquals(expectedMessage, actualMessage);
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
@@ -50,6 +50,6 @@ public class EventConsumerServiceIT extends AbstractIT {
         kafkaProducer.send(record1).get();
         kafkaProducer.send(record2).get();
         final List<String> actualMessages = service.consumeMessages(expectedMessages.size() + 1);
-        Assert.assertEquals(expectedMessages, actualMessages);
+        assertEquals(expectedMessages, actualMessages);
     }
 }

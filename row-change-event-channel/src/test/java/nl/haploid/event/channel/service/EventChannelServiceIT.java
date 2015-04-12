@@ -6,7 +6,6 @@ import nl.haploid.event.channel.TestData;
 import nl.haploid.event.channel.repository.RowChangeEventDmo;
 import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Future;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class EventChannelServiceIT extends AbstractIT {
 
@@ -30,14 +32,14 @@ public class EventChannelServiceIT extends AbstractIT {
         repository.saveAndFlush(event);
         final int expectedCount = 1;
         final int actualCount = service.queueRowChangeEvents();
-        Assert.assertEquals(expectedCount, actualCount);
+        assertEquals(expectedCount, actualCount);
     }
 
     @Test
     public void testProduceEvent() throws Exception {
         final RowChangeEvent event = TestData.rowChangeEvent();
         final Future<RecordMetadata> future = service.produceEvent(event);
-        Assert.assertNotNull(future.get());
+        assertNotNull(future.get());
     }
 
     @Test
@@ -46,6 +48,6 @@ public class EventChannelServiceIT extends AbstractIT {
         final List<RecordMetadata> results = service.produceEvents(Arrays.asList(event));
         final int expectedCount = 1;
         final int actualCount = results.size();
-        Assert.assertEquals(expectedCount, actualCount);
+        assertEquals(expectedCount, actualCount);
     }
 }

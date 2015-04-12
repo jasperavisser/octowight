@@ -25,5 +25,4 @@ public class App {
     public void poll() throws ExecutionException, InterruptedException, IOException {
         service.queueRowChangeEvents();
     }
-
 }

@@ -5,13 +5,14 @@ import kafka.consumer.ConsumerTimeoutException;
 import kafka.consumer.KafkaStream;
 import kafka.message.MessageAndMetadata;
 import mockit.*;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.Assert.assertEquals;
 
 public class EventConsumerServiceTest {
 
@@ -43,7 +44,7 @@ public class EventConsumerServiceTest {
             result = expectedMessage.getBytes();
         }};
         final String actualMessage = consumerService.consumeMessage();
-        Assert.assertEquals(expectedMessage, actualMessage);
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
@@ -79,6 +80,6 @@ public class EventConsumerServiceTest {
             result = new ConsumerTimeoutException();
         }};
         final List<String> actualMessages = consumerService.consumeMessages(expectedMessages.size() + 1);
-        Assert.assertEquals(expectedMessages, actualMessages);
+        assertEquals(expectedMessages, actualMessages);
     }
 }

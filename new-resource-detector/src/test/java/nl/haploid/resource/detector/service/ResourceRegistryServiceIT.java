@@ -1,12 +1,14 @@
 package nl.haploid.resource.detector.service;
 
-import junit.framework.Assert;
 import nl.haploid.resource.detector.AbstractIT;
 import nl.haploid.resource.detector.TestData;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ResourceRegistryServiceIT extends AbstractIT {
 
@@ -27,11 +29,11 @@ public class ResourceRegistryServiceIT extends AbstractIT {
     @Test
     public void testExcludeExistingResourcesExcluded() {
         final ResourceDescriptor descriptor = TestData.resourceDescriptor(TestData.nextLong());
-        final String key = service.createResourceKey(descriptor);
+        final String key = descriptor.getKey();
         redis.boundHashOps(ResourceRegistryService.EXISTING_RESOURCE_KEY).put(key, descriptor.getResourceId().toString());
         final boolean expectedIncluded = false;
         final boolean actualIncluded = service.excludeExistingResources(descriptor);
-        Assert.assertEquals(expectedIncluded, actualIncluded);
+        assertEquals(expectedIncluded, actualIncluded);
     }
 
     @Test
@@ -39,7 +41,7 @@ public class ResourceRegistryServiceIT extends AbstractIT {
         final ResourceDescriptor descriptor = TestData.resourceDescriptor(TestData.nextLong());
         final boolean expectedIncluded = true;
         final boolean actualIncluded = service.excludeExistingResources(descriptor);
-        Assert.assertEquals(expectedIncluded, actualIncluded);
+        assertEquals(expectedIncluded, actualIncluded);
     }
 
     @Test
@@ -47,24 +49,17 @@ public class ResourceRegistryServiceIT extends AbstractIT {
         final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
         final Long expectedId = INITIAL_ID + 1;
         final ResourceDescriptor actualDescriptor = service.registerNewResource(descriptor);
-        final String key = service.createResourceKey(descriptor);
-        Assert.assertNotNull(actualDescriptor);
-        Assert.assertEquals(expectedId, actualDescriptor.getResourceId());
+        final String key = descriptor.getKey();
+        assertNotNull(actualDescriptor);
+        assertEquals(expectedId, actualDescriptor.getResourceId());
         final String value = redis.<String, String>boundHashOps(ResourceRegistryService.EXISTING_RESOURCE_KEY).get(key);
-        Assert.assertNotNull(value);
+        assertNotNull(value);
     }
 
     @Test
     public void testGetNextId() {
         final long expectedId = INITIAL_ID + 1;
         final long actualId = service.getNextId();
-        Assert.assertEquals(expectedId, actualId);
-    }
-
-    @Test
-    public void testCreateResourceKey() {
-        final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
-        final String actualKey = service.createResourceKey(descriptor);
-        Assert.assertNotNull(actualKey);
+        assertEquals(expectedId, actualId);
     }
 }

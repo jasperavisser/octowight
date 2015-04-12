@@ -4,12 +4,13 @@ import mockit.Injectable;
 import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @Ignore
 public class ResourceDetectorsServiceTest {
@@ -37,6 +38,6 @@ public class ResourceDetectorsServiceTest {
             result = Arrays.asList("cooper");
         }};
         final List<ResourceDetector> actualDetectors = service.getDetectorsForTable(tableName);
-        Assert.assertEquals(expectedDetectors, actualDetectors);
+        assertEquals(expectedDetectors, actualDetectors);
     }
 }

@@ -1,6 +1,5 @@
 package nl.haploid.event.channel.service;
 
-import junit.framework.Assert;
 import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.event.RowChangeEvent;
@@ -11,6 +10,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class DmoToMessageMapperServiceTest {
 
     @Tested
@@ -20,9 +21,9 @@ public class DmoToMessageMapperServiceTest {
     public void testMapSingle() {
         final RowChangeEventDmo eventDmo = TestData.rowChangeEventDmo();
         final RowChangeEvent event = mapperService.map(eventDmo);
-        Assert.assertEquals(eventDmo.getId(), event.getId());
-        Assert.assertEquals(eventDmo.getRowId(), event.getRowId());
-        Assert.assertEquals(eventDmo.getTableName(), event.getTableName());
+        assertEquals(eventDmo.getId(), event.getId());
+        assertEquals(eventDmo.getRowId(), event.getRowId());
+        assertEquals(eventDmo.getTableName(), event.getTableName());
     }
 
     @Test
@@ -42,6 +43,6 @@ public class DmoToMessageMapperServiceTest {
             result = event2;
         }};
         final List<RowChangeEvent> actualEvents = mapperService.map(eventDmos);
-        Assert.assertEquals(expectedEvents, actualEvents);
+        assertEquals(expectedEvents, actualEvents);
     }
 }

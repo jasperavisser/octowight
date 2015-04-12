@@ -6,11 +6,12 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.event.JsonMapper;
 import nl.haploid.resource.detector.TestData;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import static org.junit.Assert.assertEquals;
 
 public class ResourceRegistryServiceTest {
 
@@ -28,8 +29,8 @@ public class ResourceRegistryServiceTest {
         final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
         final String expectedKey = "the other woman";
         final boolean expectedIncluded = true;
-        new StrictExpectations(service) {{
-            service.createResourceKey(descriptor);
+        new StrictExpectations(service, descriptor) {{
+            descriptor.getKey();
             times = 1;
             result = expectedKey;
             redis.boundHashOps(anyString);
@@ -40,7 +41,7 @@ public class ResourceRegistryServiceTest {
             result = null;
         }};
         final boolean actualIncluded = service.excludeExistingResources(descriptor);
-        Assert.assertEquals(expectedIncluded, actualIncluded);
+        assertEquals(expectedIncluded, actualIncluded);
     }
 
     @Test
@@ -48,8 +49,8 @@ public class ResourceRegistryServiceTest {
         final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
         final String expectedKey = "maidenform";
         final Long expectedId = 123l;
-        new StrictExpectations(service) {{
-            service.createResourceKey(descriptor);
+        new StrictExpectations(service, descriptor) {{
+            descriptor.getKey();
             times = 1;
             result = expectedKey;
             service.getNextId();
@@ -62,7 +63,7 @@ public class ResourceRegistryServiceTest {
             times = 1;
         }};
         final ResourceDescriptor actualDescriptor = service.registerNewResource(descriptor);
-        Assert.assertEquals(expectedId, actualDescriptor.getResourceId());
+        assertEquals(expectedId, actualDescriptor.getResourceId());
     }
 
     @Test
@@ -77,19 +78,6 @@ public class ResourceRegistryServiceTest {
             result = expectedId;
         }};
         final long actualId = service.getNextId();
-        Assert.assertEquals(expectedId, actualId);
-    }
-
-    @Test
-    public void testCreateResourceKey() {
-        final String expectedKey = "suitcase";
-        final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
-        new StrictExpectations() {{
-            jsonMapper.toString(descriptor);
-            times = 1;
-            result = expectedKey;
-        }};
-        final String actualKey = service.createResourceKey(descriptor);
-        Assert.assertEquals(expectedKey, actualKey);
+        assertEquals(expectedId, actualId);
     }
 }

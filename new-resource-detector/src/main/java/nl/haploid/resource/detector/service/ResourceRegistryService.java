@@ -1,6 +1,5 @@
 package nl.haploid.resource.detector.service;
 
-import nl.haploid.event.JsonMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,16 +15,13 @@ public class ResourceRegistryService {
     @Autowired
     private RedisTemplate<String, String> redis;
 
-    @Autowired
-    private JsonMapper jsonMapper;
-
     public boolean excludeExistingResources(final ResourceDescriptor descriptor) {
-        final String key = createResourceKey(descriptor);
+        final String key = descriptor.getKey();
         return redis.boundHashOps(EXISTING_RESOURCE_KEY).get(key) == null;
     }
 
     public ResourceDescriptor registerNewResource(final ResourceDescriptor descriptor) {
-        final String key = createResourceKey(descriptor);
+        final String key = descriptor.getKey();
         final ResourceDescriptor registeredDescriptor = new ResourceDescriptor();
         BeanUtils.copyProperties(descriptor, registeredDescriptor);
         registeredDescriptor.setResourceId(getNextId());
@@ -35,10 +31,5 @@ public class ResourceRegistryService {
 
     protected long getNextId() {
         return redis.boundValueOps(SEQUENCE_KEY).increment(1);
-    }
-
-    protected String createResourceKey(final ResourceDescriptor descriptor) {
-        // TODO: key must be very strong; cannot change with different JSON formatting or something
-        return jsonMapper.toString(descriptor);
     }
 }

@@ -10,6 +10,10 @@ public class ResourceDescriptor {
 
     private String tableName; // TODO: in this context, do we speak of tables/rows?
 
+    public String getKey() {
+        return String.format("%s/%s->%s", getTableName(), getRowId(), getResourceType());
+    }
+
     public Long getResourceId() {
         return resourceId;
     }
