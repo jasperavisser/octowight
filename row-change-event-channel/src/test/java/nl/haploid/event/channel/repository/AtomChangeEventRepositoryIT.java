@@ -10,17 +10,17 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class RowChangeEventRepositoryIT extends AbstractIT {
+public class AtomChangeEventRepositoryIT extends AbstractIT {
 
 	@Autowired
-	private RowChangeEventDmoRepository repository;
+	private AtomChangeEventDmoRepository repository;
 
 	@Test
 	@Transactional
 	public void testFindAll() {
-		final RowChangeEventDmo event = TestData.rowChangeEventDmo();
+		final AtomChangeEventDmo event = TestData.atomChangeEventDmo();
 		repository.saveAndFlush(event);
-		final List<RowChangeEventDmo> events = repository.findAll();
+		final List<AtomChangeEventDmo> events = repository.findAll();
 		assertEquals(1, events.size());
 	}
 }

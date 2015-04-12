@@ -64,10 +64,10 @@ TODO: script to run test consumer
 * KafkaConsumer reads events (1 or block?)
 * If block, then group by type
 * For each event group, depending on type, invoke some new resource detectors
-* Detectors query postgres to see which rowIds represent a resource
+* Detectors query postgres to see which atomIds represent a resource
 * For each resource, if it is not already in redis
     * Get next resource id from redis (INCR)
-    * Push to redis (resourceType, resourceId, rowId, timestamp)
+    * Push to redis (resourceType, resourceId, atomId, timestamp)
     * Push to kafka (resourceType, resourceId) 
 
 ### Event consumer (mark as dirty)

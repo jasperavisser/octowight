@@ -1,7 +1,7 @@
 package nl.haploid.event.channel;
 
-import nl.haploid.event.RowChangeEvent;
-import nl.haploid.event.channel.repository.RowChangeEventDmo;
+import nl.haploid.event.AtomChangeEvent;
+import nl.haploid.event.channel.repository.AtomChangeEventDmo;
 
 import java.util.Random;
 
@@ -9,17 +9,17 @@ public class TestData {
 
 	public static final String TABLE_NAME = "spike";
 
-	public static RowChangeEvent rowChangeEvent() {
-		final RowChangeEvent event = new RowChangeEvent();
-		event.setTableName(TABLE_NAME);
-		event.setRowId((long) new Random().nextInt());
+	public static AtomChangeEvent atomChangeEvent() {
+		final AtomChangeEvent event = new AtomChangeEvent();
+		event.setAtomType(TABLE_NAME);
+		event.setAtomId((long) new Random().nextInt());
 		return event;
 	}
 
-	public static RowChangeEventDmo rowChangeEventDmo() {
-		final RowChangeEventDmo event = new RowChangeEventDmo();
-		event.setTableName(TABLE_NAME);
-		event.setRowId((long) new Random().nextInt());
+	public static AtomChangeEventDmo atomChangeEventDmo() {
+		final AtomChangeEventDmo event = new AtomChangeEventDmo();
+		event.setAtomType(TABLE_NAME);
+		event.setAtomId((long) new Random().nextInt());
 		return event;
 	}
 }

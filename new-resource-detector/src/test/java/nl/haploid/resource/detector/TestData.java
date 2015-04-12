@@ -1,6 +1,6 @@
 package nl.haploid.resource.detector;
 
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.resource.detector.service.ResourceDescriptor;
 
 import java.util.Random;
@@ -16,8 +16,8 @@ public class TestData {
 		final ResourceDescriptor descriptor = new ResourceDescriptor();
 		descriptor.setResourceId(resourceId);
 		descriptor.setResourceType("olson");
-		descriptor.setRowId(nextLong());
-		descriptor.setTableName("draper");
+		descriptor.setAtomId(nextLong());
+		descriptor.setAtomType("draper");
 		return descriptor;
 	}
 
@@ -25,11 +25,11 @@ public class TestData {
 		return UUID.randomUUID().toString();
 	}
 
-	public static RowChangeEvent rowChangeEvent(final String tableName) {
-		final RowChangeEvent event = new RowChangeEvent();
+	public static AtomChangeEvent atomChangeEvent(final String atomType) {
+		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
-		event.setRowId(nextLong());
-		event.setTableName(tableName);
+		event.setAtomId(nextLong());
+		event.setAtomType(atomType);
 		return event;
 	}
 }

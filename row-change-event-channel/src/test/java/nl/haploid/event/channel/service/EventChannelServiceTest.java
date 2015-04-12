@@ -4,10 +4,10 @@ import mockit.Injectable;
 import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.event.JsonMapper;
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.event.channel.TestData;
-import nl.haploid.event.channel.repository.RowChangeEventDmo;
-import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
+import nl.haploid.event.channel.repository.AtomChangeEventDmo;
+import nl.haploid.event.channel.repository.AtomChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class EventChannelServiceTest {
 	private EventChannelService service;
 
 	@Injectable
-	private RowChangeEventDmoRepository mockRepository;
+	private AtomChangeEventDmoRepository mockRepository;
 
 	@Injectable
 	private KafkaProducer<String, String> kafkaProducer;
@@ -33,15 +33,15 @@ public class EventChannelServiceTest {
 	private JsonMapper jsonService;
 
 	@Test
-	public void testQueueRowChangeEvents() throws Exception {
-		final List<RowChangeEventDmo> expectedEventDmos = new ArrayList<>();
-		expectedEventDmos.add(TestData.rowChangeEventDmo());
-		expectedEventDmos.add(TestData.rowChangeEventDmo());
-		expectedEventDmos.add(TestData.rowChangeEventDmo());
-		final List<RowChangeEvent> expectedEvents = new ArrayList<>();
-		expectedEvents.add(TestData.rowChangeEvent());
-		expectedEvents.add(TestData.rowChangeEvent());
-		expectedEvents.add(TestData.rowChangeEvent());
+	public void testQueueAtomChangeEvents() throws Exception {
+		final List<AtomChangeEventDmo> expectedEventDmos = new ArrayList<>();
+		expectedEventDmos.add(TestData.atomChangeEventDmo());
+		expectedEventDmos.add(TestData.atomChangeEventDmo());
+		expectedEventDmos.add(TestData.atomChangeEventDmo());
+		final List<AtomChangeEvent> expectedEvents = new ArrayList<>();
+		expectedEvents.add(TestData.atomChangeEvent());
+		expectedEvents.add(TestData.atomChangeEvent());
+		expectedEvents.add(TestData.atomChangeEvent());
 		new StrictExpectations() {{
 			mockRepository.findAll();
 			times = 1;
@@ -54,6 +54,6 @@ public class EventChannelServiceTest {
 			mockRepository.delete(expectedEventDmos);
 			times = 1;
 		}};
-		service.queueRowChangeEvents();
+		service.queueAtomChangeEvents();
 	}
 }

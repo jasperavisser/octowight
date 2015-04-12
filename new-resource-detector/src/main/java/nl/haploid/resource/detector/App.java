@@ -1,7 +1,7 @@
 package nl.haploid.resource.detector;
 
 import nl.haploid.event.JsonMapper;
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.resource.detector.service.EventConsumerService;
 import nl.haploid.resource.detector.service.ResourceDetectorsService;
 import nl.haploid.resource.detector.service.ResourceProducerService;
@@ -46,8 +46,8 @@ public class App {
 	@Scheduled(fixedRate = 500)
 	public void poll() {
 		consumerService.consumeMessages(batchSize).stream()
-				.map(message -> jsonMapper.parse(message, RowChangeEvent.class))
-				.collect(Collectors.groupingBy(RowChangeEvent::getTableName))
+				.map(message -> jsonMapper.parse(message, AtomChangeEvent.class))
+				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomType))
 				.entrySet().stream()
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)

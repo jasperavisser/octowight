@@ -2,6 +2,7 @@
 READLINK=$(which greadlink readlink | head -n1)
 cd "$(dirname "$("${READLINK}" -f "$0")")"
 
+# TODO: start, but don't restart
 [[ -n "${PERSIST_IT_CONTAINERS}" ]] && {
     echo "*** Will not restart containers"
     exit

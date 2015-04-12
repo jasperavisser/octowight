@@ -4,8 +4,9 @@ import mockit.Injectable;
 import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.resource.detector.TestData;
+import nl.haploid.resource.detector.detector.ResourceDetector;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -24,33 +25,33 @@ public class ResourceDetectorsServiceTest {
 	private List<ResourceDetector> mockDetectors;
 
 	@Test
-	public void testGetDetectorsForTable(final @Mocked ResourceDetector mockDetector1,
-										 final @Mocked ResourceDetector mockDetector2) {
+	public void testGetDetectorsForAtomType(final @Mocked ResourceDetector mockDetector1,
+											final @Mocked ResourceDetector mockDetector2) {
 		final List<ResourceDetector> expectedDetectors = Arrays.asList(mockDetector1);
-		final String tableName = "sterling";
+		final String atomType = "sterling";
 		new StrictExpectations(service) {{
 			service.getDetectors();
 			times = 1;
 			result = Arrays.asList(mockDetector1, mockDetector2);
-			mockDetector1.getTableNames();
+			mockDetector1.getAtomTypes();
 			times = 1;
-			result = Arrays.asList(tableName);
-			mockDetector2.getTableNames();
+			result = Arrays.asList(atomType);
+			mockDetector2.getAtomTypes();
 			times = 1;
 			result = Arrays.asList("cooper");
 		}};
-		final List<ResourceDetector> actualDetectors = service.getDetectorsForTable(tableName);
+		final List<ResourceDetector> actualDetectors = service.getDetectorsForAtomType(atomType);
 		assertEquals(expectedDetectors, actualDetectors);
 	}
 
 	@Test
 	public void testDetectResources(final @Mocked ResourceDetector mockDetector) {
-		final RowChangeEvent event1 = TestData.rowChangeEvent("draper");
-		final RowChangeEvent event2 = TestData.rowChangeEvent("pryce");
-		final List<RowChangeEvent> events = Arrays.asList(event1, event2);
+		final AtomChangeEvent event1 = TestData.atomChangeEvent("draper");
+		final AtomChangeEvent event2 = TestData.atomChangeEvent("pryce");
+		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceDescriptor> expectedDescriptors = Arrays.asList(TestData.resourceDescriptor(null));
 		new StrictExpectations(service) {{
-			service.getDetectorsForTable("draper");
+			service.getDetectorsForAtomType("draper");
 			times = 1;
 			result = Arrays.asList(mockDetector);
 			mockDetector.detect(events);

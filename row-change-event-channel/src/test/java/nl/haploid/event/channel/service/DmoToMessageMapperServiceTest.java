@@ -2,9 +2,9 @@ package nl.haploid.event.channel.service;
 
 import mockit.StrictExpectations;
 import mockit.Tested;
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.event.channel.TestData;
-import nl.haploid.event.channel.repository.RowChangeEventDmo;
+import nl.haploid.event.channel.repository.AtomChangeEventDmo;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,21 +19,21 @@ public class DmoToMessageMapperServiceTest {
 
 	@Test
 	public void testMapSingle() {
-		final RowChangeEventDmo eventDmo = TestData.rowChangeEventDmo();
-		final RowChangeEvent event = mapperService.map(eventDmo);
+		final AtomChangeEventDmo eventDmo = TestData.atomChangeEventDmo();
+		final AtomChangeEvent event = mapperService.map(eventDmo);
 		assertEquals(eventDmo.getId(), event.getId());
-		assertEquals(eventDmo.getRowId(), event.getRowId());
-		assertEquals(eventDmo.getTableName(), event.getTableName());
+		assertEquals(eventDmo.getAtomId(), event.getAtomId());
+		assertEquals(eventDmo.getAtomType(), event.getAtomType());
 	}
 
 	@Test
 	public void testMapMultiple() {
-		final RowChangeEventDmo eventDmo1 = TestData.rowChangeEventDmo();
-		final RowChangeEventDmo eventDmo2 = TestData.rowChangeEventDmo();
-		final RowChangeEvent event1 = TestData.rowChangeEvent();
-		final RowChangeEvent event2 = TestData.rowChangeEvent();
-		final List<RowChangeEventDmo> eventDmos = Arrays.asList(eventDmo1, eventDmo2);
-		final List<RowChangeEvent> expectedEvents = Arrays.asList(event1, event2);
+		final AtomChangeEventDmo eventDmo1 = TestData.atomChangeEventDmo();
+		final AtomChangeEventDmo eventDmo2 = TestData.atomChangeEventDmo();
+		final AtomChangeEvent event1 = TestData.atomChangeEvent();
+		final AtomChangeEvent event2 = TestData.atomChangeEvent();
+		final List<AtomChangeEventDmo> eventDmos = Arrays.asList(eventDmo1, eventDmo2);
+		final List<AtomChangeEvent> expectedEvents = Arrays.asList(event1, event2);
 		new StrictExpectations(mapperService) {{
 			mapperService.map(eventDmo1);
 			times = 1;
@@ -42,7 +42,7 @@ public class DmoToMessageMapperServiceTest {
 			times = 1;
 			result = event2;
 		}};
-		final List<RowChangeEvent> actualEvents = mapperService.map(eventDmos);
+		final List<AtomChangeEvent> actualEvents = mapperService.map(eventDmos);
 		assertEquals(expectedEvents, actualEvents);
 	}
 }

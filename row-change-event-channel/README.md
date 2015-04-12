@@ -38,7 +38,7 @@ TODO: http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
 
 ## Akka
 
-RowChangeEventPollActor
+atomChangeEventPollActor
 - case PollEvent: eventRepository.findAll.asScala.map(x => eventLogActor ? PublishEvent(x))
 
 EventLogActor

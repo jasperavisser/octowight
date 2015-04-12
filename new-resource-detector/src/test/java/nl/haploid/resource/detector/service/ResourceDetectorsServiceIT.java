@@ -2,9 +2,11 @@ package nl.haploid.resource.detector.service;
 
 import mockit.Deencapsulation;
 import mockit.StrictExpectations;
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.resource.detector.AbstractIT;
 import nl.haploid.resource.detector.TestData;
+import nl.haploid.resource.detector.detector.MockResourceDetector;
+import nl.haploid.resource.detector.detector.ResourceDetector;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,34 +32,34 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 	}
 
 	@Test
-	public void testGetDetectorsForTable() {
+	public void testGetDetectorsForAtomType() {
 		final List<MockResourceDetector> expectedDetectors = Arrays.asList(mockDetector);
-		final String tableName = "kinsey";
+		final String atomType = "kinsey";
 		new StrictExpectations(mockDetector) {{
-			mockDetector.getTableNames();
+			mockDetector.getAtomTypes();
 			times = 1;
-			result = Arrays.asList("crane", tableName);
+			result = Arrays.asList("crane", atomType);
 		}};
-		final List<ResourceDetector> actualDetectors = service.getDetectorsForTable(tableName);
+		final List<ResourceDetector> actualDetectors = service.getDetectorsForAtomType(atomType);
 		assertEquals(expectedDetectors, actualDetectors);
 	}
 
 	@Test
 	public void testDetectResources() {
-		final String tableName = "harris";
-		final RowChangeEvent event1 = TestData.rowChangeEvent(tableName);
-		final RowChangeEvent event2 = TestData.rowChangeEvent("calvet");
-		final List<RowChangeEvent> events = Arrays.asList(event1, event2);
+		final String atomType = "harris";
+		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType);
+		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet");
+		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceDescriptor> expectedDescriptors = Arrays.asList(TestData.resourceDescriptor(96l));
 		new StrictExpectations(mockDetector) {{
-			mockDetector.getTableNames();
+			mockDetector.getAtomTypes();
 			times = 1;
-			result = Arrays.asList("holloway", tableName);
+			result = Arrays.asList("holloway", atomType);
 			mockDetector.detect(events);
 			times = 1;
 			result = expectedDescriptors;
 		}};
-		final List<ResourceDescriptor> actualDescriptors = service.detectResources(tableName, events);
+		final List<ResourceDescriptor> actualDescriptors = service.detectResources(atomType, events);
 		assertEquals(expectedDescriptors, actualDescriptors);
 	}
 }

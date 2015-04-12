@@ -23,6 +23,6 @@ public class App {
 
 	@Scheduled(fixedRate = 500)
 	public void poll() throws ExecutionException, InterruptedException, IOException {
-		service.queueRowChangeEvents();
+		service.queueAtomChangeEvents();
 	}
 }

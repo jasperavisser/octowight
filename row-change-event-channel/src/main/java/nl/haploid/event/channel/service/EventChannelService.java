@@ -1,9 +1,9 @@
 package nl.haploid.event.channel.service;
 
 import nl.haploid.event.JsonMapper;
-import nl.haploid.event.RowChangeEvent;
-import nl.haploid.event.channel.repository.RowChangeEventDmo;
-import nl.haploid.event.channel.repository.RowChangeEventDmoRepository;
+import nl.haploid.event.AtomChangeEvent;
+import nl.haploid.event.channel.repository.AtomChangeEventDmo;
+import nl.haploid.event.channel.repository.AtomChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -25,7 +25,7 @@ public class EventChannelService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private RowChangeEventDmoRepository repository;
+	private AtomChangeEventDmoRepository repository;
 
 	@Autowired
 	private KafkaProducer<String, String> kafkaProducer;
@@ -37,16 +37,16 @@ public class EventChannelService {
 	private JsonMapper jsonMapper;
 
 	@Transactional
-	public int queueRowChangeEvents() throws ExecutionException, InterruptedException, IOException {
-		final List<RowChangeEventDmo> eventDmos = repository.findAll();
+	public int queueAtomChangeEvents() throws ExecutionException, InterruptedException, IOException {
+		final List<AtomChangeEventDmo> eventDmos = repository.findAll();
 		log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
-		final List<RowChangeEvent> events = mapperService.map(eventDmos);
+		final List<AtomChangeEvent> events = mapperService.map(eventDmos);
 		produceEvents(events);
 		repository.delete(eventDmos);
 		return events.size();
 	}
 
-	protected List<RecordMetadata> produceEvents(final List<RowChangeEvent> events) throws ExecutionException, InterruptedException {
+	protected List<RecordMetadata> produceEvents(final List<AtomChangeEvent> events) throws ExecutionException, InterruptedException {
 		return events.stream()
 				.map(this::produceEvent)
 				.collect(Collectors.toList()).stream()
@@ -62,7 +62,7 @@ public class EventChannelService {
 		}
 	}
 
-	protected Future<RecordMetadata> produceEvent(final RowChangeEvent event) {
+	protected Future<RecordMetadata> produceEvent(final AtomChangeEvent event) {
 		final String topic = "test"; // TODO: test?
 		final String message = jsonMapper.toString(event);
 		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);

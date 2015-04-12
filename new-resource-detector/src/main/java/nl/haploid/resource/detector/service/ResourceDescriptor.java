@@ -6,12 +6,12 @@ public class ResourceDescriptor {
 
 	private String resourceType;
 
-	private Long rowId;
+	private Long atomId;
 
-	private String tableName; // TODO: in this context, do we speak of tables/rows?
+	private String atomType; // TODO: in this context, do we speak of tables/rows? maybe atomType, atomId
 
 	public String getKey() {
-		return String.format("%s/%s->%s", getTableName(), getRowId(), getResourceType());
+		return String.format("%s/%s->%s", getAtomType(), getAtomId(), getResourceType());
 	}
 
 	public Long getResourceId() {
@@ -30,19 +30,19 @@ public class ResourceDescriptor {
 		this.resourceType = resourceType;
 	}
 
-	public Long getRowId() {
-		return rowId;
+	public Long getAtomId() {
+		return atomId;
 	}
 
-	public void setRowId(Long rowId) {
-		this.rowId = rowId;
+	public void setAtomId(Long atomId) {
+		this.atomId = atomId;
 	}
 
-	public String getTableName() {
-		return tableName;
+	public String getAtomType() {
+		return atomType;
 	}
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
+	public void setAtomType(String atomType) {
+		this.atomType = atomType;
 	}
 }

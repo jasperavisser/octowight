@@ -1,6 +1,7 @@
 package nl.haploid.resource.detector.service;
 
-import nl.haploid.event.RowChangeEvent;
+import nl.haploid.event.AtomChangeEvent;
+import nl.haploid.resource.detector.detector.ResourceDetector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,14 @@ public class ResourceDetectorsService {
 		return detectors;
 	}
 
-	public List<ResourceDetector> getDetectorsForTable(final String tableName) {
+	public List<ResourceDetector> getDetectorsForAtomType(final String atomType) {
 		return this.getDetectors().stream()
-				.filter(d -> d.getTableNames().contains(tableName))
+				.filter(d -> d.getAtomTypes().contains(atomType))
 				.collect(Collectors.toList());
 	}
 
-	public List<ResourceDescriptor> detectResources(final String tableName, final List<RowChangeEvent> events) {
-		return getDetectorsForTable(tableName).stream()
+	public List<ResourceDescriptor> detectResources(final String atomType, final List<AtomChangeEvent> events) {
+		return getDetectorsForAtomType(atomType).stream()
 				.map(d -> d.detect(events))
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
