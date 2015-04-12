@@ -57,7 +57,6 @@ public class EventConsumerService {
 				.collect(Collectors.toList());
 	}
 
-	// TODO: IT
 	public void commit() {
 		getKafkaConsumer().commitOffsets();
 	}

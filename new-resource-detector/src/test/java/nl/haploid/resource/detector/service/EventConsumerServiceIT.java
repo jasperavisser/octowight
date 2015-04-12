@@ -32,10 +32,14 @@ public class EventConsumerServiceIT extends AbstractIT {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
 		final String expectedMessage = UUID.randomUUID().toString();
-		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
-		kafkaProducer.send(record).get();
+		sendMessage(topic, expectedMessage);
 		final String actualMessage = service.consumeMessage();
 		assertEquals(expectedMessage, actualMessage);
+	}
+
+	public void sendMessage(final String topic, final String expectedMessage) throws InterruptedException, ExecutionException {
+		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, expectedMessage);
+		kafkaProducer.send(record).get();
 	}
 
 	@Test
@@ -45,11 +49,22 @@ public class EventConsumerServiceIT extends AbstractIT {
 		final String message1 = UUID.randomUUID().toString();
 		final String message2 = UUID.randomUUID().toString();
 		final List<String> expectedMessages = Arrays.asList(message1, message2);
-		final ProducerRecord<String, String> record1 = new ProducerRecord<>(topic, message1);
-		final ProducerRecord<String, String> record2 = new ProducerRecord<>(topic, message2);
-		kafkaProducer.send(record1).get();
-		kafkaProducer.send(record2).get();
-		final List<String> actualMessages = service.consumeMessages(expectedMessages.size() + 1);
+		sendMessage(topic, message1);
+		sendMessage(topic, message2);
+		final List<String> actualMessages = service.consumeMessages(10);
 		assertEquals(expectedMessages, actualMessages);
+	}
+
+	@Test
+	public void testCommit() throws ExecutionException, InterruptedException {
+		final String topic = TestData.topic();
+		service.setTopic(topic);
+		final String message = UUID.randomUUID().toString();
+		sendMessage(topic, message);
+		service.consumeMessages(10);
+		service.commit();
+		service.reset();
+		final List<String> actualMessages = service.consumeMessages(10);
+		assertEquals(0, actualMessages.size());
 	}
 }

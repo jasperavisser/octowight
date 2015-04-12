@@ -75,3 +75,10 @@ TODO: script to run test consumer
 * Consume kafka topic
 * Detect new resources
 * Publish to redis & kafka
+
+### Presentation
+Explain:
+	abstract idea
+	tie-ins to other ideas
+	moving parts
+	assumptions
