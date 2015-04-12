@@ -3,8 +3,8 @@ package nl.haploid.resource.detector;
 import nl.haploid.event.JsonMapper;
 import nl.haploid.event.RowChangeEvent;
 import nl.haploid.resource.detector.service.EventConsumerService;
-import nl.haploid.resource.detector.service.ResourceDescriptor;
 import nl.haploid.resource.detector.service.ResourceDetectorsService;
+import nl.haploid.resource.detector.service.ResourceProducerService;
 import nl.haploid.resource.detector.service.ResourceRegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @ComponentScan
@@ -34,28 +33,30 @@ public class App {
     private ResourceRegistryService registryService;
 
     @Autowired
+    private ResourceProducerService producerService;
+
+    @Autowired
     private JsonMapper jsonMapper;
 
     public static void main(String[] args) {
         SpringApplication.run(App.class);
     }
 
+    // TODO: unit test/IT
     @Scheduled(fixedRate = 500)
     public void poll() {
-        final List<ResourceDescriptor> resourceDescriptors = consumerService.consumeMultipleMessages(batchSize).stream()
+        consumerService.consumeMessages(batchSize).stream()
                 .map(message -> jsonMapper.parse(message, RowChangeEvent.class))
                 .collect(Collectors.groupingBy(RowChangeEvent::getTableName))
                 .entrySet().stream()
                 .map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
                 .flatMap(Collection::stream)
-                .filter(registryService::filterResource)
-                .map(registryService::registerResource)
+                .filter(registryService::excludeExistingResources)
+                .map(registryService::registerNewResource)
+                .map(producerService::publishResourceDescriptor)
+                .collect(Collectors.toList()).stream()
+                .map(producerService::resolveFuture)
                 .collect(Collectors.toList());
-
-        // TODO: Assumption: each row represents no more than 1 resource of any given type
-        // TODO: Assumption: each row can represent resources of multiple types
-
-        // TODO: publish resources
-        // TODO: commit offsets
+        consumerService.commit();
     }
 }

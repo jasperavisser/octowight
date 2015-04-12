@@ -2,7 +2,6 @@ package nl.haploid.resource.detector;
 
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
-import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -13,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 @Configuration
@@ -57,9 +53,9 @@ public class KafkaConfiguration {
         properties.put("group.id", "1");
         properties.put("zookeeper.session.timeout.ms", "400");
         properties.put("zookeeper.sync.time.ms", "200");
-        properties.put("auto.commit.interval.ms", "1000");
+        properties.put("auto.commit.enable", "false");
         properties.put("auto.offset.reset", "smallest");
-        properties.put("consumer.timeout.ms", "1000");
+        properties.put("consumer.timeout.ms", "200");
         return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
     }
 

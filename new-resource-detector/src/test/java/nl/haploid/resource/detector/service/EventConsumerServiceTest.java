@@ -27,10 +27,10 @@ public class EventConsumerServiceTest {
     private KafkaConfiguration kafkaConfiguration;
 
     @Test
-    public void testConsumeSingleMessage(final @Mocked KafkaStream<byte[], byte[]> stream,
-                                         final @Mocked ConsumerIterator<byte[], byte[]> iterator,
-                                         final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
-                                         final @Injectable("my-topic") String topic)
+    public void testConsumeMessage(final @Mocked KafkaStream<byte[], byte[]> stream,
+                                   final @Mocked ConsumerIterator<byte[], byte[]> iterator,
+                                   final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
+                                   final @Injectable("my-topic") String topic)
             throws InterruptedException, ExecutionException {
         final String expectedMessage = UUID.randomUUID().toString();
         new Expectations(consumerService) {{
@@ -47,15 +47,15 @@ public class EventConsumerServiceTest {
             times = 1;
             result = expectedMessage.getBytes();
         }};
-        final String actualMessage = consumerService.consumeSingleMessage();
+        final String actualMessage = consumerService.consumeMessage();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
-    public void testConsumeMultipleMessages(final @Mocked KafkaStream<byte[], byte[]> stream,
-                                            final @Mocked ConsumerIterator<byte[], byte[]> iterator,
-                                            final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
-                                            final @Injectable("my-topic") String topic)
+    public void testConsumeMessages(final @Mocked KafkaStream<byte[], byte[]> stream,
+                                    final @Mocked ConsumerIterator<byte[], byte[]> iterator,
+                                    final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
+                                    final @Injectable("my-topic") String topic)
             throws InterruptedException, ExecutionException {
         final String message1 = UUID.randomUUID().toString();
         final String message2 = UUID.randomUUID().toString();
@@ -83,7 +83,7 @@ public class EventConsumerServiceTest {
             times = 1;
             result = new ConsumerTimeoutException();
         }};
-        final List<String> actualMessages = consumerService.consumeMultipleMessages(expectedMessages.size() + 1);
+        final List<String> actualMessages = consumerService.consumeMessages(expectedMessages.size() + 1);
         Assert.assertEquals(expectedMessages, actualMessages);
     }
 }

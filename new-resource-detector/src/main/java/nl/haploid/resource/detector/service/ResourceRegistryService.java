@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResourceRegistryService {
 
-    public static final String EXISTING_RESOURCE_KEY = "redis:existingResources";
+    protected static final String EXISTING_RESOURCE_KEY = "redis:existingResources";
 
-    public static final String SEQUENCE_KEY = "redis:nextId";
+    protected static final String SEQUENCE_KEY = "redis:nextId";
 
     @Autowired
     private RedisTemplate<String, String> redis;
@@ -18,26 +18,23 @@ public class ResourceRegistryService {
     @Autowired
     private JsonMapper jsonMapper;
 
-    // TODO: unit test/IT
-    public boolean filterResource(final ResourceDescriptor descriptor) {
+    public boolean excludeExistingResources(final ResourceDescriptor descriptor) {
         final String key = createResourceKey(descriptor);
-        return redis.<String, String>boundHashOps(EXISTING_RESOURCE_KEY).get(key) != null;
+        return redis.boundHashOps(EXISTING_RESOURCE_KEY).get(key) == null;
     }
 
-    // TODO: unit test/IT
-    public ResourceDescriptor registerResource(final ResourceDescriptor descriptor) {
+    public ResourceDescriptor registerNewResource(final ResourceDescriptor descriptor) {
+        // TODO: clone descriptor before mutating it
         final String key = createResourceKey(descriptor);
         descriptor.setResourceId(getNextId());
-        redis.boundHashOps(EXISTING_RESOURCE_KEY).put(key, descriptor.getResourceId());
+        redis.boundHashOps(EXISTING_RESOURCE_KEY).put(key, Long.toString(descriptor.getResourceId()));
         return descriptor;
     }
 
-    // TODO: unit test/IT
     protected long getNextId() {
         return redis.boundValueOps(SEQUENCE_KEY).increment(1);
     }
 
-    // TODO: unit test/IT
     protected String createResourceKey(final ResourceDescriptor descriptor) {
         // TODO: key must be very strong; cannot change with different JSON formatting or something
         return jsonMapper.toString(descriptor);

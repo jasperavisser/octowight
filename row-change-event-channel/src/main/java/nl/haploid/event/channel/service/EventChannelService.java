@@ -47,10 +47,9 @@ public class EventChannelService {
     }
 
     protected List<RecordMetadata> produceEvents(final List<RowChangeEvent> events) throws ExecutionException, InterruptedException {
-        final List<Future<RecordMetadata>> futures = events.stream()
+        return events.stream()
                 .map(this::produceEvent)
-                .collect(Collectors.toList());
-        return futures.stream()
+                .collect(Collectors.toList()).stream()
                 .map(this::resolveFuture)
                 .collect(Collectors.toList());
     }

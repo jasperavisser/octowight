@@ -41,14 +41,18 @@ public class EventConsumerService {
         return streamsPerTopic.get(topic).get(0);
     }
 
-    public List<String> consumeMultipleMessages(final int batchSize) {
+    public List<String> consumeMessages(final int batchSize) {
         return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
                 .limit(batchSize)
                 .map(messageAndMetadata -> new String(messageAndMetadata.message()))
                 .collect(Collectors.toList());
     }
 
-    public String consumeSingleMessage() {
+    public String consumeMessage() {
         return new String(getStream().iterator().next().message());
+    }
+
+    public void commit() {
+        kafkaConsumer.commitOffsets();
     }
 }
