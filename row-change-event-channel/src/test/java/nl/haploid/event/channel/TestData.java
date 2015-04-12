@@ -7,19 +7,27 @@ import java.util.Random;
 
 public class TestData {
 
-	public static final String TABLE_NAME = "spike";
+	public static final String ATOM_LOCUS = "sunnydale";
+
+	public static final String ATOM_TYPE = "spike";
 
 	public static AtomChangeEvent atomChangeEvent() {
 		final AtomChangeEvent event = new AtomChangeEvent();
-		event.setAtomType(TABLE_NAME);
-		event.setAtomId((long) new Random().nextInt());
+		event.setAtomId(nextLong());
+		event.setAtomLocus(ATOM_LOCUS);
+		event.setAtomType(ATOM_TYPE);
 		return event;
+	}
+
+	public static long nextLong() {
+		return new Random().nextLong();
 	}
 
 	public static AtomChangeEventDmo atomChangeEventDmo() {
 		final AtomChangeEventDmo event = new AtomChangeEventDmo();
-		event.setAtomType(TABLE_NAME);
-		event.setAtomId((long) new Random().nextInt());
+		event.setAtomId(nextLong());
+		event.setAtomLocus(ATOM_LOCUS);
+		event.setAtomType(ATOM_TYPE);
 		return event;
 	}
 }

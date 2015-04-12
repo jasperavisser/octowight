@@ -8,10 +8,13 @@ public class ResourceDescriptor {
 
 	private Long atomId;
 
-	private String atomType; // TODO: in this context, do we speak of tables/rows? maybe atomType, atomId
+	// TODO: use everywhere
+	private String atomLocus;
+
+	private String atomType;
 
 	public String getKey() {
-		return String.format("%s/%s->%s", getAtomType(), getAtomId(), getResourceType());
+		return String.format("%s:%s/%s->%s", getAtomLocus(), getAtomType(), getAtomId(), getResourceType());
 	}
 
 	public Long getResourceId() {
@@ -36,6 +39,14 @@ public class ResourceDescriptor {
 
 	public void setAtomId(Long atomId) {
 		this.atomId = atomId;
+	}
+
+	public String getAtomLocus() {
+		return atomLocus;
+	}
+
+	public void setAtomLocus(String atomLocus) {
+		this.atomLocus = atomLocus;
 	}
 
 	public String getAtomType() {

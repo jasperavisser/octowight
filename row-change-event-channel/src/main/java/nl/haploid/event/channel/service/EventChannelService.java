@@ -1,7 +1,7 @@
 package nl.haploid.event.channel.service;
 
-import nl.haploid.event.JsonMapper;
 import nl.haploid.event.AtomChangeEvent;
+import nl.haploid.event.JsonMapper;
 import nl.haploid.event.channel.repository.AtomChangeEventDmo;
 import nl.haploid.event.channel.repository.AtomChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -37,7 +36,7 @@ public class EventChannelService {
 	private JsonMapper jsonMapper;
 
 	@Transactional
-	public int queueAtomChangeEvents() throws ExecutionException, InterruptedException, IOException {
+	public int queueAtomChangeEvents() throws ExecutionException, InterruptedException {
 		final List<AtomChangeEventDmo> eventDmos = repository.findAll();
 		log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
 		final List<AtomChangeEvent> events = mapperService.map(eventDmos);
@@ -46,7 +45,7 @@ public class EventChannelService {
 		return events.size();
 	}
 
-	protected List<RecordMetadata> produceEvents(final List<AtomChangeEvent> events) throws ExecutionException, InterruptedException {
+	protected List<RecordMetadata> produceEvents(final List<AtomChangeEvent> events) {
 		return events.stream()
 				.map(this::produceEvent)
 				.collect(Collectors.toList()).stream()

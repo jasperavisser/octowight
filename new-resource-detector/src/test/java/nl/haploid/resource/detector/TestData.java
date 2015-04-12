@@ -17,6 +17,7 @@ public class TestData {
 		descriptor.setResourceId(resourceId);
 		descriptor.setResourceType("olson");
 		descriptor.setAtomId(nextLong());
+		descriptor.setAtomLocus("madison avenue");
 		descriptor.setAtomType("draper");
 		return descriptor;
 	}
@@ -25,10 +26,11 @@ public class TestData {
 		return UUID.randomUUID().toString();
 	}
 
-	public static AtomChangeEvent atomChangeEvent(final String atomType) {
+	public static AtomChangeEvent atomChangeEvent(final String atomType, final String atomLocus) {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
 		event.setAtomId(nextLong());
+		event.setAtomLocus(atomLocus);
 		event.setAtomType(atomType);
 		return event;
 	}

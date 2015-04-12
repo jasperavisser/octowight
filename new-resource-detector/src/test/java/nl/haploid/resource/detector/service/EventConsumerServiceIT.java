@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +26,7 @@ public class EventConsumerServiceIT extends AbstractIT {
 	private KafkaProducer<String, String> kafkaProducer;
 
 	@Rule
-	public Timeout globalTimeout = new Timeout(10000);
+	public Timeout globalTimeout = new Timeout(10, TimeUnit.SECONDS);
 
 	@Test
 	public void testConsumeMessage() throws InterruptedException, ExecutionException {

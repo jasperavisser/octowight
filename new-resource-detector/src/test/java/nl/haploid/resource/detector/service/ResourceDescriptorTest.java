@@ -11,8 +11,9 @@ public class ResourceDescriptorTest {
 		final ResourceDescriptor descriptor = new ResourceDescriptor();
 		descriptor.setResourceType("cosgrove");
 		descriptor.setAtomId(69l);
+		descriptor.setAtomLocus("california");
 		descriptor.setAtomType("campbell");
-		final String expectedKey = "campbell/69->cosgrove";
+		final String expectedKey = "california:campbell/69->cosgrove";
 		final String actualKey = descriptor.getKey();
 		assertEquals(expectedKey, actualKey);
 	}

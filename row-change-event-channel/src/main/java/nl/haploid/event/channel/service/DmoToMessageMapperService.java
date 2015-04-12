@@ -15,6 +15,7 @@ public class DmoToMessageMapperService {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(eventDmo.getId());
 		event.setAtomId(eventDmo.getAtomId());
+		event.setAtomLocus(eventDmo.getAtomLocus());
 		event.setAtomType(eventDmo.getAtomType());
 		return event;
 	}

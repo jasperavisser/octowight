@@ -11,11 +11,14 @@ public class AtomChangeEventDmo {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Column(name = "atom_type")
-	private String atomType;
-
 	@Column(name = "atom_id")
 	private Long atomId;
+
+	@Column(name = "atom_locus")
+	private String atomLocus;
+
+	@Column(name = "atom_type")
+	private String atomType;
 
 	public Long getId() {
 		return id;
@@ -23,6 +26,10 @@ public class AtomChangeEventDmo {
 
 	public Long getAtomId() {
 		return atomId;
+	}
+
+	public String getAtomLocus() {
+		return atomLocus;
 	}
 
 	public String getAtomType() {
@@ -39,5 +46,9 @@ public class AtomChangeEventDmo {
 
 	public void setAtomType(final String atomType) {
 		this.atomType = atomType;
+	}
+
+	public void setAtomLocus(final String atomLocus) {
+		this.atomLocus = atomLocus;
 	}
 }
