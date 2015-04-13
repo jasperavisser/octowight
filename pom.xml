@@ -8,6 +8,7 @@
 	<name>octowight</name>
 	<modules>
 		<module>new-resource-detector</module>
+		<module>new-resource-detector-poc</module>
 		<module>row-change-event</module>
 		<module>row-change-event-channel</module>
 	</modules>

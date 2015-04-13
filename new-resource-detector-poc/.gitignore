@@ -1,0 +1,10 @@
+/.cache
+/.classpath
+/*.iml
+/.idea
+/override.properties
+/.project
+/.settings/
+/.tmpBin/
+/target/
+/target-ide/
