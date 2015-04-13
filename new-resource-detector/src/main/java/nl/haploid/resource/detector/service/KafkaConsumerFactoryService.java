@@ -17,7 +17,6 @@ public class KafkaConsumerFactoryService {
 	@Autowired
 	private ConsumerConfig consumerConfig;
 
-	// TODO: test
 	public ConsumerConnector createKafkaConsumer() {
 		return Consumer.createJavaConsumerConnector(consumerConfig);
 	}
