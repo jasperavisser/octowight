@@ -2,7 +2,8 @@
 READLINK=$(which greadlink readlink | head -n1)
 cd "$(dirname "$("${READLINK}" -f "$0")")"
 
-[[ -n "${PERSIST_IT_CONTAINERS}" ]] && {
+DOCKER_REUSE_IT=$1
+[[ "${DOCKER_REUSE_IT}" == "true" ]] && {
     echo "*** Will not stop containers"
     exit
 }

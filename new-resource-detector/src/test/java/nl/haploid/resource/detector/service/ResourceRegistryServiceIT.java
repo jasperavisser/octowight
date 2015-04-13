@@ -27,20 +27,20 @@ public class ResourceRegistryServiceIT extends AbstractIT {
 	}
 
 	@Test
-	public void testExcludeExistingResourcesExcluded() {
+	public void testIsNewResourceExcluded() {
 		final ResourceDescriptor descriptor = TestData.resourceDescriptor(TestData.nextLong());
 		final String key = descriptor.getKey();
 		redis.boundHashOps(ResourceRegistryService.EXISTING_RESOURCE_KEY).put(key, descriptor.getResourceId().toString());
 		final boolean expectedIncluded = false;
-		final boolean actualIncluded = service.excludeExistingResources(descriptor);
+		final boolean actualIncluded = service.isNewResource(descriptor);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 
 	@Test
-	public void testExcludeExistingResourcesIncluded() {
+	public void testIsNewResourceIncluded() {
 		final ResourceDescriptor descriptor = TestData.resourceDescriptor(TestData.nextLong());
 		final boolean expectedIncluded = true;
-		final boolean actualIncluded = service.excludeExistingResources(descriptor);
+		final boolean actualIncluded = service.isNewResource(descriptor);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 

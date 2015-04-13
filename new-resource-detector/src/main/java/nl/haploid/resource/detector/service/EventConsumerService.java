@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -50,11 +51,11 @@ public class EventConsumerService {
 		return new String(getStream().iterator().next().message());
 	}
 
-	public List<String> consumeMessages(final int batchSize) {
+	public Stream<String> consumeMessages(final int batchSize) {
 		return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
 				.limit(batchSize)
 				.map(messageAndMetadata -> new String(messageAndMetadata.message()))
-				.collect(Collectors.toList());
+				;//.collect(Collectors.toList());
 	}
 
 	public void commit() {

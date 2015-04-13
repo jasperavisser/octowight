@@ -10,5 +10,6 @@ public interface ResourceDetector {
 
 	Collection<String> getAtomTypes();
 
+	// TODO: do we want them grouped by atom type/locus?
 	List<ResourceDescriptor> detect(final List<AtomChangeEvent> events);
 }

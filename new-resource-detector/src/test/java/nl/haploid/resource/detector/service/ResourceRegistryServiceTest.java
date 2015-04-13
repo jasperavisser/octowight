@@ -25,7 +25,7 @@ public class ResourceRegistryServiceTest {
 	private JsonMapper jsonMapper;
 
 	@Test
-	public void testExcludeExistingResources(final @Mocked BoundHashOperations mockedBoundHashOperations) {
+	public void testIsNewResource(final @Mocked BoundHashOperations mockedBoundHashOperations) {
 		final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
 		final String expectedKey = "the other woman";
 		final boolean expectedIncluded = true;
@@ -40,7 +40,7 @@ public class ResourceRegistryServiceTest {
 			times = 1;
 			result = null;
 		}};
-		final boolean actualIncluded = service.excludeExistingResources(descriptor);
+		final boolean actualIncluded = service.isNewResource(descriptor);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 

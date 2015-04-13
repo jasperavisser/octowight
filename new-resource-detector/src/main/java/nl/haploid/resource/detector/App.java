@@ -45,14 +45,13 @@ public class App {
 	// TODO: unit test/IT
 	@Scheduled(fixedRate = 500)
 	public void poll() {
-		consumerService.consumeMessages(batchSize).stream() // TODO: if we make it return stream, we can use limit
-				// TODO: add a namespace/schema/source/origin for the atoms, so we can distinguish database/schemas
+		consumerService.consumeMessages(batchSize)
 				.map(message -> jsonMapper.parse(message, AtomChangeEvent.class))
 				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomType))
 				.entrySet().stream()
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
-				.filter(registryService::excludeExistingResources)
+				.filter(registryService::isNewResource)
 				.map(registryService::registerNewResource)
 				.map(producerService::publishResourceDescriptor)
 				.collect(Collectors.toList()).stream()

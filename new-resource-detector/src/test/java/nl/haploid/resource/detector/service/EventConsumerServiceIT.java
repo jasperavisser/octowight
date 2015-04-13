@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,7 +53,8 @@ public class EventConsumerServiceIT extends AbstractIT {
 		final List<String> expectedMessages = Arrays.asList(message1, message2);
 		sendMessage(topic, message1);
 		sendMessage(topic, message2);
-		final List<String> actualMessages = service.consumeMessages(10);
+		final List<String> actualMessages = service.consumeMessages(10)
+				.collect(Collectors.toList());
 		assertEquals(expectedMessages, actualMessages);
 	}
 
@@ -62,10 +64,12 @@ public class EventConsumerServiceIT extends AbstractIT {
 		service.setTopic(topic);
 		final String message = UUID.randomUUID().toString();
 		sendMessage(topic, message);
-		service.consumeMessages(10);
+		service.consumeMessages(10)
+				.collect(Collectors.toList());
 		service.commit();
 		service.reset();
-		final List<String> actualMessages = service.consumeMessages(10);
+		final List<String> actualMessages = service.consumeMessages(10)
+				.collect(Collectors.toList());
 		assertEquals(0, actualMessages.size());
 	}
 }

@@ -18,6 +18,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.testTarget>${java.version}</maven.compiler.testTarget>
 		<maven.compiler.testSource>${java.version}</maven.compiler.testSource>
+		<docker.reuse.it>false</docker.reuse.it>
 		<encoding>UTF-8</encoding>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<jmockit.version>1.16</jmockit.version>
@@ -185,6 +186,7 @@
 							<executable>bash</executable>
 							<arguments>
 								<argument>start-it-containers.sh</argument>
+								<argument>${docker.reuse.it}</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -199,6 +201,7 @@
 							<executable>bash</executable>
 							<arguments>
 								<argument>stop-it-containers.sh</argument>
+								<argument>${docker.reuse.it}</argument>
 							</arguments>
 						</configuration>
 					</execution>

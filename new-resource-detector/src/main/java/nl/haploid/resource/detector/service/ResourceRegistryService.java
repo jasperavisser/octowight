@@ -15,7 +15,7 @@ public class ResourceRegistryService {
 	@Autowired
 	private RedisTemplate<String, String> redis;
 
-	public boolean excludeExistingResources(final ResourceDescriptor descriptor) {
+	public boolean isNewResource(final ResourceDescriptor descriptor) {
 		final String key = descriptor.getKey();
 		return redis.boundHashOps(EXISTING_RESOURCE_KEY).get(key) == null;
 	}

@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -80,7 +81,8 @@ public class EventConsumerServiceTest {
 			times = 1;
 			result = new ConsumerTimeoutException();
 		}};
-		final List<String> actualMessages = consumerService.consumeMessages(expectedMessages.size() + 1);
+		final List<String> actualMessages = consumerService.consumeMessages(expectedMessages.size() + 1)
+				.collect(Collectors.toList());
 		assertEquals(expectedMessages, actualMessages);
 	}
 

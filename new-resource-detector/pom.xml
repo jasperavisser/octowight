@@ -19,6 +19,7 @@
 		<maven.compiler.testTarget>${java.version}</maven.compiler.testTarget>
 		<maven.compiler.testSource>${java.version}</maven.compiler.testSource>
 		<encoding>UTF-8</encoding>
+		<docker.reuse.it>false</docker.reuse.it>
 		<jmockit.version>1.16</jmockit.version>
 		<kafka.version>0.8.2.1</kafka.version>
 		<scala.version>2.10.0</scala.version>
@@ -193,6 +194,7 @@
 							<executable>bash</executable>
 							<arguments>
 								<argument>start-it-containers.sh</argument>
+								<argument>${docker.reuse.it}</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -207,6 +209,7 @@
 							<executable>bash</executable>
 							<arguments>
 								<argument>stop-it-containers.sh</argument>
+								<argument>${docker.reuse.it}</argument>
 							</arguments>
 						</configuration>
 					</execution>
