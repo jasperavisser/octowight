@@ -38,7 +38,7 @@ public class App {
 	@Autowired
 	private JsonMapper jsonMapper;
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(App.class);
 	}
 
