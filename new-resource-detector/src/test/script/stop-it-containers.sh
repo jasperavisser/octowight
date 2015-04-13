@@ -8,7 +8,6 @@ DOCKER_REUSE_IT=$1
     exit
 }
 
-# TODO: remove container if it is not running!
 function removeContainer {
     local name=$1
     if [[ -n $(docker ps --filter="name=${name}" -aq) ]]; then

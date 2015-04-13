@@ -12,8 +12,6 @@ http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api
 
 ## TODO
 TODO: add all required docker images (java7) somewhere
-TODO: docker pull in bootstrap (plus figure out what to do with bootstrap)
-TODO: script to run test consumer
 
 ### Choose how to run IT
 * Containers for

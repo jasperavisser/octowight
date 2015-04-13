@@ -47,8 +47,8 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 	@Test
 	public void testDetectResources() {
 		final String atomType = "harris";
-		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType, "TODO"); // TODO
-		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet", "TODO"); // TODO
+		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType);
+		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet");
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceDescriptor> expectedDescriptors = Arrays.asList(TestData.resourceDescriptor(96l));
 		new StrictExpectations(mockDetector) {{

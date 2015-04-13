@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @EnableAutoConfiguration
 public class App {
 
+	private static final int POLLING_INTERVAL_MS = 500;
+
 	@Value("${kafka.batch.size:100}")
 	private int batchSize;
 
@@ -42,8 +44,7 @@ public class App {
 		SpringApplication.run(App.class);
 	}
 
-	// TODO: unit test/IT
-	@Scheduled(fixedRate = 500)
+	@Scheduled(fixedRate = POLLING_INTERVAL_MS)
 	public void poll() {
 		consumerService.consumeMessages(batchSize)
 				.map(message -> jsonMapper.parse(message, AtomChangeEvent.class))

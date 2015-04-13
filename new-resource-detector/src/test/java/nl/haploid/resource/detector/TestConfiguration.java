@@ -23,7 +23,6 @@ public class TestConfiguration {
 		return configurer;
 	}
 
-	// TODO: bah, so duplication
 	@Bean
 	public JsonMapper jsonMapper() {
 		return new JsonMapper();

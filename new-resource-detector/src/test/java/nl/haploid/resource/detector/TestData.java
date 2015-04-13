@@ -30,11 +30,11 @@ public class TestData {
 		return UUID.randomUUID().toString();
 	}
 
-	public static AtomChangeEvent atomChangeEvent(final String atomType, final String atomLocus) {
+	public static AtomChangeEvent atomChangeEvent(final String atomType) {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
 		event.setAtomId(nextLong());
-		event.setAtomLocus(atomLocus);
+		event.setAtomLocus("everywhere");
 		event.setAtomType(atomType);
 		return event;
 	}

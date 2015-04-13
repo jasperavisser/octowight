@@ -2,9 +2,9 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.haploid</groupId>
-	<artifactId>new-resource-detector</artifactId>
+	<artifactId>spring-boot-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,7 +19,15 @@
 		<maven.compiler.testTarget>${java.version}</maven.compiler.testTarget>
 		<maven.compiler.testSource>${java.version}</maven.compiler.testSource>
 		<encoding>UTF-8</encoding>
+
+		<!-- TODO: java8! -->
+		<!-- Docker -->
+		<docker.image.from>java7</docker.image.from>
+		<docker.image.name>${project.artifactId}</docker.image.name>
 		<docker.reuse.it>false</docker.reuse.it>
+
+		<!-- Versions -->
+		<docker-maven-plugin.version>0.0.21</docker-maven-plugin.version>
 		<jmockit.version>1.16</jmockit.version>
 		<kafka.version>0.8.2.1</kafka.version>
 		<scala.version>2.10.0</scala.version>
@@ -27,59 +35,76 @@
 		<zkclient.version>0.3</zkclient.version>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Redis -->
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+			</dependency>
+
+			<!-- Kafka consumer -->
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka_2.10</artifactId>
+				<version>${kafka.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-compiler</artifactId>
+				<version>${scala.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-library</artifactId>
+				<version>${scala.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.101tec</groupId>
+				<artifactId>zkclient</artifactId>
+				<version>${zkclient.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yammer.metrics</groupId>
+				<artifactId>metrics-core</artifactId>
+				<version>${yammer-metrics.version}</version>
+			</dependency>
+
+			<!-- Kafka producer -->
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>${kafka.version}</version>
+			</dependency>
+
+			<!-- JMockit -->
+			<dependency>
+				<groupId>org.jmockit</groupId>
+				<artifactId>jmockit</artifactId>
+				<version>${jmockit.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka_2.10</artifactId>
-			<version>${kafka.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-compiler</artifactId>
-			<version>${scala.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>${scala.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.101tec</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>${zkclient.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.yammer.metrics</groupId>
-			<artifactId>metrics-core</artifactId>
-			<version>${yammer-metrics.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>nl.haploid</groupId>
-			<artifactId>row-change-event</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.jmockit</groupId>
 			<artifactId>jmockit</artifactId>
-			<version>${jmockit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -153,10 +178,10 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.0.21</version>
+				<version>${docker-maven-plugin.version}</version>
 				<configuration>
-					<imageName>new-resource-detector</imageName>
-					<baseImage>java7</baseImage>
+					<imageName>${docker.image.name}</imageName>
+					<baseImage>${docker.image.from}</baseImage>
 					<dockerDirectory>docker</dockerDirectory>
 					<resources>
 						<resource>
@@ -177,7 +202,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.3.2</version>
+				<!-- TODO? <version>1.3.2</version> -->
 				<executions>
 					<execution>
 						<id>start-it-containers</id>

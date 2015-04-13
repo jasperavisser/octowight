@@ -46,8 +46,8 @@ public class ResourceDetectorsServiceTest {
 
 	@Test
 	public void testDetectResources(final @Mocked ResourceDetector mockDetector) {
-		final AtomChangeEvent event1 = TestData.atomChangeEvent("draper", "TODO"); // TODO
-		final AtomChangeEvent event2 = TestData.atomChangeEvent("pryce", "TODO"); // TODO
+		final AtomChangeEvent event1 = TestData.atomChangeEvent("draper");
+		final AtomChangeEvent event2 = TestData.atomChangeEvent("pryce");
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceDescriptor> expectedDescriptors = Arrays.asList(TestData.resourceDescriptor(null));
 		new StrictExpectations(service) {{
