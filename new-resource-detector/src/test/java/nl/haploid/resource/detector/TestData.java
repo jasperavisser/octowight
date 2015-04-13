@@ -22,6 +22,10 @@ public class TestData {
 		return descriptor;
 	}
 
+	public static String message() {
+		return UUID.randomUUID().toString();
+	}
+
 	public static String topic() {
 		return UUID.randomUUID().toString();
 	}

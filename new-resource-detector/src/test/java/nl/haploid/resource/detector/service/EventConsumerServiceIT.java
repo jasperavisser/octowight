@@ -33,7 +33,7 @@ public class EventConsumerServiceIT extends AbstractIT {
 	public void testConsumeMessage() throws InterruptedException, ExecutionException {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
-		final String expectedMessage = UUID.randomUUID().toString();
+		final String expectedMessage = TestData.message();
 		sendMessage(topic, expectedMessage);
 		final String actualMessage = service.consumeMessage();
 		assertEquals(expectedMessage, actualMessage);
@@ -48,8 +48,8 @@ public class EventConsumerServiceIT extends AbstractIT {
 	public void testConsumeMessages() throws InterruptedException, ExecutionException {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
-		final String message1 = UUID.randomUUID().toString();
-		final String message2 = UUID.randomUUID().toString();
+		final String message1 = TestData.message();
+		final String message2 = TestData.message();
 		final List<String> expectedMessages = Arrays.asList(message1, message2);
 		sendMessage(topic, message1);
 		sendMessage(topic, message2);
@@ -62,7 +62,7 @@ public class EventConsumerServiceIT extends AbstractIT {
 	public void testCommit() throws ExecutionException, InterruptedException {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
-		final String message = UUID.randomUUID().toString();
+		final String message = TestData.message();
 		sendMessage(topic, message);
 		service.consumeMessages(10)
 				.collect(Collectors.toList());

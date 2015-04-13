@@ -24,6 +24,7 @@ public class TestConfiguration {
 		properties.setProperty("postgres.port", "5432");
 		properties.setProperty("postgres.database", "postgres");
 		properties.setProperty("postgres.username", "postgres");
+		properties.setProperty("kafka.topic.events", TestData.topic());
 		properties.setProperty("kafka.hostname", dockerHostIp);
 		configurer.setProperties(properties);
 		return configurer;

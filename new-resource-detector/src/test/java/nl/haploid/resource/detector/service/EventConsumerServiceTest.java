@@ -6,11 +6,11 @@ import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.message.MessageAndMetadata;
 import mockit.*;
+import nl.haploid.resource.detector.TestData;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -30,7 +30,7 @@ public class EventConsumerServiceTest {
 								   final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
 								   final @Injectable("my-topic") String topic)
 			throws InterruptedException, ExecutionException {
-		final String expectedMessage = UUID.randomUUID().toString();
+		final String expectedMessage = TestData.message();
 		new Expectations(consumerService) {{
 			consumerService.getStream();
 			times = 1;
@@ -55,8 +55,8 @@ public class EventConsumerServiceTest {
 									final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
 									final @Injectable("my-topic") String topic)
 			throws InterruptedException, ExecutionException {
-		final String message1 = UUID.randomUUID().toString();
-		final String message2 = UUID.randomUUID().toString();
+		final String message1 = TestData.message();
+		final String message2 = TestData.message();
 		final List<String> expectedMessages = Arrays.asList(message1, message2);
 		new StrictExpectations(consumerService) {{
 			consumerService.getStream();

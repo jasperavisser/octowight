@@ -4,6 +4,7 @@ import nl.haploid.event.AtomChangeEvent;
 import nl.haploid.event.channel.repository.AtomChangeEventDmo;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class TestData {
 
@@ -29,5 +30,9 @@ public class TestData {
 		event.setAtomLocus(ATOM_LOCUS);
 		event.setAtomType(ATOM_TYPE);
 		return event;
+	}
+
+	public static String topic() {
+		return UUID.randomUUID().toString();
 	}
 }

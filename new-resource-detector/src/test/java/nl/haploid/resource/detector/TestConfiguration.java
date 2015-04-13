@@ -32,13 +32,13 @@ public class TestConfiguration {
 	private static Properties getTestProperties() {
 		final Properties properties = new Properties();
 		final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
-		final String topic = UUID.randomUUID().toString();
 		properties.setProperty("postgres.hostname", dockerHostIp);
 		properties.setProperty("postgres.port", "5432");
 		properties.setProperty("postgres.database", "postgres");
 		properties.setProperty("postgres.username", "postgres");
 		properties.setProperty("redis.hostname", dockerHostIp);
-		properties.setProperty("kafka.topic.events", topic);
+		properties.setProperty("kafka.topic.events", TestData.topic());
+		properties.setProperty("kafka.topic.resources", TestData.topic());
 		properties.setProperty("kafka.hostname", dockerHostIp);
 		properties.setProperty("kafka.consumer.timeout.ms", "2500");
 		properties.setProperty("zookeeper.hostname", dockerHostIp);

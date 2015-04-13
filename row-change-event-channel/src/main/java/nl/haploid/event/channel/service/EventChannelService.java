@@ -10,6 +10,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ import java.util.stream.Collectors;
 public class EventChannelService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@Value("${kafka.topic.events}")
+	private String topic;
 
 	@Autowired
 	private AtomChangeEventDmoRepository repository;
@@ -62,7 +66,6 @@ public class EventChannelService {
 	}
 
 	protected Future<RecordMetadata> produceEvent(final AtomChangeEvent event) {
-		final String topic = "test"; // TODO: test?
 		final String message = jsonMapper.toString(event);
 		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
 		return kafkaProducer.send(record);

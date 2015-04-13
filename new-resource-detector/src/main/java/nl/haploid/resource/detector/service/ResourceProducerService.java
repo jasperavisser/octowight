@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -13,6 +14,9 @@ import java.util.concurrent.Future;
 @Service
 public class ResourceProducerService {
 
+	@Value("${kafka.topic.resources}")
+	private String topic;
+
 	@Autowired
 	private KafkaProducer<String, String> kafkaProducer;
 
@@ -20,7 +24,6 @@ public class ResourceProducerService {
 	private JsonMapper jsonMapper;
 
 	public Future<RecordMetadata> publishResourceDescriptor(final ResourceDescriptor descriptor) {
-		final String topic = "TODO"; // TODO: topic name
 		final String message = jsonMapper.toString(descriptor);
 		return kafkaProducer.send(new ProducerRecord<>(topic, message));
 	}

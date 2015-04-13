@@ -8,7 +8,6 @@ public class ResourceDescriptor {
 
 	private Long atomId;
 
-	// TODO: use everywhere
 	private String atomLocus;
 
 	private String atomType;
