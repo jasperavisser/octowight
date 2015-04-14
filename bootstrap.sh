@@ -1,4 +1,6 @@
 #!/bin/bash
+READLINK=$(which greadlink readlink | head -n1)
+cd "$(dirname "$("${READLINK}" -f "$0")")"
 
 # TODO: need this?
 #export DOCKER_HOST=tcp://0.0.0.0:4243
@@ -16,6 +18,9 @@ docker pull postgres:9.2
 docker pull redis:3.0
 docker pull wurstmeister/kafka:0.8.2.0
 docker pull wurstmeister/zookeeper
+
+# Build requisite images
+docker build --tag oracle-java8 oracle-java8
 
 # TODO: notes
 # http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
