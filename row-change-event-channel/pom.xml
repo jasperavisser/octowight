@@ -12,6 +12,7 @@
 	</parent>
 
 	<properties>
+		<docker-maven.skip>false</docker-maven.skip>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 	</properties>

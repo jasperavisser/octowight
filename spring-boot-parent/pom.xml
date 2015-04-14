@@ -22,6 +22,7 @@
 
 		<!-- Plugins -->
 		<spring-boot-maven.skip>false</spring-boot-maven.skip>
+		<docker-maven.skip>true</docker-maven.skip>
 		<docker.image.name>${project.artifactId}</docker.image.name>
 		<docker.reuse.it>false</docker.reuse.it>
 
@@ -172,6 +173,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>${docker-maven-plugin.version}</version>
 				<configuration>
+					<skipDockerBuild>${docker-maven.skip}</skipDockerBuild>
 					<imageName>${docker.image.name}</imageName>
 					<dockerDirectory>docker</dockerDirectory>
 					<resources>
