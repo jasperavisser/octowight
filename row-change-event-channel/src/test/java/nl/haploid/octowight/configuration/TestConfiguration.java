@@ -1,5 +1,7 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.configuration;
 
+import nl.haploid.octowight.JsonMapper;
+import nl.haploid.octowight.TestData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(excludeFilters = {
+@ComponentScan(basePackages = "nl.haploid.octowight", excludeFilters = {
 		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AppConfiguration.class)
 })
 public class TestConfiguration {

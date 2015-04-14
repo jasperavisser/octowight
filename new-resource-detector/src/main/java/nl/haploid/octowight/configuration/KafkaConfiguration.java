@@ -1,4 +1,4 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.configuration;
 
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;

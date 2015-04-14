@@ -1,5 +1,7 @@
 package nl.haploid.octowight;
 
+import nl.haploid.octowight.configuration.KafkaConfiguration;
+import nl.haploid.octowight.configuration.TestConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;

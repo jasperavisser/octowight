@@ -1,4 +1,4 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.configuration;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;

@@ -1,5 +1,8 @@
 package nl.haploid.octowight;
 
+import nl.haploid.octowight.configuration.KafkaConfiguration;
+import nl.haploid.octowight.configuration.PostgresConfiguration;
+import nl.haploid.octowight.configuration.TestConfiguration;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -16,10 +19,10 @@ import java.sql.SQLException;
 		loader = AnnotationConfigContextLoader.class)
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 
+	private static boolean isSetup = false;
+
 	@Autowired
 	private DataSource dataSource;
-
-	private static boolean isSetup = false;
 
 	public void initializeDatabase() throws SQLException {
 		final ClassPathResource resource = new ClassPathResource("/initialize-database.sql", getClass());

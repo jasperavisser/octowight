@@ -1,4 +1,4 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

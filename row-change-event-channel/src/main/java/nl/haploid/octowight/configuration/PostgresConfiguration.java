@@ -1,4 +1,4 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.configuration;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 import org.slf4j.Logger;
