@@ -20,7 +20,9 @@ docker pull wurstmeister/kafka:0.8.2.0
 docker pull wurstmeister/zookeeper
 
 # Build requisite images
+pushd docker
 docker build --tag oracle-java8 oracle-java8
+popd
 
 # TODO: notes
 # http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
