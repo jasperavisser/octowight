@@ -5,6 +5,7 @@ import mockit.StrictExpectations;
 import nl.haploid.octowight.AbstractIT;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
+import nl.haploid.octowight.data.ResourceCoreAtom;
 import nl.haploid.octowight.detector.MockResourceDetector;
 import nl.haploid.octowight.detector.ResourceDetector;
 import org.junit.Before;
@@ -51,16 +52,16 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType);
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet");
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
-		final List<ResourceDescriptor> expectedDescriptors = Collections.singletonList(TestData.resourceDescriptor(96l));
+		final List<ResourceCoreAtom> expectedCoreAtoms = Collections.singletonList(TestData.resourceCoreAtom(96l));
 		new StrictExpectations(mockDetector) {{
 			mockDetector.getAtomTypes();
 			times = 1;
 			result = Arrays.asList("holloway", atomType);
 			mockDetector.detect(events);
 			times = 1;
-			result = expectedDescriptors;
+			result = expectedCoreAtoms;
 		}};
-		final List<ResourceDescriptor> actualDescriptors = service.detectResources(atomType, events);
-		assertEquals(expectedDescriptors, actualDescriptors);
+		final List<ResourceCoreAtom> actualCoreAtoms = service.detectResources(atomType, events);
+		assertEquals(expectedCoreAtoms, actualCoreAtoms);
 	}
 }

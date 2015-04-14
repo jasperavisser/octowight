@@ -7,6 +7,7 @@ import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.message.MessageAndMetadata;
 import mockit.*;
 import nl.haploid.octowight.TestData;
+import nl.haploid.octowight.kafka.KafkaConsumerFactory;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class EventConsumerServiceTest {
 	private EventConsumerService consumerService;
 
 	@Injectable
-	private KafkaConsumerFactoryService consumerFactoryService;
+	private KafkaConsumerFactory consumerFactoryService;
 
 	@Test
 	public void testConsumeMessage(final @Mocked KafkaStream<byte[], byte[]> stream,

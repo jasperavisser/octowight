@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.kafka;
 
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.ConsumerTimeoutException;
@@ -8,7 +8,7 @@ import kafka.message.MessageAndMetadata;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-class KafkaStreamSpliterator implements Spliterator<MessageAndMetadata<byte[], byte[]>> {
+public class KafkaStreamSpliterator implements Spliterator<MessageAndMetadata<byte[], byte[]>> {
 
 	private final ConsumerIterator<byte[], byte[]> iterator;
 

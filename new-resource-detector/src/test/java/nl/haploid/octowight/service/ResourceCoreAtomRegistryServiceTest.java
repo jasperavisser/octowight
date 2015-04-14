@@ -6,6 +6,7 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
+import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.junit.Test;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
@@ -13,10 +14,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import static org.junit.Assert.assertEquals;
 
-public class ResourceRegistryServiceTest {
+public class ResourceCoreAtomRegistryServiceTest {
 
 	@Tested
-	private ResourceRegistryService service;
+	private ResourceCoreAtomRegistryService service;
 
 	@Injectable
 	private RedisTemplate<String, String> redis;
@@ -26,11 +27,11 @@ public class ResourceRegistryServiceTest {
 
 	@Test
 	public void testIsNewResource(final @Mocked BoundHashOperations mockedBoundHashOperations) {
-		final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
+		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final String expectedKey = "the other woman";
 		final boolean expectedIncluded = true;
-		new StrictExpectations(service, descriptor) {{
-			descriptor.getKey();
+		new StrictExpectations(service, coreAtom) {{
+			coreAtom.key();
 			times = 1;
 			result = expectedKey;
 			redis.boundHashOps(anyString);
@@ -40,17 +41,17 @@ public class ResourceRegistryServiceTest {
 			times = 1;
 			result = null;
 		}};
-		final boolean actualIncluded = service.isNewResource(descriptor);
+		final boolean actualIncluded = service.isNewResource(coreAtom);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 
 	@Test
-	public void testRegisterNewResource(final @Mocked BoundHashOperations mockedBoundHashOperations) {
-		final ResourceDescriptor descriptor = TestData.resourceDescriptor(null);
+	public void testPutNewResource(final @Mocked BoundHashOperations mockedBoundHashOperations) {
+		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final String expectedKey = "maidenform";
 		final Long expectedId = 123l;
-		new StrictExpectations(service, descriptor) {{
-			descriptor.getKey();
+		new StrictExpectations(service, coreAtom) {{
+			coreAtom.key();
 			times = 1;
 			result = expectedKey;
 			service.getNextId();
@@ -62,8 +63,8 @@ public class ResourceRegistryServiceTest {
 			mockedBoundHashOperations.put(expectedKey, expectedId.toString());
 			times = 1;
 		}};
-		final ResourceDescriptor actualDescriptor = service.registerNewResource(descriptor);
-		assertEquals(expectedId, actualDescriptor.getResourceId());
+		final ResourceCoreAtom actualCoreAtom = service.putNewResource(coreAtom);
+		assertEquals(expectedId, actualCoreAtom.getResourceId());
 	}
 
 	@Test

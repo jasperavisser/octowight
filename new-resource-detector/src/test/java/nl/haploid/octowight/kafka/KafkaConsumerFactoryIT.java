@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.kafka;
 
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
 
-public class KafkaConsumerFactoryServiceIT extends AbstractIT {
+public class KafkaConsumerFactoryIT extends AbstractIT {
 
 	@Autowired
-	private KafkaConsumerFactoryService service;
+	private KafkaConsumerFactory service;
 
 	@Test
 	public void testCreateKafkaConsumer() {

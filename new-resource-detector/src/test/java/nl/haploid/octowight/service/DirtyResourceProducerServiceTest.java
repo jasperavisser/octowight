@@ -6,6 +6,7 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
+import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -15,10 +16,10 @@ import java.util.concurrent.Future;
 
 import static org.junit.Assert.assertEquals;
 
-public class ResourceProducerServiceTest {
+public class DirtyResourceProducerServiceTest {
 
 	@Tested
-	private ResourceProducerService service;
+	private DirtyResourceProducerService service;
 
 	@Injectable
 	private KafkaProducer<String, String> kafkaProducer;
@@ -28,18 +29,18 @@ public class ResourceProducerServiceTest {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testPublishResourceDescriptor(final @Mocked Future<RecordMetadata> expectedFuture) throws Exception {
-		final ResourceDescriptor descriptor = TestData.resourceDescriptor(451l);
+	public void testSendDirtyResource(final @Mocked Future<RecordMetadata> expectedFuture) throws Exception {
+		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(451l);
 		final String message = "joy";
 		new StrictExpectations() {{
-			jsonMapper.toString(descriptor);
+			jsonMapper.toString(coreAtom);
 			times = 1;
 			result = message;
 			kafkaProducer.send((ProducerRecord<String, String>) any);
 			times = 1;
 			result = expectedFuture;
 		}};
-		final Future<RecordMetadata> actualFuture = service.publishResourceDescriptor(descriptor);
+		final Future<RecordMetadata> actualFuture = service.sendDirtyResource(coreAtom);
 		assertEquals(expectedFuture, actualFuture);
 	}
 

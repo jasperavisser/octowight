@@ -1,18 +1,19 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.kafka;
 
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class KafkaConsumerFactoryService {
+@Component
+public class KafkaConsumerFactory {
 
 	@Autowired
 	private ConsumerConfig consumerConfig;

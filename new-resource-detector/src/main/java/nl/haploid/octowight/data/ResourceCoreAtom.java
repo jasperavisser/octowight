@@ -1,6 +1,6 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.data;
 
-public class ResourceDescriptor {
+public class ResourceCoreAtom {
 
 	private Long resourceId;
 
@@ -12,7 +12,7 @@ public class ResourceDescriptor {
 
 	private String atomType;
 
-	public String getKey() {
+	public String key() {
 		return String.format("%s:%s/%s->%s", getAtomLocus(), getAtomType(), getAtomId(), getResourceType());
 	}
 

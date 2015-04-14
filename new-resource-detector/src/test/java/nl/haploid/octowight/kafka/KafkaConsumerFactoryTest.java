@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.kafka;
 
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
@@ -17,10 +17,10 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class KafkaConsumerFactoryServiceTest {
+public class KafkaConsumerFactoryTest {
 
 	@Tested
-	KafkaConsumerFactoryService service;
+	KafkaConsumerFactory service;
 
 	@Injectable
 	private ConsumerConfig consumerConfig;

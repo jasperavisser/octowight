@@ -1,9 +1,9 @@
 package nl.haploid.octowight;
 
-import nl.haploid.octowight.service.ResourceDetectorsService;
-import nl.haploid.octowight.service.ResourceProducerService;
-import nl.haploid.octowight.service.ResourceRegistryService;
 import nl.haploid.octowight.service.EventConsumerService;
+import nl.haploid.octowight.service.ResourceDetectorsService;
+import nl.haploid.octowight.service.DirtyResourceProducerService;
+import nl.haploid.octowight.service.ResourceCoreAtomRegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -30,10 +30,10 @@ public class App {
 	private ResourceDetectorsService detectorsService;
 
 	@Autowired
-	private ResourceRegistryService registryService;
+	private ResourceCoreAtomRegistryService registryService;
 
 	@Autowired
-	private ResourceProducerService producerService;
+	private DirtyResourceProducerService producerService;
 
 	@Autowired
 	private JsonMapper jsonMapper;
@@ -42,14 +42,6 @@ public class App {
 		SpringApplication.run(App.class);
 	}
 
-	/**
-	 * TODO: better name for "new-resource-detector", "resource.detector", ResourceDescriptor and services
-	 * This app:
-	 * - reads a stream of atom change events
-	 * - detects new resources
-	 * - publishes said resources
-	 * - registers said resources
-	 */
 	// TODO: put this in a service
 	@Scheduled(fixedRate = POLLING_INTERVAL_MS)
 	public void poll() {
@@ -60,8 +52,8 @@ public class App {
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
 				.filter(registryService::isNewResource)
-				.map(registryService::registerNewResource)
-				.map(producerService::publishResourceDescriptor)
+				.map(registryService::putNewResource)
+				.map(producerService::sendDirtyResource)
 				.collect(Collectors.toList()).stream()
 				.map(producerService::resolveFuture)
 				.collect(Collectors.toList());

@@ -7,7 +7,7 @@ import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
-import nl.haploid.octowight.service.ResourceDescriptor;
+import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -49,9 +49,9 @@ public class ScifiBookResourceDetectorTest {
 			times = 1;
 			result = booksById;
 		}};
-		final List<ResourceDescriptor> descriptors = detector.detect(events);
-		assertEquals(1, descriptors.size());
-		assertEquals(id2, descriptors.get(0).getAtomId());
+		final List<ResourceCoreAtom> coreAtoms = detector.detect(events);
+		assertEquals(1, coreAtoms.size());
+		assertEquals(id2, coreAtoms.get(0).getAtomId());
 	}
 
 	@Test

@@ -3,8 +3,8 @@ package nl.haploid.octowight.detector;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
-import nl.haploid.octowight.service.ResourceDescriptor;
-import nl.haploid.octowight.service.ResourceDescriptorFactory;
+import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.data.ResourceCoreAtomFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,12 +33,12 @@ public class ScifiBookResourceDetector implements ResourceDetector {
 	}
 
 	@Override
-	public List<ResourceDescriptor> detect(final List<AtomChangeEvent> events) {
+	public List<ResourceCoreAtom> detect(final List<AtomChangeEvent> events) {
 		final Map<Long, BookDmo> booksByAtomId = getBooksById(events);
 		return events.stream()
 				.filter(event -> booksByAtomId.containsKey(event.getAtomId()))
 				.filter(event -> GENRE.equals(booksByAtomId.get(event.getAtomId()).getGenre()))
-				.map(event -> ResourceDescriptorFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
+				.map(event -> ResourceCoreAtomFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
 				.collect(Collectors.toList());
 	}
 

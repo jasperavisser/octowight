@@ -1,7 +1,7 @@
 package nl.haploid.octowight.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.service.ResourceDescriptor;
+import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -16,7 +16,7 @@ public class MockResourceDetector implements ResourceDetector {
 	}
 
 	@Override
-	public List<ResourceDescriptor> detect(final List<AtomChangeEvent> events) {
+	public List<ResourceCoreAtom> detect(final List<AtomChangeEvent> events) {
 		return null;
 	}
 }

@@ -1,6 +1,7 @@
 package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.JsonMapper;
+import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -12,9 +13,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Service
-public class ResourceProducerService {
+public class DirtyResourceProducerService {
 
-	@Value("${kafka.topic.resources}")
+	@Value("${kafka.topic.resources.dirty}")
 	private String topic;
 
 	@Autowired
@@ -23,8 +24,8 @@ public class ResourceProducerService {
 	@Autowired
 	private JsonMapper jsonMapper;
 
-	public Future<RecordMetadata> publishResourceDescriptor(final ResourceDescriptor descriptor) {
-		final String message = jsonMapper.toString(descriptor);
+	public Future<RecordMetadata> sendDirtyResource(final ResourceCoreAtom coreAtom) {
+		final String message = jsonMapper.toString(coreAtom);
 		return kafkaProducer.send(new ProducerRecord<>(topic, message));
 	}
 

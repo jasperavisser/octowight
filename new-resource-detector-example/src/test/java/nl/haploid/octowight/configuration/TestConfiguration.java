@@ -27,7 +27,7 @@ public class TestConfiguration {
 		properties.setProperty("postgres.database", "postgres");
 		properties.setProperty("postgres.username", "postgres");
 		properties.setProperty("kafka.topic.events", TestData.topic());
-		properties.setProperty("kafka.topic.resources", TestData.topic());
+		properties.setProperty("kafka.topic.resources.dirty", TestData.topic());
 		properties.setProperty("kafka.hostname", dockerHostIp);
 		properties.setProperty("kafka.consumer.timeout.ms", "2500");
 		properties.setProperty("zookeeper.hostname", dockerHostIp);
