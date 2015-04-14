@@ -1,10 +1,10 @@
 package nl.haploid.octowight.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.repository.BookDmo;
-import nl.haploid.octowight.repository.BookDmoRepository;
 import nl.haploid.octowight.data.ResourceCoreAtom;
 import nl.haploid.octowight.data.ResourceCoreAtomFactory;
+import nl.haploid.octowight.repository.BookDmo;
+import nl.haploid.octowight.repository.BookDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

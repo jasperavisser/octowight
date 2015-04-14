@@ -23,14 +23,9 @@ ResourceDetectService
         commit Offsets
 
 ## TODO (experimental)
-Maybe spring integration anyway?
-Feature toggle whether to spin down containers
-Shared parent pom.xml (at the very least with dependency management)
 
         // TODO: Assumption: each row represents no more than 1 resource of any given type
         // TODO: Assumption: each row can represent resources of multiple types
 
         // TODO: js presentation on architecture
         // TODO: design choices & assumptions
-    
-        // TODO: tabs instead of spaces!!
