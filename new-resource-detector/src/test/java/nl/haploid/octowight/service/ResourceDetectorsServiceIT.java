@@ -2,8 +2,8 @@ package nl.haploid.octowight.service;
 
 import mockit.Deencapsulation;
 import mockit.StrictExpectations;
-import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.AbstractIT;
+import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.detector.MockResourceDetector;
 import nl.haploid.octowight.detector.ResourceDetector;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -28,12 +29,12 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 
 	@Before
 	public void setUp() throws Exception {
-		Deencapsulation.setField(service, "detectors", Arrays.asList(mockDetector));
+		Deencapsulation.setField(service, "detectors", Collections.singletonList(mockDetector));
 	}
 
 	@Test
 	public void testGetDetectorsForAtomType() {
-		final List<MockResourceDetector> expectedDetectors = Arrays.asList(mockDetector);
+		final List<MockResourceDetector> expectedDetectors = Collections.singletonList(mockDetector);
 		final String atomType = "kinsey";
 		new StrictExpectations(mockDetector) {{
 			mockDetector.getAtomTypes();
@@ -50,7 +51,7 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType);
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet");
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
-		final List<ResourceDescriptor> expectedDescriptors = Arrays.asList(TestData.resourceDescriptor(96l));
+		final List<ResourceDescriptor> expectedDescriptors = Collections.singletonList(TestData.resourceDescriptor(96l));
 		new StrictExpectations(mockDetector) {{
 			mockDetector.getAtomTypes();
 			times = 1;

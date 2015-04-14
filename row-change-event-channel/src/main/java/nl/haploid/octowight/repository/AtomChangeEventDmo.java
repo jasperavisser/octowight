@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class AtomChangeEventDmo {
 
 	@Id
-	@SequenceGenerator(name = "event_sequence", schema = "octowight")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "event_sequence", sequenceName = "octowight.event_sequence")
+	@GeneratedValue(generator = "event_sequence")
 	private Long id;
 
 	@Column(name = "atom_id")

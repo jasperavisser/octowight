@@ -1,7 +1,7 @@
 package nl.haploid.octowight.service;
 
-import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.AbstractIT;
+import nl.haploid.octowight.TestData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.Rule;

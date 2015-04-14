@@ -17,18 +17,23 @@ function isRunning {
 }
 
 # Run containers
-[[ -n $(isRunning ${POSTGRES_NAME}) ]] || docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres:9.2
+[[ -n $(isRunning ${POSTGRES_NAME}) ]] || {
+    docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres:9.2
+    WAIT_FOR_POSTGRES_TO_START=true
+}
 [[ -n $(isRunning ${ZOOKEEPER_NAME}) ]] || docker run -d --publish=2181:2181 --name ${ZOOKEEPER_NAME} wurstmeister/zookeeper
 [[ -n $(isRunning ${KAFKA_BROKER_NAME}) ]] || docker run -d --publish=9092:9092 --name=${KAFKA_BROKER_NAME} --link=${ZOOKEEPER_NAME}:zk \
     --env KAFKA_ADVERTISED_HOST_NAME=${DOCKER_HOST_IP} \
     --volume /var/run/docker.sock:/var/run/docker.sock wurstmeister/kafka:0.8.2.0
 
 # Wait for postgres to start
-[[ -z $(isRunning ${POSTGRES_NAME}) ]] || docker logs -f ${POSTGRES_NAME} 3>&1 1>&2 2>&3 | {
-    while IFS= read -r line; do
-        echo "${line}"
-        if [[ "${line}" == *"database system is ready to accept connections"* ]]; then
-             pkill -P $$ docker
-        fi
-    done
-}
+if [[ "${WAIT_FOR_POSTGRES_TO_START}" == "true" ]]; then
+    docker logs -f ${POSTGRES_NAME} 3>&1 1>&2 2>&3 | {
+        while IFS= read -r line; do
+            echo "${line}"
+            if [[ "${line}" == *"database system is ready to accept connections"* ]]; then
+                 pkill -P $$ docker
+            fi
+        done
+    }
+fi

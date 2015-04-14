@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -45,7 +45,7 @@ public class EventChannelServiceIT extends AbstractIT {
 	@Test
 	public void testProduceEvents() throws Exception {
 		final AtomChangeEvent event = TestData.atomChangeEvent();
-		final List<RecordMetadata> results = service.produceEvents(Arrays.asList(event));
+		final List<RecordMetadata> results = service.produceEvents(Collections.singletonList(event));
 		final int expectedCount = 1;
 		final int actualCount = results.size();
 		assertEquals(expectedCount, actualCount);

@@ -10,13 +10,12 @@ import mockit.Tested;
 import nl.haploid.octowight.TestData;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class KafkaConsumerFactoryServiceTest {
 
@@ -32,7 +31,7 @@ public class KafkaConsumerFactoryServiceTest {
 								 final @Mocked KafkaStream<byte[], byte[]> expectedStream) {
 		final String topic = TestData.topic();
 		final Map<String, List<KafkaStream<byte[], byte[]>>> streams = new HashMap<>();
-		streams.put(topic, Arrays.asList(expectedStream));
+		streams.put(topic, Collections.singletonList(expectedStream));
 		new StrictExpectations() {{
 			kafkaConsumer.createMessageStreams((Map<String, Integer>) any);
 			times = 1;
