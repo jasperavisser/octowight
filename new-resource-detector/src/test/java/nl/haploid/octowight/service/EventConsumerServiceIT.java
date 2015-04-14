@@ -1,6 +1,8 @@
 package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AbstractIT;
+import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -25,6 +27,9 @@ public class EventConsumerServiceIT extends AbstractIT {
 	@Autowired
 	private KafkaProducer<String, String> kafkaProducer;
 
+	@Autowired
+	private JsonMapper jsonMapper;
+
 	@Rule
 	public Timeout globalTimeout = new Timeout(10, TimeUnit.SECONDS);
 
@@ -32,10 +37,11 @@ public class EventConsumerServiceIT extends AbstractIT {
 	public void testConsumeMessage() throws InterruptedException, ExecutionException {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
-		final String expectedMessage = TestData.message();
-		sendMessage(topic, expectedMessage);
-		final String actualMessage = service.consumeMessage();
-		assertEquals(expectedMessage, actualMessage);
+		final AtomChangeEvent expectedEvent = TestData.atomChangeEvent("joan");
+		final String message = jsonMapper.toString(expectedEvent);
+		sendMessage(topic, message);
+		final AtomChangeEvent actualEvent = service.consumeMessage();
+		assertEquals(expectedEvent, actualEvent);
 	}
 
 	public void sendMessage(final String topic, final String expectedMessage) throws InterruptedException, ExecutionException {
@@ -47,28 +53,31 @@ public class EventConsumerServiceIT extends AbstractIT {
 	public void testConsumeMessages() throws InterruptedException, ExecutionException {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
-		final String message1 = TestData.message();
-		final String message2 = TestData.message();
-		final List<String> expectedMessages = Arrays.asList(message1, message2);
+		final AtomChangeEvent event1 = TestData.atomChangeEvent("bob");
+		final AtomChangeEvent event2 = TestData.atomChangeEvent("benson");
+		final String message1 = jsonMapper.toString(event1);
+		final String message2 = jsonMapper.toString(event2);
+		final List<AtomChangeEvent> expectedEvents = Arrays.asList(event1, event2);
 		sendMessage(topic, message1);
 		sendMessage(topic, message2);
-		final List<String> actualMessages = service.consumeMessages(10)
+		final List<AtomChangeEvent> actualEvents = service.consumeMessages(10)
 				.collect(Collectors.toList());
-		assertEquals(expectedMessages, actualMessages);
+		assertEquals(expectedEvents, actualEvents);
 	}
 
 	@Test
 	public void testCommit() throws ExecutionException, InterruptedException {
 		final String topic = TestData.topic();
 		service.setTopic(topic);
-		final String message = TestData.message();
+		final AtomChangeEvent event = TestData.atomChangeEvent("harris");
+		final String message = jsonMapper.toString(event);
 		sendMessage(topic, message);
 		service.consumeMessages(10)
 				.collect(Collectors.toList());
 		service.commit();
 		service.reset();
-		final List<String> actualMessages = service.consumeMessages(10)
+		final List<AtomChangeEvent> actualEvents = service.consumeMessages(10)
 				.collect(Collectors.toList());
-		assertEquals(0, actualMessages.size());
+		assertEquals(0, actualEvents.size());
 	}
 }

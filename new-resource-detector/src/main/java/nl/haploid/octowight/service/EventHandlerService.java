@@ -28,7 +28,6 @@ public class EventHandlerService {
 
 	public long handleEvents(final int batchSize) {
 		final long count = consumerService.consumeMessages(batchSize)
-				.map(message -> jsonMapper.parse(message, AtomChangeEvent.class))
 				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomType))
 				.entrySet().stream()
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))

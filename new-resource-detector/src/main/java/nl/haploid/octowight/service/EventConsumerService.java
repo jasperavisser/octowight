@@ -2,6 +2,8 @@ package nl.haploid.octowight.service;
 
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.kafka.KafkaConsumerFactory;
 import nl.haploid.octowight.kafka.KafkaStreamSpliterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,16 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
-public class EventConsumerService { // TODO: EventMessageConsumerService? or ECS if we also parse
+public class EventConsumerService {
 
 	@Value("${kafka.topic.events}")
 	private String topic;
 
 	@Autowired
 	private KafkaConsumerFactory consumerFactoryService;
+
+	@Autowired
+	private JsonMapper jsonMapper;
 
 	private ThreadLocal<ConsumerConnector> kafkaConsumer;
 
@@ -47,14 +52,16 @@ public class EventConsumerService { // TODO: EventMessageConsumerService? or ECS
 		reset();
 	}
 
-	public String consumeMessage() {
-		return new String(getStream().iterator().next().message());
+	public AtomChangeEvent consumeMessage() {
+		final String message = new String(getStream().iterator().next().message());
+		return jsonMapper.parse(message, AtomChangeEvent.class);
 	}
 
-	public Stream<String> consumeMessages(final int batchSize) {
+	public Stream<AtomChangeEvent> consumeMessages(final int batchSize) {
 		return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
 				.limit(batchSize)
-				.map(messageAndMetadata -> new String(messageAndMetadata.message()));
+				.map(messageAndMetadata -> new String(messageAndMetadata.message()))
+				.map(message -> jsonMapper.parse(message, AtomChangeEvent.class));
 	}
 
 	public void commit() {
