@@ -20,8 +20,9 @@
 		<maven.compiler.testSource>${java.version}</maven.compiler.testSource>
 		<encoding>UTF-8</encoding>
 
+		<!-- Plugins -->
+		<spring-boot-maven.skip>false</spring-boot-maven.skip>
 		<!-- TODO: java8! -->
-		<!-- Docker -->
 		<docker.image.from>java7</docker.image.from>
 		<docker.image.name>${project.artifactId}</docker.image.name>
 		<docker.reuse.it>false</docker.reuse.it>
@@ -116,6 +117,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<skip>${spring-boot-maven.skip}</skip>
+				</configuration>
 			</plugin>
 
 			<!-- Run unit tests during test phase -->

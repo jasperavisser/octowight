@@ -11,6 +11,10 @@
 		<relativePath>../spring-boot-parent</relativePath>
 	</parent>
 
+	<properties>
+		<spring-boot-maven.skip>true</spring-boot-maven.skip>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>redis.clients</groupId>

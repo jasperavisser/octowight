@@ -5,15 +5,12 @@ import nl.haploid.octowight.TestData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "nl.haploid.octowight", excludeFilters = {
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AppConfiguration.class)
-})
+@ComponentScan(basePackages = "nl.haploid.octowight")
 public class TestConfiguration {
 
 	@Bean

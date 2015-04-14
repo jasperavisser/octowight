@@ -2,7 +2,6 @@ package nl.haploid.octowight.configuration;
 
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.configuration.AppConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
