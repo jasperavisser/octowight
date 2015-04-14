@@ -22,8 +22,6 @@
 
 		<!-- Plugins -->
 		<spring-boot-maven.skip>false</spring-boot-maven.skip>
-		<!-- TODO: java8! -->
-		<docker.image.from>java7</docker.image.from>
 		<docker.image.name>${project.artifactId}</docker.image.name>
 		<docker.reuse.it>false</docker.reuse.it>
 
@@ -175,7 +173,6 @@
 				<version>${docker-maven-plugin.version}</version>
 				<configuration>
 					<imageName>${docker.image.name}</imageName>
-					<baseImage>${docker.image.from}</baseImage>
 					<dockerDirectory>docker</dockerDirectory>
 					<resources>
 						<resource>

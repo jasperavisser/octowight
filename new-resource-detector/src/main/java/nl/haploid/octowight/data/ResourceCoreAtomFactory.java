@@ -4,7 +4,6 @@ import nl.haploid.octowight.AtomChangeEvent;
 
 public class ResourceCoreAtomFactory {
 
-	// TODO: test
 	public static ResourceCoreAtom fromAtomChangeEvent(final AtomChangeEvent event, final String resourceType) {
 		final ResourceCoreAtom coreAtom = new ResourceCoreAtom();
 		coreAtom.setAtomId(event.getAtomId());
