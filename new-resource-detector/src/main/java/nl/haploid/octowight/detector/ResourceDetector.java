@@ -1,0 +1,14 @@
+package nl.haploid.octowight.detector;
+
+import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.service.ResourceDescriptor;
+
+import java.util.Collection;
+import java.util.List;
+
+public interface ResourceDetector {
+
+	Collection<String> getAtomTypes();
+
+	List<ResourceDescriptor> detect(final List<AtomChangeEvent> events);
+}
