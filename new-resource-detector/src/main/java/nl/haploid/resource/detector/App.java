@@ -44,6 +44,15 @@ public class App {
 		SpringApplication.run(App.class);
 	}
 
+	/**
+	 * TODO: better name for "new-resource-detector", "resource.detector", ResourceDescriptor and services
+	 * This app:
+	 * - reads a stream of atom change events
+	 * - detects new resources
+	 * - publishes said resources
+	 * - registers said resources
+	 */
+	// TODO: put this in a service
 	@Scheduled(fixedRate = POLLING_INTERVAL_MS)
 	public void poll() {
 		consumerService.consumeMessages(batchSize)

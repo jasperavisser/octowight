@@ -20,7 +20,7 @@ public class ResourceDescriptor {
 		return resourceId;
 	}
 
-	public void setResourceId(Long resourceId) {
+	public void setResourceId(final Long resourceId) {
 		this.resourceId = resourceId;
 	}
 
@@ -28,7 +28,7 @@ public class ResourceDescriptor {
 		return resourceType;
 	}
 
-	public void setResourceType(String resourceType) {
+	public void setResourceType(final String resourceType) {
 		this.resourceType = resourceType;
 	}
 
@@ -36,7 +36,7 @@ public class ResourceDescriptor {
 		return atomId;
 	}
 
-	public void setAtomId(Long atomId) {
+	public void setAtomId(final Long atomId) {
 		this.atomId = atomId;
 	}
 
@@ -44,7 +44,7 @@ public class ResourceDescriptor {
 		return atomLocus;
 	}
 
-	public void setAtomLocus(String atomLocus) {
+	public void setAtomLocus(final String atomLocus) {
 		this.atomLocus = atomLocus;
 	}
 
@@ -52,7 +52,7 @@ public class ResourceDescriptor {
 		return atomType;
 	}
 
-	public void setAtomType(String atomType) {
+	public void setAtomType(final String atomType) {
 		this.atomType = atomType;
 	}
 }
