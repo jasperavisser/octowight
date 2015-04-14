@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJpaRepositories(basePackages = {"nl.haploid.event.channel.repository"})
 @EnableTransactionManagement
-@PropertySources(value = {@PropertySource(value = "file:./override.properties", ignoreResourceNotFound = true)})
+@PropertySources(value = {})
 public class PostgresConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
