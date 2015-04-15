@@ -18,7 +18,7 @@ function isRunning {
 
 # Run containers
 [[ -n $(isRunning ${POSTGRES_NAME}) ]] || {
-    docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres:9.2
+    docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres-it
     WAIT_FOR_POSTGRES_TO_START=true
 }
 [[ -n $(isRunning ${ZOOKEEPER_NAME}) ]] || docker run -d --publish=2181:2181 --name ${ZOOKEEPER_NAME} wurstmeister/zookeeper

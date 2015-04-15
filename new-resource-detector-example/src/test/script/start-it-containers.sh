@@ -19,7 +19,7 @@ function isRunning {
 
 # Run containers
 [[ -n $(isRunning ${POSTGRES_NAME}) ]] || {
-    docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres:9.2
+    docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres-it
     WAIT_FOR_POSTGRES_TO_START=true
 }
 [[ -n $(isRunning ${REDIS_NAME}) ]] || docker run -d --publish=6379:6379 --name=${REDIS_NAME} redis:3.0

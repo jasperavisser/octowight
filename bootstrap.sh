@@ -22,6 +22,7 @@ docker pull wurstmeister/zookeeper
 # Build requisite images
 pushd docker
 docker build --tag oracle-java8 oracle-java8
+docker build --tag postgres-it postgres-it
 popd
 
 # TODO: notes

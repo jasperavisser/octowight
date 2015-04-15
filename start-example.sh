@@ -13,9 +13,8 @@ ROW_CHANGE_EVENT_CHANNEL_NAME="row-change-event-channel"
 removeContainer ${NEW_RESOURCE_DETECTOR_NAME}
 removeContainer ${ROW_CHANGE_EVENT_CHANNEL_NAME}
 
-# TODO: initialize database!
 # TODO: script to trigger example detector
-# TODO: reduce code duplication in bash scripts!
+# TODO: reduce code duplication in˜ bash scripts!
 
 # Run containers
 docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
