@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,7 +21,7 @@ public class ResourceCoreAtomRegistryServiceTest {
 	private ResourceCoreAtomRegistryService service;
 
 	@Injectable
-	private RedisTemplate<String, String> redis;
+	private StringRedisTemplate redis;
 
 	@Injectable
 	private JsonMapper jsonMapper;

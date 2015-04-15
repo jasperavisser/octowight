@@ -4,6 +4,7 @@ import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,7 @@ public class ResourceCoreAtomRegistryService {
 	protected static final String SEQUENCE_KEY = "redis:nextId";
 
 	@Autowired
-	private RedisTemplate<String, String> redis;
+	private StringRedisTemplate redis;
 
 	public boolean isNewResource(final ResourceCoreAtom coreAtom) {
 		final String key = coreAtom.key();

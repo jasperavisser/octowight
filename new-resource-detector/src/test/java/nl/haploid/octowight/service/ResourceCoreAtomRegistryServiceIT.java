@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,7 +17,7 @@ public class ResourceCoreAtomRegistryServiceIT extends AbstractIT {
 	private static final long INITIAL_ID = 789l;
 
 	@Autowired
-	private RedisTemplate<String, String> redis;
+	private StringRedisTemplate redis;
 
 	@Autowired
 	private ResourceCoreAtomRegistryService service;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisShardInfo;
 
@@ -23,11 +23,9 @@ public class RedisConfiguration {
 		return new JedisConnectionFactory(shardInfo);
 	}
 
-	// TODO: we don't seem to need this?
-	// No qualifying bean of type [org.springframework.data.redis.core.RedisTemplate] is defined: expected single matching bean but found 2: redisTemplate,stringRedisTemplate
 	@Bean
-	public RedisTemplate<String, String> redisTemplate(final JedisConnectionFactory jedisConnectionFactory) {
-		final RedisTemplate<String, String> template = new RedisTemplate<>();
+	public StringRedisTemplate redisTemplate(final JedisConnectionFactory jedisConnectionFactory) {
+		final StringRedisTemplate template = new StringRedisTemplate();
 		template.setConnectionFactory(jedisConnectionFactory);
 		template.setKeySerializer(new StringRedisSerializer());
 		template.setHashValueSerializer(new StringRedisSerializer());

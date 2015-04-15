@@ -13,12 +13,15 @@ ROW_CHANGE_EVENT_CHANNEL_NAME="row-change-event-channel"
 removeContainer ${NEW_RESOURCE_DETECTOR_NAME}
 removeContainer ${ROW_CHANGE_EVENT_CHANNEL_NAME}
 
-# TODO: initialize database (otherwise user does not exist)!
-# TODO: script to stop containers
-# TODO: fix connectivity troubles (probably kafka won't work, because published ip is different)
+# TODO: initialize database!
+# TODO: script to trigger example detector
 # TODO: reduce code duplication in bash scripts!
 
 # Run containers
+docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
+	--link=kafka-broker-it:kafka-broker \
+	--link=postgres-it:postgres \
+	row-change-event-channel
 docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=kafka-broker-it:kafka-broker \
 	--link=postgres-it:postgres \
@@ -26,7 +29,6 @@ docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=zookeeper-it:zookeeper \
 	new-resource-detector-example
 
-docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
-	--link=kafka-broker-it:kafka-broker \
-	--link=postgres-it:postgres \
-	row-change-event-channel
+# docker logs -f ${NEW_RESOURCE_DETECTOR_NAME}
+# docker logs -f ${ROW_CHANGE_EVENT_CHANNEL_NAME}
+# docker exec postgres-it psql -U postgres postgres -c "insert into octowight.atom_change_events values(1, 2, 'a', 'b');"
