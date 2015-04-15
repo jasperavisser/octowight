@@ -4,18 +4,11 @@ cd "$(dirname "$("${READLINK}" -f "${BASH_SOURCE[0]}")")"
 
 DOCKER_REUSE_IT=$1
 
-POSTGRES_NAME="postgres-it"
-REDIS_NAME="redis-it"
-ZOOKEEPER_NAME="zookeeper-it"
-KAFKA_BROKER_NAME="kafka-broker-it"
+. ../lib/docker.sh
+. constants.sh
 
 # Remove containers
-bash stop-it-containers.sh ${DOCKER_REUSE_IT}
-
-function isRunning {
-    local name=$1
-    docker ps --filter="name=${name}" -q
-}
+bash stop-containers.sh ${DOCKER_REUSE_IT}
 
 # Run containers
 [[ -n $(isRunning ${POSTGRES_NAME}) ]] || {

@@ -1,6 +1,6 @@
 #!/bin/bash
 READLINK=$(which greadlink readlink | head -n1)
-cd "$(dirname "$("${READLINK}" -f "$0")")"
+cd "$(dirname "$("${READLINK}" -f "${BASH_SOURCE[0]}")")"
 
 # Build artifacts
 mvn -Ddocker.reuse.it=true clean install

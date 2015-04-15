@@ -1,6 +1,6 @@
 #!/bin/bash
 READLINK=$(which greadlink readlink | head -n1)
-cd "$(dirname "$("${READLINK}" -f "$0")")"
+cd "$(dirname "$("${READLINK}" -f "${BASH_SOURCE[0]}")")"
 
 # TODO: need this?
 #export DOCKER_HOST=tcp://0.0.0.0:4243
