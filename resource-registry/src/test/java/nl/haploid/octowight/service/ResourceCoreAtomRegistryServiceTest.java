@@ -8,10 +8,9 @@ import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.junit.Test;
-import org.springframework.data.redis.core.BoundHashOperations;
-import org.springframework.data.redis.core.BoundValueOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,7 +26,7 @@ public class ResourceCoreAtomRegistryServiceTest {
 	private JsonMapper jsonMapper;
 
 	@Test
-	public void testIsNewResource(final @Mocked BoundHashOperations mockedBoundHashOperations) {
+	public void testIsNewResource(final @Mocked HashOperations mockedHashOperations) {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final String expectedKey = "the other woman";
 		final boolean expectedIncluded = true;
@@ -35,10 +34,10 @@ public class ResourceCoreAtomRegistryServiceTest {
 			coreAtom.key();
 			times = 1;
 			result = expectedKey;
-			redis.boundHashOps(anyString);
+			redis.opsForHash();
 			times = 1;
-			result = mockedBoundHashOperations;
-			mockedBoundHashOperations.get(expectedKey);
+			result = mockedHashOperations;
+			mockedHashOperations.get(anyString, expectedKey);
 			times = 1;
 			result = null;
 		}};
@@ -47,21 +46,23 @@ public class ResourceCoreAtomRegistryServiceTest {
 	}
 
 	@Test
-	public void testPutNewResource(final @Mocked BoundHashOperations mockedBoundHashOperations) {
+	public void testPutNewResource(final @Mocked HashOperations mockedHashOperations) {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final String expectedKey = "maidenform";
 		final Long expectedId = 123l;
 		new StrictExpectations(service, coreAtom) {{
+			service.getNextResourceId();
+			times = 1;
+			result = expectedId;
 			coreAtom.key();
 			times = 1;
 			result = expectedKey;
-			service.getNextId();
+			redis.opsForHash();
 			times = 1;
-			result = expectedId;
-			redis.boundHashOps(anyString);
+			result = mockedHashOperations;
+			mockedHashOperations.put(anyString, expectedKey, expectedId.toString());
 			times = 1;
-			result = mockedBoundHashOperations;
-			mockedBoundHashOperations.put(expectedKey, expectedId.toString());
+			mockedHashOperations.put(anyString, expectedId.toString(), expectedKey);
 			times = 1;
 		}};
 		final ResourceCoreAtom actualCoreAtom = service.putNewResource(coreAtom);
@@ -69,17 +70,17 @@ public class ResourceCoreAtomRegistryServiceTest {
 	}
 
 	@Test
-	public void testGetNextId(final @Mocked BoundValueOperations mockedBoundValueOperations) {
+	public void testGetNextId(final @Mocked ValueOperations mockedValueOperations) {
 		final long expectedId = 123l;
 		new StrictExpectations() {{
-			redis.boundValueOps(anyString);
+			redis.opsForValue();
 			times = 1;
-			result = mockedBoundValueOperations;
-			mockedBoundValueOperations.increment(1);
+			result = mockedValueOperations;
+			mockedValueOperations.increment(anyString, 1);
 			times = 1;
 			result = expectedId;
 		}};
-		final long actualId = service.getNextId();
+		final long actualId = service.getNextResourceId();
 		assertEquals(expectedId, actualId);
 	}
 }

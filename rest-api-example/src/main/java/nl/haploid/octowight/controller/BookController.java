@@ -14,21 +14,24 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/book")
+@ResponseBody
 public class BookController {
 
 	@Autowired
 	private BookDmoRepository repository;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@ResponseBody
 	public List<BookDmo> getBooks() {
 		return repository.findAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
 	public BookDmo getBook(final @PathVariable long id) {
 		// TODO: get by resource id, not by atom id
+		// TODO: using redis
+		// TODO: handle non-existent (404)
+		// TODO: tests
+		// TODO: docker
 		return repository.findOne(id);
 	}
 }

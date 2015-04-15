@@ -204,10 +204,10 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<workingDirectory>${project.basedir}/src/test/script/</workingDirectory>
+							<workingDirectory>${project.basedir}/../bin/it/</workingDirectory>
 							<executable>bash</executable>
 							<arguments>
-								<argument>start-it-containers.sh</argument>
+								<argument>start-containers.sh</argument>
 								<argument>${docker.reuse.it}</argument>
 							</arguments>
 						</configuration>
@@ -219,10 +219,10 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<workingDirectory>${project.basedir}/src/test/script/</workingDirectory>
+							<workingDirectory>${project.basedir}/../bin/it/</workingDirectory>
 							<executable>bash</executable>
 							<arguments>
-								<argument>stop-it-containers.sh</argument>
+								<argument>stop-containers.sh</argument>
 								<argument>${docker.reuse.it}</argument>
 							</arguments>
 						</configuration>

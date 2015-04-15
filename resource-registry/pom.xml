@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>resource-registry</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<artifactId>spring-boot-parent</artifactId>
+		<groupId>nl.haploid</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../spring-boot-parent/pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<spring-boot-maven.skip>true</spring-boot-maven.skip>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>nl.haploid</groupId>
+			<artifactId>row-change-event</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>
