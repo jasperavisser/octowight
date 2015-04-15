@@ -28,16 +28,16 @@ public class TestConfiguration {
 	private static Properties getTestProperties() {
 		final Properties properties = new Properties();
 		final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
-		properties.setProperty("postgres.hostname", dockerHostIp);
-		properties.setProperty("postgres.port", "5432");
-		properties.setProperty("postgres.database", "postgres");
-		properties.setProperty("postgres.username", "postgres");
-		properties.setProperty("redis.hostname", dockerHostIp);
-		properties.setProperty("kafka.topic.events", TestData.topic());
-		properties.setProperty("kafka.topic.resources.dirty", TestData.topic());
-		properties.setProperty("kafka.hostname", dockerHostIp);
-		properties.setProperty("kafka.consumer.timeout.ms", "2500");
-		properties.setProperty("zookeeper.hostname", dockerHostIp);
+		properties.setProperty("octowight.postgres.hostname", dockerHostIp);
+		properties.setProperty("octowight.postgres.port", "5432");
+		properties.setProperty("octowight.postgres.database", "postgres");
+		properties.setProperty("octowight.postgres.username", "postgres");
+		properties.setProperty("octowight.redis.hostname", dockerHostIp);
+		properties.setProperty("octowight.kafka.topic.events", TestData.topic());
+		properties.setProperty("octowight.kafka.topic.resources.dirty", TestData.topic());
+		properties.setProperty("octowight.kafka.hostname", dockerHostIp);
+		properties.setProperty("octowight.kafka.consumer.timeout.ms", "2500");
+		properties.setProperty("octowight.zookeeper.hostname", dockerHostIp);
 		return properties;
 	}
 }

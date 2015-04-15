@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
 @Service
 public class EventConsumerService {
 
-	@Value("${kafka.topic.events}")
+	@Value("${octowight.kafka.topic.events}")
 	private String topic;
 
 	@Autowired

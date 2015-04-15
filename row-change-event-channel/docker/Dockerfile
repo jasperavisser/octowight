@@ -6,11 +6,11 @@ USER app
 ADD app /opt/app
 WORKDIR /opt/app
 
-ENV kafka.hostname kafka-broker
-ENV kafka.topic.events row-change-events
-ENV postgres.hostname postgres
-ENV postgres.port 5432
-ENV postgres.username postgres
-ENV postgres.database postgres
+ENV OCTOWIGHT_KAFKA_HOSTNAME kafka-broker
+ENV OCTOWIGHT_KAFKA_TOPIC_EVENTS row-change-events
+ENV OCTOWIGHT_POSTGRES_HOSTNAME postgres
+ENV OCTOWIGHT_POSTGRES_PORT 5432
+ENV OCTOWIGHT_POSTGRES_USERNAME postgres
+ENV OCTOWIGHT_POSTGRES_DATABASE postgres
 
 ENTRYPOINT ["java", "-cp", "/opt/app/*", "nl.haploid.octowight.App"]

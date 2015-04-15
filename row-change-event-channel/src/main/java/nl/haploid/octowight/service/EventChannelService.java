@@ -24,7 +24,7 @@ public class EventChannelService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value("${kafka.topic.events}")
+	@Value("${octowight.kafka.topic.events}")
 	private String topic;
 
 	@Autowired

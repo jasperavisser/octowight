@@ -6,16 +6,16 @@ USER app
 ADD app /opt/app
 WORKDIR /opt/app
 
-ENV kafka.hostname kafka-broker
-ENV kafka.consumer.timeout.ms 200
-ENV kafka.topic.events row-change-events
-ENV kafka.topic.resources.dirty dirty-resources
-ENV postgres.hostname postgres
-ENV postgres.port 5432
-ENV postgres.username postgres
-ENV postgres.database postgres
-ENV redis.hostname redis
-ENV redis.port 6379
-ENV zookeeper.hostname zookeeper
+ENV OCTOWIGHT_KAFKA_HOSTNAME kafka-broker
+ENV OCTOWIGHT_KAFKA_CONSUMER_TIMEOUT_MS 200
+ENV OCTOWIGHT_KAFKA_TOPIC_EVENTS row-change-events
+ENV OCTOWIGHT_KAFKA_TOPIC_RESOURCES_DIRTY dirty-resources
+ENV OCTOWIGHT_POSTGRES_HOSTNAME postgres
+ENV OCTOWIGHT_POSTGRES_PORT 5432
+ENV OCTOWIGHT_POSTGRES_USERNAME postgres
+ENV OCTOWIGHT_POSTGRES_DATABASE postgres
+ENV OCTOWIGHT_REDIS_HOSTNAME redis
+ENV OCTOWIGHT_REDIS_PORT 6379
+ENV OCTOWIGHT_ZOOKEEPER_HOSTNAME zookeeper
 
 ENTRYPOINT ["java", "-cp", "/opt/app/*", "nl.haploid.octowight.App"]

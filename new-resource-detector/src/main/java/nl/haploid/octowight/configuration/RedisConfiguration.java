@@ -11,10 +11,10 @@ import redis.clients.jedis.JedisShardInfo;
 @Configuration
 public class RedisConfiguration {
 
-	@Value("${redis.hostname:localhost}")
+	@Value("${octowight.redis.hostname:localhost}")
 	private String hostname;
 
-	@Value("${redis.port:6379}")
+	@Value("${octowight.redis.port:6379}")
 	private int port;
 
 	@Bean
@@ -23,6 +23,8 @@ public class RedisConfiguration {
 		return new JedisConnectionFactory(shardInfo);
 	}
 
+	// TODO: we don't seem to need this?
+	// No qualifying bean of type [org.springframework.data.redis.core.RedisTemplate] is defined: expected single matching bean but found 2: redisTemplate,stringRedisTemplate
 	@Bean
 	public RedisTemplate<String, String> redisTemplate(final JedisConnectionFactory jedisConnectionFactory) {
 		final RedisTemplate<String, String> template = new RedisTemplate<>();

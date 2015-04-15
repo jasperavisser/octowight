@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
 @Service
 public class DirtyResourceProducerService {
 
-	@Value("${kafka.topic.resources.dirty}")
+	@Value("${octowight.kafka.topic.resources.dirty}")
 	private String topic;
 
 	@Autowired

@@ -17,19 +17,19 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfiguration {
 
-	@Value("${kafka.hostname:localhost}")
+	@Value("${octowight.kafka.hostname:localhost}")
 	private String kafkaHostname;
 
-	@Value("${kafka.port:9092}")
+	@Value("${octowight.kafka.port:9092}")
 	private int kafkaPort;
 
-	@Value("${kafka.consumer.timeout.ms:200}")
+	@Value("${octowight.kafka.consumer.timeout.ms:200}")
 	private Integer consumerTimeoutMs;
 
-	@Value("${zookeeper.hostname:localhost}")
+	@Value("${octowight.zookeeper.hostname:localhost}")
 	private String zookeeperHostname;
 
-	@Value("${zookeeper.port:2181}")
+	@Value("${octowight.zookeeper.port:2181}")
 	private int zookeeperPort;
 
 	public String getKafkaHostname() {

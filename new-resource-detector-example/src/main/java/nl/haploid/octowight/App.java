@@ -14,7 +14,7 @@ public class App {
 
 	private static final int POLLING_INTERVAL_MS = 500;
 
-	@Value("${kafka.batch.size:100}")
+	@Value("${octowight.kafka.batch.size:100}")
 	private int batchSize;
 
 	@Autowired

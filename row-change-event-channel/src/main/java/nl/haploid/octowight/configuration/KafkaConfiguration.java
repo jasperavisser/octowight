@@ -12,10 +12,10 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfiguration {
 
-	@Value("${kafka.hostname:localhost}")
+	@Value("${octowight.kafka.hostname:localhost}")
 	private String hostname;
 
-	@Value("${kafka.port:9092}")
+	@Value("${octowight.kafka.port:9092}")
 	private int port;
 
 	public String getHostname() {
