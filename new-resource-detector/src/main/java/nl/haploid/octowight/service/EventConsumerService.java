@@ -6,6 +6,8 @@ import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.kafka.KafkaConsumerFactory;
 import nl.haploid.octowight.kafka.KafkaStreamSpliterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class EventConsumerService {
+
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Value("${octowight.kafka.topic.events}")
 	private String topic;
@@ -54,14 +58,19 @@ public class EventConsumerService {
 
 	public AtomChangeEvent consumeMessage() {
 		final String message = new String(getStream().iterator().next().message());
-		return jsonMapper.parse(message, AtomChangeEvent.class);
+		return parseMessage(message);
 	}
 
 	public Stream<AtomChangeEvent> consumeMessages(final int batchSize) {
 		return StreamSupport.stream(new KafkaStreamSpliterator(getStream()), false)
 				.limit(batchSize)
 				.map(messageAndMetadata -> new String(messageAndMetadata.message()))
-				.map(message -> jsonMapper.parse(message, AtomChangeEvent.class));
+				.map(this::parseMessage);
+	}
+
+	protected AtomChangeEvent parseMessage(final String message) {
+		log.debug(String.format("Consumed message: %s", message));
+		return jsonMapper.parse(message, AtomChangeEvent.class);
 	}
 
 	public void commit() {

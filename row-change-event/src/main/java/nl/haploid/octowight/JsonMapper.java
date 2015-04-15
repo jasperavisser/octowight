@@ -16,7 +16,6 @@ public class JsonMapper {
 
 	public <T> T parse(final String serialized, Class<T> targetClass) {
 		try {
-			System.out.println(String.format("Will parse: %s", serialized)); // TODO: log elsewhere
 			return mapper.readValue(serialized, targetClass);
 		} catch (IOException e) {
 			throw new JsonMapException(String.format("Could not parse JSON: %s!", serialized), e);
@@ -25,9 +24,7 @@ public class JsonMapper {
 
 	public String toString(final Object object) {
 		try {
-			final String serialized = mapper.writeValueAsString(object);
-			System.out.println(String.format("Have serialized: %s", serialized)); // TODO: log elsewhere
-			return serialized;
+			return mapper.writeValueAsString(object);
 		} catch (IOException e) {
 			throw new JsonMapException(String.format("Could not serialize object of type %s!", object.getClass().getCanonicalName()), e);
 		}
