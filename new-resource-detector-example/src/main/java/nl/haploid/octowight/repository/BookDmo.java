@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class BookDmo {
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name = "book_sequence", sequenceName = "octowight.book_sequence")
+	@GeneratedValue(generator = "book_sequence")
 	private Long id;
 
 	@Column(name = "genre")

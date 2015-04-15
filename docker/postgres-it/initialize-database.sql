@@ -10,6 +10,7 @@ create table octowight.atom_change_events(
 	atom_type varchar(256) not null
 );
 
+create sequence octowight.book_sequence;
 drop table if exists octowight.book;
 create table octowight.book(
 	id bigint not null primary key,

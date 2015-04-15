@@ -13,8 +13,8 @@ ROW_CHANGE_EVENT_CHANNEL_NAME="row-change-event-channel"
 removeContainer ${NEW_RESOURCE_DETECTOR_NAME}
 removeContainer ${ROW_CHANGE_EVENT_CHANNEL_NAME}
 
-# TODO: script to trigger example detector
-# TODO: reduce code duplication in˜ bash scripts!
+# TODO: reduce code duplication in bash scripts!
+# TODO: move bash scripts to bin/
 
 # Run containers
 docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
@@ -27,7 +27,3 @@ docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=redis-it:redis \
 	--link=zookeeper-it:zookeeper \
 	new-resource-detector-example
-
-# docker logs -f ${NEW_RESOURCE_DETECTOR_NAME}
-# docker logs -f ${ROW_CHANGE_EVENT_CHANNEL_NAME}
-# docker exec postgres-it psql -U postgres postgres -c "insert into octowight.atom_change_events values(1, 2, 'a', 'b');"
