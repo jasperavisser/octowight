@@ -61,5 +61,10 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>nl.haploid</groupId>
+			<artifactId>resource-registry</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

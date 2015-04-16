@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.repository;
 
 import mockit.Injectable;
 import mockit.Mocked;
@@ -14,10 +14,10 @@ import org.springframework.data.redis.core.ValueOperations;
 
 import static org.junit.Assert.assertEquals;
 
-public class ResourceCoreAtomRegistryServiceTest {
+public class ResourceRegistryRepositoryTest {
 
 	@Tested
-	private ResourceCoreAtomRegistryService service;
+	private ResourceRegistryRepository repository;
 
 	@Injectable
 	private StringRedisTemplate redis;
@@ -30,7 +30,7 @@ public class ResourceCoreAtomRegistryServiceTest {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final String expectedKey = "the other woman";
 		final boolean expectedIncluded = true;
-		new StrictExpectations(service, coreAtom) {{
+		new StrictExpectations(repository, coreAtom) {{
 			coreAtom.key();
 			times = 1;
 			result = expectedKey;
@@ -41,7 +41,7 @@ public class ResourceCoreAtomRegistryServiceTest {
 			times = 1;
 			result = null;
 		}};
-		final boolean actualIncluded = service.isNewResource(coreAtom);
+		final boolean actualIncluded = repository.isNewResource(coreAtom);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 
@@ -50,8 +50,8 @@ public class ResourceCoreAtomRegistryServiceTest {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final String expectedKey = "maidenform";
 		final Long expectedId = 123l;
-		new StrictExpectations(service, coreAtom) {{
-			service.getNextResourceId();
+		new StrictExpectations(repository, coreAtom) {{
+			repository.getNextResourceId();
 			times = 1;
 			result = expectedId;
 			coreAtom.key();
@@ -65,7 +65,7 @@ public class ResourceCoreAtomRegistryServiceTest {
 			mockedHashOperations.put(anyString, expectedId.toString(), expectedKey);
 			times = 1;
 		}};
-		final ResourceCoreAtom actualCoreAtom = service.putNewResource(coreAtom);
+		final ResourceCoreAtom actualCoreAtom = repository.putNewResource(coreAtom);
 		assertEquals(expectedId, actualCoreAtom.getResourceId());
 	}
 
@@ -80,7 +80,7 @@ public class ResourceCoreAtomRegistryServiceTest {
 			times = 1;
 			result = expectedId;
 		}};
-		final long actualId = service.getNextResourceId();
+		final long actualId = repository.getNextResourceId();
 		assertEquals(expectedId, actualId);
 	}
 }

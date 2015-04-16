@@ -2,6 +2,7 @@ package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.JsonMapper;
+import nl.haploid.octowight.repository.ResourceRegistryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class EventHandlerService {
 	private ResourceDetectorsService detectorsService;
 
 	@Autowired
-	private ResourceCoreAtomRegistryService registryService;
+	private ResourceRegistryRepository resourceRepository;
 
 	@Autowired
 	private DirtyResourceProducerService producerService;
@@ -32,8 +33,8 @@ public class EventHandlerService {
 				.entrySet().stream()
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
-				.filter(registryService::isNewResource)
-				.map(registryService::putNewResource)
+				.filter(resourceRepository::isNewResource)
+				.map(resourceRepository::putNewResource)
 				.map(producerService::sendDirtyResource)
 				.collect(Collectors.toList()).stream()
 				.map(producerService::resolveFuture)

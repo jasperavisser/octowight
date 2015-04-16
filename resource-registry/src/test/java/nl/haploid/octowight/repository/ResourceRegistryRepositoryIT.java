@@ -1,8 +1,9 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.repository;
 
 import nl.haploid.octowight.AbstractIT;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.repository.ResourceRegistryRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ResourceCoreAtomRegistryServiceIT extends AbstractIT {
+public class ResourceRegistryRepositoryIT extends AbstractIT {
 
 	private static final long INITIAL_ID = 789l;
 
@@ -19,21 +20,21 @@ public class ResourceCoreAtomRegistryServiceIT extends AbstractIT {
 	private StringRedisTemplate redis;
 
 	@Autowired
-	private ResourceCoreAtomRegistryService service;
+	private ResourceRegistryRepository repository;
 
 	@Before
 	public void setup() {
-		redis.opsForValue().set(ResourceCoreAtomRegistryService.NEXT_RESOURCE_ID_KEY, Long.toString(INITIAL_ID));
-		redis.delete(ResourceCoreAtomRegistryService.CORE_ATOM_TO_RESOURCE_KEY);
+		redis.opsForValue().set(ResourceRegistryRepository.NEXT_RESOURCE_ID_KEY, Long.toString(INITIAL_ID));
+		redis.delete(ResourceRegistryRepository.CORE_ATOM_TO_RESOURCE_KEY);
 	}
 
 	@Test
 	public void testIsNewResourceExcluded() {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(TestData.nextLong());
 		final String key = coreAtom.key();
-		redis.opsForHash().put(ResourceCoreAtomRegistryService.CORE_ATOM_TO_RESOURCE_KEY, key, coreAtom.getResourceId().toString());
+		redis.opsForHash().put(ResourceRegistryRepository.CORE_ATOM_TO_RESOURCE_KEY, key, coreAtom.getResourceId().toString());
 		final boolean expectedIncluded = false;
-		final boolean actualIncluded = service.isNewResource(coreAtom);
+		final boolean actualIncluded = repository.isNewResource(coreAtom);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 
@@ -41,7 +42,7 @@ public class ResourceCoreAtomRegistryServiceIT extends AbstractIT {
 	public void testIsNewResourceIncluded() {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(TestData.nextLong());
 		final boolean expectedIncluded = true;
-		final boolean actualIncluded = service.isNewResource(coreAtom);
+		final boolean actualIncluded = repository.isNewResource(coreAtom);
 		assertEquals(expectedIncluded, actualIncluded);
 	}
 
@@ -49,18 +50,18 @@ public class ResourceCoreAtomRegistryServiceIT extends AbstractIT {
 	public void testPutNewResource() {
 		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(null);
 		final Long expectedId = INITIAL_ID + 1;
-		final ResourceCoreAtom actualCoreAtom = service.putNewResource(coreAtom);
+		final ResourceCoreAtom actualCoreAtom = repository.putNewResource(coreAtom);
 		final String key = coreAtom.key();
 		assertNotNull(actualCoreAtom);
 		assertEquals(expectedId, actualCoreAtom.getResourceId());
-		final String value = redis.<String, String>opsForHash().get(ResourceCoreAtomRegistryService.CORE_ATOM_TO_RESOURCE_KEY, key);
+		final String value = redis.<String, String>opsForHash().get(ResourceRegistryRepository.CORE_ATOM_TO_RESOURCE_KEY, key);
 		assertNotNull(value);
 	}
 
 	@Test
 	public void testGetNextId() {
 		final long expectedId = INITIAL_ID + 1;
-		final long actualId = service.getNextResourceId();
+		final long actualId = repository.getNextResourceId();
 		assertEquals(expectedId, actualId);
 	}
 }

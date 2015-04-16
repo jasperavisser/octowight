@@ -1,14 +1,14 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.repository;
 
 import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
-public class ResourceCoreAtomRegistryService {
+@Repository
+public class ResourceRegistryRepository {
 
 	protected static final String CORE_ATOM_TO_RESOURCE_KEY = "redis:coreAtomToResource";
 
@@ -30,6 +30,8 @@ public class ResourceCoreAtomRegistryService {
 		final String resourceKey = Long.toString(coreAtomClone.getResourceId());
 		final HashOperations<String, Object, Object> hashOps = redis.opsForHash();
 		hashOps.put(CORE_ATOM_TO_RESOURCE_KEY, coreAtomKey, resourceKey);
+		// TODO: key = resourceType + resourceId
+		// TODO: maybe Postgres would be easier :)
 		hashOps.put(RESOURCE_TO_CORE_ATOM_KEY, resourceKey, coreAtomKey);
 		return coreAtomClone;
 	}
@@ -43,5 +45,9 @@ public class ResourceCoreAtomRegistryService {
 
 	protected long getNextResourceId() {
 		return redis.opsForValue().increment(NEXT_RESOURCE_ID_KEY, 1);
+	}
+
+	public ResourceCoreAtom findByResourceTypeAndResourceId(final String resourceType, final long resourceId) {
+		return null;
 	}
 }
