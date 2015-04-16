@@ -48,6 +48,6 @@ public class ResourceRegistryRepository {
 	}
 
 	public ResourceCoreAtom findByResourceTypeAndResourceId(final String resourceType, final long resourceId) {
-		return null;
+		return null; // TODO
 	}
 }
