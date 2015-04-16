@@ -32,7 +32,6 @@ public class TestConfiguration {
 		properties.setProperty("octowight.postgres.port", "5432");
 		properties.setProperty("octowight.postgres.database", "postgres");
 		properties.setProperty("octowight.postgres.username", "postgres");
-		properties.setProperty("octowight.redis.hostname", dockerHostIp);
 		properties.setProperty("octowight.kafka.topic.events", TestData.topic());
 		properties.setProperty("octowight.kafka.topic.resources.dirty", TestData.topic());
 		properties.setProperty("octowight.kafka.hostname", dockerHostIp);

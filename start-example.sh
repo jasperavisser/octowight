@@ -8,22 +8,28 @@ function removeContainer {
 }
 
 NEW_RESOURCE_DETECTOR_NAME="new-resource-detector-example"
+REST_API_NAME="rest-api-example"
 ROW_CHANGE_EVENT_CHANNEL_NAME="row-change-event-channel"
 
 removeContainer ${NEW_RESOURCE_DETECTOR_NAME}
+removeContainer ${REST_API_NAME}
 removeContainer ${ROW_CHANGE_EVENT_CHANNEL_NAME}
 
 # TODO: reduce code duplication in bash scripts!
 # TODO: move bash scripts to bin/
 
 # Run containers
-docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
-	--link=kafka-broker-it:kafka-broker \
-	--link=postgres-it:postgres \
-	row-change-event-channel
 docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=kafka-broker-it:kafka-broker \
 	--link=postgres-it:postgres \
 	--link=redis-it:redis \
 	--link=zookeeper-it:zookeeper \
 	new-resource-detector-example
+docker run -d --name ${REST_API_NAME} \
+	--publish=8080:8080 \
+	--link=postgres-it:postgres \
+	rest-api-example
+docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
+	--link=kafka-broker-it:kafka-broker \
+	--link=postgres-it:postgres \
+	row-change-event-channel

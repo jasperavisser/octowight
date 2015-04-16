@@ -31,7 +31,6 @@ public class TestConfiguration {
 		properties.setProperty("octowight.postgres.port", "5432");
 		properties.setProperty("octowight.postgres.database", "postgres");
 		properties.setProperty("octowight.postgres.username", "postgres");
-		properties.setProperty("octowight.redis.hostname", dockerHostIp);
 		return properties;
 	}
 }
