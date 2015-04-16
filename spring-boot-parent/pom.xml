@@ -204,6 +204,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<skip>${skipTests}</skip>
 							<workingDirectory>${project.basedir}/../bin/it/</workingDirectory>
 							<executable>bash</executable>
 							<arguments>
@@ -219,6 +220,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<skip>${skipTests}</skip>
 							<workingDirectory>${project.basedir}/../bin/it/</workingDirectory>
 							<executable>bash</executable>
 							<arguments>
