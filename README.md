@@ -1,4 +1,4 @@
-# octowight
+# octowight [![Build Status](https://travis-ci.org/jasperavisser/octowight.svg?branch=master)](https://travis-ci.org/jasperavisser/octowight)
 Just playing around with Scala, Spring, Docker
 
 ## Required
