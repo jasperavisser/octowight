@@ -30,6 +30,7 @@ public class TestData {
 	public static String title() {
 		return UUID.randomUUID().toString();
 	}
+
 	public static String topic() {
 		return UUID.randomUUID().toString();
 	}

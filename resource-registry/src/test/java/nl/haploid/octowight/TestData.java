@@ -1,9 +1,9 @@
 package nl.haploid.octowight;
 
 import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.repository.ResourceCoreAtomDmo;
 
 import java.util.Random;
-import java.util.UUID;
 
 public class TestData {
 
@@ -21,14 +21,6 @@ public class TestData {
 		return coreAtom;
 	}
 
-	public static String message() {
-		return UUID.randomUUID().toString();
-	}
-
-	public static String topic() {
-		return UUID.randomUUID().toString();
-	}
-
 	public static AtomChangeEvent atomChangeEvent(final String atomType) {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
@@ -36,5 +28,15 @@ public class TestData {
 		event.setAtomLocus("everywhere");
 		event.setAtomType(atomType);
 		return event;
+	}
+
+	public static ResourceCoreAtomDmo resourceCoreAtomDmo() {
+		final ResourceCoreAtomDmo coreAtom = new ResourceCoreAtomDmo();
+		coreAtom.setResourceId(nextLong());
+		coreAtom.setResourceType("olson");
+		coreAtom.setAtomId(nextLong());
+		coreAtom.setAtomLocus("madison avenue");
+		coreAtom.setAtomType("draper");
+		return coreAtom;
 	}
 }

@@ -3,7 +3,7 @@ package nl.haploid.octowight.controller;
 import nl.haploid.octowight.data.ResourceCoreAtom;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
-import nl.haploid.octowight.repository.ResourceRegistryRepository;
+import nl.haploid.octowight.repository.ResourceCoreAtomDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,24 +22,22 @@ public class BookController {
 	private static final String RESOURCE_TYPE = "scifi-book"; // TODO: doesn't match resource type
 
 	@Autowired
-	private BookDmoRepository repository;
+	private BookDmoRepository bookRepository;
 
 	@Autowired
-	private ResourceRegistryRepository resourceRepository;
+	private ResourceCoreAtomDmoRepository resourceRepository;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<BookDmo> getBooks() {
-		return repository.findAll();
+		return bookRepository.findAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public BookDmo getBook(final @PathVariable long id) {
-		// TODO: get by resource id, not by atom id
 		final ResourceCoreAtom coreAtom = resourceRepository.findByResourceTypeAndResourceId(RESOURCE_TYPE, id);
-		// TODO: using redis
 		// TODO: handle non-existent (404)
 		// TODO: tests
 		// TODO: docker
-		return repository.findOne(id);
+		return bookRepository.findOne(coreAtom.getAtomId());
 	}
 }

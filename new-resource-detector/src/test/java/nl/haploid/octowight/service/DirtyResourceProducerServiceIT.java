@@ -1,7 +1,7 @@
 package nl.haploid.octowight.service;
 
-import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.AbstractIT;
+import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.data.ResourceCoreAtom;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.junit.Test;

@@ -10,6 +10,17 @@ create table octowight.atom_change_events(
 	atom_type varchar(256) not null
 );
 
+create sequence octowight.resource_sequence;
+drop table if exists octowight.resource_core_atom;
+create table octowight.resource_core_atom(
+	atom_id bigint not null,
+	atom_locus varchar(256) not null,
+	atom_type varchar(256) not null,
+	resource_id bigint not null primary key,
+	resource_type varchar(256) not null,
+	unique(resource_id, resource_type)
+);
+
 create sequence octowight.book_sequence;
 drop table if exists octowight.book;
 create table octowight.book(
