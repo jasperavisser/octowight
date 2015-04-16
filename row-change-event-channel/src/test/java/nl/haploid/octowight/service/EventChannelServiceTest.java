@@ -24,10 +24,10 @@ public class EventChannelServiceTest {
 	private AtomChangeEventDmoRepository mockRepository;
 
 	@Injectable
-	private KafkaProducer<String, String> kafkaProducer;
+	private AtomChangeEventFactory eventFactory;
 
 	@Injectable
-	private DmoToMessageMapperService mapperService;
+	private KafkaProducer<String, String> kafkaProducer;
 
 	@Injectable
 	private JsonMapper jsonService;
@@ -46,7 +46,7 @@ public class EventChannelServiceTest {
 			mockRepository.findAll();
 			times = 1;
 			result = expectedEventDmos;
-			mapperService.map(expectedEventDmos);
+			eventFactory.fromAtomChangeEventDmos(expectedEventDmos);
 			times = 1;
 			result = expectedEvents;
 			kafkaProducer.send((ProducerRecord<String, String>) any);

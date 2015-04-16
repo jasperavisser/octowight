@@ -1,6 +1,6 @@
 package nl.haploid.octowight;
 
-import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.data.Resource;
 
 import java.util.Random;
 import java.util.UUID;
@@ -11,14 +11,14 @@ public class TestData {
 		return new Random().nextLong();
 	}
 
-	public static ResourceCoreAtom resourceCoreAtom(final Long resourceId) {
-		final ResourceCoreAtom coreAtom = new ResourceCoreAtom();
-		coreAtom.setResourceId(resourceId);
-		coreAtom.setResourceType("olson");
-		coreAtom.setAtomId(nextLong());
-		coreAtom.setAtomLocus("madison avenue");
-		coreAtom.setAtomType("draper");
-		return coreAtom;
+	public static Resource resource(final Long resourceId) {
+		final Resource resource = new Resource();
+		resource.setResourceId(resourceId);
+		resource.setResourceType("olson");
+		resource.setAtomId(nextLong());
+		resource.setAtomLocus("madison avenue");
+		resource.setAtomType("draper");
+		return resource;
 	}
 
 	public static String message() {

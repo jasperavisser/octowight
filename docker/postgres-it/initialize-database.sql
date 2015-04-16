@@ -11,8 +11,8 @@ create table octowight.atom_change_events(
 );
 
 create sequence octowight.resource_sequence;
-drop table if exists octowight.resource_core_atom;
-create table octowight.resource_core_atom(
+drop table if exists octowight.resource;
+create table octowight.resource(
 	atom_id bigint not null,
 	atom_locus varchar(256) not null,
 	atom_type varchar(256) not null,

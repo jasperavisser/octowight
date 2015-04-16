@@ -10,17 +10,17 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ResourceCoreAtomDmoRepositoryIT extends AbstractIT {
+public class ResourceRepositoryIT extends AbstractIT {
 
 	@Autowired
-	private ResourceCoreAtomDmoRepository repository;
+	private ResourceDmoRepository repository;
 
 	@Test
 	@Transactional
 	public void testFindAll() {
-		final ResourceCoreAtomDmo dmo = TestData.resourceCoreAtomDmo();
+		final ResourceDmo dmo = TestData.resourceDmo();
 		repository.saveAndFlush(dmo);
-		final List<ResourceCoreAtomDmo> dmos = repository.findAll();
+		final List<ResourceDmo> dmos = repository.findAll();
 		assertEquals(1, dmos.size());
 	}
 }

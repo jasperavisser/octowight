@@ -1,6 +1,6 @@
 package nl.haploid.octowight.data;
 
-public class ResourceCoreAtom {
+public class Resource {
 
 	private Long resourceId;
 

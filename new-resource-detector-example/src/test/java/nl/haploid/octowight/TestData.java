@@ -1,5 +1,6 @@
 package nl.haploid.octowight;
 
+import nl.haploid.octowight.data.Resource;
 import nl.haploid.octowight.repository.BookDmo;
 
 import java.util.Random;
@@ -41,5 +42,15 @@ public class TestData {
 		event.setAtomLocus(ATOM_LOCUS);
 		event.setAtomType(ATOM_TYPE);
 		return event;
+	}
+
+	public static Resource resource(final Long resourceId) {
+		final Resource resource = new Resource();
+		resource.setResourceId(resourceId);
+		resource.setResourceType("olson");
+		resource.setAtomId(nextLong());
+		resource.setAtomLocus("madison avenue");
+		resource.setAtomType("draper");
+		return resource;
 	}
 }

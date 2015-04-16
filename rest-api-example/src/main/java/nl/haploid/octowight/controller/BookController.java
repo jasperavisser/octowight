@@ -1,9 +1,9 @@
 package nl.haploid.octowight.controller;
 
-import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.data.Resource;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
-import nl.haploid.octowight.repository.ResourceCoreAtomDmoRepository;
+import nl.haploid.octowight.repository.ResourceDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class BookController {
 	private BookDmoRepository bookRepository;
 
 	@Autowired
-	private ResourceCoreAtomDmoRepository resourceRepository;
+	private ResourceDmoRepository resourceRepository;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<BookDmo> getBooks() {
@@ -34,10 +34,10 @@ public class BookController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public BookDmo getBook(final @PathVariable long id) {
-		final ResourceCoreAtom coreAtom = resourceRepository.findByResourceTypeAndResourceId(RESOURCE_TYPE, id);
+		final Resource resource = resourceRepository.findByResourceTypeAndResourceId(RESOURCE_TYPE, id);
 		// TODO: handle non-existent (404)
 		// TODO: tests
 		// TODO: docker
-		return bookRepository.findOne(coreAtom.getAtomId());
+		return bookRepository.findOne(resource.getAtomId());
 	}
 }

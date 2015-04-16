@@ -2,16 +2,16 @@ package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.repository.AtomChangeEventDmo;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-public class DmoToMessageMapperService {
+@Component
+public class AtomChangeEventFactory {
 
-	public AtomChangeEvent map(final AtomChangeEventDmo eventDmo) {
+	public AtomChangeEvent fromAtomChangeEventDmo(final AtomChangeEventDmo eventDmo) {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(eventDmo.getId());
 		event.setAtomId(eventDmo.getAtomId());
@@ -20,9 +20,9 @@ public class DmoToMessageMapperService {
 		return event;
 	}
 
-	public List<AtomChangeEvent> map(final Collection<AtomChangeEventDmo> eventDmos) {
+	public List<AtomChangeEvent> fromAtomChangeEventDmos(final Collection<AtomChangeEventDmo> eventDmos) {
 		return eventDmos.stream()
-				.map(this::map)
+				.map(this::fromAtomChangeEventDmo)
 				.collect(Collectors.toList());
 	}
 }

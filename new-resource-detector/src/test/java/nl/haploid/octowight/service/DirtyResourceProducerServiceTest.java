@@ -6,7 +6,7 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.data.Resource;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -30,17 +30,17 @@ public class DirtyResourceProducerServiceTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testSendDirtyResource(final @Mocked Future<RecordMetadata> expectedFuture) throws Exception {
-		final ResourceCoreAtom coreAtom = TestData.resourceCoreAtom(451l);
+		final Resource resource = TestData.resource(451l);
 		final String message = "joy";
 		new StrictExpectations() {{
-			jsonMapper.toString(coreAtom);
+			jsonMapper.toString(resource);
 			times = 1;
 			result = message;
 			kafkaProducer.send((ProducerRecord<String, String>) any);
 			times = 1;
 			result = expectedFuture;
 		}};
-		final Future<RecordMetadata> actualFuture = service.sendDirtyResource(coreAtom);
+		final Future<RecordMetadata> actualFuture = service.sendDirtyResource(resource);
 		assertEquals(expectedFuture, actualFuture);
 	}
 

@@ -1,7 +1,7 @@
 package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.JsonMapper;
-import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.data.Resource;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -28,8 +28,8 @@ public class DirtyResourceProducerService {
 	@Autowired
 	private JsonMapper jsonMapper;
 
-	public Future<RecordMetadata> sendDirtyResource(final ResourceCoreAtom coreAtom) {
-		final String message = jsonMapper.toString(coreAtom);
+	public Future<RecordMetadata> sendDirtyResource(final Resource resource) {
+		final String message = jsonMapper.toString(resource);
 		log.debug(String.format("Send message: %s", message));
 		return kafkaProducer.send(new ProducerRecord<>(topic, message));
 	}

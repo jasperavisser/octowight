@@ -5,15 +5,13 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.ResourceCoreAtom;
+import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.data.ResourceFactory;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,6 +22,9 @@ public class ScifiBookResourceDetectorTest {
 
 	@Injectable
 	private BookDmoRepository bookDmoRepository;
+
+	@Injectable
+	private ResourceFactory resourceFactory;
 
 	@Test
 	public void testGetAtomTypes() throws Exception {
@@ -44,14 +45,18 @@ public class ScifiBookResourceDetectorTest {
 			put(id1, book1);
 			put(id2, book2);
 		}};
+		final Resource resource = TestData.resource(id2);
+		final List<Resource> expectedResources = Collections.singletonList(resource);
 		new StrictExpectations(detector) {{
 			detector.getBooksById(events);
 			times = 1;
 			result = booksById;
+			resourceFactory.fromAtomChangeEvent(event2, ScifiBookResourceDetector.RESOURCE_TYPE);
+			times = 1;
+			result = resource;
 		}};
-		final List<ResourceCoreAtom> coreAtoms = detector.detect(events);
-		assertEquals(1, coreAtoms.size());
-		assertEquals(id2, coreAtoms.get(0).getAtomId());
+		final List<Resource> actualResources = detector.detect(events);
+		assertEquals(expectedResources, actualResources);
 	}
 
 	@Test

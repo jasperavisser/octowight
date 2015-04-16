@@ -34,7 +34,7 @@ public class EventChannelService {
 	private KafkaProducer<String, String> kafkaProducer;
 
 	@Autowired
-	private DmoToMessageMapperService mapperService;
+	private AtomChangeEventFactory eventFactory;
 
 	@Autowired
 	private JsonMapper jsonMapper;
@@ -43,7 +43,7 @@ public class EventChannelService {
 	public int queueAtomChangeEvents() throws ExecutionException, InterruptedException {
 		final List<AtomChangeEventDmo> eventDmos = repository.findAll();
 		log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
-		final List<AtomChangeEvent> events = mapperService.map(eventDmos);
+		final List<AtomChangeEvent> events = eventFactory.fromAtomChangeEventDmos(eventDmos);
 		produceEvents(events);
 		repository.delete(eventDmos);
 		return events.size();

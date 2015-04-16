@@ -1,8 +1,8 @@
 package nl.haploid.octowight.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.data.ResourceCoreAtom;
-import nl.haploid.octowight.data.ResourceCoreAtomFactory;
+import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.data.ResourceFactory;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,17 @@ import java.util.stream.Collectors;
 @Component
 public class ScifiBookResourceDetector implements ResourceDetector {
 
-	public static final String ATOM_TYPE = "book";
+	protected static final String ATOM_TYPE = "book";
 
-	public static final String GENRE = "scifi";
+	protected static final String GENRE = "scifi";
 
-	private static final String RESOURCE_TYPE = "scifi-book";
+	protected static final String RESOURCE_TYPE = "scifi-book";
 
 	@Autowired
 	private BookDmoRepository repository;
+
+	@Autowired
+	private ResourceFactory resourceFactory;
 
 	@Override
 	public Collection<String> getAtomTypes() {
@@ -33,12 +36,12 @@ public class ScifiBookResourceDetector implements ResourceDetector {
 	}
 
 	@Override
-	public List<ResourceCoreAtom> detect(final List<AtomChangeEvent> events) {
+	public List<Resource> detect(final List<AtomChangeEvent> events) {
 		final Map<Long, BookDmo> booksByAtomId = getBooksById(events);
 		return events.stream()
 				.filter(event -> booksByAtomId.containsKey(event.getAtomId()))
 				.filter(event -> GENRE.equals(booksByAtomId.get(event.getAtomId()).getGenre()))
-				.map(event -> ResourceCoreAtomFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
+				.map(event -> resourceFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
 				.collect(Collectors.toList());
 	}
 

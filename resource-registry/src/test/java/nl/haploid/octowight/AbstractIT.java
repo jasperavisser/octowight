@@ -2,7 +2,7 @@ package nl.haploid.octowight;
 
 import nl.haploid.octowight.configuration.PostgresConfiguration;
 import nl.haploid.octowight.configuration.TestConfiguration;
-import nl.haploid.octowight.repository.ResourceCoreAtomDmoRepository;
+import nl.haploid.octowight.repository.ResourceDmoRepository;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContex
 	protected Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private ResourceCoreAtomDmoRepository repository;
+	private ResourceDmoRepository repository;
 
 	@Before
 	public void setup() {

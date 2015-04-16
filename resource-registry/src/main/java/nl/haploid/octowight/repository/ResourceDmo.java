@@ -2,10 +2,9 @@ package nl.haploid.octowight.repository;
 
 import javax.persistence.*;
 
-// TODO: there has to be a better name!!!!!
 @Entity
-@Table(name = "resource_core_atom", schema = "octowight")
-public class ResourceCoreAtomDmo {
+@Table(name = "resource", schema = "octowight")
+public class ResourceDmo {
 
 	@Id
 	@Column(name = "resource_id")
