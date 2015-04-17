@@ -28,7 +28,6 @@ public class BookController {
 	public Book getBook(final @PathVariable long id) {
 		// TODO: handle non-existent (404)
 		// TODO: tests
-		// TODO: docker
 		return bookService.getBook(id);
 	}
 }

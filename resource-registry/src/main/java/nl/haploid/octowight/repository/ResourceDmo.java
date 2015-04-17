@@ -1,5 +1,8 @@
 package nl.haploid.octowight.repository;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 
 @Entity
@@ -62,5 +65,15 @@ public class ResourceDmo {
 
 	public void setAtomType(final String atomType) {
 		this.atomType = atomType;
+	}
+
+	@Override
+	public boolean equals(final Object that) {
+		return EqualsBuilder.reflectionEquals(this, that, false);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this, false);
 	}
 }

@@ -31,9 +31,12 @@ public class TestData {
 	}
 
 	public static ResourceDmo resourceDmo() {
+		return resourceDmo("olson");
+	}
+
+	public static ResourceDmo resourceDmo(final String resourceType) {
 		final ResourceDmo resource = new ResourceDmo();
-		resource.setResourceId(nextLong());
-		resource.setResourceType("olson");
+		resource.setResourceType(resourceType);
 		resource.setAtomId(nextLong());
 		resource.setAtomLocus("madison avenue");
 		resource.setAtomType("draper");
