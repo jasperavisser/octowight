@@ -14,11 +14,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+// TODO: tests
 @Service
 public class BookService {
 
 	// TODO: doesn't match resource type; maybe product, subcategory=book
-	private static final String RESOURCE_TYPE = "scifi-book";
+	public static final String RESOURCE_TYPE = "scifi-book";
 
 	@Autowired
 	private BookDmoRepository bookRepository;
@@ -32,7 +33,6 @@ public class BookService {
 	public Book getBook(final long resourceId) {
 		final ResourceDmo resourceDmo = resourceRepository.findByResourceTypeAndResourceId(RESOURCE_TYPE, resourceId);
 		// TODO: handle non-existent (404)
-		// TODO: tests
 		final BookDmo bookDmo = bookRepository.findOne(resourceDmo.getAtomId());
 		final Book book = bookFactory.fromBookDmo(bookDmo);
 		book.setId(resourceDmo.getResourceId());

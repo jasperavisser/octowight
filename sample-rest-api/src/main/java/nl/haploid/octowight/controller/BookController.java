@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-// TODO: tests
 @Controller
 @RequestMapping("/book")
 @ResponseBody
@@ -20,7 +19,7 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Book> getBooks() {
 		return bookService.getBooks();
 	}
