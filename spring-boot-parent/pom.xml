@@ -176,7 +176,7 @@
 				<configuration>
 					<skipDockerBuild>${docker-maven.skip}</skipDockerBuild>
 					<imageName>${docker.image.name}</imageName>
-					<dockerDirectory>docker</dockerDirectory>
+					<dockerDirectory>src/main/docker</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/app</targetPath>
