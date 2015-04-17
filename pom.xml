@@ -8,11 +8,11 @@
 	<name>octowight</name>
 	<modules>
 		<module>new-resource-detector</module>
-		<module>new-resource-detector-example</module>
-		<module>repository-example</module>
 		<module>resource-registry</module>
-		<module>rest-api-example</module>
 		<module>row-change-event</module>
 		<module>row-change-event-channel</module>
+		<module>sample-data-repository</module>
+		<module>sample-new-resource-detector</module>
+		<module>sample-rest-api</module>
 	</modules>
 </project>

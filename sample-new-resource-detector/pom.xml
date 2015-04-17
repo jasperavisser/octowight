@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>rest-api-example</artifactId>
+	<artifactId>sample-new-resource-detector</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
-		<artifactId>spring-boot-parent</artifactId>
 		<groupId>nl.haploid</groupId>
+		<artifactId>spring-boot-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../spring-boot-parent/pom.xml</relativePath>
 	</parent>
@@ -20,30 +20,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>nl.haploid</groupId>
-			<artifactId>resource-registry</artifactId>
+			<artifactId>new-resource-detector</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>nl.haploid</groupId>
-			<artifactId>repository-example</artifactId>
+			<artifactId>sample-data-repository</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>postgresql</groupId>

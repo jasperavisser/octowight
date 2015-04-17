@@ -3,9 +3,10 @@ READLINK=$(which greadlink readlink | head -n1)
 cd "$(dirname "$("${READLINK}" -f "${BASH_SOURCE[0]}")")"
 
 # Build artifacts
-mvn -Ddocker.reuse.it=true clean install
+pushd ../..
+mvn clean install -DskipTests
 
 # Build images
 pushd row-change-event-channel && mvn docker:build && popd
-pushd new-resource-detector-example && mvn docker:build && popd
-
+pushd sample-new-resource-detector && mvn docker:build && popd
+pushd sample-rest-api && mvn docker:build && popd
