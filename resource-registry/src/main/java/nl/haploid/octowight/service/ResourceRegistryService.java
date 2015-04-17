@@ -25,8 +25,9 @@ public class ResourceRegistryService {
 	private ResourceDmoFactory resourceDmoFactory;
 
 	public boolean isNewResource(final Resource resource) {
-		// TODO: and resource type, i guess?
-		final ResourceDmo dmo = resourceRepository.findByAtomIdAndAtomTypeAndAtomLocus(resource.getAtomId(), resource.getAtomType(), resource.getAtomLocus());
+		final ResourceDmo dmo = resourceRepository
+				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resource.getResourceType(),
+						resource.getAtomId(), resource.getAtomType(), resource.getAtomLocus());
 		return dmo == null;
 	}
 

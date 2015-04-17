@@ -21,7 +21,6 @@
 		<encoding>UTF-8</encoding>
 
 		<!-- Plugins -->
-		<spring-boot-maven.skip>false</spring-boot-maven.skip>
 		<docker-maven.skip>true</docker-maven.skip>
 		<docker.image.name>${project.artifactId}</docker.image.name>
 		<docker.reuse.it>false</docker.reuse.it>
@@ -111,15 +110,6 @@
 
 	<build>
 		<plugins>
-
-			<!-- Allow running project with 'mvn spring-boot:run' -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<skip>${spring-boot-maven.skip}</skip>
-				</configuration>
-			</plugin>
 
 			<!-- Run unit tests during test phase -->
 			<plugin>

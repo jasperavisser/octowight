@@ -12,7 +12,6 @@
 	</parent>
 
 	<properties>
-		<spring-boot-maven.skip>true</spring-boot-maven.skip>
 		<!-- TODO: so many projects depend on PG now -->
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>

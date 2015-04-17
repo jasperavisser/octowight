@@ -27,7 +27,6 @@ public class BookController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Book getBook(final @PathVariable long id) {
 		// TODO: handle non-existent (404)
-		// TODO: each resource may already have been demoted (not a resource anymore, but that info is still in event stream)
 		return bookService.getBook(id);
 	}
 }

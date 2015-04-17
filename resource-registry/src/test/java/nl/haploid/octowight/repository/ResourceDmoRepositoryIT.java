@@ -19,7 +19,9 @@ public class ResourceDmoRepositoryIT extends AbstractIT {
 	public void findByAtomIdAndAtomTypeAndAtomLocus() {
 		final ResourceDmo dmo = TestData.resourceDmo();
 		final ResourceDmo expectedDmo = repository.save(dmo);
-		final ResourceDmo actualDmo = repository.findByAtomIdAndAtomTypeAndAtomLocus(expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
+		final ResourceDmo actualDmo = repository
+				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(expectedDmo.getResourceType(),
+						expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
 		assertEquals(expectedDmo, actualDmo);
 	}
 

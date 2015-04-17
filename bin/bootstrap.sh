@@ -1,15 +1,12 @@
 #!/bin/bash
 cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
-# TODO: need this?
-#export DOCKER_HOST=tcp://0.0.0.0:4243
-#export DOCKER_HOST_IP="127.0.0.1"
-#export DOCKER_TLS_VERIFY="1"
-
-# Configure environment for boot2docker
+# Configure docker host
 if [[ -n "$(which boot2docker)" ]]; then
     $(boot2docker shellinit)
     export DOCKER_HOST_IP=$(boot2docker ip)
+else
+    export DOCKER_HOST_IP=127.0.0.1
 fi
 
 # Pull requisite images
