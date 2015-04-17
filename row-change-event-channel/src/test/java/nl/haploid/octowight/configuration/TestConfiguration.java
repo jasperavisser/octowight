@@ -27,6 +27,7 @@ public class TestConfiguration {
 		properties.setProperty("octowight.postgres.username", "postgres");
 		properties.setProperty("octowight.kafka.topic.events", TestData.topic());
 		properties.setProperty("octowight.kafka.hostname", dockerHostIp);
+		properties.setProperty("octowight.kafka.port", "9092");
 		configurer.setProperties(properties);
 		return configurer;
 	}

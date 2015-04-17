@@ -1,7 +1,7 @@
-package nl.haploid.octowight.repository;
+package nl.haploid.octowight.registry.repository;
 
-import nl.haploid.octowight.AbstractIT;
-import nl.haploid.octowight.TestData;
+import nl.haploid.octowight.registry.AbstractIT;
+import nl.haploid.octowight.registry.TestData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

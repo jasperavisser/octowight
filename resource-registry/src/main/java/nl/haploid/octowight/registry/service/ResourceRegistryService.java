@@ -1,10 +1,10 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.registry.service;
 
-import nl.haploid.octowight.data.Resource;
-import nl.haploid.octowight.data.ResourceFactory;
-import nl.haploid.octowight.repository.ResourceDmo;
-import nl.haploid.octowight.repository.ResourceDmoFactory;
-import nl.haploid.octowight.repository.ResourceDmoRepository;
+import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceFactory;
+import nl.haploid.octowight.registry.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceDmoFactory;
+import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

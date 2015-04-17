@@ -21,47 +21,32 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = {"nl.haploid.octowight.repository"})
 @EnableTransactionManagement
 @PropertySources(value = {})
-public class PostgresConfiguration {
+// TODO: maybe a abstract base class or factory or something?
+public class PostgresConfiguration { // TODO: this is the sample data database (so, this is partly a sample project?)
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value("${octowight.postgres.hostname:localhost}")
+	@Value("${octowight.postgres.hostname}")
 	private String hostname;
 
-	@Value("${octowight.postgres.port:5432}")
+	@Value("${octowight.postgres.port}")
 	private int port;
 
-	@Value("${octowight.postgres.username:postgres}")
+	@Value("${octowight.postgres.username}")
 	private String username;
 
-	@Value("${octowight.postgres.database:postgres}")
+	@Value("${octowight.postgres.database}")
 	private String database;
-
-	protected String getHostname() {
-		return hostname;
-	}
-
-	protected int getPort() {
-		return port;
-	}
-
-	protected String getUsername() {
-		return username;
-	}
-
-	protected String getDatabase() {
-		return database;
-	}
 
 	@Bean
 	public DataSource dataSource() {
 		final BoneCPDataSource dataSource = new BoneCPDataSource();
 		dataSource.setDriverClass("org.postgresql.Driver");
-		String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", getHostname(), getPort(), getDatabase());
+		final String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", hostname, port, database);
 		dataSource.setJdbcUrl(jdbcUrl);
-		dataSource.setUsername(getUsername());
-		dataSource.setPassword(getUsername());
-		log.debug(String.format("Will connect to %s as %s", jdbcUrl, getUsername()));
+		dataSource.setUsername(username);
+		dataSource.setPassword(username);
+		log.debug(String.format("Will connect to %s as %s", jdbcUrl, username));
 		return dataSource;
 	}
 

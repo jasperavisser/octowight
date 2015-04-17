@@ -1,4 +1,4 @@
-package nl.haploid.octowight.repository;
+package nl.haploid.octowight.registry.repository;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

@@ -2,7 +2,7 @@ package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AbstractIT;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

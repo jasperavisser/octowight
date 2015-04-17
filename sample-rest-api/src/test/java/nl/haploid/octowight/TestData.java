@@ -2,6 +2,7 @@ package nl.haploid.octowight;
 
 import nl.haploid.octowight.repository.BookDmo;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class TestData {
@@ -12,6 +13,10 @@ public class TestData {
 		book.setGenre(genre);
 		book.setTitle(title());
 		return book;
+	}
+
+	public static long nextLong() {
+		return new Random().nextLong();
 	}
 
 	public static String title() {

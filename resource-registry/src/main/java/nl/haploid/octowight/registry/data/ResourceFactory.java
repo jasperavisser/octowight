@@ -1,7 +1,7 @@
-package nl.haploid.octowight.data;
+package nl.haploid.octowight.registry.data;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceDmo;
 import org.springframework.stereotype.Component;
 
 @Component

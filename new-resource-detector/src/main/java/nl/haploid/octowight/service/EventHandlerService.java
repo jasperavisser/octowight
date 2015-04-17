@@ -2,6 +2,7 @@ package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.JsonMapper;
+import nl.haploid.octowight.registry.service.ResourceRegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

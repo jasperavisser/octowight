@@ -1,7 +1,7 @@
 # octowight [![Build Status](https://travis-ci.org/jasperavisser/octowight.svg?branch=master)](https://travis-ci.org/jasperavisser/octowight)
 TODO
 
-## Required
+## Requirements
 
 ### Linux
 Add this line to */etc/init/docker.conf*
@@ -19,8 +19,12 @@ sudo ln -s /usr/local/bin/greadlink /usr/local/bin/readlink
 
 Install *boot2docker* from http://boot2docker.io/
 
+## Installation
+TODO: How to install, run IT, run apps
+
 ## Design principles
-TODO: Design principles (event stream
+TODO: Design principles
+TODO: Adopt names from EDA
 
 ### Assumptions
 * Each resource has a single atom that represents its main component
@@ -34,6 +38,8 @@ TODO: Design principles (event stream
 
 ### Design principles
 * https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
+* http://en.wikipedia.org/wiki/Event-driven_architecture
+* https://www.voxxed.com/blog/2015/04/coupling-versus-autonomy-in-microservices/
 
 ### Docker
 * https://docs.docker.com/reference/builder/

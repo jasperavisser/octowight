@@ -4,8 +4,8 @@ import nl.haploid.octowight.data.Book;
 import nl.haploid.octowight.data.BookFactory;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
-import nl.haploid.octowight.repository.ResourceDmo;
-import nl.haploid.octowight.repository.ResourceDmoRepository;
+import nl.haploid.octowight.registry.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

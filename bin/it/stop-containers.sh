@@ -13,6 +13,7 @@ fi
 
 # Remove containers
 removeContainer ${POSTGRES_NAME}
+removeContainer ${POSTGRES_RESOURCE_REGISRY_NAME}
 removeContainer ${REDIS_NAME}
 removeContainer ${KAFKA_BROKER_NAME}
 removeContainer ${ZOOKEEPER_NAME}

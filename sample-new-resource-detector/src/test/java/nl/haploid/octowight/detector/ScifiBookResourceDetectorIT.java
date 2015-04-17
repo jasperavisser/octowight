@@ -3,7 +3,7 @@ package nl.haploid.octowight.detector;
 import nl.haploid.octowight.AbstractIT;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.repository.BookDmo;
 import nl.haploid.octowight.repository.BookDmoRepository;
 import org.junit.Test;

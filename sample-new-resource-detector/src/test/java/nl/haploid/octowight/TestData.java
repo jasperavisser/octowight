@@ -1,6 +1,6 @@
 package nl.haploid.octowight;
 
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.repository.BookDmo;
 
 import java.util.Random;

@@ -1,8 +1,8 @@
-package nl.haploid.octowight.repository;
+package nl.haploid.octowight.registry.repository;
 
 import mockit.Tested;
-import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.TestData;
+import nl.haploid.octowight.registry.data.Resource;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

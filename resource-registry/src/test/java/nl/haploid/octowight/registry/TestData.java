@@ -1,7 +1,8 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.registry;
 
-import nl.haploid.octowight.data.Resource;
-import nl.haploid.octowight.repository.ResourceDmo;
+import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.repository.ResourceDmo;
 
 import java.util.Random;
 

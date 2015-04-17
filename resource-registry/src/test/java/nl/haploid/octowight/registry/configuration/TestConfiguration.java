@@ -1,4 +1,4 @@
-package nl.haploid.octowight.configuration;
+package nl.haploid.octowight.registry.configuration;
 
 import nl.haploid.octowight.JsonMapper;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "nl.haploid.octowight")
+@ComponentScan(basePackages = "nl.haploid.octowight.registry")
 public class TestConfiguration {
 
 	@Bean
@@ -27,10 +27,10 @@ public class TestConfiguration {
 	private static Properties getTestProperties() {
 		final Properties properties = new Properties();
 		final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
-		properties.setProperty("octowight.postgres.hostname", dockerHostIp);
-		properties.setProperty("octowight.postgres.port", "5432");
-		properties.setProperty("octowight.postgres.database", "postgres");
-		properties.setProperty("octowight.postgres.username", "postgres");
+		properties.setProperty("octowight.registry.postgres.hostname", dockerHostIp);
+		properties.setProperty("octowight.registry.postgres.port", "5433");
+		properties.setProperty("octowight.registry.postgres.database", "postgres");
+		properties.setProperty("octowight.registry.postgres.username", "postgres");
 		return properties;
 	}
 }

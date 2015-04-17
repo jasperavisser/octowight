@@ -6,7 +6,7 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;

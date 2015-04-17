@@ -1,9 +1,9 @@
-package nl.haploid.octowight.data;
+package nl.haploid.octowight.registry.data;
 
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.repository.ResourceDmo;
+import nl.haploid.octowight.registry.TestData;
+import nl.haploid.octowight.registry.repository.ResourceDmo;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

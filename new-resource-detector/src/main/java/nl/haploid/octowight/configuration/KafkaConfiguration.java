@@ -17,36 +17,20 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfiguration {
 
-	@Value("${octowight.kafka.hostname:localhost}")
+	@Value("${octowight.kafka.hostname}")
 	private String kafkaHostname;
 
-	@Value("${octowight.kafka.port:9092}")
+	@Value("${octowight.kafka.port}")
 	private int kafkaPort;
 
-	@Value("${octowight.kafka.consumer.timeout.ms:200}")
+	@Value("${octowight.kafka.consumer.timeout.ms}")
 	private Integer consumerTimeoutMs;
 
-	@Value("${octowight.zookeeper.hostname:localhost}")
+	@Value("${octowight.zookeeper.hostname}")
 	private String zookeeperHostname;
 
-	@Value("${octowight.zookeeper.port:2181}")
+	@Value("${octowight.zookeeper.port}")
 	private int zookeeperPort;
-
-	public String getKafkaHostname() {
-		return kafkaHostname;
-	}
-
-	public int getKafkaPort() {
-		return kafkaPort;
-	}
-
-	public String getZookeeperHostname() {
-		return zookeeperHostname;
-	}
-
-	public int getZookeeperPort() {
-		return zookeeperPort;
-	}
 
 	@Bean(destroyMethod = "shutdown")
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -57,7 +41,7 @@ public class KafkaConfiguration {
 	@Bean
 	public ConsumerConfig consumerConfig() {
 		final Properties properties = new Properties();
-		properties.put("zookeeper.connect", String.format("%s:%d", getZookeeperHostname(), getZookeeperPort()));
+		properties.put("zookeeper.connect", String.format("%s:%d", zookeeperHostname, zookeeperPort));
 		properties.put("group.id", "1");
 		properties.put("zookeeper.session.timeout.ms", "400");
 		properties.put("zookeeper.sync.time.ms", "200");
@@ -70,7 +54,7 @@ public class KafkaConfiguration {
 	@Bean
 	public KafkaProducer<String, String> kafkaProducer() {
 		final Properties properties = new Properties();
-		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, String.format("%s:%d", getKafkaHostname(), getKafkaPort()));
+		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, String.format("%s:%d", kafkaHostname, kafkaPort));
 		properties.put(ProducerConfig.RETRIES_CONFIG, "3");
 		properties.put(ProducerConfig.ACKS_CONFIG, "all");
 		properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");

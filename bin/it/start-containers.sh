@@ -10,10 +10,17 @@ DOCKER_REUSE_IT=$1
 bash stop-containers.sh ${DOCKER_REUSE_IT}
 
 # Run containers
+# TODO: map ports in a higher range, so as not to conflict with people running stuff locally
 [[ -n $(isRunning ${POSTGRES_NAME}) ]] || {
     docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres-it
     waitForPostgresToStart ${POSTGRES_NAME}
 }
+# TODO: configure apps to use either PG instance
+[[ -n $(isRunning ${POSTGRES_RESOURCE_REGISRY_NAME}) ]] || {
+    docker run -d --publish=5433:5432 --name=${POSTGRES_RESOURCE_REGISRY_NAME} postgres-resource-registry
+    waitForPostgresToStart ${POSTGRES_RESOURCE_REGISRY_NAME}
+}
+# TODO: redis is not needed anymore
 [[ -n $(isRunning ${REDIS_NAME}) ]] || docker run -d --publish=6379:6379 --name=${REDIS_NAME} redis:3.0
 [[ -n $(isRunning ${ZOOKEEPER_NAME}) ]] || docker run -d --publish=2181:2181 --name ${ZOOKEEPER_NAME} wurstmeister/zookeeper
 [[ -n $(isRunning ${KAFKA_BROKER_NAME}) ]] || docker run -d --publish=9092:9092 --name=${KAFKA_BROKER_NAME} --link=${ZOOKEEPER_NAME}:zk \

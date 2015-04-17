@@ -1,6 +1,6 @@
-package nl.haploid.octowight.repository;
+package nl.haploid.octowight.registry.repository;
 
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import org.springframework.stereotype.Component;
 
 @Component

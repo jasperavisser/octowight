@@ -1,7 +1,7 @@
 package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.detector.ResourceDetector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

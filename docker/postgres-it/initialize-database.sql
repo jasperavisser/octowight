@@ -1,6 +1,7 @@
 drop schema if exists octowight cascade;
 create schema octowight;
 
+-- Create atom change event table
 create sequence octowight.event_sequence;
 drop table if exists octowight.atom_change_events;
 create table octowight.atom_change_events(
@@ -10,25 +11,7 @@ create table octowight.atom_change_events(
 	atom_type varchar(256) not null
 );
 
-create sequence octowight.resource_sequence;
-drop table if exists octowight.resource;
-create table octowight.resource(
-	atom_id bigint not null,
-	atom_locus varchar(256) not null,
-	atom_type varchar(256) not null,
-	resource_id bigint not null primary key,
-	resource_type varchar(256) not null,
-	unique(resource_id, resource_type)
-);
-
-create sequence octowight.book_sequence;
-drop table if exists octowight.book;
-create table octowight.book(
-	id bigint not null primary key,
-	genre varchar(256) not null,
-	title varchar(256) not null
-);
-
+-- Create atom change event trigger functions
 create or replace function push_atom_insert_or_update_event()
 	returns trigger as
 	$$
@@ -49,6 +32,16 @@ create or replace function push_atom_delete_or_update_event()
 	end;
 	$$ language plpgsql;
 
+-- Create book table (TODO: move to another script)
+create sequence octowight.book_sequence;
+drop table if exists octowight.book;
+create table octowight.book(
+	id bigint not null primary key,
+	genre varchar(256) not null,
+	title varchar(256) not null
+);
+
+-- Create book change event triggers (TODO: move to another script)
 drop trigger if exists book_insert_or_update on octowight.book;
 create trigger book_insert_or_update
 	after insert or update on octowight.book

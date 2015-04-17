@@ -14,7 +14,7 @@ public class App {
 
 	private static final int POLLING_INTERVAL_MS = 500;
 
-	@Value("${octowight.kafka.batch.size:100}")
+	@Value("${octowight.kafka.batch.size}")
 	private int batchSize;
 
 	@Autowired
@@ -24,6 +24,7 @@ public class App {
 		SpringApplication.run(App.class);
 	}
 
+	// TODO: split up into 2 apps: detectors -> kafka -> registry
 	@Scheduled(fixedRate = POLLING_INTERVAL_MS)
 	public void poll() {
 		service.handleEvents(batchSize);

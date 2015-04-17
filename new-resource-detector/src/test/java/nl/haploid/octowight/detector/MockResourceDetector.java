@@ -1,8 +1,8 @@
 package nl.haploid.octowight.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.data.Resource;
-import nl.haploid.octowight.data.ResourceFactory;
+import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

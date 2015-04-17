@@ -1,8 +1,8 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.registry;
 
-import nl.haploid.octowight.configuration.PostgresConfiguration;
-import nl.haploid.octowight.configuration.TestConfiguration;
-import nl.haploid.octowight.repository.ResourceDmoRepository;
+import nl.haploid.octowight.registry.configuration.ResourceRegistryConfiguration;
+import nl.haploid.octowight.registry.configuration.TestConfiguration;
+import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @ContextConfiguration(
-		classes = {TestConfiguration.class, PostgresConfiguration.class},
+		classes = {TestConfiguration.class, ResourceRegistryConfiguration.class},
 		loader = AnnotationConfigContextLoader.class)
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 

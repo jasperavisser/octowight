@@ -1,4 +1,4 @@
-package nl.haploid.octowight.repository;
+package nl.haploid.octowight.registry.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

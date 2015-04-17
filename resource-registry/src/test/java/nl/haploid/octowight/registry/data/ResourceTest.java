@@ -1,4 +1,4 @@
-package nl.haploid.octowight.data;
+package nl.haploid.octowight.registry.data;
 
 import org.junit.Test;
 

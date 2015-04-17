@@ -5,7 +5,7 @@ import mockit.StrictExpectations;
 import nl.haploid.octowight.AbstractIT;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.Resource;
+import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.detector.MockResourceDetector;
 import nl.haploid.octowight.detector.ResourceDetector;
 import org.junit.Before;

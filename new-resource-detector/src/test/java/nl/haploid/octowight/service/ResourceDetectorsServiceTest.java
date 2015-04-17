@@ -6,9 +6,8 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.data.Resource;
 import nl.haploid.octowight.detector.ResourceDetector;
-import org.junit.Ignore;
+import nl.haploid.octowight.registry.data.Resource;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
 public class ResourceDetectorsServiceTest {
 
 	@Tested
