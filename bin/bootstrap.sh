@@ -24,11 +24,3 @@ pushd docker
 docker build --tag oracle-java8 oracle-java8
 docker build --tag postgres-it postgres-it
 popd
-
-# TODO: notes
-# http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
-# https://github.com/wouterd/docker-maven-plugin
-# http://wurstmeister.github.io/kafka-docker/
-# http://kafka.apache.org/documentation.html#quickstart
-# bash start-kafka-shell.sh ${DOCKER_HOST_IP} ${DOCKER_HOST_IP}:2181
-# http://stackoverflow.com/questions/24705877/cant-get-maven-to-recognize-java-1-8

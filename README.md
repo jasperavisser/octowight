@@ -1,78 +1,54 @@
 # octowight [![Build Status](https://travis-ci.org/jasperavisser/octowight.svg?branch=master)](https://travis-ci.org/jasperavisser/octowight)
-Just playing around with Scala, Spring, Docker
+TODO
 
 ## Required
 
-FOR greadlink:
-brew install coreutils
+### Linux
+Add this line to */etc/init/docker.conf*
 
-Add this line to /etc/init/docker.conf
+```bash
 DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
-http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
+```
+### Mac OS
+Install *greadlink*
+
+```bash
+brew install coreutils
+```
+
+Install *boot2docker* from http://boot2docker.io/
+
+## Design principles
+TODO: Design principles (event stream
+
+### Assumptions
+* Each resource has a single atom that represents its main component
+* Each atom represents no more than a single resource of any given type
+* Each atom can represent resources of multiple types
+* Order of atom change events does not matter
+* It suffices to send third parties a stream of dirty resources
+* TODO: more assumptions
+
+## References
+
+### Design principles
+* https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
+
+### Docker
+* https://docs.docker.com/reference/builder/
+* http://boot2docker.io/
+* http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
+* https://github.com/spotify/docker-maven-plugin
+
+### Kafka
+* http://www.quora.com/Which-one-is-better-for-durable-messaging-with-good-query-features-RabbitMQ-or-Kafka
+* http://wurstmeister.github.io/kafka-docker/
+* http://kafka.apache.org/documentation.html
+
+### Maven
+* http://stackoverflow.com/questions/24705877/cant-get-maven-to-recognize-java-1-8
 
 ## TODO
-TODO: add all required docker images (java7) somewhere
-
-### Choose how to run IT
-* Containers for
-	* PostgreSQL
-	* Zookeeper
-	* Kafka broker
-	* Redis
-	* Event source
-	* Event consumer (new resources)
-	* Event consumer (mark as dirty)
-	* IT suite (separate maven module, test data, output as junit.xml)
-* fig-it.yml
-
-#### What about ITs inside the project?
-* Run with failsafe plugin?
-	* Start up requisite servers
-	* https://docs.docker.com/reference/api/remote_api_client_libraries/
-	* Set environment variables
-	* Docker spring configuration annotation provider thingy (to docker inspect and connect to database)
-	* http://scottfrederick.cfapps.io/blog/2012/05/22/Custom-PropertySource-in-Spring-3.1---Part-1
-* Run in container?
-	* Add module directory to a container that can run mvn
-	* Build container
-	* Run container with fig
-
-### Choose & configure image for
-* PostgreSQL (layer on top to initialize database for IT)
-	* https://registry.hub.docker.com/_/postgres/
-	* docker run -v "${MY_POSTGRES_DATA}":/var/lib/postgresql/data -d postgres
-* Zookeeper
-* Kafka broker
-* Redis
-
-### Event source
-* (should be a library, so user can swap in another database?)
-* Merge 2 projects (hibernate, scalatest)
-* Make IT work with HSQLDB
-* Add KafkaConfiguration
-* Write to kafka (mocked in unit/IT)
-
-### Event consumer (new resources)
-* (library, so user can define resource detectors)
-* Consume kafka topic
-* Detect new resources
-* Publish to redis & kafka
-
-* IT: Container for zookeeper, kafka, redis, postgres
-* KafkaConsumer reads events (1 or block?)
-* If block, then group by type
-* For each event group, depending on type, invoke some new resource detectors
-* Detectors query postgres to see which atomIds represent a resource
-* For each resource, if it is not already in redis
-    * Get next resource id from redis (INCR)
-    * Push to redis (resourceType, resourceId, atomId, timestamp)
-    * Push to kafka (resourceType, resourceId) 
-
-### Event consumer (mark as dirty)
-* (library, so user can define resource detectors)
-* Consume kafka topic
-* Detect new resources
-* Publish to redis & kafka
 
 ### Presentation
 Explain:
