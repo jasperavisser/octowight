@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class BookService {
 
-	// TODO: doesn't match resource type
+	// TODO: doesn't match resource type; maybe product, subcategory=book
 	private static final String RESOURCE_TYPE = "scifi-book";
 
 	@Autowired

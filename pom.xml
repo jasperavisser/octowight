@@ -9,6 +9,7 @@
 	<modules>
 		<module>new-resource-detector</module>
 		<module>new-resource-detector-example</module>
+		<module>repository-example</module>
 		<module>resource-registry</module>
 		<module>rest-api-example</module>
 		<module>row-change-event</module>

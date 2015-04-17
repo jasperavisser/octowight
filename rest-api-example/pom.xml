@@ -19,6 +19,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>nl.haploid</groupId>
+			<artifactId>resource-registry</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.haploid</groupId>
+			<artifactId>repository-example</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
@@ -60,11 +71,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>nl.haploid</groupId>
-			<artifactId>resource-registry</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = {"nl.haploid.octowight.repository"})
 @EnableTransactionManagement
 @PropertySources(value = {})
+// TODO: use separate PG for resource registry & example data
 public class PostgresConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());

@@ -8,7 +8,7 @@
 		<groupId>nl.haploid</groupId>
 		<artifactId>spring-boot-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../spring-boot-parent</relativePath>
+		<relativePath>../spring-boot-parent/pom.xml</relativePath>
 	</parent>
 
 	<properties>

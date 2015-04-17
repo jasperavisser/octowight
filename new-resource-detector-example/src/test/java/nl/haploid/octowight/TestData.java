@@ -37,8 +37,12 @@ public class TestData {
 	}
 
 	public static AtomChangeEvent atomChangeEvent() {
+		return atomChangeEvent(nextLong());
+	}
+
+	public static AtomChangeEvent atomChangeEvent(final long atomId) {
 		final AtomChangeEvent event = new AtomChangeEvent();
-		event.setAtomId(nextLong());
+		event.setAtomId(atomId);
 		event.setAtomLocus(ATOM_LOCUS);
 		event.setAtomType(ATOM_TYPE);
 		return event;
