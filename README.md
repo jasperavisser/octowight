@@ -14,6 +14,7 @@ Install *greadlink*
 
 ```bash
 brew install coreutils
+sudo ln -s /usr/local/bin/greadlink /usr/local/bin/readlink
 ```
 
 Install *boot2docker* from http://boot2docker.io/

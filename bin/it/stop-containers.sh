@@ -1,6 +1,5 @@
 #!/bin/bash
-READLINK=$(which greadlink readlink | head -n1)
-cd "$(dirname "$("${READLINK}" -f "${BASH_SOURCE[0]}")")"
+cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 DOCKER_REUSE_IT=$1
 
