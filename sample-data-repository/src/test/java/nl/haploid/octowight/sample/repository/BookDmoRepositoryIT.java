@@ -1,7 +1,7 @@
 package nl.haploid.octowight.sample.repository;
 
-import nl.haploid.octowight.sample.TestData;
 import nl.haploid.octowight.sample.AbstractIT;
+import nl.haploid.octowight.sample.TestData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,17 +10,17 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class AtomChangeEventRepositoryIT extends AbstractIT {
+public class BookDmoRepositoryIT extends AbstractIT {
 
 	@Autowired
-	private AtomChangeEventDmoRepository repository;
+	private BookDmoRepository repository;
 
 	@Test
 	@Transactional
 	public void testFindAll() {
-		final AtomChangeEventDmo event = TestData.atomChangeEventDmo();
-		repository.saveAndFlush(event);
-		final List<AtomChangeEventDmo> events = repository.findAll();
-		assertEquals(1, events.size());
+		final BookDmo book = TestData.bookDmo("comedy");
+		repository.saveAndFlush(book);
+		final List<BookDmo> books = repository.findAll();
+		assertEquals(1, books.size());
 	}
 }
