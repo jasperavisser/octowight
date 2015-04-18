@@ -14,7 +14,7 @@
 	<properties>
 		<docker-maven.skip>false</docker-maven.skip>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
-		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<postgresql.version>9.2-1004-jdbc41</postgresql.version>
 	</properties>
 
 	<dependencies>
@@ -28,7 +28,7 @@
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>

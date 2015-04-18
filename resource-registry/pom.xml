@@ -13,12 +13,12 @@
 
 	<properties>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
-		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<postgresql.version>9.2-1004-jdbc41</postgresql.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>
