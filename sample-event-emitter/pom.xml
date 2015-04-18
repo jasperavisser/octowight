@@ -20,7 +20,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>nl.haploid</groupId>
-			<artifactId>row-change-event-channel</artifactId>
+			<artifactId>event-emitter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
