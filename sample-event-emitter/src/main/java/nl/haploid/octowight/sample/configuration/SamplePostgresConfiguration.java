@@ -1,4 +1,4 @@
-package nl.haploid.octowight.configuration;
+package nl.haploid.octowight.sample.configuration;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"nl.haploid.octowight.repository"})
+@EnableJpaRepositories(basePackages = {"nl.haploid.octowight.sample.repository"})
 @EnableTransactionManagement
 @PropertySources(value = {})
 public class SamplePostgresConfiguration {
@@ -56,7 +56,7 @@ public class SamplePostgresConfiguration {
 		vendorAdapter.setShowSql(true);
 		final LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("nl.haploid.octowight.repository");
+		factory.setPackagesToScan("nl.haploid.octowight.sample.repository");
 		factory.setDataSource(dataSource);
 		factory.afterPropertiesSet();
 		return factory.getObject();

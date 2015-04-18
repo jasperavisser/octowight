@@ -1,9 +1,9 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.sample;
 
 import nl.haploid.octowight.configuration.KafkaConfiguration;
-import nl.haploid.octowight.configuration.SamplePostgresConfiguration;
-import nl.haploid.octowight.configuration.TestConfiguration;
-import nl.haploid.octowight.repository.AtomChangeEventDmoRepository;
+import nl.haploid.octowight.sample.configuration.SamplePostgresConfiguration;
+import nl.haploid.octowight.sample.configuration.TestConfiguration;
+import nl.haploid.octowight.sample.repository.AtomChangeEventDmoRepository;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

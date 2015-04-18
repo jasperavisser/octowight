@@ -1,4 +1,4 @@
-package nl.haploid.octowight.repository;
+package nl.haploid.octowight.sample.repository;
 
 import javax.persistence.*;
 

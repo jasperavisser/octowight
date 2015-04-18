@@ -1,8 +1,9 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.sample;
 
-import nl.haploid.octowight.repository.AtomChangeEventDmo;
-import nl.haploid.octowight.repository.AtomChangeEventDmoRepository;
-import nl.haploid.octowight.service.AtomChangeEventFactory;
+import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.sample.repository.AtomChangeEventDmo;
+import nl.haploid.octowight.sample.repository.AtomChangeEventDmoRepository;
+import nl.haploid.octowight.sample.service.AtomChangeEventFactory;
 import nl.haploid.octowight.service.EventChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,7 @@
-package nl.haploid.octowight.service;
+package nl.haploid.octowight.sample.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.repository.AtomChangeEventDmo;
+import nl.haploid.octowight.sample.repository.AtomChangeEventDmo;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

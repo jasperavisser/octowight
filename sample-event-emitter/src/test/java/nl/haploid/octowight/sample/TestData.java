@@ -1,6 +1,6 @@
-package nl.haploid.octowight;
+package nl.haploid.octowight.sample;
 
-import nl.haploid.octowight.repository.AtomChangeEventDmo;
+import nl.haploid.octowight.sample.repository.AtomChangeEventDmo;
 
 import java.util.Random;
 import java.util.UUID;

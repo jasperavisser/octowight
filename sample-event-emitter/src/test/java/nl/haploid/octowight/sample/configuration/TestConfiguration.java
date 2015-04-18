@@ -1,7 +1,8 @@
-package nl.haploid.octowight.configuration;
+package nl.haploid.octowight.sample.configuration;
 
 import nl.haploid.octowight.JsonMapper;
-import nl.haploid.octowight.TestData;
+import nl.haploid.octowight.configuration.AppConfiguration;
+import nl.haploid.octowight.sample.TestData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
