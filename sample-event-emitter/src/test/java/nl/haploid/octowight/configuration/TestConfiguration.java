@@ -21,6 +21,10 @@ public class TestConfiguration {
 		final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
 		final Properties properties = new Properties();
 		final String dockerHostIp = System.getenv("DOCKER_HOST_IP");
+		properties.setProperty("octowight.postgres.hostname", dockerHostIp);
+		properties.setProperty("octowight.postgres.port", "5432");
+		properties.setProperty("octowight.postgres.database", "postgres");
+		properties.setProperty("octowight.postgres.username", "postgres");
 		properties.setProperty("octowight.kafka.topic.events", TestData.topic());
 		properties.setProperty("octowight.kafka.hostname", dockerHostIp);
 		properties.setProperty("octowight.kafka.port", "9092");

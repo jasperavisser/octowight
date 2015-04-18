@@ -12,6 +12,7 @@
 		<module>row-change-event</module>
 		<module>row-change-event-channel</module>
 		<module>sample-data-repository</module>
+		<module>sample-event-emitter</module>
 		<module>sample-new-resource-detector</module>
 		<module>sample-rest-api</module>
 	</modules>

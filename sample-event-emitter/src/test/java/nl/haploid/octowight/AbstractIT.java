@@ -3,8 +3,7 @@ package nl.haploid.octowight;
 import nl.haploid.octowight.configuration.KafkaConfiguration;
 import nl.haploid.octowight.configuration.SamplePostgresConfiguration;
 import nl.haploid.octowight.configuration.TestConfiguration;
-import nl.haploid.octowight.registry.configuration.ResourceRegistryConfiguration;
-import nl.haploid.octowight.repository.BookDmoRepository;
+import nl.haploid.octowight.repository.AtomChangeEventDmoRepository;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,13 +11,12 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @ContextConfiguration(
-		classes = {TestConfiguration.class, KafkaConfiguration.class, ResourceRegistryConfiguration.class,
-				SamplePostgresConfiguration.class},
+		classes = {TestConfiguration.class, KafkaConfiguration.class, SamplePostgresConfiguration.class},
 		loader = AnnotationConfigContextLoader.class)
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
-	private BookDmoRepository repository;
+	private AtomChangeEventDmoRepository repository;
 
 	@Before
 	public void setup() {

@@ -8,6 +8,10 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 bash stop-containers.sh
 
 # Run containers
+docker run -d --name ${EVENT_EMITTER_NAME} \
+	--link=kafka-broker-it:kafka-broker \
+	--link=postgres-it:postgres \
+	sample-event-emitter
 docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=kafka-broker-it:kafka-broker \
 	--link=postgres-it:postgres \
@@ -18,7 +22,3 @@ docker run -d --name ${REST_API_NAME} \
 	--publish=8080:8080 \
 	--link=postgres-it:postgres \
 	sample-rest-api
-docker run -d --name ${ROW_CHANGE_EVENT_CHANNEL_NAME} \
-	--link=kafka-broker-it:kafka-broker \
-	--link=postgres-it:postgres \
-	row-change-event-channel

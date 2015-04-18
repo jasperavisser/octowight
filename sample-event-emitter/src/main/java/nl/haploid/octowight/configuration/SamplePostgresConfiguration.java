@@ -21,8 +21,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = {"nl.haploid.octowight.repository"})
 @EnableTransactionManagement
 @PropertySources(value = {})
-// TODO: maybe a abstract base class or factory or something?
-public class PostgresConfiguration { // TODO: this is the sample data database (so, this is partly a sample project?)
+public class SamplePostgresConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

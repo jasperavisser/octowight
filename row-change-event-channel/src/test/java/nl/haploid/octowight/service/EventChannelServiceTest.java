@@ -1,19 +1,20 @@
 package nl.haploid.octowight.service;
 
 import mockit.Injectable;
+import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.repository.AtomChangeEventDmo;
-import nl.haploid.octowight.repository.AtomChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
 
 public class EventChannelServiceTest {
 
@@ -21,39 +22,37 @@ public class EventChannelServiceTest {
 	private EventChannelService service;
 
 	@Injectable
-	private AtomChangeEventDmoRepository mockRepository;
-
-	@Injectable
-	private AtomChangeEventFactory eventFactory;
-
-	@Injectable
 	private KafkaProducer<String, String> kafkaProducer;
 
 	@Injectable
-	private JsonMapper jsonService;
+	private JsonMapper jsonMapper;
 
 	@Test
-	public void testQueueAtomChangeEvents() throws Exception {
-		final List<AtomChangeEventDmo> expectedEventDmos = new ArrayList<>();
-		expectedEventDmos.add(TestData.atomChangeEventDmo());
-		expectedEventDmos.add(TestData.atomChangeEventDmo());
-		expectedEventDmos.add(TestData.atomChangeEventDmo());
-		final List<AtomChangeEvent> expectedEvents = new ArrayList<>();
-		expectedEvents.add(TestData.atomChangeEvent());
-		expectedEvents.add(TestData.atomChangeEvent());
-		expectedEvents.add(TestData.atomChangeEvent());
+	public void testSendEvents(final @Mocked Future<RecordMetadata> future1,
+							   final @Mocked Future<RecordMetadata> future2) throws Exception {
+		final AtomChangeEvent event1 = TestData.atomChangeEvent();
+		final AtomChangeEvent event2 = TestData.atomChangeEvent();
+		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
+		final String message1 = TestData.message();
+		final String message2 = TestData.message();
 		new StrictExpectations() {{
-			mockRepository.findAll();
+			jsonMapper.toString(event1);
 			times = 1;
-			result = expectedEventDmos;
-			eventFactory.fromAtomChangeEventDmos(expectedEventDmos);
-			times = 1;
-			result = expectedEvents;
+			result = message1;
 			kafkaProducer.send((ProducerRecord<String, String>) any);
-			times = 3;
-			mockRepository.delete(expectedEventDmos);
+			times = 1;
+			result = future1;
+			jsonMapper.toString(event2);
+			times = 1;
+			result = message2;
+			kafkaProducer.send((ProducerRecord<String, String>) any);
+			times = 1;
+			result = future2;
+			future1.get();
+			times = 1;
+			future2.get();
 			times = 1;
 		}};
-		service.queueAtomChangeEvents();
+		service.sendEvents(events);
 	}
 }

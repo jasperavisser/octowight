@@ -2,8 +2,6 @@ package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.JsonMapper;
-import nl.haploid.octowight.repository.AtomChangeEventDmo;
-import nl.haploid.octowight.repository.AtomChangeEventDmoRepository;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -28,47 +25,35 @@ public class EventChannelService {
 	private String topic;
 
 	@Autowired
-	private AtomChangeEventDmoRepository repository;
-
-	@Autowired
 	private KafkaProducer<String, String> kafkaProducer;
-
-	@Autowired
-	private AtomChangeEventFactory eventFactory;
 
 	@Autowired
 	private JsonMapper jsonMapper;
 
-	@Transactional
-	public int queueAtomChangeEvents() throws ExecutionException, InterruptedException {
-		final List<AtomChangeEventDmo> eventDmos = repository.findAll();
-		log.debug(String.format("Found %d row change eventDmos", eventDmos.size()));
-		final List<AtomChangeEvent> events = eventFactory.fromAtomChangeEventDmos(eventDmos);
-		produceEvents(events);
-		repository.delete(eventDmos);
-		return events.size();
-	}
-
-	protected List<RecordMetadata> produceEvents(final List<AtomChangeEvent> events) {
+	public List<RecordMetadata> sendEvents(final List<AtomChangeEvent> events) {
+		log.debug(String.format("Send %d messages", events.size()));
 		return events.stream()
-				.map(this::produceEvent)
+				.map(this::sendEvent)
 				.collect(Collectors.toList()).stream()
 				.map(this::resolveFuture)
 				.collect(Collectors.toList());
 	}
 
-	private RecordMetadata resolveFuture(Future<RecordMetadata> future) {
-		try {
-			return future.get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException("Could not resolve future; message may not have been produced!", e);
-		}
-	}
-
-	protected Future<RecordMetadata> produceEvent(final AtomChangeEvent event) {
+	protected Future<RecordMetadata> sendEvent(final AtomChangeEvent event) {
 		final String message = jsonMapper.toString(event);
 		log.debug(String.format("Send message: %s", message));
 		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
 		return kafkaProducer.send(record);
+	}
+
+	private RecordMetadata resolveFuture(final Future<RecordMetadata> future) {
+		try {
+			log.debug("Resolving future: " + future.toString());
+			final RecordMetadata recordMetadata = future.get();
+			log.debug("X = " + recordMetadata.topic());
+			return recordMetadata;
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException("Could not resolve future; message may not have been produced!", e);
+		}
 	}
 }
