@@ -34,13 +34,6 @@ public class EventHandlerService {
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
 				.filter(registryService::isNewResource)
-						/**
-						 * TODO: alternatively
-						 * assign resource id
-						 * send to kafka
-						 * then register resource in a separate app (maybe api)
-						 * CON: it is possible to assign multiple resource ids to the same atom
-						 */
 				.map(registryService::saveResource)
 				.map(producerService::sendDirtyResource)
 				.collect(Collectors.toList()).stream()

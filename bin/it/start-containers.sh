@@ -14,8 +14,6 @@ bash stop-containers.sh ${DOCKER_REUSE_IT}
 [[ -n $(isRunning ${POSTGRES_NAME}) ]] || {
     docker run -d --publish=5432:5432 --name=${POSTGRES_NAME} postgres-it
     waitForPostgresToStart ${POSTGRES_NAME}
-}
-# TODO: configure apps to use either PG instance
 [[ -n $(isRunning ${POSTGRES_RESOURCE_REGISRY_NAME}) ]] || {
     docker run -d --publish=5433:5432 --name=${POSTGRES_RESOURCE_REGISRY_NAME} postgres-resource-registry
     waitForPostgresToStart ${POSTGRES_RESOURCE_REGISRY_NAME}

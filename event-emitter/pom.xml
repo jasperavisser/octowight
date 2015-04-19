@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>nl.haploid</groupId>
-			<artifactId>row-change-event</artifactId>
+			<artifactId>atom-change-event</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

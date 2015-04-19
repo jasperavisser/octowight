@@ -24,7 +24,6 @@ import javax.sql.DataSource;
 		transactionManagerRef = "samplePlatformTransactionManager")
 @EnableTransactionManagement
 @PropertySources(value = {})
-// TODO: move code to sample package
 public class SamplePostgresConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
