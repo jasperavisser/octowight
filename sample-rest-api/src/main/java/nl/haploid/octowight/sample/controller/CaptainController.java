@@ -1,6 +1,7 @@
 package nl.haploid.octowight.sample.controller;
 
-import nl.haploid.octowight.sample.data.Book;
+import nl.haploid.octowight.sample.data.Captain;
+import nl.haploid.octowight.sample.service.CaptainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -12,21 +13,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/captain")
 @ResponseBody
-public class BookController {
+public class CaptainController {
 
 	@Autowired
-	private BookService bookService;
+	private CaptainService captainService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Book> getBooks() {
-		return bookService.getBooks();
+	public List<Captain> getCaptains() {
+		return captainService.getCaptains();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Book getBook(final @PathVariable long id) {
+	public Captain getCaptain(final @PathVariable long id) {
 		// TODO: handle non-existent (404)
-		return bookService.getBook(id);
+		return captainService.getCaptain(id);
 	}
 }

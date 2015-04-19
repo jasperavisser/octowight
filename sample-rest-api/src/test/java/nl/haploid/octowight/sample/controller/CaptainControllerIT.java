@@ -4,8 +4,9 @@ import nl.haploid.octowight.registry.repository.ResourceDmo;
 import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
 import nl.haploid.octowight.sample.AbstractIT;
 import nl.haploid.octowight.sample.TestData;
-import nl.haploid.octowight.sample.repository.BookDmo;
-import nl.haploid.octowight.sample.repository.BookDmoRepository;
+import nl.haploid.octowight.sample.data.Captain;
+import nl.haploid.octowight.sample.repository.PersonDmo;
+import nl.haploid.octowight.sample.repository.PersonDmoRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,15 +20,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookControllerIT extends AbstractIT {
+public class CaptainControllerIT extends AbstractIT {
 
 	private MockMvc mockMvc;
 
 	@Autowired
-	private BookController controller;
+	private CaptainController controller;
 
 	@Autowired
-	private BookDmoRepository bookDmoRepository;
+	private PersonDmoRepository personDmoRepository;
 
 	@Autowired
 	private ResourceDmoRepository resourceDmoRepository;
@@ -37,28 +38,28 @@ public class BookControllerIT extends AbstractIT {
 	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-		bookDmoRepository.deleteAllInBatch();
+		personDmoRepository.deleteAllInBatch();
 	}
 
 	@Test
-	public void testGetBooks() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/book"))
+	public void testGetCaptains() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/captain"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}
 
 	@Test
-	public void testGetBook() throws Exception {
-		final BookDmo bookDmo = bookDmoRepository.save(TestData.bookDmo("scifi"));
+	public void testGetCaptain() throws Exception {
+		final PersonDmo personDmo = personDmoRepository.save(TestData.personDmo());
 		final ResourceDmo resourceDmo = new ResourceDmo();
-		resourceDmo.setAtomId(bookDmo.getId());
-		resourceDmo.setAtomType("book");
-		resourceDmo.setAtomLocus("somewhere");
+		resourceDmo.setAtomId(personDmo.getId());
+		resourceDmo.setAtomType(PersonDmo.ATOM_TYPE);
+		resourceDmo.setAtomLocus("the seven seas");
 		resourceDmo.setResourceId(TestData.nextLong());
-		resourceDmo.setResourceType(BookService.RESOURCE_TYPE);
+		resourceDmo.setResourceType(Captain.RESOURCE_TYPE);
 		final ResourceDmo resourceDmoWithId = resourceDmoRepository.save(resourceDmo);
 		tempResourceDmos.add(resourceDmoWithId);
-		mockMvc.perform(MockMvcRequestBuilders.get(String.format("/book/%d", resourceDmoWithId.getResourceId())))
+		mockMvc.perform(MockMvcRequestBuilders.get(String.format("/captain/%d", resourceDmoWithId.getResourceId())))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}

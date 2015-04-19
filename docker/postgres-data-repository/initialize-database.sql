@@ -32,24 +32,46 @@ create or replace function push_atom_delete_or_update_event()
 	end;
 	$$ language plpgsql;
 
--- Create book table (TODO: move to another script)
-create sequence octowight.book_sequence;
-drop table if exists octowight.book;
-create table octowight.book(
+-- Create person table (TODO: move to another script)
+create sequence octowight.person_sequence;
+drop table if exists octowight.person;
+create table octowight.person(
 	id bigint not null primary key,
-	genre varchar(256) not null,
-	title varchar(256) not null
+	name varchar(256) not null
 );
 
--- Create book change event triggers (TODO: move to another script)
-drop trigger if exists book_insert_or_update on octowight.book;
-create trigger book_insert_or_update
-	after insert or update on octowight.book
+-- Create role table
+create sequence octowight.role_sequence;
+drop table if exists octowight.role;
+create table octowight.role(
+	id bigint not null primary key,
+	person bigint not null,
+	type varchar(256) not null,
+	foreign key (person) references octowight.person(id)
+);
+
+-- Create person change event triggers
+drop trigger if exists person_insert_or_update on octowight.person;
+create trigger person_insert_or_update
+	after insert or update on octowight.person
 	for each row
 	execute procedure push_atom_insert_or_update_event();
 
-drop trigger if exists book_delete_or_update on octowight.book;
-create trigger book_delete_or_update
-	after delete or update on octowight.book
+drop trigger if exists person_delete_or_update on octowight.person;
+create trigger person_delete_or_update
+	after delete or update on octowight.person
+	for each row
+	execute procedure push_atom_delete_or_update_event();
+
+-- Create role change event triggers
+drop trigger if exists role_insert_or_update on octowight.role;
+create trigger role_insert_or_update
+	after insert or update on octowight.role
+	for each row
+	execute procedure push_atom_insert_or_update_event();
+
+drop trigger if exists role_delete_or_update on octowight.role;
+create trigger role_delete_or_update
+	after delete or update on octowight.role
 	for each row
 	execute procedure push_atom_delete_or_update_event();

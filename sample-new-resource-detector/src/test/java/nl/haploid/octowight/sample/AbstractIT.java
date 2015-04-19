@@ -4,7 +4,7 @@ import nl.haploid.octowight.configuration.KafkaConfiguration;
 import nl.haploid.octowight.registry.configuration.ResourceRegistryConfiguration;
 import nl.haploid.octowight.sample.configuration.SamplePostgresConfiguration;
 import nl.haploid.octowight.sample.configuration.TestConfiguration;
-import nl.haploid.octowight.sample.repository.BookDmoRepository;
+import nl.haploid.octowight.sample.repository.PersonDmoRepository;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +18,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
-	private BookDmoRepository repository;
+	private PersonDmoRepository repository;
 
 	@Before
 	public void setup() {
