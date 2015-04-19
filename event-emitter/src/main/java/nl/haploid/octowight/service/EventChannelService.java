@@ -41,16 +41,14 @@ public class EventChannelService {
 
 	protected Future<RecordMetadata> sendEvent(final AtomChangeEvent event) {
 		final String message = jsonMapper.toString(event);
-		log.debug(String.format("Send message: %s", message));
+		log.debug(String.format("Send message to %s: %s", topic, message));
 		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
 		return kafkaProducer.send(record);
 	}
 
 	private RecordMetadata resolveFuture(final Future<RecordMetadata> future) {
 		try {
-			log.debug("Resolving future: " + future.toString());
 			final RecordMetadata recordMetadata = future.get();
-			log.debug("X = " + recordMetadata.topic());
 			return recordMetadata;
 		} catch (InterruptedException | ExecutionException e) {
 			throw new RuntimeException("Could not resolve future; message may not have been produced!", e);

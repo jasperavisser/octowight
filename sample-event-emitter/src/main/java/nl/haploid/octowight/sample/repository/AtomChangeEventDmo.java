@@ -3,7 +3,7 @@ package nl.haploid.octowight.sample.repository;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "atom_change_events", schema = "octowight")
+@Table(name = "atom_change_event", schema = "octowight")
 public class AtomChangeEventDmo {
 
 	@Id

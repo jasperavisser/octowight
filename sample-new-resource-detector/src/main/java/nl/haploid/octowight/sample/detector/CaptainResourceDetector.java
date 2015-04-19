@@ -6,6 +6,8 @@ import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.registry.data.ResourceFactory;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class CaptainResourceDetector implements ResourceDetector {
+
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	protected static final String ROLE_TYPE = "captain";
 

@@ -47,7 +47,7 @@ public class EventConsumerService {
 		return kafkaConsumer.get();
 	}
 
-	private String getTopic() {
+	public String getTopic() {
 		return topic;
 	}
 
@@ -69,7 +69,7 @@ public class EventConsumerService {
 	}
 
 	protected AtomChangeEvent parseMessage(final String message) {
-		log.debug(String.format("Consumed message: %s", message));
+		log.debug(String.format("Consume message: %s", message));
 		return jsonMapper.parse(message, AtomChangeEvent.class);
 	}
 
