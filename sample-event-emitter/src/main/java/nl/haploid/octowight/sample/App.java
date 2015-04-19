@@ -31,7 +31,7 @@ public class App {
 		SpringApplication.run(App.class);
 	}
 
-	@Scheduled(fixedRate = 500)
+	@Scheduled(fixedRate = 1000)
 	@Transactional
 	public void poll() {
 		final List<AtomChangeEventDmo> eventDmos = repository.findAll();

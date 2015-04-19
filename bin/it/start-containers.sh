@@ -3,6 +3,8 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 DOCKER_REUSE_IT=$1
 
+: ${DOCKER_HOST_IP:?}
+
 . ../lib/docker.sh
 . names.sh
 

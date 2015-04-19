@@ -38,7 +38,6 @@ public class EventHandlerService {
 		final Set<Map.Entry<String, List<AtomChangeEvent>>> events = consumerService.consumeMessages(batchSize)
 				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomType))
 				.entrySet();
-		// TODO: where are my events??
 		log.debug(String.format("Consumed %d events", events.size()));
 		final long count = events.stream()
 				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))

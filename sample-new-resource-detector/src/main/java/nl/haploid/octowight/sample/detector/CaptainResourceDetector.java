@@ -6,10 +6,9 @@ import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.registry.data.ResourceFactory;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,8 +19,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class CaptainResourceDetector implements ResourceDetector {
-
-	private Logger log = LoggerFactory.getLogger(getClass());
 
 	protected static final String ROLE_TYPE = "captain";
 
@@ -39,6 +36,7 @@ public class CaptainResourceDetector implements ResourceDetector {
 	}
 
 	@Override
+	@Transactional("sampleTransactionManager")
 	public List<Resource> detect(final List<AtomChangeEvent> events) {
 		final Map<Long, PersonDmo> personsByAtomId = getPersonsById(events);
 		return events.stream()

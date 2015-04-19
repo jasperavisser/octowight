@@ -1,21 +1,21 @@
 package nl.haploid.octowight.configuration;
 
-import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
-import kafka.javaapi.consumer.ConsumerConnector;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 import java.util.Properties;
 
 @Configuration
 public class KafkaConfiguration {
+
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Value("${octowight.kafka.hostname}")
 	private String kafkaHostname;
@@ -31,12 +31,6 @@ public class KafkaConfiguration {
 
 	@Value("${octowight.zookeeper.port}")
 	private int zookeeperPort;
-
-	@Bean(destroyMethod = "shutdown")
-	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public ConsumerConnector kafkaConsumer(final ConsumerConfig consumerConfig) {
-		return Consumer.createJavaConsumerConnector(consumerConfig);
-	}
 
 	@Bean
 	public ConsumerConfig consumerConfig() {

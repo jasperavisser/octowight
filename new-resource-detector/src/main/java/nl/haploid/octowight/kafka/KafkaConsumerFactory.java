@@ -4,6 +4,8 @@ import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +16,13 @@ import java.util.Map;
 @Component
 public class KafkaConsumerFactory {
 
+	private Logger log = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private ConsumerConfig consumerConfig;
 
 	public ConsumerConnector createKafkaConsumer() {
+		log.debug(String.format("Create kafka consumer for %s", consumerConfig.zkConnect()));
 		return Consumer.createJavaConsumerConnector(consumerConfig);
 	}
 

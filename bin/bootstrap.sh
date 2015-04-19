@@ -1,5 +1,4 @@
 #!/bin/bash
-cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 # Configure docker host
 if [[ -n "$(which boot2docker)" ]]; then

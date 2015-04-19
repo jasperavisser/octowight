@@ -35,6 +35,7 @@ public class EventConsumerService {
 
 	protected KafkaStream<byte[], byte[]> getStream() {
 		if (stream == null) {
+			log.debug(String.format("Create new stream for %s", getTopic()));
 			stream = ThreadLocal.withInitial(() -> this.consumerFactoryService.createStream(getKafkaConsumer(), getTopic()));
 		}
 		return stream.get();

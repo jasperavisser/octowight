@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,9 +50,9 @@ public class EventChannelService {
 
 	private RecordMetadata resolveFuture(final Future<RecordMetadata> future) {
 		try {
-			final RecordMetadata recordMetadata = future.get();
+			final RecordMetadata recordMetadata = future.get(5, TimeUnit.SECONDS);
 			return recordMetadata;
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			throw new RuntimeException("Could not resolve future; message may not have been produced!", e);
 		}
 	}

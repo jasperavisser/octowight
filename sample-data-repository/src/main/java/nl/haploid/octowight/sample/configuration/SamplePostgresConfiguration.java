@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJpaRepositories(basePackages = {"nl.haploid.octowight.sample.repository"},
 		entityManagerFactoryRef = "sampleEntityManagerFactory",
-		transactionManagerRef = "samplePlatformTransactionManager")
+		transactionManagerRef = "sampleTransactionManager")
 @EnableTransactionManagement
 @PropertySources(value = {})
 public class SamplePostgresConfiguration {
@@ -67,7 +67,7 @@ public class SamplePostgresConfiguration {
 		return factory.getObject();
 	}
 
-	@Bean(name = "samplePlatformTransactionManager")
+	@Bean(name = "sampleTransactionManager")
 	@Qualifier("sample")
 	public PlatformTransactionManager transactionManager(final EntityManagerFactory sampleEntityManagerFactory) {
 		final JpaTransactionManager manager = new JpaTransactionManager();

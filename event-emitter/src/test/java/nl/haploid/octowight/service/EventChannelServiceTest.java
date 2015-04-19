@@ -15,6 +15,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class EventChannelServiceTest {
 
@@ -48,9 +49,9 @@ public class EventChannelServiceTest {
 			kafkaProducer.send((ProducerRecord<String, String>) any);
 			times = 1;
 			result = future2;
-			future1.get();
+			future1.get(anyLong, TimeUnit.SECONDS);
 			times = 1;
-			future2.get();
+			future2.get(anyLong, TimeUnit.SECONDS);
 			times = 1;
 		}};
 		service.sendEvents(events);

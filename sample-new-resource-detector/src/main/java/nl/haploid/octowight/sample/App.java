@@ -23,7 +23,7 @@ public class App {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	private static final int POLLING_INTERVAL_MS = 500;
+	private static final int POLLING_INTERVAL_MS = 1000;
 
 	@Value("${octowight.kafka.batch.size}")
 	private int batchSize;
