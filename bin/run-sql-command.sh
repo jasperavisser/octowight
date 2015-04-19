@@ -1,3 +1,6 @@
 #!/bin/bash
 COMMAND="$1"
-docker exec -it postgres-it psql -U postgres postgres -c "${COMMAND}"
+
+. it/names.sh
+
+docker exec -it ${POSTGRES_DATA_REPOSITORY_NAME} psql -U postgres postgres -c "${COMMAND}"

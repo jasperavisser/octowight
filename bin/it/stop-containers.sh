@@ -4,7 +4,7 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 DOCKER_REUSE_IT=$1
 
 . ../lib/docker.sh
-. constants.sh
+. names.sh
 
 if [[ "${DOCKER_REUSE_IT}" == "true" ]]; then
     echo "*** Will not stop containers"
@@ -12,8 +12,7 @@ if [[ "${DOCKER_REUSE_IT}" == "true" ]]; then
 fi
 
 # Remove containers
-removeContainer ${POSTGRES_NAME}
+removeContainer ${POSTGRES_DATA_REPOSITORY_NAME}
 removeContainer ${POSTGRES_RESOURCE_REGISRY_NAME}
-removeContainer ${REDIS_NAME}
 removeContainer ${KAFKA_BROKER_NAME}
 removeContainer ${ZOOKEEPER_NAME}
