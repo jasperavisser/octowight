@@ -5,6 +5,7 @@ import nl.haploid.octowight.registry.configuration.ResourceRegistryConfiguration
 import nl.haploid.octowight.sample.configuration.SamplePostgresConfiguration;
 import nl.haploid.octowight.sample.configuration.TestConfiguration;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import nl.haploid.octowight.sample.repository.RoleDmoRepository;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,11 +19,15 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
-	private PersonDmoRepository repository;
+	private PersonDmoRepository personDmoRepository;
+
+	@Autowired
+	private RoleDmoRepository roleDmoRepository;
 
 	@Before
 	public void setup() {
-		repository.deleteAllInBatch();
+		roleDmoRepository.deleteAllInBatch();
+		personDmoRepository.deleteAllInBatch();
 	}
 }
 

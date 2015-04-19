@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = {"nl.haploid.octowight.registry.repository"},
 		entityManagerFactoryRef = "registryEntityManagerFactory",
 		transactionManagerRef = "registryTransactionManager")
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources(value = {})
 public class ResourceRegistryConfiguration {
 

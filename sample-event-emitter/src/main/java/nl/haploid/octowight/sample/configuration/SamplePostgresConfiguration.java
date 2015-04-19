@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"nl.haploid.octowight.sample.repository"})
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources(value = {})
 public class SamplePostgresConfiguration {
 

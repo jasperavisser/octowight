@@ -23,8 +23,8 @@ public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContex
 
 	@Before
 	public void setup() {
-		personDmoRepository.deleteAllInBatch();
 		roleDmoRepository.deleteAllInBatch();
+		personDmoRepository.deleteAllInBatch();
 	}
 }
 

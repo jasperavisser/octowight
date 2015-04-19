@@ -7,6 +7,7 @@ import nl.haploid.octowight.sample.TestData;
 import nl.haploid.octowight.sample.data.Captain;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import nl.haploid.octowight.sample.repository.RoleDmoRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,11 +34,15 @@ public class CaptainControllerIT extends AbstractIT {
 	@Autowired
 	private ResourceDmoRepository resourceDmoRepository;
 
+	@Autowired
+	private RoleDmoRepository roleDmoRepository;
+
 	private final List<ResourceDmo> tempResourceDmos = new ArrayList<>();
 
 	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		roleDmoRepository.deleteAllInBatch();
 		personDmoRepository.deleteAllInBatch();
 	}
 
