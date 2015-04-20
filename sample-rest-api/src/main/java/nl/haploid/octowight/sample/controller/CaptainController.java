@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/captain")
 @ResponseBody
-public class CaptainController {
+public class CaptainController extends AbstractController {
 
 	@Autowired
 	private CaptainService captainService;
@@ -27,7 +27,6 @@ public class CaptainController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Captain getCaptain(final @PathVariable long id) {
-		// TODO: handle non-existent (404)
 		return captainService.getCaptain(id);
 	}
 }

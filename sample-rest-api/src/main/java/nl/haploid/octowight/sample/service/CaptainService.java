@@ -2,6 +2,7 @@ package nl.haploid.octowight.sample.service;
 
 import nl.haploid.octowight.registry.repository.ResourceDmo;
 import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
+import nl.haploid.octowight.sample.controller.ResourceNotFoundException;
 import nl.haploid.octowight.sample.data.Captain;
 import nl.haploid.octowight.sample.data.CaptainFactory;
 import nl.haploid.octowight.sample.repository.PersonDmo;
@@ -27,8 +28,13 @@ public class CaptainService {
 
 	public Captain getCaptain(final long resourceId) {
 		final ResourceDmo resourceDmo = resourceDmoRepository.findByResourceTypeAndResourceId(Captain.RESOURCE_TYPE, resourceId);
-		// TODO: handle non-existent (404)
+		if (resourceDmo == null) {
+			throw new ResourceNotFoundException();
+		}
 		final PersonDmo personDmo = personDmoRepository.findOne(resourceDmo.getAtomId());
+		if (personDmo == null) {
+			throw new ResourceNotFoundException();
+		}
 		final Captain captain = captainFactory.fromPersonDmo(personDmo, resourceId);
 		captain.setId(resourceDmo.getResourceId());
 		return captain;
