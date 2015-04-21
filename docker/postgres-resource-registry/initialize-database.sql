@@ -1,8 +1,6 @@
 drop schema if exists octowight cascade;
 create schema octowight;
 
-alter user postgres SET search_path=octowight;
-
 -- Create resource table
 create sequence octowight.resource_sequence;
 drop table if exists octowight.resource;

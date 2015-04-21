@@ -1,8 +1,6 @@
 drop schema if exists octowight cascade;
 create schema octowight;
 
-alter user postgres SET search_path=octowight;
-
 -- Create atom change event table
 create sequence octowight.event_sequence;
 drop table if exists octowight.atom_change_event;

@@ -1,12 +1,14 @@
 package nl.haploid.octowight.sample.repository;
 
+import nl.haploid.octowight.registry.data.Atom;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = PersonDmo.ATOM_TYPE, schema = "octowight")
-public class PersonDmo {
+public class PersonDmo implements Atom {
 
 	public static final String ATOM_TYPE = "person";
 
@@ -43,5 +45,15 @@ public class PersonDmo {
 
 	public void setRoles(final List<RoleDmo> roles) {
 		this.roles = roles;
+	}
+
+	@Override
+	public Long getAtomId() {
+		return getId();
+	}
+
+	@Override
+	public String getAtomType() {
+		return ATOM_TYPE;
 	}
 }
