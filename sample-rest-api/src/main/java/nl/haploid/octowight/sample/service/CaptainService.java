@@ -38,6 +38,8 @@ public class CaptainService {
 
     public Captain getCaptain(final long resourceId) {
         final Resource resource = getResource(resourceId);
+        // TODO: wrap this in some sort of captain resource builder object
+        // TODO: given a resource: get elements, save elements, build representation
         final PersonDmo personDmo = personDmoRepository.findOne(resource.getAtomId());
         if (personDmo == null) {
             throw new ResourceNotFoundException();
