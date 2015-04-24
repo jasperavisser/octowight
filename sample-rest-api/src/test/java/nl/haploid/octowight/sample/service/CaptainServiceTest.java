@@ -5,8 +5,8 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.registry.data.ResourceRoot;
 import nl.haploid.octowight.registry.data.ResourceRootFactory;
-import nl.haploid.octowight.registry.repository.ResourceDmo;
-import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
+import nl.haploid.octowight.registry.repository.ResourceRootDmo;
+import nl.haploid.octowight.registry.repository.ResourceRootDmoRepository;
 import nl.haploid.octowight.registry.repository.ResourceElementDmoFactory;
 import nl.haploid.octowight.registry.repository.ResourceElementDmoRepository;
 import nl.haploid.octowight.sample.TestData;
@@ -32,7 +32,7 @@ public class CaptainServiceTest {
     private PersonDmoRepository personDmoRepository;
 
     @Injectable
-    private ResourceDmoRepository resourceDmoRepository;
+    private ResourceRootDmoRepository resourceRootDmoRepository;
 
     @Injectable
     private ResourceElementDmoRepository resourceElementDmoRepository;
@@ -76,11 +76,11 @@ public class CaptainServiceTest {
         final Set<Long> personIds = new HashSet<>(Arrays.asList(personId1, personId2));
         final long resourceId1 = 123l;
         final long resourceId2 = 456l;
-        final ResourceDmo resourceDmo1 = TestData.resourceDmo(resourceId1);
-        final ResourceDmo resourceDmo2 = TestData.resourceDmo(resourceId2);
-        final List<ResourceDmo> resourceDmos = Arrays.asList(resourceDmo1, resourceDmo2);
-        resourceDmo1.setAtomId(personId1);
-        resourceDmo2.setAtomId(personId2);
+        final ResourceRootDmo resourceRootDmo1 = TestData.resourceDmo(resourceId1);
+        final ResourceRootDmo resourceRootDmo2 = TestData.resourceDmo(resourceId2);
+        final List<ResourceRootDmo> resourceRootDmos = Arrays.asList(resourceRootDmo1, resourceRootDmo2);
+        resourceRootDmo1.setAtomId(personId1);
+        resourceRootDmo2.setAtomId(personId2);
         final PersonDmo personDmo1 = TestData.personDmo(personId1);
         final PersonDmo personDmo2 = TestData.personDmo(personId2);
         final List<PersonDmo> personDmos = Arrays.asList(personDmo1, personDmo2);
@@ -88,9 +88,9 @@ public class CaptainServiceTest {
         final Captain captain2 = TestData.captain();
         final List<Captain> expectedCaptains = Arrays.asList(captain1, captain2);
         new StrictExpectations() {{
-            resourceDmoRepository.findByResourceType(Captain.RESOURCE_TYPE);
+            resourceRootDmoRepository.findByResourceType(Captain.RESOURCE_TYPE);
             times = 1;
-            result = resourceDmos;
+            result = resourceRootDmos;
             personDmoRepository.findAll(personIds);
             times = 1;
             result = personDmos;

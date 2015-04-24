@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class CaptainService {
 
     /**
-     * ResourceRoot: something that can be addressed by a URL and fetched (id, type, toJson)
+     * Resource: something that can be addressed by a URL and fetched (id, type, toJson)
      * Atom: something in a data store (id, type, locus)
      * ResourceRoot: mapping of a ResourceRoot to its root atom (atom_id, atom_type, atom_locus, resource_id, resource_type)
      */
@@ -28,7 +28,7 @@ public class CaptainService {
      * Given: resource type + id
      *
      * Fetch resource representation + version from cache
-     * (ResourceCacheDmoRepository -> ResourceCacheDmo)
+     *      (ResourceCacheDmoRepository -> ResourceCacheDmo)
      * Fetch resource version
      * If resource version == cached version {
      *      Return cached representation
@@ -45,7 +45,7 @@ public class CaptainService {
     private PersonDmoRepository personDmoRepository;
 
     @Autowired
-    private ResourceDmoRepository resourceDmoRepository;
+    private ResourceRootDmoRepository resourceRootDmoRepository;
 
     @Autowired
     private ResourceElementDmoRepository resourceElementDmoRepository;
@@ -74,9 +74,9 @@ public class CaptainService {
     }
 
     public List<Captain> getCaptains() {
-        final Map<Long, Long> atomIdToResourceId = resourceDmoRepository
+        final Map<Long, Long> atomIdToResourceId = resourceRootDmoRepository
                 .findByResourceType(Captain.RESOURCE_TYPE).stream()
-                .collect(Collectors.toMap(ResourceDmo::getAtomId, ResourceDmo::getResourceId));
+                .collect(Collectors.toMap(ResourceRootDmo::getAtomId, ResourceRootDmo::getResourceId));
         return personDmoRepository.findAll(atomIdToResourceId.keySet())
                 .stream()
                 .map(personDmo -> captainFactory.fromPersonDmo(personDmo, atomIdToResourceId.get(personDmo.getId())))
@@ -85,11 +85,11 @@ public class CaptainService {
 
     // TODO: test
     protected ResourceRoot getResource(final long resourceId) {
-        final ResourceDmo resourceDmo = resourceDmoRepository.findByResourceTypeAndResourceId(Captain.RESOURCE_TYPE, resourceId);
-        if (resourceDmo == null) {
+        final ResourceRootDmo resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(Captain.RESOURCE_TYPE, resourceId);
+        if (resourceRootDmo == null) {
             throw new ResourceNotFoundException();
         }
-        return resourceRootFactory.fromResourceDmo(resourceDmo);
+        return resourceRootFactory.fromResourceDmo(resourceRootDmo);
     }
 
     // TODO: test

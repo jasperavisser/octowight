@@ -1,7 +1,7 @@
 package nl.haploid.octowight.registry.data;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.registry.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,13 +16,13 @@ public class ResourceRootFactory {
 		return resourceRoot;
 	}
 
-	public ResourceRoot fromResourceDmo(final ResourceDmo resourceDmo) {
+	public ResourceRoot fromResourceDmo(final ResourceRootDmo resourceRootDmo) {
 		final ResourceRoot resourceRoot = new ResourceRoot();
-		resourceRoot.setAtomId(resourceDmo.getAtomId());
-		resourceRoot.setAtomLocus(resourceDmo.getAtomLocus());
-		resourceRoot.setAtomType(resourceDmo.getAtomType());
-		resourceRoot.setResourceId(resourceDmo.getResourceId());
-		resourceRoot.setResourceType(resourceDmo.getResourceType());
+		resourceRoot.setAtomId(resourceRootDmo.getAtomId());
+		resourceRoot.setAtomLocus(resourceRootDmo.getAtomLocus());
+		resourceRoot.setAtomType(resourceRootDmo.getAtomType());
+		resourceRoot.setResourceId(resourceRootDmo.getResourceId());
+		resourceRoot.setResourceType(resourceRootDmo.getResourceType());
 		return resourceRoot;
 	}
 }

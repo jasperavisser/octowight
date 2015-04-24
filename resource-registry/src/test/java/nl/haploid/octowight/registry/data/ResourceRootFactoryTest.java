@@ -3,7 +3,7 @@ package nl.haploid.octowight.registry.data;
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.registry.TestData;
-import nl.haploid.octowight.registry.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,12 +28,12 @@ public class ResourceRootFactoryTest {
 
 	@Test
 	public void testFromResourceDmo() {
-		final ResourceDmo resourceDmo = TestData.resourceDmo();
-		final ResourceRoot resourceRoot = resourceRootFactory.fromResourceDmo(resourceDmo);
-		assertEquals(resourceDmo.getAtomId(), resourceRoot.getAtomId());
-		assertEquals(resourceDmo.getAtomType(), resourceRoot.getAtomType());
-		assertEquals(resourceDmo.getAtomLocus(), resourceRoot.getAtomLocus());
-		assertEquals(resourceDmo.getResourceId(), resourceRoot.getResourceId());
-		assertEquals(resourceDmo.getResourceType(), resourceRoot.getResourceType());
+		final ResourceRootDmo resourceRootDmo = TestData.resourceRootDmo();
+		final ResourceRoot resourceRoot = resourceRootFactory.fromResourceDmo(resourceRootDmo);
+		assertEquals(resourceRootDmo.getAtomId(), resourceRoot.getAtomId());
+		assertEquals(resourceRootDmo.getAtomType(), resourceRoot.getAtomType());
+		assertEquals(resourceRootDmo.getAtomLocus(), resourceRoot.getAtomLocus());
+		assertEquals(resourceRootDmo.getResourceId(), resourceRoot.getResourceId());
+		assertEquals(resourceRootDmo.getResourceType(), resourceRoot.getResourceType());
 	}
 }

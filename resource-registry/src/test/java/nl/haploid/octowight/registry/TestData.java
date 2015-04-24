@@ -2,7 +2,7 @@ package nl.haploid.octowight.registry;
 
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.registry.data.ResourceRoot;
-import nl.haploid.octowight.registry.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 import nl.haploid.octowight.registry.repository.ResourceElementDmo;
 
 import java.util.Random;
@@ -32,12 +32,12 @@ public class TestData {
 		return event;
 	}
 
-	public static ResourceDmo resourceDmo() {
-		return resourceDmo("olson");
+	public static ResourceRootDmo resourceRootDmo() {
+		return resourceRootDmo("olson");
 	}
 
-	public static ResourceDmo resourceDmo(final String resourceType) {
-		final ResourceDmo dmo = new ResourceDmo();
+	public static ResourceRootDmo resourceRootDmo(final String resourceType) {
+		final ResourceRootDmo dmo = new ResourceRootDmo();
 		dmo.setResourceType(resourceType);
 		dmo.setAtomId(nextLong());
 		dmo.setAtomLocus("madison avenue");

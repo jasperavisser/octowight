@@ -1,7 +1,7 @@
 package nl.haploid.octowight.sample;
 
 import nl.haploid.octowight.registry.data.ResourceRoot;
-import nl.haploid.octowight.registry.repository.ResourceDmo;
+import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 import nl.haploid.octowight.sample.data.Captain;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 
@@ -29,8 +29,8 @@ public class TestData {
 		return new Random().nextLong();
 	}
 
-	public static ResourceDmo resourceDmo(final long resourceId) {
-		final ResourceDmo dmo = new ResourceDmo();
+	public static ResourceRootDmo resourceDmo(final long resourceId) {
+		final ResourceRootDmo dmo = new ResourceRootDmo();
 		dmo.setAtomId(nextLong());
 		dmo.setAtomLocus(nextString());
 		dmo.setAtomType(nextString());

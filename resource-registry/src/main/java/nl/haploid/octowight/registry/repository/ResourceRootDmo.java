@@ -6,10 +6,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "resource", schema = "octowight") // TODO: rename?
-public class ResourceDmo {
+@Table(name = "resource_root", schema = "octowight")
+public class ResourceRootDmo {
 
-	@Id
+	@Id // TODO: @Id is really resourceId + resourceType
 	@Column(name = "resource_id")
 	@SequenceGenerator(name = "resource_sequence", sequenceName = "octowight.resource_sequence")
 	@GeneratedValue(generator = "resource_sequence")

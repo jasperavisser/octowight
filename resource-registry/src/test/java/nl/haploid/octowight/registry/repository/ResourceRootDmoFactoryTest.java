@@ -10,16 +10,16 @@ import static org.junit.Assert.assertEquals;
 public class ResourceRootDmoFactoryTest {
 
 	@Tested
-	private ResourceDmoFactory resourceDmoFactory;
+	private ResourceRootDmoFactory resourceRootDmoFactory;
 
 	@Test
 	public void testFromResource() {
 		final ResourceRoot resourceRoot = TestData.resourceRoot(123l);
-		final ResourceDmo resourceDmo = resourceDmoFactory.fromResource(resourceRoot);
-		assertEquals(resourceRoot.getAtomId(), resourceDmo.getAtomId());
-		assertEquals(resourceRoot.getAtomType(), resourceDmo.getAtomType());
-		assertEquals(resourceRoot.getAtomLocus(), resourceDmo.getAtomLocus());
-		assertEquals(resourceRoot.getResourceId(), resourceDmo.getResourceId());
-		assertEquals(resourceRoot.getResourceType(), resourceDmo.getResourceType());
+		final ResourceRootDmo resourceRootDmo = resourceRootDmoFactory.fromResourceRoot(resourceRoot);
+		assertEquals(resourceRoot.getAtomId(), resourceRootDmo.getAtomId());
+		assertEquals(resourceRoot.getAtomType(), resourceRootDmo.getAtomType());
+		assertEquals(resourceRoot.getAtomLocus(), resourceRootDmo.getAtomLocus());
+		assertEquals(resourceRoot.getResourceId(), resourceRootDmo.getResourceId());
+		assertEquals(resourceRoot.getResourceType(), resourceRootDmo.getResourceType());
 	}
 }
