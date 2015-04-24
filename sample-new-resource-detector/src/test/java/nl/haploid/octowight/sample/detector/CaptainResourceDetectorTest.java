@@ -5,8 +5,8 @@ import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.registry.data.Resource;
-import nl.haploid.octowight.registry.data.ResourceFactory;
+import nl.haploid.octowight.registry.data.ResourceRoot;
+import nl.haploid.octowight.registry.data.ResourceRootFactory;
 import nl.haploid.octowight.sample.TestData;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
@@ -27,7 +27,7 @@ public class CaptainResourceDetectorTest {
 	private PersonDmoRepository personDmoRepository;
 
 	@Injectable
-	private ResourceFactory resourceFactory;
+	private ResourceRootFactory resourceRootFactory;
 
 	@Test
 	public void testGetAtomTypes() throws Exception {
@@ -48,8 +48,8 @@ public class CaptainResourceDetectorTest {
 			put(id1, personDmo1);
 			put(id2, personDmo2);
 		}};
-		final Resource resource = TestData.resource(id2);
-		final List<Resource> expectedResources = Collections.singletonList(resource);
+		final ResourceRoot resourceRoot = TestData.resourceRoot(id2);
+		final List<ResourceRoot> expectedResourceRoots = Collections.singletonList(resourceRoot);
 		new StrictExpectations(detector) {{
 			detector.getPersonsById(events);
 			times = 1;
@@ -60,12 +60,12 @@ public class CaptainResourceDetectorTest {
 			detector.isCaptain(personDmo2);
 			times = 1;
 			result = true;
-			resourceFactory.fromAtomChangeEvent(event2, CaptainResourceDetector.RESOURCE_TYPE);
+			resourceRootFactory.fromAtomChangeEvent(event2, CaptainResourceDetector.RESOURCE_TYPE);
 			times = 1;
-			result = resource;
+			result = resourceRoot;
 		}};
-		final List<Resource> actualResources = detector.detect(events);
-		assertEquals(expectedResources, actualResources);
+		final List<ResourceRoot> actualResourceRoots = detector.detect(events);
+		assertEquals(expectedResourceRoots, actualResourceRoots);
 	}
 
 	@Test

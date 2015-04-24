@@ -1,18 +1,18 @@
 package nl.haploid.octowight.registry.repository;
 
-import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceRoot;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ResourceDmoFactory {
 
-	public ResourceDmo fromResource(final Resource resource) {
+	public ResourceDmo fromResource(final ResourceRoot resourceRoot) {
 		final ResourceDmo resourceDmo = new ResourceDmo();
-		resourceDmo.setAtomId(resource.getAtomId());
-		resourceDmo.setAtomLocus(resource.getAtomLocus());
-		resourceDmo.setAtomType(resource.getAtomType());
-		resourceDmo.setResourceId(resource.getResourceId());
-		resourceDmo.setResourceType(resource.getResourceType());
+		resourceDmo.setAtomId(resourceRoot.getAtomId());
+		resourceDmo.setAtomLocus(resourceRoot.getAtomLocus());
+		resourceDmo.setAtomType(resourceRoot.getAtomType());
+		resourceDmo.setResourceId(resourceRoot.getResourceId());
+		resourceDmo.setResourceType(resourceRoot.getResourceType());
 		return resourceDmo;
 	}
 }

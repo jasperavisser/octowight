@@ -1,8 +1,8 @@
 package nl.haploid.octowight.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.registry.data.Resource;
-import nl.haploid.octowight.registry.data.ResourceFactory;
+import nl.haploid.octowight.registry.data.ResourceRoot;
+import nl.haploid.octowight.registry.data.ResourceRootFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class MockResourceDetector implements ResourceDetector {
 	public static final String RESOURCE_TYPE = "preston";
 
 	@Autowired
-	private ResourceFactory resourceFactory;
+	private ResourceRootFactory resourceRootFactory;
 
 	@Override
 	public Collection<String> getAtomTypes() {
@@ -27,9 +27,9 @@ public class MockResourceDetector implements ResourceDetector {
 	}
 
 	@Override
-	public List<Resource> detect(final List<AtomChangeEvent> events) {
+	public List<ResourceRoot> detect(final List<AtomChangeEvent> events) {
 		return events.stream()
-				.map(event -> resourceFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
+				.map(event -> resourceRootFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
 				.collect(Collectors.toList());
 	}
 }

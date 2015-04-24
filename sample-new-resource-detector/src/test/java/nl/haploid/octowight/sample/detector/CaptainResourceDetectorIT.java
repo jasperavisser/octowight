@@ -1,7 +1,7 @@
 package nl.haploid.octowight.sample.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
-import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceRoot;
 import nl.haploid.octowight.sample.AbstractIT;
 import nl.haploid.octowight.sample.TestData;
 import nl.haploid.octowight.sample.repository.PersonDmo;
@@ -53,8 +53,8 @@ public class CaptainResourceDetectorIT extends AbstractIT {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent(dmo1.getId());
 		final AtomChangeEvent event2 = TestData.atomChangeEvent(dmo2.getId());
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
-		final List<Resource> actualResources = detector.detect(events);
-		assertEquals(1, actualResources.size());
-		assertEquals(dmo1.getId(), actualResources.get(0).getAtomId());
+		final List<ResourceRoot> actualResourceRoots = detector.detect(events);
+		assertEquals(1, actualResourceRoots.size());
+		assertEquals(dmo1.getId(), actualResourceRoots.get(0).getAtomId());
 	}
 }

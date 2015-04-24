@@ -2,8 +2,8 @@ package nl.haploid.octowight.sample.detector;
 
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.detector.ResourceDetector;
-import nl.haploid.octowight.registry.data.Resource;
-import nl.haploid.octowight.registry.data.ResourceFactory;
+import nl.haploid.octowight.registry.data.ResourceRoot;
+import nl.haploid.octowight.registry.data.ResourceRootFactory;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class CaptainResourceDetector implements ResourceDetector {
 	private PersonDmoRepository repository;
 
 	@Autowired
-	private ResourceFactory resourceFactory;
+	private ResourceRootFactory resourceRootFactory;
 
 	@Override
 	public Collection<String> getAtomTypes() {
@@ -37,12 +37,12 @@ public class CaptainResourceDetector implements ResourceDetector {
 
 	@Override
 	@Transactional("sampleTransactionManager")
-	public List<Resource> detect(final List<AtomChangeEvent> events) {
+	public List<ResourceRoot> detect(final List<AtomChangeEvent> events) {
 		final Map<Long, PersonDmo> personsByAtomId = getPersonsById(events);
 		return events.stream()
 				.filter(event -> personsByAtomId.containsKey(event.getAtomId()))
 				.filter(event -> isCaptain(personsByAtomId.get(event.getAtomId())))
-				.map(event -> resourceFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
+				.map(event -> resourceRootFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
 				.collect(Collectors.toList());
 	}
 

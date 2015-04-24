@@ -1,6 +1,6 @@
 package nl.haploid.octowight.registry.data;
 
-public class Resource {
+public class ResourceRoot {
 
 	private Long resourceId;
 

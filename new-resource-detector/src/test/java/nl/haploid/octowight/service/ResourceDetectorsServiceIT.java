@@ -7,7 +7,7 @@ import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.detector.MockResourceDetector;
 import nl.haploid.octowight.detector.ResourceDetector;
-import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceRoot;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,16 +52,16 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType);
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet");
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
-		final List<Resource> expectedResources = Collections.singletonList(TestData.resource(96l));
+		final List<ResourceRoot> expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(96l));
 		new StrictExpectations(mockDetector) {{
 			mockDetector.getAtomTypes();
 			times = 1;
 			result = Arrays.asList("holloway", atomType);
 			mockDetector.detect(events);
 			times = 1;
-			result = expectedResources;
+			result = expectedResourceRoots;
 		}};
-		final List<Resource> actualResources = service.detectResources(atomType, events);
-		assertEquals(expectedResources, actualResources);
+		final List<ResourceRoot> actualResourceRoots = service.detectResources(atomType, events);
+		assertEquals(expectedResourceRoots, actualResourceRoots);
 	}
 }

@@ -7,7 +7,7 @@ import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.detector.ResourceDetector;
-import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceRoot;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -49,16 +49,16 @@ public class ResourceDetectorsServiceTest {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent("draper");
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("pryce");
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
-		final List<Resource> expectedResources = Collections.singletonList(TestData.resource(null));
+		final List<ResourceRoot> expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(null));
 		new StrictExpectations(service) {{
 			service.getDetectorsForAtomType("draper");
 			times = 1;
 			result = Collections.singletonList(mockDetector);
 			mockDetector.detect(events);
 			times = 1;
-			result = expectedResources;
+			result = expectedResourceRoots;
 		}};
-		final List<Resource> actualResources = service.detectResources("draper", events);
-		assertEquals(expectedResources, actualResources);
+		final List<ResourceRoot> actualResourceRoots = service.detectResources("draper", events);
+		assertEquals(expectedResourceRoots, actualResourceRoots);
 	}
 }

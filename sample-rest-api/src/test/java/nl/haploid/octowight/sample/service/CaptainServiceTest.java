@@ -3,8 +3,8 @@ package nl.haploid.octowight.sample.service;
 import mockit.Injectable;
 import mockit.StrictExpectations;
 import mockit.Tested;
-import nl.haploid.octowight.registry.data.Resource;
-import nl.haploid.octowight.registry.data.ResourceFactory;
+import nl.haploid.octowight.registry.data.ResourceRoot;
+import nl.haploid.octowight.registry.data.ResourceRootFactory;
 import nl.haploid.octowight.registry.repository.ResourceDmo;
 import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
 import nl.haploid.octowight.registry.repository.ResourceElementDmoFactory;
@@ -41,7 +41,7 @@ public class CaptainServiceTest {
     private CaptainFactory captainFactory;
 
     @Injectable
-    private ResourceFactory resourceFactory;
+    private ResourceRootFactory resourceRootFactory;
 
     @Injectable
     private ResourceElementDmoFactory resourceElementDmoFactory;
@@ -49,17 +49,17 @@ public class CaptainServiceTest {
     @Test
     public void testGetCaptain() {
         final Long resourceId = 123l;
-        final Resource resource = TestData.resource(resourceId);
+        final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
         final PersonDmo personDmo = TestData.personDmo();
         final Captain captain = TestData.captain();
         new StrictExpectations(service) {{
             service.getResource(resourceId);
             times = 1;
-            result = resource;
-            personDmoRepository.findOne(resource.getAtomId());
+            result = resourceRoot;
+            personDmoRepository.findOne(resourceRoot.getAtomId());
             times = 1;
             result = personDmo;
-            service.saveResourceElements(resource, personDmo);
+            service.saveResourceElements(resourceRoot, personDmo);
             times = 1;
             captainFactory.fromPersonDmo(personDmo, resourceId);
             times = 1;

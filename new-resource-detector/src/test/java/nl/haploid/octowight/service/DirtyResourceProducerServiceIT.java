@@ -2,7 +2,7 @@ package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AbstractIT;
 import nl.haploid.octowight.TestData;
-import nl.haploid.octowight.registry.data.Resource;
+import nl.haploid.octowight.registry.data.ResourceRoot;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ public class DirtyResourceProducerServiceIT extends AbstractIT {
 
 	@Test
 	public void testSendDirtyResource() throws Exception {
-		final Resource resource = TestData.resource(555l);
-		final Future<RecordMetadata> future = service.sendDirtyResource(resource);
+		final ResourceRoot resourceRoot = TestData.resourceRoot(555l);
+		final Future<RecordMetadata> future = service.sendDirtyResource(resourceRoot);
 		assertNotNull(future.get());
 	}
 }

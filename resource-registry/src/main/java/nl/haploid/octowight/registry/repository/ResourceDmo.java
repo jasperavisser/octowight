@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "resource", schema = "octowight")
+@Table(name = "resource", schema = "octowight") // TODO: rename?
 public class ResourceDmo {
 
 	@Id

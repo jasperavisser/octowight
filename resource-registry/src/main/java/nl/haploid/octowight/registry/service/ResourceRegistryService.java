@@ -1,7 +1,7 @@
 package nl.haploid.octowight.registry.service;
 
-import nl.haploid.octowight.registry.data.Resource;
-import nl.haploid.octowight.registry.data.ResourceFactory;
+import nl.haploid.octowight.registry.data.ResourceRoot;
+import nl.haploid.octowight.registry.data.ResourceRootFactory;
 import nl.haploid.octowight.registry.repository.ResourceDmo;
 import nl.haploid.octowight.registry.repository.ResourceDmoFactory;
 import nl.haploid.octowight.registry.repository.ResourceDmoRepository;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResourceRegistryService {
+public class ResourceRegistryService { // TODO: rename?
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -19,22 +19,22 @@ public class ResourceRegistryService {
 	private ResourceDmoRepository resourceRepository;
 
 	@Autowired
-	private ResourceFactory resourceFactory;
+	private ResourceRootFactory resourceRootFactory;
 
 	@Autowired
 	private ResourceDmoFactory resourceDmoFactory;
 
-	public boolean isNewResource(final Resource resource) {
+	public boolean isNewResource(final ResourceRoot resourceRoot) {
 		final ResourceDmo dmo = resourceRepository
-				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resource.getResourceType(),
-						resource.getAtomId(), resource.getAtomType(), resource.getAtomLocus());
+				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resourceRoot.getResourceType(),
+						resourceRoot.getAtomId(), resourceRoot.getAtomType(), resourceRoot.getAtomLocus());
 		return dmo == null;
 	}
 
-	public Resource saveResource(final Resource resource) {
-		final ResourceDmo resourceDmo = resourceDmoFactory.fromResource(resource);
+	public ResourceRoot saveResource(final ResourceRoot resourceRoot) {
+		final ResourceDmo resourceDmo = resourceDmoFactory.fromResource(resourceRoot);
 		final ResourceDmo dmo = resourceRepository.saveAndFlush(resourceDmo);
 		log.debug(String.format("Saved resource: %s/%d", dmo.getResourceType(), dmo.getResourceId()));
-		return resourceFactory.fromResourceDmo(dmo);
+		return resourceRootFactory.fromResourceDmo(dmo);
 	}
 }
