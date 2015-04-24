@@ -1,5 +1,6 @@
 package nl.haploid.octowight.sample;
 
+import nl.haploid.octowight.registry.data.ResourceRoot;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.RoleDmo;
 
@@ -9,6 +10,10 @@ import java.util.UUID;
 public class TestData {
 
 	public static String name() {
+		return nextString();
+	}
+
+	public static String nextString() {
 		return UUID.randomUUID().toString();
 	}
 
@@ -29,5 +34,16 @@ public class TestData {
 		dmo.setPerson(personDmo);
 		dmo.setType(type);
 		return dmo;
+	}
+
+	public static ResourceRoot resourceRoot() {
+		final ResourceRoot resourceRoot = new ResourceRoot();
+		resourceRoot.setAtomId(nextLong());
+		resourceRoot.setAtomLocus(nextString());
+		resourceRoot.setAtomType(nextString());
+		resourceRoot.setResourceId(nextLong());
+		resourceRoot.setResourceType(nextString());
+		resourceRoot.setVersion(nextLong());
+		return resourceRoot;
 	}
 }

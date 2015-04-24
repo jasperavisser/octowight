@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class CaptainController extends AbstractController {
 
-    @Autowired
-    private CaptainService captainService;
+	@Autowired
+	private CaptainService captainService;
 
 //	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public List<CaptainModel> getCaptains() {
 //		return captainService.getCaptains();
 //	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Model getCaptain(final @PathVariable long id) {
-        return captainService.getCaptain(id);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Model getCaptain(final @PathVariable long id) {
+		return captainService.getModel(id);
+	}
 }

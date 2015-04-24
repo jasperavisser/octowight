@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 
 // TODO: test
 @Component
-public class CaptainResourceFactory {
+public class CaptainResourceFactory implements ResourceFactory<CaptainResource> {
 
     @Autowired
     private PersonDmoRepository personDmoRepository;
 
+    @Override
     public CaptainResource fromResourceRoot(final ResourceRoot resourceRoot) {
         final PersonDmo personDmo = personDmoRepository.findOne(resourceRoot.getAtomId());
         if (personDmo == null) {

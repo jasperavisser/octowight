@@ -23,7 +23,7 @@ public class CaptainResource implements Resource<CaptainModel> {
     }
 
     @Override
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -53,7 +53,7 @@ public class CaptainResource implements Resource<CaptainModel> {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(final Long version) {
         this.version = version;
     }
 }

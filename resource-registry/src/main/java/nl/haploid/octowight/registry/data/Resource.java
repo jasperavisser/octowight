@@ -6,7 +6,7 @@ public interface Resource<T extends Model> {
 
     Collection<Atom> getAtoms();
 
-    long getId();
+    Long getId();
 
     String getType();
 

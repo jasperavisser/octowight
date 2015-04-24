@@ -10,60 +10,61 @@ import java.util.List;
 @Table(name = PersonDmo.ATOM_TYPE, schema = "octowight")
 public class PersonDmo implements Atom {
 
-    public static final String ATOM_TYPE = "person";
+	public static final String ATOM_TYPE = "person";
 
-    @Id
-    @SequenceGenerator(name = "person_sequence", sequenceName = "octowight.person_sequence")
-    @GeneratedValue(generator = "person_sequence")
-    private Long id;
+	@Id
+	@SequenceGenerator(name = "person_sequence", sequenceName = "octowight.person_sequence")
+	@GeneratedValue(generator = "person_sequence")
+	private Long id;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @OneToMany(mappedBy = "person")
-    private List<RoleDmo> roles = new ArrayList<>();
-    private String atomLocus;
+	@OneToMany(mappedBy = "person")
+	private List<RoleDmo> roles = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
+	private String atomLocus;
 
-    public String getName() {
-        return name;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public List<RoleDmo> getRoles() {
-        return this.roles;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	public List<RoleDmo> getRoles() {
+		return this.roles;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
-    public void setRoles(final List<RoleDmo> roles) {
-        this.roles = roles;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    @Override
-    public Long getAtomId() {
-        return getId();
-    }
+	public void setRoles(final List<RoleDmo> roles) {
+		this.roles = roles;
+	}
 
-    @Override
-    public String getAtomLocus() {
-        return atomLocus;
-    }
+	@Override
+	public Long getAtomId() {
+		return getId();
+	}
 
-    public void setAtomLocus(String atomLocus) {
-        this.atomLocus = atomLocus;
-    }
+	@Override
+	public String getAtomLocus() {
+		return atomLocus;
+	}
 
-    @Override
-    public String getAtomType() {
-        return ATOM_TYPE;
-    }
+	public void setAtomLocus(String atomLocus) {
+		this.atomLocus = atomLocus;
+	}
+
+	@Override
+	public String getAtomType() {
+		return ATOM_TYPE;
+	}
 }
