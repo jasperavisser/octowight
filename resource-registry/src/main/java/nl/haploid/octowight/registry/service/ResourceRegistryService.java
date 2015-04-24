@@ -13,28 +13,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResourceRegistryService { // TODO: rename?
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+    private Logger log = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	private ResourceRootDmoRepository resourceRepository;
+    @Autowired
+    private ResourceRootDmoRepository resourceRepository;
 
-	@Autowired
-	private ResourceRootFactory resourceRootFactory;
+    @Autowired
+    private ResourceRootFactory resourceRootFactory;
 
-	@Autowired
-	private ResourceRootDmoFactory resourceRootDmoFactory;
+    @Autowired
+    private ResourceRootDmoFactory resourceRootDmoFactory;
 
-	public boolean isNewResource(final ResourceRoot resourceRoot) {
-		final ResourceRootDmo dmo = resourceRepository
-				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resourceRoot.getResourceType(),
-						resourceRoot.getAtomId(), resourceRoot.getAtomType(), resourceRoot.getAtomLocus());
-		return dmo == null;
-	}
+    public boolean isNewResource(final ResourceRoot resourceRoot) {
+        final ResourceRootDmo dmo = resourceRepository
+                .findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resourceRoot.getResourceType(),
+                        resourceRoot.getAtomId(), resourceRoot.getAtomType(), resourceRoot.getAtomLocus());
+        return dmo == null;
+    }
 
-	public ResourceRoot saveResource(final ResourceRoot resourceRoot) {
-		final ResourceRootDmo resourceRootDmo = resourceRootDmoFactory.fromResourceRoot(resourceRoot);
-		final ResourceRootDmo dmo = resourceRepository.saveAndFlush(resourceRootDmo);
-		log.debug(String.format("Saved resource: %s/%d", dmo.getResourceType(), dmo.getResourceId()));
-		return resourceRootFactory.fromResourceDmo(dmo);
-	}
+    public ResourceRoot saveResource(final ResourceRoot resourceRoot) {
+        final ResourceRootDmo resourceRootDmo = resourceRootDmoFactory.fromResourceRoot(resourceRoot);
+        final ResourceRootDmo dmo = resourceRepository.saveAndFlush(resourceRootDmo);
+        log.debug(String.format("Saved resource: %s/%d", dmo.getResourceType(), dmo.getResourceId()));
+        return resourceRootFactory.fromResourceDmo(dmo);
+    }
 }

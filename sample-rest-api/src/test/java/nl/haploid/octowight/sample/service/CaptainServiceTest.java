@@ -1,25 +1,18 @@
 package nl.haploid.octowight.sample.service;
 
 import mockit.Injectable;
+import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
+import nl.haploid.octowight.registry.data.ModelSerializer;
 import nl.haploid.octowight.registry.data.ResourceRoot;
 import nl.haploid.octowight.registry.data.ResourceRootFactory;
-import nl.haploid.octowight.registry.repository.ResourceRootDmo;
-import nl.haploid.octowight.registry.repository.ResourceRootDmoRepository;
-import nl.haploid.octowight.registry.repository.ResourceElementDmoFactory;
-import nl.haploid.octowight.registry.repository.ResourceElementDmoRepository;
+import nl.haploid.octowight.registry.repository.*;
 import nl.haploid.octowight.sample.TestData;
-import nl.haploid.octowight.sample.data.Captain;
-import nl.haploid.octowight.sample.data.CaptainFactory;
-import nl.haploid.octowight.sample.repository.PersonDmo;
-import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import nl.haploid.octowight.sample.data.CaptainResource;
+import nl.haploid.octowight.sample.data.CaptainResourceFactory;
+import nl.haploid.octowight.sample.data.CaptainModel;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,16 +22,10 @@ public class CaptainServiceTest {
     private CaptainService service;
 
     @Injectable
-    private PersonDmoRepository personDmoRepository;
-
-    @Injectable
     private ResourceRootDmoRepository resourceRootDmoRepository;
 
     @Injectable
     private ResourceElementDmoRepository resourceElementDmoRepository;
-
-    @Injectable
-    private CaptainFactory captainFactory;
 
     @Injectable
     private ResourceRootFactory resourceRootFactory;
@@ -46,62 +33,44 @@ public class CaptainServiceTest {
     @Injectable
     private ResourceElementDmoFactory resourceElementDmoFactory;
 
-    @Test
-    public void testGetCaptain() {
-        final Long resourceId = 123l;
-        final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
-        final PersonDmo personDmo = TestData.personDmo();
-        final Captain captain = TestData.captain();
-        new StrictExpectations(service) {{
-            service.getResource(resourceId);
-            times = 1;
-            result = resourceRoot;
-            personDmoRepository.findOne(resourceRoot.getAtomId());
-            times = 1;
-            result = personDmo;
-            service.saveResourceElements(resourceRoot, personDmo);
-            times = 1;
-            captainFactory.fromPersonDmo(personDmo, resourceId);
-            times = 1;
-            result = captain;
-        }};
-        final Captain actualCaptain = service.getCaptain(resourceId);
-        assertEquals(resourceId, actualCaptain.getId());
-    }
+    @Injectable
+    private CaptainResourceFactory captainResourceFactory;
+
+    @Injectable
+    private ResourceModelDmoFactory resourceModelDmoFactory;
+
+    @Injectable
+    private ResourceModelDmoRepository resourceModelDmoRepository;
+
+    @Injectable
+    private ModelSerializer<CaptainModel> modelSerializer;
 
     @Test
-    public void testGetCaptains() {
-        final long personId1 = 111l;
-        final long personId2 = 222l;
-        final Set<Long> personIds = new HashSet<>(Arrays.asList(personId1, personId2));
-        final long resourceId1 = 123l;
-        final long resourceId2 = 456l;
-        final ResourceRootDmo resourceRootDmo1 = TestData.resourceDmo(resourceId1);
-        final ResourceRootDmo resourceRootDmo2 = TestData.resourceDmo(resourceId2);
-        final List<ResourceRootDmo> resourceRootDmos = Arrays.asList(resourceRootDmo1, resourceRootDmo2);
-        resourceRootDmo1.setAtomId(personId1);
-        resourceRootDmo2.setAtomId(personId2);
-        final PersonDmo personDmo1 = TestData.personDmo(personId1);
-        final PersonDmo personDmo2 = TestData.personDmo(personId2);
-        final List<PersonDmo> personDmos = Arrays.asList(personDmo1, personDmo2);
-        final Captain captain1 = TestData.captain();
-        final Captain captain2 = TestData.captain();
-        final List<Captain> expectedCaptains = Arrays.asList(captain1, captain2);
-        new StrictExpectations() {{
-            resourceRootDmoRepository.findByResourceType(Captain.RESOURCE_TYPE);
+    public void testGetCaptain(final @Mocked CaptainResource captainResource) {
+        final Long resourceId = TestData.nextLong();
+        final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
+        final CaptainModel expectedCaptainModel = TestData.captainModel();
+        final ResourceModelDmo resourceModelDmo = TestData.resourceModelDmo();
+        final String body = TestData.nextString();
+        new StrictExpectations(service) {{
+            service.getResourceRoot(CaptainResource.RESOURCE_TYPE, resourceId);
             times = 1;
-            result = resourceRootDmos;
-            personDmoRepository.findAll(personIds);
+            result = resourceRoot;
+            captainResourceFactory.fromResourceRoot(resourceRoot);
             times = 1;
-            result = personDmos;
-            captainFactory.fromPersonDmo(personDmo1, resourceId1);
+            result = captainResource;
+            service.saveResourceElements(captainResource);
             times = 1;
-            result = captain1;
-            captainFactory.fromPersonDmo(personDmo2, resourceId2);
+            captainResource.getModel();
             times = 1;
-            result = captain2;
+            result = expectedCaptainModel;
+            modelSerializer.toString(expectedCaptainModel);
+            times = 1;
+            result = body;
+            service.saveModel(captainResource, body);
+            times = 1;
         }};
-        final List<Captain> actualCaptains = service.getCaptains();
-        assertEquals(expectedCaptains, actualCaptains);
+        final CaptainModel actualCaptainModel = service.getCaptain(resourceId);
+        assertEquals(expectedCaptainModel, actualCaptainModel);
     }
 }

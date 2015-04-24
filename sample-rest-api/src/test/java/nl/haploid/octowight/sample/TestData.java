@@ -1,8 +1,9 @@
 package nl.haploid.octowight.sample;
 
 import nl.haploid.octowight.registry.data.ResourceRoot;
+import nl.haploid.octowight.registry.repository.ResourceModelDmo;
 import nl.haploid.octowight.registry.repository.ResourceRootDmo;
-import nl.haploid.octowight.sample.data.Captain;
+import nl.haploid.octowight.sample.data.CaptainModel;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 
 import java.util.Random;
@@ -10,48 +11,48 @@ import java.util.UUID;
 
 public class TestData {
 
-	public static PersonDmo personDmo() {
-		return personDmo(null);
-	}
+    public static PersonDmo personDmo() {
+        return personDmo(null);
+    }
 
-	public static PersonDmo personDmo(final Long id) {
-		final PersonDmo person = new PersonDmo();
-		person.setId(id);
-		person.setName(nextString());
-		return person;
-	}
+    public static PersonDmo personDmo(final Long id) {
+        final PersonDmo person = new PersonDmo();
+        person.setId(id);
+        person.setName(nextString());
+        return person;
+    }
 
-	public static String nextString() {
-		return UUID.randomUUID().toString();
-	}
+    public static String nextString() {
+        return UUID.randomUUID().toString();
+    }
 
-	public static long nextLong() {
-		return new Random().nextLong();
-	}
+    public static long nextLong() {
+        return new Random().nextLong();
+    }
 
-	public static ResourceRootDmo resourceDmo(final long resourceId) {
-		final ResourceRootDmo dmo = new ResourceRootDmo();
-		dmo.setAtomId(nextLong());
-		dmo.setAtomLocus(nextString());
-		dmo.setAtomType(nextString());
-		dmo.setResourceId(resourceId);
-		dmo.setResourceType(nextString());
-		return dmo;
-	}
+    public static ResourceRoot resourceRoot() {
+        return resourceRoot(nextLong());
+    }
 
-	public static Captain captain() {
-		final Captain captain = new Captain();
-		captain.setName(nextString());
-		return captain;
-	}
+    public static ResourceRoot resourceRoot(final Long resourceId) {
+        final ResourceRoot resourceRoot = new ResourceRoot();
+        resourceRoot.setAtomId(nextLong());
+        resourceRoot.setAtomLocus(nextString());
+        resourceRoot.setAtomType(nextString());
+        resourceRoot.setResourceId(resourceId);
+        resourceRoot.setResourceType(nextString());
+        return resourceRoot;
+    }
 
-	public static ResourceRoot resourceRoot(final Long resourceId) {
-		final ResourceRoot resourceRoot = new ResourceRoot();
-		resourceRoot.setAtomId(nextLong());
-		resourceRoot.setAtomLocus(nextString());
-		resourceRoot.setAtomType(nextString());
-		resourceRoot.setResourceId(resourceId);
-		resourceRoot.setResourceType(nextString());
-		return resourceRoot;
-	}
+    public static CaptainModel captainModel() {
+        return new CaptainModel();
+    }
+
+    public static ResourceModelDmo resourceModelDmo() {
+        return new ResourceModelDmo();
+    }
+
+    public static ResourceRootDmo resourceRootDmo() {
+        return new ResourceRootDmo();
+    }
 }

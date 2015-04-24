@@ -12,6 +12,8 @@ public class ResourceRoot {
 
 	private String atomType;
 
+	private Long version;
+
 	public String key() {
 		return String.format("%s:%s/%s->%s", getAtomLocus(), getAtomType(), getAtomId(), getResourceType());
 	}
@@ -54,5 +56,13 @@ public class ResourceRoot {
 
 	public void setAtomType(final String atomType) {
 		this.atomType = atomType;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(final Long version) {
+		this.version = version;
 	}
 }

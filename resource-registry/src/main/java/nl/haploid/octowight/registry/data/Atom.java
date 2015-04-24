@@ -4,5 +4,7 @@ public interface Atom {
 
     Long getAtomId();
 
+    String getAtomLocus();
+
     String getAtomType();
 }

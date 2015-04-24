@@ -1,8 +1,8 @@
 package nl.haploid.octowight.sample.data;
 
-public class Captain {
+import nl.haploid.octowight.registry.data.Model;
 
-	public static final String RESOURCE_TYPE = "captain";
+public class CaptainModel implements Model {
 
 	private Long id;
 

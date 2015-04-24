@@ -1,102 +1,29 @@
 package nl.haploid.octowight.sample.service;
 
 import nl.haploid.octowight.registry.data.ResourceRoot;
-import nl.haploid.octowight.registry.data.ResourceRootFactory;
-import nl.haploid.octowight.registry.repository.*;
-import nl.haploid.octowight.sample.controller.ResourceNotFoundException;
-import nl.haploid.octowight.sample.data.Captain;
-import nl.haploid.octowight.sample.data.CaptainFactory;
-import nl.haploid.octowight.sample.repository.PersonDmo;
-import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import nl.haploid.octowight.sample.data.CaptainResource;
+import nl.haploid.octowight.sample.data.CaptainResourceFactory;
+import nl.haploid.octowight.sample.data.CaptainModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CaptainService {
-
-    /**
-     * Resource: something that can be addressed by a URL and fetched (id, type, toJson)
-     * Atom: something in a data store (id, type, locus)
-     * ResourceRoot: mapping of a ResourceRoot to its root atom (atom_id, atom_type, atom_locus, resource_id, resource_type)
-     */
-
-    /**
-     * Given: resource type + id
-     *
-     * Fetch resource representation + version from cache
-     *      (ResourceCacheDmoRepository -> ResourceCacheDmo)
-     * Fetch resource version
-     * If resource version == cached version {
-     *      Return cached representation
-     * }
-     *
-     * Fetch atoms for resource
-     * Save resource->atoms map
-     * Build resource representation
-     * Save resource representation + version to cache
-     * Return representation
-     */
+public class CaptainService extends AbstractResourceService<CaptainModel> {
 
     @Autowired
-    private PersonDmoRepository personDmoRepository;
+    private CaptainResourceFactory captainResourceFactory;
 
-    @Autowired
-    private ResourceRootDmoRepository resourceRootDmoRepository;
-
-    @Autowired
-    private ResourceElementDmoRepository resourceElementDmoRepository;
-
-    @Autowired
-    private CaptainFactory captainFactory;
-
-    @Autowired
-    private ResourceRootFactory resourceRootFactory;
-
-    @Autowired
-    private ResourceElementDmoFactory resourceElementDmoFactory;
-
-    public Captain getCaptain(final long resourceId) {
-        final ResourceRoot resourceRoot = getResource(resourceId);
-        // TODO: wrap this in some sort of captain resource builder object
-        // TODO: given a resource: get elements, save elements, build representation
-        final PersonDmo personDmo = personDmoRepository.findOne(resourceRoot.getAtomId());
-        if (personDmo == null) {
-            throw new ResourceNotFoundException();
-        }
-        saveResourceElements(resourceRoot, personDmo);
-        final Captain captain = captainFactory.fromPersonDmo(personDmo, resourceRoot.getResourceId());
-        captain.setId(resourceRoot.getResourceId());
-        return captain;
-    }
-
-    public List<Captain> getCaptains() {
-        final Map<Long, Long> atomIdToResourceId = resourceRootDmoRepository
-                .findByResourceType(Captain.RESOURCE_TYPE).stream()
-                .collect(Collectors.toMap(ResourceRootDmo::getAtomId, ResourceRootDmo::getResourceId));
-        return personDmoRepository.findAll(atomIdToResourceId.keySet())
-                .stream()
-                .map(personDmo -> captainFactory.fromPersonDmo(personDmo, atomIdToResourceId.get(personDmo.getId())))
-                .collect(Collectors.toList());
-    }
-
-    // TODO: test
-    protected ResourceRoot getResource(final long resourceId) {
-        final ResourceRootDmo resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(Captain.RESOURCE_TYPE, resourceId);
-        if (resourceRootDmo == null) {
-            throw new ResourceNotFoundException();
-        }
-        return resourceRootFactory.fromResourceDmo(resourceRootDmo);
-    }
-
-    // TODO: test
-    // TODO: transactional over resourceRegistry
-    protected void saveResourceElements(final ResourceRoot resourceRoot, final PersonDmo personDmo) {
-        resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resourceRoot.getResourceType(), resourceRoot.getResourceId());
-        final ResourceElementDmo dmo = resourceElementDmoFactory.fromResourceAndAtom(resourceRoot, personDmo);
-        resourceElementDmoRepository.save(dmo);
+    // TODO: check if it is still a resource (captain resource detector)
+    @Transactional("registryTransactionManager")
+    public CaptainModel getCaptain(final long resourceId) {
+        final ResourceRoot resourceRoot = getResourceRoot(CaptainResource.RESOURCE_TYPE, resourceId);
+        // TODO: read model from cache, check version
+        final CaptainResource captainResource = captainResourceFactory.fromResourceRoot(resourceRoot);
+        saveResourceElements(captainResource);
+        final CaptainModel captainModel = captainResource.getModel();
+        final String body = getModelSerializer().toString(captainModel);
+        saveModel(captainResource, body);
+        return captainModel;
     }
 }
