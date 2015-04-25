@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 public class CaptainService extends AbstractResourceService<CaptainModel, CaptainResource> {
 
 	@Override
+	protected Class<CaptainModel> getModelClass() {
+		return CaptainModel.class;
+	}
+
+	@Override
 	public String getResourceType() {
 		return CaptainResource.RESOURCE_TYPE;
 	}

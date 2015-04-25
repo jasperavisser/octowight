@@ -9,68 +9,71 @@ import nl.haploid.octowight.registry.data.ResourceRoot;
 import nl.haploid.octowight.registry.data.ResourceRootFactory;
 import nl.haploid.octowight.registry.repository.*;
 import nl.haploid.octowight.sample.TestData;
-import nl.haploid.octowight.sample.data.CaptainResource;
-import nl.haploid.octowight.sample.data.CaptainResourceFactory;
 import nl.haploid.octowight.sample.data.CaptainModel;
+import nl.haploid.octowight.sample.data.CaptainResource;
+import nl.haploid.octowight.sample.data.ResourceFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class CaptainServiceTest {
 
-    @Tested
-    private CaptainService service;
+	@Tested
+	private CaptainService service;
 
-    @Injectable
-    private ResourceRootDmoRepository resourceRootDmoRepository;
+	@Injectable
+	private ResourceRootDmoRepository resourceRootDmoRepository;
 
-    @Injectable
-    private ResourceElementDmoRepository resourceElementDmoRepository;
+	@Injectable
+	private ResourceElementDmoRepository resourceElementDmoRepository;
 
-    @Injectable
-    private ResourceRootFactory resourceRootFactory;
+	@Injectable
+	private ResourceRootFactory resourceRootFactory;
 
-    @Injectable
-    private ResourceElementDmoFactory resourceElementDmoFactory;
+	@Injectable
+	private ResourceElementDmoFactory resourceElementDmoFactory;
 
-    @Injectable
-    private CaptainResourceFactory captainResourceFactory;
+	@Injectable
+	private ResourceModelDmoFactory resourceModelDmoFactory;
 
-    @Injectable
-    private ResourceModelDmoFactory resourceModelDmoFactory;
+	@Injectable
+	private ResourceModelDmoRepository resourceModelDmoRepository;
 
-    @Injectable
-    private ResourceModelDmoRepository resourceModelDmoRepository;
+	@Injectable
+	private ModelSerializer<CaptainModel> modelSerializer;
 
-    @Injectable
-    private ModelSerializer<CaptainModel> modelSerializer;
+	@Injectable
+	private ResourceFactory<CaptainResource> resourceFactory;
 
-    @Test
-    public void testGetCaptain(final @Mocked CaptainResource captainResource) {
-        final Long resourceId = TestData.nextLong();
-        final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
-        final CaptainModel expectedCaptainModel = TestData.captainModel();
-        final ResourceModelDmo resourceModelDmo = TestData.resourceModelDmo();
-        final String body = TestData.nextString();
-        new StrictExpectations(service) {{
-            service.getResourceRoot(CaptainResource.RESOURCE_TYPE, resourceId);
-            times = 1;
-            result = resourceRoot;
-            captainResourceFactory.fromResourceRoot(resourceRoot);
-            times = 1;
-            result = captainResource;
-            service.saveResourceElements(captainResource);
-            times = 1;
-            captainResource.getModel();
-            times = 1;
-            result = expectedCaptainModel;
-            modelSerializer.toString(expectedCaptainModel);
-            times = 1;
-            result = body;
-            service.saveModel(captainResource, body);
-            times = 1;
-        }};
-        final CaptainModel actualCaptainModel = service.getCaptain(resourceId);
-        assertEquals(expectedCaptainModel, actualCaptainModel);
-    }
+	@Test
+	public void testGetCaptain(final @Mocked CaptainResource captainResource) {
+		final Long resourceId = TestData.nextLong();
+		final String resourceType = CaptainResource.RESOURCE_TYPE;
+		final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
+		final CaptainModel expectedCaptainModel = TestData.captainModel();
+		final String body = TestData.nextString();
+		new StrictExpectations(service) {{
+			service.getResourceType();
+			times = 1;
+			result = resourceType;
+			service.getResourceRoot(resourceType, resourceId);
+			times = 1;
+			result = resourceRoot;
+			resourceFactory.fromResourceRoot(resourceRoot);
+			times = 1;
+			result = captainResource;
+			service.getCachedModel(captainResource);
+			times = 1;
+			result = null;
+			service.saveResourceElements(captainResource);
+			times = 1;
+			captainResource.getModel();
+			times = 1;
+			result = expectedCaptainModel;
+			service.saveModel(captainResource, expectedCaptainModel);
+			times = 1;
+		}};
+		final CaptainModel actualCaptainModel = service.getModel(resourceId);
+		assertEquals(expectedCaptainModel, actualCaptainModel);
+	}
 }

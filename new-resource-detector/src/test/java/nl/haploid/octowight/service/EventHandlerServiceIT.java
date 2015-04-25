@@ -49,7 +49,7 @@ public class EventHandlerServiceIT extends AbstractIT {
 	}
 
 	public void sendMessage(final String topic, final AtomChangeEvent event) throws InterruptedException, ExecutionException {
-		final String message = jsonMapper.toString(event);
+		final String message = jsonMapper.serialize(event);
 		log.debug(String.format("Send message: %s", message));
 		final ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
 		kafkaProducer.send(record).get();

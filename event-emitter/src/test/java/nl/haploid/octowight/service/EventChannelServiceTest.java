@@ -37,13 +37,13 @@ public class EventChannelServiceTest {
 		final String message1 = TestData.message();
 		final String message2 = TestData.message();
 		new StrictExpectations() {{
-			jsonMapper.toString(event1);
+			jsonMapper.serialize(event1);
 			times = 1;
 			result = message1;
 			kafkaProducer.send((ProducerRecord<String, String>) any);
 			times = 1;
 			result = future1;
-			jsonMapper.toString(event2);
+			jsonMapper.serialize(event2);
 			times = 1;
 			result = message2;
 			kafkaProducer.send((ProducerRecord<String, String>) any);

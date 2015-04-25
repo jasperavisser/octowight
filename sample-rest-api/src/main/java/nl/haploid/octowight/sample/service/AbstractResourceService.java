@@ -34,24 +34,34 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	@Autowired
 	private ResourceFactory<R> resourceFactory;
 
-	protected ModelSerializer<M> getModelSerializer() {
-		return modelSerializer;
-	}
-
 	public abstract String getResourceType();
 
 	// TODO: check if it is still a resource (captain resource detector)
+	// TODO: test
 	@Transactional("registryTransactionManager")
 	public M getModel(final long resourceId) {
 		final ResourceRoot resourceRoot = getResourceRoot(getResourceType(), resourceId);
-		// TODO: read model from cache, check version
 		final R resource = resourceFactory.fromResourceRoot(resourceRoot);
+		final M cachedModel = getCachedModel(resource);
+		if (cachedModel != null) {
+			return cachedModel;
+		}
 		saveResourceElements(resource);
 		final M model = resource.getModel();
-		final String body = getModelSerializer().toString(model);
-		saveModel(resource, body);
+		saveModel(resource, model);
 		return model;
 	}
+
+	// TODO: test
+	protected M getCachedModel(final R resource) {
+		final ResourceModelDmo modelDmo = resourceModelDmoRepository.findByResourceTypeAndResourceId(resource.getType(), resource.getId());
+		if (modelDmo != null && modelDmo.getVersion().equals(resource.getVersion())) {
+			return modelSerializer.deserialize(modelDmo.getBody(), getModelClass());
+		}
+		return null;
+	}
+
+	protected abstract Class<M> getModelClass();
 
 	protected ResourceRoot getResourceRoot(final String resourceType, final long resourceId) {
 		final ResourceRootDmo resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId);
@@ -61,7 +71,8 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 		return resourceRootFactory.fromResourceDmo(resourceRootDmo);
 	}
 
-	private ResourceModelDmo createModel(final Resource<M> resource, final String body) {
+	private ResourceModelDmo createModelDmo(final R resource, final M model) {
+		final String body = modelSerializer.serialize(model);
 		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findByResourceTypeAndResourceId(resource.getType(), resource.getId());
 		if (resourceModelDmo != null) {
 			resourceModelDmo.setBody(body);
@@ -72,13 +83,13 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	}
 
 	// TODO: test
-	protected void saveModel(final Resource<M> resource, final String body) {
-		final ResourceModelDmo resourceModelDmo = createModel(resource, body);
+	protected void saveModel(final R resource, final M model) {
+		final ResourceModelDmo resourceModelDmo = createModelDmo(resource, model);
 		resourceModelDmoRepository.save(resourceModelDmo);
 	}
 
 	// TODO: test
-	protected void saveResourceElements(final Resource<M> resource) {
+	protected void saveResourceElements(final R resource) {
 		resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType(), resource.getId());
 		resourceElementDmoRepository.flush();
 		resource.getAtoms().stream()

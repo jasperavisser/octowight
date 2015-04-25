@@ -71,7 +71,7 @@ public class EventConsumerService {
 
 	protected AtomChangeEvent parseMessage(final String message) {
 		log.debug(String.format("Consume message: %s", message));
-		return jsonMapper.parse(message, AtomChangeEvent.class);
+		return jsonMapper.deserialize(message, AtomChangeEvent.class);
 	}
 
 	public void commit() {

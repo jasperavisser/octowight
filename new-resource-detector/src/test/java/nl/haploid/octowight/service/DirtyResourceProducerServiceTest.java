@@ -33,7 +33,7 @@ public class DirtyResourceProducerServiceTest {
 		final ResourceRoot resourceRoot = TestData.resourceRoot(451l);
 		final String message = "joy";
 		new StrictExpectations() {{
-			jsonMapper.toString(resourceRoot);
+			jsonMapper.serialize(resourceRoot);
 			times = 1;
 			result = message;
 			kafkaProducer.send((ProducerRecord<String, String>) any);

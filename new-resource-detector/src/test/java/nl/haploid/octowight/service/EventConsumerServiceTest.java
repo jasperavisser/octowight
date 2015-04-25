@@ -51,7 +51,7 @@ public class EventConsumerServiceTest {
 			messageAndMetaData.message();
 			times = 1;
 			result = message.getBytes();
-			jsonMapper.parse(message, AtomChangeEvent.class);
+			jsonMapper.deserialize(message, AtomChangeEvent.class);
 			times = 1;
 			result = expectedEvent;
 		}};
@@ -83,7 +83,7 @@ public class EventConsumerServiceTest {
 			messageAndMetaData.message();
 			times = 1;
 			result = message1.getBytes();
-			jsonMapper.parse(message1, AtomChangeEvent.class);
+			jsonMapper.deserialize(message1, AtomChangeEvent.class);
 			times = 1;
 			result = event1;
 			iterator.next();
@@ -92,7 +92,7 @@ public class EventConsumerServiceTest {
 			messageAndMetaData.message();
 			times = 1;
 			result = message2.getBytes();
-			jsonMapper.parse(message2, AtomChangeEvent.class);
+			jsonMapper.deserialize(message2, AtomChangeEvent.class);
 			times = 1;
 			result = event2;
 			iterator.next();

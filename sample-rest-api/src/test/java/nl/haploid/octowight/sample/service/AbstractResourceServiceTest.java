@@ -3,72 +3,79 @@ package nl.haploid.octowight.sample.service;
 import mockit.Injectable;
 import mockit.StrictExpectations;
 import mockit.Tested;
-import nl.haploid.octowight.registry.data.Model;
-import nl.haploid.octowight.registry.data.ModelSerializer;
-import nl.haploid.octowight.registry.data.ResourceRoot;
-import nl.haploid.octowight.registry.data.ResourceRootFactory;
+import nl.haploid.octowight.registry.data.*;
 import nl.haploid.octowight.registry.repository.*;
 import nl.haploid.octowight.sample.TestData;
+import nl.haploid.octowight.sample.data.ResourceFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class AbstractResourceServiceTest {
 
-    @Tested
-    private AbstractResourceService<Model> service;
+	private abstract class MockModel implements Model {
+	}
 
-    @Injectable
-    private ResourceRootDmoRepository resourceRootDmoRepository;
+	private abstract class MockResource implements Resource<MockModel> {
+	}
 
-    @Injectable
-    private ResourceElementDmoRepository resourceElementDmoRepository;
+	@Tested
+	private AbstractResourceService<MockModel, MockResource> service;
 
-    @Injectable
-    private ResourceRootFactory resourceRootFactory;
+	@Injectable
+	private ResourceRootDmoRepository resourceRootDmoRepository;
 
-    @Injectable
-    private ResourceElementDmoFactory resourceElementDmoFactory;
+	@Injectable
+	private ResourceElementDmoRepository resourceElementDmoRepository;
 
-    @Injectable
-    private ResourceModelDmoFactory resourceModelDmoFactory;
+	@Injectable
+	private ResourceRootFactory resourceRootFactory;
 
-    @Injectable
-    private ResourceModelDmoRepository resourceModelDmoRepository;
+	@Injectable
+	private ResourceElementDmoFactory resourceElementDmoFactory;
 
-    @Injectable
-    private ModelSerializer<Model> modelSerializer;
+	@Injectable
+	private ResourceModelDmoFactory resourceModelDmoFactory;
 
-    @Test
-    public void testGetResourceRoot() {
-        final long resourceId = TestData.nextLong();
-        final String resourceType = TestData.nextString();
-        final ResourceRootDmo resourceRootDmo = TestData.resourceRootDmo();
-        final ResourceRoot expectedResourceRoot = TestData.resourceRoot();
-        new StrictExpectations() {{
-            resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId);
-            times = 1;
-            result = resourceRootDmo;
-            resourceRootFactory.fromResourceDmo(resourceRootDmo);
-            times = 1;
-            result = expectedResourceRoot;
-        }};
-        final ResourceRoot actualResourceRoot = service.getResourceRoot(resourceType, resourceId);
-        assertEquals(expectedResourceRoot, actualResourceRoot);
-    }
+	@Injectable
+	private ResourceModelDmoRepository resourceModelDmoRepository;
 
-    @Test
-    public void testSaveModel() {
+	@Injectable
+	private ModelSerializer<MockModel> modelSerializer;
 
-    }
+	@Injectable
+	private ResourceFactory<MockResource> resourceFactory;
 
-    @Test
-    public void testSaveResourceElements() {
+	@Test
+	public void testGetResourceRoot() {
+		final long resourceId = TestData.nextLong();
+		final String resourceType = TestData.nextString();
+		final ResourceRootDmo resourceRootDmo = TestData.resourceRootDmo();
+		final ResourceRoot expectedResourceRoot = TestData.resourceRoot();
+		new StrictExpectations() {{
+			resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId);
+			times = 1;
+			result = resourceRootDmo;
+			resourceRootFactory.fromResourceDmo(resourceRootDmo);
+			times = 1;
+			result = expectedResourceRoot;
+		}};
+		final ResourceRoot actualResourceRoot = service.getResourceRoot(resourceType, resourceId);
+		assertEquals(expectedResourceRoot, actualResourceRoot);
+	}
 
-    }
+	@Test
+	public void testSaveModel() {
 
-    @Test
-    public void testSaveResourceElement() {
+	}
 
-    }
+	@Test
+	public void testSaveResourceElements() {
+
+	}
+
+	@Test
+	public void testSaveResourceElement() {
+
+	}
 }

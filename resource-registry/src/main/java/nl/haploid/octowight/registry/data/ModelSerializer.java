@@ -1,6 +1,8 @@
 package nl.haploid.octowight.registry.data;
 
-public interface ModelSerializer<T extends Model> {
+public interface ModelSerializer<M extends Model> {
 
-    String toString(final T model);
+	String serialize(final M model);
+
+	M deserialize(final String body, final Class<M> modelClass);
 }

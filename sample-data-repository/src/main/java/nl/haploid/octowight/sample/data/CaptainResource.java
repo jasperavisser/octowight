@@ -7,6 +7,7 @@ import nl.haploid.octowight.sample.repository.PersonDmo;
 import java.util.Collection;
 import java.util.Collections;
 
+// TODO: new project with resource stuff?
 public class CaptainResource implements Resource<CaptainModel> {
 
     public static final String RESOURCE_TYPE = "captain";

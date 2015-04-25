@@ -29,7 +29,7 @@ public class DirtyResourceProducerService {
 	private JsonMapper jsonMapper;
 
 	public Future<RecordMetadata> sendDirtyResource(final ResourceRoot resourceRoot) {
-		final String message = jsonMapper.toString(resourceRoot);
+		final String message = jsonMapper.serialize(resourceRoot);
 		log.debug(String.format("Send message: %s", message));
 		return kafkaProducer.send(new ProducerRecord<>(topic, message));
 	}
