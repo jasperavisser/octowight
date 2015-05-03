@@ -46,12 +46,11 @@ public class CaptainServiceTest {
 	private ResourceFactory<CaptainResource> resourceFactory;
 
 	@Test
-	public void testGetCaptain(final @Mocked CaptainResource captainResource) {
+	public void testGetModel(final @Mocked CaptainResource captainResource) {
 		final Long resourceId = TestData.nextLong();
 		final String resourceType = CaptainResource.RESOURCE_TYPE;
 		final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
 		final CaptainModel expectedCaptainModel = TestData.captainModel();
-		final String body = TestData.nextString();
 		new StrictExpectations(service) {{
 			service.getResourceType();
 			times = 1;

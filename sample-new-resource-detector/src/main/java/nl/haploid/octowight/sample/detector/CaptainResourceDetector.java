@@ -36,7 +36,7 @@ public class CaptainResourceDetector implements ResourceDetector {
 	}
 
 	@Override
-	@Transactional("sampleTransactionManager")
+	@Transactional(value = "sampleTransactionManager", readOnly = true)
 	public List<ResourceRoot> detect(final List<AtomChangeEvent> events) {
 		final Map<Long, PersonDmo> personsByAtomId = getPersonsById(events);
 		return events.stream()

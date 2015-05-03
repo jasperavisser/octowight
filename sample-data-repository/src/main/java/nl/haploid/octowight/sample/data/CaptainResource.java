@@ -49,6 +49,7 @@ public class CaptainResource implements Resource<CaptainModel> {
         return captainModel;
     }
 
+    // TODO: in abstract base class
     @Override
     public Long getVersion() {
         return version;
