@@ -1,9 +1,6 @@
 package nl.haploid.octowight;
 
-import nl.haploid.octowight.service.EventConsumerService;
 import nl.haploid.octowight.service.EventHandlerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -21,26 +18,20 @@ import org.springframework.scheduling.annotation.Scheduled;
 		JpaRepositoriesAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
 public class App {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
-
 	private static final int POLLING_INTERVAL_MS = 1000;
-
-	@Value("${octowight.kafka.batch.size}")
-	private int batchSize;
-
-	@Autowired
-	private EventConsumerService eventConsumerService;
-
-	@Autowired
-	private EventHandlerService eventHandlerService;
 
 	public static void main(final String[] args) {
 		SpringApplication.run(App.class);
 	}
 
+	@Value("${octowight.kafka.batch.size}")
+	private int batchSize;
+
+	@Autowired
+	private EventHandlerService eventHandlerService;
+
 	@Scheduled(fixedRate = POLLING_INTERVAL_MS)
 	public void poll() {
-		log.debug(String.format("Poll for atom change events on %s", eventConsumerService.getTopic()));
 		eventHandlerService.detectDirtyResources(batchSize);
 	}
 }

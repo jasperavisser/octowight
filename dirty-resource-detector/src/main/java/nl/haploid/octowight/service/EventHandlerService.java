@@ -30,6 +30,7 @@ public class EventHandlerService {
 
 	// TODO: test
 	public long detectDirtyResources(final int batchSize) {
+		log.debug(String.format("Poll for atom change events on %s", eventConsumerService.getTopic()));
 		final Set<Map.Entry<AtomGroup, List<AtomChangeEvent>>> events = eventConsumerService.consumeMessages(batchSize)
 				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomGroup))
 				.entrySet();
@@ -41,6 +42,7 @@ public class EventHandlerService {
 				.collect(Collectors.toList()).stream()
 				.map(dirtyResourceProducerService::resolveFuture)
 				.count();
+		log.debug(String.format("Marked %d resources as dirty", count));
 		eventConsumerService.commit();
 		return count;
 	}
