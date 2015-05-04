@@ -35,7 +35,7 @@ public class KafkaConfiguration {
 	public ConsumerConfig consumerConfig() {
 		final Properties properties = new Properties();
 		properties.put("zookeeper.connect", String.format("%s:%d", zookeeperHostname, zookeeperPort));
-		properties.put("group.id", kafkaGroupId); // TODO: different groups for new/dirty resource detectors
+		properties.put("group.id", kafkaGroupId);
 		properties.put("zookeeper.session.timeout.ms", "400");
 		properties.put("zookeeper.sync.time.ms", "200");
 		properties.put("auto.commit.enable", "false");

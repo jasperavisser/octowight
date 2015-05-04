@@ -31,6 +31,9 @@ public class ResourceRegistryService {
 	@Autowired
 	private ResourceRootDmoFactory resourceRootDmoFactory;
 
+	@Autowired
+	private VersionDmoRepository versionDmoRepository;
+
 	public boolean isNewResource(final ResourceRoot resourceRoot) {
 		final ResourceRootDmo dmo = resourceRootDmoRepository
 				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resourceRoot.getResourceType(),
@@ -65,8 +68,8 @@ public class ResourceRegistryService {
 
 	private ResourceRoot markResourceDirty(final ResourceRootDmo resourceRootDmo) {
 		log.debug(String.format("Mark %s/%d as dirty", resourceRootDmo.getResourceType(), resourceRootDmo.getResourceId()));
-		final long version = 123l; // TODO: set version
-		resourceRootDmo.setVersion(version);
+		final VersionDmo versionDmo = versionDmoRepository.findNext();
+		resourceRootDmo.setVersion(versionDmo.getVersion());
 		return resourceRootFactory.fromResourceDmo(resourceRootDmoRepository.saveAndFlush(resourceRootDmo));
 	}
 }
