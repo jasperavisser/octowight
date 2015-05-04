@@ -11,10 +11,13 @@ import javax.persistence.*;
 @Table(name = "resource_root", schema = "octowight")
 public class ResourceRootDmo {
 
-    @Id // TODO: @Id is really resourceId + resourceType
+    @Id
+    @SequenceGenerator(name = "resource_root_sequence", sequenceName = "octowight.resource_root_sequence")
+    @GeneratedValue(generator = "resource_root_sequence")
+    private Long id;
+
     @Column(name = "resource_id")
-    @SequenceGenerator(name = "resource_sequence", sequenceName = "octowight.resource_sequence")
-    @GeneratedValue(generator = "resource_sequence")
+    @Generated(value = GenerationTime.INSERT)
     private Long resourceId;
 
     @Column(name = "resource_type")
@@ -32,22 +35,6 @@ public class ResourceRootDmo {
     @Column
     @Generated(value = GenerationTime.INSERT)
     private Long version;
-
-    public Long getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(final Long resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    public String getResourceType() {
-        return resourceType;
-    }
-
-    public void setResourceType(final String resourceType) {
-        this.resourceType = resourceType;
-    }
 
     public Long getAtomId() {
         return atomId;
@@ -73,6 +60,22 @@ public class ResourceRootDmo {
         this.atomType = atomType;
     }
 
+    public Long getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
     public Long getVersion() {
         return version;
     }
@@ -91,4 +94,11 @@ public class ResourceRootDmo {
         return HashCodeBuilder.reflectionHashCode(this, false);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

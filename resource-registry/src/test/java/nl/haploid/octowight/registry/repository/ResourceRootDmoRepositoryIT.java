@@ -40,7 +40,7 @@ public class ResourceRootDmoRepositoryIT extends AbstractIT {
 	public void findByResourceTypeAndResourceId() {
 		final ResourceRootDmo dmo1 = TestData.resourceRootDmo("willow");
 		final ResourceRootDmo dmo2 = TestData.resourceRootDmo("oz");
-		final ResourceRootDmo expectedDmo = repository.save(dmo1);
+		final ResourceRootDmo expectedDmo = repository.saveAndFlush(dmo1);
 		repository.save(dmo2);
 		final ResourceRootDmo actualDmo = repository.findByResourceTypeAndResourceId("willow", expectedDmo.getResourceId());
 		assertEquals(expectedDmo, actualDmo);

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResourceRegistryService { // TODO: rename?
+public class ResourceRegistryService {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 

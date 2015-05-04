@@ -1,7 +1,6 @@
 package nl.haploid.octowight.sample;
 
 import nl.haploid.octowight.registry.data.ResourceRoot;
-import nl.haploid.octowight.registry.repository.ResourceModelDmo;
 import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 import nl.haploid.octowight.sample.data.CaptainModel;
 import nl.haploid.octowight.sample.repository.PersonDmo;
@@ -47,10 +46,6 @@ public class TestData {
 
     public static CaptainModel captainModel() {
         return new CaptainModel();
-    }
-
-    public static ResourceModelDmo resourceModelDmo() {
-        return new ResourceModelDmo();
     }
 
     public static ResourceRootDmo resourceRootDmo() {
