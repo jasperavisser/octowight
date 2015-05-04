@@ -1,4 +1,4 @@
-package nl.haploid.octowight.sample;
+package nl.haploid.octowight;
 
 import nl.haploid.octowight.service.EventConsumerService;
 import nl.haploid.octowight.service.EventHandlerService;

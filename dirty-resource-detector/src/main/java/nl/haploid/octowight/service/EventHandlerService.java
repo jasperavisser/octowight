@@ -23,24 +23,20 @@ public class EventHandlerService {
 	private EventConsumerService eventConsumerService;
 
 	@Autowired
-	private ResourceDetectorsService resourceDetectorsService;
-
-	@Autowired
 	private ResourceRegistryService resourceRegistryService;
 
 	@Autowired
 	private DirtyResourceProducerService dirtyResourceProducerService;
 
-	public long detectNewResources(final int batchSize) {
+	// TODO: test
+	public long detectDirtyResources(final int batchSize) {
 		final Set<Map.Entry<AtomGroup, List<AtomChangeEvent>>> events = eventConsumerService.consumeMessages(batchSize)
 				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomGroup))
 				.entrySet();
 		log.debug(String.format("Consumed %d events", events.size()));
 		final long count = events.stream()
-				.map(entry -> resourceDetectorsService.detectResources(entry.getKey(), entry.getValue()))
+				.map(entry -> resourceRegistryService.markResourcesDirty(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
-				.filter(resourceRegistryService::isNewResource)
-				.map(resourceRegistryService::saveResource)
 				.map(dirtyResourceProducerService::sendDirtyResource)
 				.collect(Collectors.toList()).stream()
 				.map(dirtyResourceProducerService::resolveFuture)

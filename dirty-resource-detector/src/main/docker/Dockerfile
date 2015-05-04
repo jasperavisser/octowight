@@ -20,4 +20,4 @@ ENV OCTOWIGHT_REGISTRY_POSTGRES_DATABASE postgres
 ENV OCTOWIGHT_ZOOKEEPER_HOSTNAME zookeeper
 ENV OCTOWIGHT_ZOOKEEPER_PORT 2181
 
-ENTRYPOINT ["java", "-cp", "/opt/app/*", "nl.haploid.octowight.sample.App"]
+ENTRYPOINT ["java", "-cp", "/opt/app/*", "nl.haploid.octowight.App"]

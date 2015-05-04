@@ -21,6 +21,10 @@ public class TestData {
 		return resourceRoot;
 	}
 
+	public static String message() {
+		return nextString();
+	}
+
 	public static String topic() {
 		return nextString();
 	}

@@ -23,7 +23,7 @@ public class TestData {
 	}
 
 	public static String name() {
-		return UUID.randomUUID().toString();
+		return nextString();
 	}
 
 	public static long nextLong() {
@@ -60,12 +60,16 @@ public class TestData {
 	}
 
 	public static String topic() {
-		return UUID.randomUUID().toString();
+		return nextString();
 	}
 
 	public static RoleDmo roleDmo(final Long id) {
 		final RoleDmo dmo = new RoleDmo();
 		dmo.setId(id);
 		return dmo;
+	}
+
+	public static String nextString() {
+		return UUID.randomUUID().toString();
 	}
 }

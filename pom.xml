@@ -9,6 +9,7 @@
     <modules>
         <module>atom-change-event</module>
         <module>dirty-resource-detector</module>
+        <module>event-consumer</module>
         <module>event-emitter</module>
         <module>new-resource-detector</module>
         <module>resource-registry</module>

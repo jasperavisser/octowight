@@ -14,33 +14,8 @@
     <dependencies>
         <dependency>
             <groupId>nl.haploid</groupId>
-            <artifactId>atom-change-event</artifactId>
+            <artifactId>event-consumer</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>nl.haploid</groupId>
-            <artifactId>resource-registry</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.10</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.101tec</groupId>
-            <artifactId>zkclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-core</artifactId>
         </dependency>
     </dependencies>
 </project>

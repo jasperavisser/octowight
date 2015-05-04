@@ -1,4 +1,4 @@
-package nl.haploid.octowight.sample.configuration;
+package nl.haploid.octowight.configuration;
 
 import nl.haploid.octowight.JsonMapper;
 import org.springframework.context.annotation.Bean;
