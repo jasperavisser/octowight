@@ -7,6 +7,7 @@ import nl.haploid.octowight.sample.TestData;
 import nl.haploid.octowight.sample.data.CaptainResource;
 import nl.haploid.octowight.sample.repository.PersonDmo;
 import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import nl.haploid.octowight.sample.repository.RoleDmo;
 import nl.haploid.octowight.sample.repository.RoleDmoRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -48,14 +49,15 @@ public class CaptainControllerIT extends AbstractIT {
 
     @Test
     public void testGetCaptain() throws Exception {
-        final PersonDmo personDmo = personDmoRepository.save(TestData.personDmo());
+        final PersonDmo personDmo = personDmoRepository.saveAndFlush(TestData.personDmo());
+        final RoleDmo roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.RESOURCE_TYPE));
         final ResourceRootDmo resourceRootDmo = new ResourceRootDmo();
-        resourceRootDmo.setAtomId(personDmo.getId());
-        resourceRootDmo.setAtomType(PersonDmo.ATOM_TYPE);
+        resourceRootDmo.setAtomId(roleDmo.getId());
+        resourceRootDmo.setAtomType(RoleDmo.ATOM_TYPE);
         resourceRootDmo.setAtomLocus("the seven seas");
         resourceRootDmo.setResourceId(TestData.nextLong());
         resourceRootDmo.setResourceType(CaptainResource.RESOURCE_TYPE);
-        final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.save(resourceRootDmo);
+        final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.saveAndFlush(resourceRootDmo);
         tempResourceRootDmos.add(resourceRootDmoWithId);
         mockMvc.perform(MockMvcRequestBuilders.get(String.format("/captain/%d", resourceRootDmoWithId.getResourceId())))
                 .andExpect(MockMvcResultMatchers.status().isOk())

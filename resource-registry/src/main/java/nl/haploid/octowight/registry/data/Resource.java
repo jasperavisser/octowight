@@ -2,15 +2,23 @@ package nl.haploid.octowight.registry.data;
 
 import java.util.Collection;
 
-public interface Resource<T extends Model> {
+public abstract class Resource<T extends Model> {
 
-    Collection<Atom> getAtoms();
+    private Long version;
 
-    Long getId();
+    public abstract Collection<Atom> getAtoms();
 
-    String getType();
+    public abstract Long getId();
 
-    T getModel();
+    public abstract String getType();
 
-    Long getVersion();
+    public abstract T getModel();
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(final Long version) {
+        this.version = version;
+    }
 }

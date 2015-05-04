@@ -10,56 +10,62 @@ import java.util.UUID;
 
 public class TestData {
 
-	public static AtomChangeEvent atomChangeEvent() {
-		return atomChangeEvent(nextLong());
-	}
+    public static AtomChangeEvent atomChangeEvent() {
+        return atomChangeEvent(nextLong());
+    }
 
-	public static AtomChangeEvent atomChangeEvent(final long atomId) {
-		final AtomChangeEvent event = new AtomChangeEvent();
-		event.setAtomId(atomId);
-		event.setAtomLocus(name());
-		event.setAtomType(PersonDmo.ATOM_TYPE);
-		return event;
-	}
+    public static AtomChangeEvent atomChangeEvent(final long atomId) {
+        final AtomChangeEvent event = new AtomChangeEvent();
+        event.setAtomId(atomId);
+        event.setAtomLocus(name());
+        event.setAtomType(PersonDmo.ATOM_TYPE);
+        return event;
+    }
 
-	public static String name() {
-		return UUID.randomUUID().toString();
-	}
+    public static String name() {
+        return UUID.randomUUID().toString();
+    }
 
-	public static long nextLong() {
-		return new Random().nextLong();
-	}
+    public static long nextLong() {
+        return new Random().nextLong();
+    }
 
-	public static PersonDmo personDmo() {
-		return personDmo(nextLong());
-	}
+    public static PersonDmo personDmo() {
+        return personDmo(nextLong());
+    }
 
-	public static PersonDmo personDmo(final long id) {
-		final PersonDmo dmo = new PersonDmo();
-		dmo.setId(id);
-		dmo.setName(name());
-		return dmo;
-	}
+    public static PersonDmo personDmo(final long id) {
+        final PersonDmo dmo = new PersonDmo();
+        dmo.setId(id);
+        dmo.setName(name());
+        return dmo;
+    }
 
-	public static ResourceRoot resourceRoot(final Long resourceId) {
-		final ResourceRoot resourceRoot = new ResourceRoot();
-		resourceRoot.setResourceId(resourceId);
-		resourceRoot.setResourceType("olson");
-		resourceRoot.setAtomId(nextLong());
-		resourceRoot.setAtomLocus("madison avenue");
-		resourceRoot.setAtomType("draper");
-		return resourceRoot;
-	}
+    public static ResourceRoot resourceRoot(final Long resourceId) {
+        final ResourceRoot resourceRoot = new ResourceRoot();
+        resourceRoot.setResourceId(resourceId);
+        resourceRoot.setResourceType("olson");
+        resourceRoot.setAtomId(nextLong());
+        resourceRoot.setAtomLocus("madison avenue");
+        resourceRoot.setAtomType("draper");
+        return resourceRoot;
+    }
 
-	public static RoleDmo roleDmo(final PersonDmo personDmo, final String type) {
-		final RoleDmo dmo = new RoleDmo();
-		dmo.setId(nextLong());
-		dmo.setPerson(personDmo);
-		dmo.setType(type);
-		return dmo;
-	}
+    public static RoleDmo roleDmo(final PersonDmo personDmo, final String type) {
+        final RoleDmo dmo = new RoleDmo();
+        dmo.setId(nextLong());
+        dmo.setPerson(personDmo);
+        dmo.setType(type);
+        return dmo;
+    }
 
-	public static String topic() {
-		return UUID.randomUUID().toString();
-	}
+    public static String topic() {
+        return UUID.randomUUID().toString();
+    }
+
+    public static RoleDmo roleDmo(final Long id) {
+        final RoleDmo dmo = new RoleDmo();
+        dmo.setId(id);
+        return dmo;
+    }
 }

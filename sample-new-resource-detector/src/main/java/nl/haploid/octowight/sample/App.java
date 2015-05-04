@@ -39,6 +39,7 @@ public class App {
 	}
 
 	// TODO: split up into 2 apps: detectors -> kafka -> registry
+	// TODO: dirty resource detector app (consume kafka -> map atom to resources -> flatmap -> mark as dirty)
 	@Scheduled(fixedRate = POLLING_INTERVAL_MS)
 	public void poll() {
 		log.debug(String.format("Poll for atom change events on %s", eventConsumerService.getTopic()));

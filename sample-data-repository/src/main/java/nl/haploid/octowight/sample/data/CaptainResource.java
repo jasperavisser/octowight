@@ -3,24 +3,25 @@ package nl.haploid.octowight.sample.data;
 import nl.haploid.octowight.registry.data.Atom;
 import nl.haploid.octowight.registry.data.Resource;
 import nl.haploid.octowight.sample.repository.PersonDmo;
+import nl.haploid.octowight.sample.repository.RoleDmo;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 // TODO: new project with resource stuff?
-public class CaptainResource implements Resource<CaptainModel> {
+public class CaptainResource extends Resource<CaptainModel> {
 
     public static final String RESOURCE_TYPE = "captain";
 
     private PersonDmo personDmo;
 
-    private Long id;
+    private RoleDmo roleDmo;
 
-    private Long version;
+    private Long id;
 
     @Override
     public Collection<Atom> getAtoms() {
-        return Collections.singletonList(personDmo);
+        return Arrays.asList(personDmo, roleDmo);
     }
 
     @Override
@@ -36,6 +37,10 @@ public class CaptainResource implements Resource<CaptainModel> {
         this.personDmo = personDmo;
     }
 
+    public void setRoleDmo(final RoleDmo roleDmo) {
+        this.roleDmo = roleDmo;
+    }
+
     @Override
     public String getType() {
         return RESOURCE_TYPE;
@@ -47,15 +52,5 @@ public class CaptainResource implements Resource<CaptainModel> {
         captainModel.setId(personDmo.getId());
         captainModel.setName(personDmo.getName());
         return captainModel;
-    }
-
-    // TODO: in abstract base class
-    @Override
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(final Long version) {
-        this.version = version;
     }
 }

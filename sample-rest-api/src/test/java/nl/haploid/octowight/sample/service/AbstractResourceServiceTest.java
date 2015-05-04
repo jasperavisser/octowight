@@ -16,7 +16,7 @@ public class AbstractResourceServiceTest {
 	private abstract class MockModel implements Model {
 	}
 
-	private abstract class MockResource implements Resource<MockModel> {
+	private abstract class MockResource extends Resource<MockModel> {
 	}
 
 	@Tested

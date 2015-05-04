@@ -5,6 +5,7 @@ import nl.haploid.octowight.registry.repository.ResourceModelDmo;
 import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 import nl.haploid.octowight.sample.data.CaptainModel;
 import nl.haploid.octowight.sample.repository.PersonDmo;
+import nl.haploid.octowight.sample.repository.RoleDmo;
 
 import java.util.Random;
 import java.util.UUID;
@@ -54,5 +55,13 @@ public class TestData {
 
     public static ResourceRootDmo resourceRootDmo() {
         return new ResourceRootDmo();
+    }
+
+    public static RoleDmo roleDmo(final PersonDmo personDmo, final String type) {
+        final RoleDmo dmo = new RoleDmo();
+        dmo.setId(nextLong());
+        dmo.setPerson(personDmo);
+        dmo.setType(type);
+        return dmo;
     }
 }

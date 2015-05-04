@@ -4,8 +4,8 @@ import nl.haploid.octowight.AtomChangeEvent;
 import nl.haploid.octowight.detector.ResourceDetector;
 import nl.haploid.octowight.registry.data.ResourceRoot;
 import nl.haploid.octowight.registry.data.ResourceRootFactory;
-import nl.haploid.octowight.sample.repository.PersonDmo;
-import nl.haploid.octowight.sample.repository.PersonDmoRepository;
+import nl.haploid.octowight.sample.repository.RoleDmo;
+import nl.haploid.octowight.sample.repository.RoleDmoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,38 +25,36 @@ public class CaptainResourceDetector implements ResourceDetector {
 	protected static final String RESOURCE_TYPE = "captain";
 
 	@Autowired
-	private PersonDmoRepository repository;
+	private RoleDmoRepository repository;
 
 	@Autowired
 	private ResourceRootFactory resourceRootFactory;
 
 	@Override
 	public Collection<String> getAtomTypes() {
-		return Collections.singletonList(PersonDmo.ATOM_TYPE);
+		return Collections.singletonList(RoleDmo.ATOM_TYPE);
 	}
 
 	@Override
 	@Transactional(value = "sampleTransactionManager", readOnly = true)
 	public List<ResourceRoot> detect(final List<AtomChangeEvent> events) {
-		final Map<Long, PersonDmo> personsByAtomId = getPersonsById(events);
+		final Map<Long, RoleDmo> rolesByAtomId = getRolesById(events);
 		return events.stream()
-				.filter(event -> personsByAtomId.containsKey(event.getAtomId()))
-				.filter(event -> isCaptain(personsByAtomId.get(event.getAtomId())))
+				.filter(event -> rolesByAtomId.containsKey(event.getAtomId()))
+				.filter(event -> isCaptain(rolesByAtomId.get(event.getAtomId())))
 				.map(event -> resourceRootFactory.fromAtomChangeEvent(event, RESOURCE_TYPE))
 				.collect(Collectors.toList());
 	}
 
-	protected Map<Long, PersonDmo> getPersonsById(final List<AtomChangeEvent> events) {
-		final List<Long> personIds = events.stream()
+	protected Map<Long, RoleDmo> getRolesById(final List<AtomChangeEvent> events) {
+		final List<Long> roleIds = events.stream()
 				.map(AtomChangeEvent::getAtomId)
 				.collect(Collectors.toList());
-		return repository.findAll(personIds).stream()
-				.collect(Collectors.toMap(PersonDmo::getId, Function.identity()));
+		return repository.findAll(roleIds).stream()
+				.collect(Collectors.toMap(RoleDmo::getId, Function.identity()));
 	}
 
-	protected boolean isCaptain(final PersonDmo personDmo) {
-		return personDmo.getRoles().stream()
-				.filter(roleDmo -> ROLE_TYPE.equals(roleDmo.getType()))
-				.count() > 0;
+	protected boolean isCaptain(final RoleDmo roleDmo) {
+		return ROLE_TYPE.equals(roleDmo.getType());
 	}
 }
