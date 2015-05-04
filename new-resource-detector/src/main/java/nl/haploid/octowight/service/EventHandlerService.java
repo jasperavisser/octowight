@@ -1,6 +1,7 @@
 package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.AtomGroup;
 import nl.haploid.octowight.JsonMapper;
 import nl.haploid.octowight.registry.service.ResourceRegistryService;
 import org.slf4j.Logger;
@@ -20,35 +21,52 @@ public class EventHandlerService {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private EventConsumerService consumerService;
+	private EventConsumerService eventConsumerService;
 
 	@Autowired
-	private ResourceDetectorsService detectorsService;
+	private ResourceDetectorsService resourceDetectorsService;
 
 	@Autowired
-	private ResourceRegistryService registryService;
+	private ResourceRegistryService resourceRegistryService;
 
 	@Autowired
-	private DirtyResourceProducerService producerService;
+	private DirtyResourceProducerService dirtyResourceProducerService;
 
 	@Autowired
 	private JsonMapper jsonMapper;
 
-	public long handleEvents(final int batchSize) {
-		final Set<Map.Entry<String, List<AtomChangeEvent>>> events = consumerService.consumeMessages(batchSize)
-				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomType))
+	public long detectNewResources(final int batchSize) {
+		final Set<Map.Entry<AtomGroup, List<AtomChangeEvent>>> events = eventConsumerService.consumeMessages(batchSize)
+				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomGroup))
 				.entrySet();
 		log.debug(String.format("Consumed %d events", events.size()));
 		final long count = events.stream()
-				.map(entry -> detectorsService.detectResources(entry.getKey(), entry.getValue()))
+				.map(entry -> resourceDetectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
-				.filter(registryService::isNewResource)
-				.map(registryService::saveResource)
-				.map(producerService::sendDirtyResource)
+				.filter(resourceRegistryService::isNewResource)
+				.map(resourceRegistryService::saveResource)
+				.map(dirtyResourceProducerService::sendDirtyResource)
 				.collect(Collectors.toList()).stream()
-				.map(producerService::resolveFuture)
+				.map(dirtyResourceProducerService::resolveFuture)
 				.count();
-		consumerService.commit();
+		eventConsumerService.commit();
+		return count;
+	}
+
+	// TODO: test
+	public long detectDirtyResources(final int batchSize) {
+		final Set<Map.Entry<AtomGroup, List<AtomChangeEvent>>> events = eventConsumerService.consumeMessages(batchSize)
+				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomGroup))
+				.entrySet();
+		log.debug(String.format("Consumed %d events", events.size()));
+		final long count = events.stream()
+				.map(entry -> resourceRegistryService.markResourcesDirty(entry.getKey(), entry.getValue()))
+				.flatMap(Collection::stream)
+				.map(dirtyResourceProducerService::sendDirtyResource)
+				.collect(Collectors.toList()).stream()
+				.map(dirtyResourceProducerService::resolveFuture)
+				.count();
+		eventConsumerService.commit();
 		return count;
 	}
 }

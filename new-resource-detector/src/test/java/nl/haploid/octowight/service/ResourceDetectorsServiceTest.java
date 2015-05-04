@@ -5,6 +5,7 @@ import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
 import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.AtomGroup;
 import nl.haploid.octowight.TestData;
 import nl.haploid.octowight.detector.ResourceDetector;
 import nl.haploid.octowight.registry.data.ResourceRoot;
@@ -26,7 +27,7 @@ public class ResourceDetectorsServiceTest {
 
 	@Test
 	public void testGetDetectorsForAtomType(final @Mocked ResourceDetector mockDetector1,
-											final @Mocked ResourceDetector mockDetector2) {
+	                                        final @Mocked ResourceDetector mockDetector2) {
 		final List<ResourceDetector> expectedDetectors = Collections.singletonList(mockDetector1);
 		final String atomType = "sterling";
 		new StrictExpectations(service) {{
@@ -48,6 +49,9 @@ public class ResourceDetectorsServiceTest {
 	public void testDetectResources(final @Mocked ResourceDetector mockDetector) {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent("draper");
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("pryce");
+		final AtomGroup atomGroup = new AtomGroup();
+		atomGroup.setAtomLocus(event1.getAtomLocus());
+		atomGroup.setAtomType(event1.getAtomType());
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceRoot> expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(null));
 		new StrictExpectations(service) {{
@@ -58,7 +62,7 @@ public class ResourceDetectorsServiceTest {
 			times = 1;
 			result = expectedResourceRoots;
 		}};
-		final List<ResourceRoot> actualResourceRoots = service.detectResources("draper", events);
+		final List<ResourceRoot> actualResourceRoots = service.detectResources(atomGroup, events);
 		assertEquals(expectedResourceRoots, actualResourceRoots);
 	}
 }

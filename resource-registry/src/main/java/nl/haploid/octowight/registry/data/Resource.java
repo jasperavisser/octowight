@@ -4,21 +4,21 @@ import java.util.Collection;
 
 public abstract class Resource<T extends Model> {
 
-    private Long version;
+	private Long version;
 
-    public abstract Collection<Atom> getAtoms();
+	public abstract Collection<Atom> getAtoms();
 
-    public abstract Long getId();
+	public abstract Long getId();
 
-    public abstract String getType();
+	public abstract String getType();
 
-    public abstract T getModel();
+	public abstract T getModel();
 
-    public Long getVersion() {
-        return version;
-    }
+	public Long getVersion() {
+		return version;
+	}
 
-    public void setVersion(final Long version) {
-        this.version = version;
-    }
+	public void setVersion(final Long version) {
+		this.version = version;
+	}
 }

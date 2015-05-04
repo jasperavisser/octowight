@@ -22,11 +22,11 @@ public class TestData {
 	}
 
 	public static String message() {
-		return UUID.randomUUID().toString();
+		return nextString();
 	}
 
 	public static String topic() {
-		return UUID.randomUUID().toString();
+		return nextString();
 	}
 
 	public static AtomChangeEvent atomChangeEvent(final String atomType) {
@@ -36,5 +36,9 @@ public class TestData {
 		event.setAtomLocus("everywhere");
 		event.setAtomType(atomType);
 		return event;
+	}
+
+	public static String nextString() {
+		return UUID.randomUUID().toString();
 	}
 }

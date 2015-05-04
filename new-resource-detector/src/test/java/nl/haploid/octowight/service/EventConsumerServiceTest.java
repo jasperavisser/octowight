@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 public class EventConsumerServiceTest {
 
 	@Tested
-	private EventConsumerService consumerService;
+	private EventConsumerService eventConsumerService;
 
 	@Injectable
 	private KafkaConsumerFactory consumerFactoryService;
@@ -32,14 +32,14 @@ public class EventConsumerServiceTest {
 
 	@Test
 	public void testConsumeMessage(final @Mocked KafkaStream<byte[], byte[]> stream,
-								   final @Mocked ConsumerIterator<byte[], byte[]> iterator,
-								   final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
-								   final @Injectable("my-topic") String topic)
+	                               final @Mocked ConsumerIterator<byte[], byte[]> iterator,
+	                               final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
+	                               final @Injectable("my-topic") String topic)
 			throws InterruptedException, ExecutionException {
 		final AtomChangeEvent expectedEvent = TestData.atomChangeEvent("rick");
 		final String message = TestData.message();
-		new Expectations(consumerService) {{
-			consumerService.getStream();
+		new Expectations(eventConsumerService) {{
+			eventConsumerService.getStream();
 			times = 1;
 			result = stream;
 			stream.iterator();
@@ -55,23 +55,23 @@ public class EventConsumerServiceTest {
 			times = 1;
 			result = expectedEvent;
 		}};
-		final AtomChangeEvent actualEvent = consumerService.consumeMessage();
+		final AtomChangeEvent actualEvent = eventConsumerService.consumeMessage();
 		assertEquals(expectedEvent, actualEvent);
 	}
 
 	@Test
 	public void testConsumeMessages(final @Mocked KafkaStream<byte[], byte[]> stream,
-									final @Mocked ConsumerIterator<byte[], byte[]> iterator,
-									final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
-									final @Injectable("my-topic") String topic)
+	                                final @Mocked ConsumerIterator<byte[], byte[]> iterator,
+	                                final @Mocked MessageAndMetadata<byte[], byte[]> messageAndMetaData,
+	                                final @Injectable("my-topic") String topic)
 			throws InterruptedException, ExecutionException {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent("carol");
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("daryl");
 		final String message1 = TestData.message();
 		final String message2 = TestData.message();
 		final List<AtomChangeEvent> expectedEvents = Arrays.asList(event1, event2);
-		new StrictExpectations(consumerService) {{
-			consumerService.getStream();
+		new StrictExpectations(eventConsumerService) {{
+			eventConsumerService.getStream();
 			times = 1;
 			result = stream;
 			stream.iterator();
@@ -99,20 +99,20 @@ public class EventConsumerServiceTest {
 			times = 1;
 			result = new ConsumerTimeoutException();
 		}};
-		final List<AtomChangeEvent> actualEvents = consumerService.consumeMessages(expectedEvents.size() + 1)
+		final List<AtomChangeEvent> actualEvents = eventConsumerService.consumeMessages(expectedEvents.size() + 1)
 				.collect(Collectors.toList());
 		assertEquals(expectedEvents, actualEvents);
 	}
 
 	@Test
 	public void testCommit(final @Mocked ConsumerConnector kafkaConsumer) {
-		new StrictExpectations(consumerService) {{
-			consumerService.getKafkaConsumer();
+		new StrictExpectations(eventConsumerService) {{
+			eventConsumerService.getKafkaConsumer();
 			times = 1;
 			result = kafkaConsumer;
 			kafkaConsumer.commitOffsets();
 			times = 1;
 		}};
-		consumerService.commit();
+		eventConsumerService.commit();
 	}
 }

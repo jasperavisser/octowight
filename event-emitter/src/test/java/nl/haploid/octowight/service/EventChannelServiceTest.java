@@ -30,7 +30,7 @@ public class EventChannelServiceTest {
 
 	@Test
 	public void testSendEvents(final @Mocked Future<RecordMetadata> future1,
-							   final @Mocked Future<RecordMetadata> future2) throws Exception {
+	                           final @Mocked Future<RecordMetadata> future2) throws Exception {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent();
 		final AtomChangeEvent event2 = TestData.atomChangeEvent();
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);

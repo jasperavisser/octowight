@@ -8,6 +8,7 @@ popd
 
 # Build images
 pushd ../..
+pushd dirty-resource-detector && mvn docker:build && popd
 pushd sample-event-emitter && mvn docker:build && popd
 pushd sample-new-resource-detector && mvn docker:build && popd
 pushd sample-rest-api && mvn docker:build && popd

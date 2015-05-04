@@ -82,6 +82,7 @@ public class ResourceElementDmo {
 	public boolean equals(final Object that) {
 		return EqualsBuilder.reflectionEquals(this, that, false);
 	}
+
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this, false);

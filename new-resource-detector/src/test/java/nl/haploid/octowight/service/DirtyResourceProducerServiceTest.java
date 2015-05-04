@@ -46,7 +46,7 @@ public class DirtyResourceProducerServiceTest {
 
 	@Test
 	public void testResolveFuture(final @Mocked Future<RecordMetadata> future,
-								  final @Mocked RecordMetadata expectedMetadata) throws Exception {
+	                              final @Mocked RecordMetadata expectedMetadata) throws Exception {
 		new StrictExpectations() {{
 			future.get();
 			times = 1;

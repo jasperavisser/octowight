@@ -2,6 +2,7 @@ package nl.haploid.octowight;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class AtomChangeEvent {
 
@@ -43,6 +44,14 @@ public class AtomChangeEvent {
 
 	public void setAtomType(final String atomType) {
 		this.atomType = atomType;
+	}
+
+	@JsonIgnore
+	public AtomGroup getAtomGroup() {
+		final AtomGroup atomGroup = new AtomGroup();
+		atomGroup.setAtomLocus(getAtomLocus());
+		atomGroup.setAtomType(getAtomType());
+		return atomGroup;
 	}
 
 	@Override

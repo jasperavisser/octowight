@@ -1,6 +1,7 @@
 package nl.haploid.octowight.service;
 
 import nl.haploid.octowight.AtomChangeEvent;
+import nl.haploid.octowight.AtomGroup;
 import nl.haploid.octowight.detector.ResourceDetector;
 import nl.haploid.octowight.registry.data.ResourceRoot;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class ResourceDetectorsService { // TODO: rename?
 				.collect(Collectors.toList());
 	}
 
-	public List<ResourceRoot> detectResources(final String atomType, final List<AtomChangeEvent> events) {
-		return getDetectorsForAtomType(atomType).stream()
+	public List<ResourceRoot> detectResources(final AtomGroup atomGroup, final List<AtomChangeEvent> events) {
+		return getDetectorsForAtomType(atomGroup.getAtomType()).stream()
 				.map(d -> d.detect(events))
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());

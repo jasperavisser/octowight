@@ -11,46 +11,46 @@ import java.util.Collection;
 // TODO: new project with resource stuff?
 public class CaptainResource extends Resource<CaptainModel> {
 
-    public static final String RESOURCE_TYPE = "captain";
+	public static final String RESOURCE_TYPE = "captain";
 
-    private PersonDmo personDmo;
+	private PersonDmo personDmo;
 
-    private RoleDmo roleDmo;
+	private RoleDmo roleDmo;
 
-    private Long id;
+	private Long id;
 
-    @Override
-    public Collection<Atom> getAtoms() {
-        return Arrays.asList(personDmo, roleDmo);
-    }
+	@Override
+	public Collection<Atom> getAtoms() {
+		return Arrays.asList(personDmo, roleDmo);
+	}
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(final long id) {
-        this.id = id;
-    }
+	public void setId(final long id) {
+		this.id = id;
+	}
 
-    public void setPersonDmo(final PersonDmo personDmo) {
-        this.personDmo = personDmo;
-    }
+	public void setPersonDmo(final PersonDmo personDmo) {
+		this.personDmo = personDmo;
+	}
 
-    public void setRoleDmo(final RoleDmo roleDmo) {
-        this.roleDmo = roleDmo;
-    }
+	public void setRoleDmo(final RoleDmo roleDmo) {
+		this.roleDmo = roleDmo;
+	}
 
-    @Override
-    public String getType() {
-        return RESOURCE_TYPE;
-    }
+	@Override
+	public String getType() {
+		return RESOURCE_TYPE;
+	}
 
-    @Override
-    public CaptainModel getModel() {
-        final CaptainModel captainModel = new CaptainModel();
-        captainModel.setId(personDmo.getId());
-        captainModel.setName(personDmo.getName());
-        return captainModel;
-    }
+	@Override
+	public CaptainModel getModel() {
+		final CaptainModel captainModel = new CaptainModel();
+		captainModel.setId(personDmo.getId());
+		captainModel.setName(personDmo.getName());
+		return captainModel;
+	}
 }

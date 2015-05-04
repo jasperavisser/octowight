@@ -24,48 +24,48 @@ import java.util.List;
 
 public class CaptainControllerIT extends AbstractIT {
 
-    private MockMvc mockMvc;
+	private MockMvc mockMvc;
 
-    @Autowired
-    private CaptainController controller;
+	@Autowired
+	private CaptainController controller;
 
-    @Autowired
-    private PersonDmoRepository personDmoRepository;
+	@Autowired
+	private PersonDmoRepository personDmoRepository;
 
-    @Autowired
-    private ResourceRootDmoRepository resourceRootDmoRepository;
+	@Autowired
+	private ResourceRootDmoRepository resourceRootDmoRepository;
 
-    @Autowired
-    private RoleDmoRepository roleDmoRepository;
+	@Autowired
+	private RoleDmoRepository roleDmoRepository;
 
-    private final List<ResourceRootDmo> tempResourceRootDmos = new ArrayList<>();
+	private final List<ResourceRootDmo> tempResourceRootDmos = new ArrayList<>();
 
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        roleDmoRepository.deleteAllInBatch();
-        personDmoRepository.deleteAllInBatch();
-    }
+	@Before
+	public void setup() {
+		this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		roleDmoRepository.deleteAllInBatch();
+		personDmoRepository.deleteAllInBatch();
+	}
 
-    @Test
-    public void testGetCaptain() throws Exception {
-        final PersonDmo personDmo = personDmoRepository.saveAndFlush(TestData.personDmo());
-        final RoleDmo roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.RESOURCE_TYPE));
-        final ResourceRootDmo resourceRootDmo = new ResourceRootDmo();
-        resourceRootDmo.setAtomId(roleDmo.getId());
-        resourceRootDmo.setAtomType(RoleDmo.ATOM_TYPE);
-        resourceRootDmo.setAtomLocus("the seven seas");
-        resourceRootDmo.setResourceId(TestData.nextLong());
-        resourceRootDmo.setResourceType(CaptainResource.RESOURCE_TYPE);
-        final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.saveAndFlush(resourceRootDmo);
-        tempResourceRootDmos.add(resourceRootDmoWithId);
-        mockMvc.perform(MockMvcRequestBuilders.get(String.format("/captain/%d", resourceRootDmoWithId.getResourceId())))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
-    }
+	@Test
+	public void testGetCaptain() throws Exception {
+		final PersonDmo personDmo = personDmoRepository.saveAndFlush(TestData.personDmo());
+		final RoleDmo roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.RESOURCE_TYPE));
+		final ResourceRootDmo resourceRootDmo = new ResourceRootDmo();
+		resourceRootDmo.setAtomId(roleDmo.getId());
+		resourceRootDmo.setAtomType(RoleDmo.ATOM_TYPE);
+		resourceRootDmo.setAtomLocus("the seven seas");
+		resourceRootDmo.setResourceId(TestData.nextLong());
+		resourceRootDmo.setResourceType(CaptainResource.RESOURCE_TYPE);
+		final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.saveAndFlush(resourceRootDmo);
+		tempResourceRootDmos.add(resourceRootDmoWithId);
+		mockMvc.perform(MockMvcRequestBuilders.get(String.format("/captain/%d", resourceRootDmoWithId.getResourceId())))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+	}
 
-    @After
-    public void teardown() {
-        resourceRootDmoRepository.delete(tempResourceRootDmos);
-    }
+	@After
+	public void teardown() {
+		resourceRootDmoRepository.delete(tempResourceRootDmos);
+	}
 }

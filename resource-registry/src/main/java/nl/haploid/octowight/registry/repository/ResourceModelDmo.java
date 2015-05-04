@@ -5,61 +5,61 @@ import javax.persistence.*;
 @Entity
 @Table(name = "resource_model", schema = "octowight")
 public class ResourceModelDmo {
-    
-    @Id
-    @SequenceGenerator(name = "resource_model_sequence", sequenceName = "octowight.resource_model_sequence")
-    @GeneratedValue(generator = "resource_model_sequence")
-    private Long id;
 
-    @Column(name = "resource_id")
-    private Long resourceId;
+	@Id
+	@SequenceGenerator(name = "resource_model_sequence", sequenceName = "octowight.resource_model_sequence")
+	@GeneratedValue(generator = "resource_model_sequence")
+	private Long id;
 
-    @Column(name = "resource_type")
-    private String resourceType;
+	@Column(name = "resource_id")
+	private Long resourceId;
 
-    @Column
-    private Long version;
+	@Column(name = "resource_type")
+	private String resourceType;
 
-    @Column
-    private String body;
+	@Column
+	private Long version;
 
-    public Long getId() {
-        return id;
-    }
+	@Column
+	private String body;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getResourceId() {
-        return resourceId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
-    }
+	public Long getResourceId() {
+		return resourceId;
+	}
 
-    public String getResourceType() {
-        return resourceType;
-    }
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
 
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
+	public String getResourceType() {
+		return resourceType;
+	}
 
-    public Long getVersion() {
-        return version;
-    }
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
+	}
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
+	public Long getVersion() {
+		return version;
+	}
 
-    public String getBody() {
-        return body;
-    }
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
 }

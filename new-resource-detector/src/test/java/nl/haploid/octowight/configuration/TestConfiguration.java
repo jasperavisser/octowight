@@ -25,6 +25,7 @@ public class TestConfiguration {
 		properties.setProperty("octowight.kafka.hostname", dockerHostIp);
 		properties.setProperty("octowight.kafka.port", "9092");
 		properties.setProperty("octowight.kafka.consumer.timeout.ms", "2500");
+		properties.setProperty("octowight.kafka.group.id", TestData.nextString());
 		properties.setProperty("octowight.kafka.topic.events", TestData.topic());
 		properties.setProperty("octowight.kafka.topic.resources.dirty", TestData.topic());
 		properties.setProperty("octowight.registry.postgres.hostname", dockerHostIp);

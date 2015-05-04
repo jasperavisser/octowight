@@ -2,9 +2,9 @@ package nl.haploid.octowight.registry.data;
 
 public interface Atom {
 
-    Long getAtomId();
+	Long getAtomId();
 
-    String getAtomLocus();
+	String getAtomLocus();
 
-    String getAtomType();
+	String getAtomType();
 }

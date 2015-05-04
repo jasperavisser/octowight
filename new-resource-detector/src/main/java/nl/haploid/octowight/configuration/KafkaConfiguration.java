@@ -4,8 +4,6 @@ import kafka.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +13,6 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfiguration {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
-
 	@Value("${octowight.kafka.hostname}")
 	private String kafkaHostname;
 
@@ -25,6 +21,9 @@ public class KafkaConfiguration {
 
 	@Value("${octowight.kafka.consumer.timeout.ms}")
 	private Integer consumerTimeoutMs;
+
+	@Value("${octowight.kafka.group.id}")
+	private String kafkaGroupId;
 
 	@Value("${octowight.zookeeper.hostname}")
 	private String zookeeperHostname;
@@ -36,7 +35,7 @@ public class KafkaConfiguration {
 	public ConsumerConfig consumerConfig() {
 		final Properties properties = new Properties();
 		properties.put("zookeeper.connect", String.format("%s:%d", zookeeperHostname, zookeeperPort));
-		properties.put("group.id", "1");
+		properties.put("group.id", kafkaGroupId); // TODO: different groups for new/dirty resource detectors
 		properties.put("zookeeper.session.timeout.ms", "400");
 		properties.put("zookeeper.sync.time.ms", "200");
 		properties.put("auto.commit.enable", "false");

@@ -17,10 +17,10 @@ import static org.junit.Assert.assertEquals;
 public class EventHandlerServiceIT extends AbstractIT {
 
 	@Autowired
-	private EventHandlerService service;
+	private EventHandlerService eventHandlerService;
 
 	@Autowired
-	private EventConsumerService consumerService;
+	private EventConsumerService eventConsumerService;
 
 	@Autowired
 	private KafkaProducer<String, String> kafkaProducer;
@@ -30,21 +30,21 @@ public class EventHandlerServiceIT extends AbstractIT {
 
 	@Test
 	public void testHandleEventsNone() throws Exception {
-		final long actualCount = service.handleEvents(10);
+		final long actualCount = eventHandlerService.detectNewResources(10);
 		assertEquals(0, actualCount);
 	}
 
 	@Test
 	public void testHandleEvents() throws Exception {
 		final String topic = TestData.topic();
-		consumerService.setTopic(topic);
+		eventConsumerService.setTopic(topic);
 		final AtomChangeEvent event1 = TestData.atomChangeEvent(MockResourceDetector.ATOM_TYPE);
 		final AtomChangeEvent event2 = TestData.atomChangeEvent(MockResourceDetector.ATOM_TYPE);
 		final AtomChangeEvent event3 = TestData.atomChangeEvent("jack");
 		sendMessage(topic, event1);
 		sendMessage(topic, event2);
 		sendMessage(topic, event3);
-		final long actualCount = service.handleEvents(10);
+		final long actualCount = eventHandlerService.detectNewResources(10);
 		assertEquals(2, actualCount);
 	}
 

@@ -28,7 +28,7 @@ public class KafkaConsumerFactoryTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testCreateStream(final @Mocked ConsumerConnector kafkaConsumer,
-								 final @Mocked KafkaStream<byte[], byte[]> expectedStream) {
+	                             final @Mocked KafkaStream<byte[], byte[]> expectedStream) {
 		final String topic = TestData.topic();
 		final Map<String, List<KafkaStream<byte[], byte[]>>> streams = new HashMap<>();
 		streams.put(topic, Collections.singletonList(expectedStream));
