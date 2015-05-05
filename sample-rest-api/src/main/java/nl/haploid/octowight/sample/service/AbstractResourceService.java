@@ -2,11 +2,16 @@ package nl.haploid.octowight.sample.service;
 
 import nl.haploid.octowight.registry.data.*;
 import nl.haploid.octowight.registry.repository.*;
+import nl.haploid.octowight.sample.data.CaptainResource;
 import nl.haploid.octowight.sample.data.ResourceFactory;
 import nl.haploid.octowight.sample.data.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 // TODO: separate library for generic API stuff
 public abstract class AbstractResourceService<M extends Model, R extends Resource<M>> {
@@ -57,6 +62,21 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 		final M model = resource.getModel();
 		saveModel(resource, model);
 		return model;
+	}
+
+	// TODO: test
+	public List<M> getAllModels() {
+		return resourceRootDmoRepository.findByResourceType(CaptainResource.RESOURCE_TYPE).stream()
+				.map(ResourceRootDmo::getResourceId)
+				.map(resourceId -> {
+					try {
+						return getModel(resourceId);
+					} catch (ResourceNotFoundException e) {
+						return null;
+					}
+				})
+				.filter(Objects::nonNull)
+				.collect(Collectors.toList());
 	}
 
 	// TODO: test
