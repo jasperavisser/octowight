@@ -14,15 +14,9 @@ public class ResourceModelDmoRepositoryIT extends AbstractIT {
 
 	@Test
 	public void testFindOne() {
-		// TODO: move to TestData
-		final ResourceModelDmo expectedResourceModelDmo = new ResourceModelDmo();
-		final ResourceModelId resourceModelId = new ResourceModelId();
-		resourceModelId.setResourceId(TestData.nextLong());
-		resourceModelId.setResourceType(TestData.nextString());
-		expectedResourceModelDmo.setId(resourceModelId);
-		expectedResourceModelDmo.setBody(TestData.nextString());
+		final ResourceModelDmo expectedResourceModelDmo = TestData.resourceModelDmo();
 		resourceModelDmoRepository.save(expectedResourceModelDmo);
-		final ResourceModelDmo actualResourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId);
+		final ResourceModelDmo actualResourceModelDmo = resourceModelDmoRepository.findOne(expectedResourceModelDmo.getId());
 		assertEquals(expectedResourceModelDmo.getBody(), actualResourceModelDmo.getBody());
 	}
 }

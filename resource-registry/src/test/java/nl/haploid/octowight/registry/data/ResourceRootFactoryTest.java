@@ -27,9 +27,9 @@ public class ResourceRootFactoryTest {
 	}
 
 	@Test
-	public void testFromResourceDmo() {
+	public void testFromResourceRootDmo() {
 		final ResourceRootDmo resourceRootDmo = TestData.resourceRootDmo();
-		final ResourceRoot resourceRoot = resourceRootFactory.fromResourceDmo(resourceRootDmo);
+		final ResourceRoot resourceRoot = resourceRootFactory.fromResourceRootDmo(resourceRootDmo);
 		assertEquals(resourceRootDmo.getAtomId(), resourceRoot.getAtomId());
 		assertEquals(resourceRootDmo.getAtomType(), resourceRoot.getAtomType());
 		assertEquals(resourceRootDmo.getAtomLocus(), resourceRoot.getAtomLocus());

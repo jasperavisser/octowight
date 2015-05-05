@@ -47,10 +47,9 @@ public class ResourceRegistryService {
 		resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VERSION_SEQUENCE));
 		final ResourceRootDmo dmo = resourceRootDmoRepository.save(resourceRootDmo);
 		log.debug(String.format("Saved resource %s/%d", dmo.getResourceType(), dmo.getResourceId()));
-		return resourceRootFactory.fromResourceDmo(dmo);
+		return resourceRootFactory.fromResourceRootDmo(dmo);
 	}
 
-	// TODO: test
 	public List<ResourceRoot> markResourcesDirty(final AtomGroup atomGroup, final List<AtomChangeEvent> atomChangeEvents) {
 		final List<Long> atomIds = atomChangeEvents.stream()
 				.map(AtomChangeEvent::getAtomId)
@@ -72,6 +71,6 @@ public class ResourceRegistryService {
 		log.debug(String.format("Mark %s/%d as dirty", resourceRootDmo.getResourceType(), resourceRootDmo.getResourceId()));
 		final long version = sequenceService.getNextValue(ResourceRootDmo.VERSION_SEQUENCE);
 		resourceRootDmo.setVersion(version);
-		return resourceRootFactory.fromResourceDmo(resourceRootDmoRepository.save(resourceRootDmo));
+		return resourceRootFactory.fromResourceRootDmo(resourceRootDmoRepository.save(resourceRootDmo));
 	}
 }

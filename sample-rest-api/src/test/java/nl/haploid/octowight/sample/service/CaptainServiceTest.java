@@ -34,10 +34,13 @@ public class CaptainServiceTest {
 	private ResourceElementDmoFactory resourceElementDmoFactory;
 
 	@Injectable
-	private ResourceModelDocumentFactory resourceModelDocumentFactory;
+	private ResourceModelDmoFactory resourceModelDmoFactory;
 
 	@Injectable
 	private ResourceModelDmoRepository resourceModelDmoRepository;
+
+	@Injectable
+	private ResourceModelIdFactory resourceModelIdFactory;
 
 	@Injectable
 	private ModelSerializer<CaptainModel> modelSerializer;

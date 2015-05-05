@@ -4,7 +4,6 @@ import nl.haploid.octowight.registry.data.Atom;
 import nl.haploid.octowight.registry.data.Resource;
 import org.springframework.stereotype.Component;
 
-// TODO: test
 @Component
 public class ResourceElementDmoFactory {
 

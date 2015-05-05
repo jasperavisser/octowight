@@ -35,11 +35,14 @@ public class AbstractResourceServiceTest {
 	private ResourceElementDmoFactory resourceElementDmoFactory;
 
 	@Injectable
-	private ResourceModelDocumentFactory resourceModelDocumentFactory;
+	private ResourceModelDmoFactory resourceModelDmoFactory;
 
 	@Injectable
 	private ResourceModelDmoRepository resourceModelDmoRepository;
 
+	@Injectable
+	private ResourceModelIdFactory resourceModelIdFactory;
+	
 	@Injectable
 	private ModelSerializer<MockModel> modelSerializer;
 
@@ -56,7 +59,7 @@ public class AbstractResourceServiceTest {
 			resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId);
 			times = 1;
 			result = resourceRootDmo;
-			resourceRootFactory.fromResourceDmo(resourceRootDmo);
+			resourceRootFactory.fromResourceRootDmo(resourceRootDmo);
 			times = 1;
 			result = expectedResourceRoot;
 		}};

@@ -26,10 +26,13 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	private ResourceElementDmoFactory resourceElementDmoFactory;
 
 	@Autowired
-	private ResourceModelDocumentFactory resourceModelDocumentFactory;
+	private ResourceModelDmoFactory resourceModelDmoFactory;
 
 	@Autowired
 	private ResourceModelDmoRepository resourceModelDmoRepository;
+
+	@Autowired
+	private ResourceModelIdFactory resourceModelIdFactory;
 
 	@Autowired
 	private ModelSerializer<M> modelSerializer;
@@ -59,14 +62,11 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 
 	// TODO: test
 	protected M getCachedModel(final R resource) {
-		final ResourceModelId resourceModelId = new ResourceModelId();
-		resourceModelId.setResourceId(resource.getId());
-		resourceModelId.setResourceType(resource.getType());
+		final ResourceModelId resourceModelId = resourceModelIdFactory.resourceModelId(resource);
 		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId);
 		if (resourceModelDmo != null && resourceModelDmo.getVersion().equals(resource.getVersion())) {
 			return modelSerializer.deserialize(resourceModelDmo.getBody(), getModelClass());
 		}
-		// TODO: factory method
 		return null;
 	}
 
@@ -77,21 +77,19 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 		if (resourceRootDmo == null) {
 			throw new ResourceNotFoundException();
 		}
-		return resourceRootFactory.fromResourceDmo(resourceRootDmo);
+		return resourceRootFactory.fromResourceRootDmo(resourceRootDmo);
 	}
 
 	private ResourceModelDmo createModelDmo(final R resource, final M model) {
 		final String body = modelSerializer.serialize(model);
-		final ResourceModelId resourceModelId = new ResourceModelId();
-		resourceModelId.setResourceId(resource.getId());
-		resourceModelId.setResourceType(resource.getType());
+		final ResourceModelId resourceModelId = resourceModelIdFactory.resourceModelId(resource);
 		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId);
 		if (resourceModelDmo != null) {
 			resourceModelDmo.setBody(body);
 			resourceModelDmo.setVersion(resource.getVersion());
 			return resourceModelDmo;
 		}
-		return resourceModelDocumentFactory.fromResourceAndBody(resource, body);
+		return resourceModelDmoFactory.fromResourceAndBody(resource, body);
 	}
 
 	// TODO: test

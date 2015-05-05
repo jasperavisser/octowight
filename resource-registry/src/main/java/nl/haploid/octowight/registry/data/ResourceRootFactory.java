@@ -16,7 +16,7 @@ public class ResourceRootFactory {
 		return resourceRoot;
 	}
 
-	public ResourceRoot fromResourceDmo(final ResourceRootDmo resourceRootDmo) {
+	public ResourceRoot fromResourceRootDmo(final ResourceRootDmo resourceRootDmo) {
 		final ResourceRoot resourceRoot = new ResourceRoot();
 		resourceRoot.setAtomId(resourceRootDmo.getAtomId());
 		resourceRoot.setAtomLocus(resourceRootDmo.getAtomLocus());
