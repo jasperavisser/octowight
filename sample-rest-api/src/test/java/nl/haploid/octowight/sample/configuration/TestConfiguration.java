@@ -1,5 +1,6 @@
 package nl.haploid.octowight.sample.configuration;
 
+import nl.haploid.octowight.sample.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,9 @@ public class TestConfiguration {
 		properties.setProperty("octowight.postgres.port", "5432");
 		properties.setProperty("octowight.postgres.database", "postgres");
 		properties.setProperty("octowight.postgres.username", "postgres");
+		properties.setProperty("octowight.registry.mongo.hostname", dockerHostIp);
+		properties.setProperty("octowight.registry.mongo.port", "27017");
+		properties.setProperty("octowight.registry.mongo.database", String.format("integration-test-%s", TestData.nextString()));
 		properties.setProperty("octowight.registry.postgres.hostname", dockerHostIp);
 		properties.setProperty("octowight.registry.postgres.port", "5433");
 		properties.setProperty("octowight.registry.postgres.database", "postgres");

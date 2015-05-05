@@ -4,11 +4,15 @@ import nl.haploid.octowight.registry.data.*;
 import nl.haploid.octowight.registry.repository.*;
 import nl.haploid.octowight.sample.data.ResourceFactory;
 import nl.haploid.octowight.sample.data.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 // TODO: separate library for generic API stuff
 public abstract class AbstractResourceService<M extends Model, R extends Resource<M>> {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private ResourceRootDmoRepository resourceRootDmoRepository;
@@ -23,7 +27,7 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	private ResourceElementDmoFactory resourceElementDmoFactory;
 
 	@Autowired
-	private ResourceModelDmoFactory resourceModelDmoFactory;
+	private ResourceModelDocumentFactory resourceModelDocumentFactory;
 
 	@Autowired
 	private ResourceModelDmoRepository resourceModelDmoRepository;
@@ -40,10 +44,13 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	// TODO: test
 	@Transactional("registryTransactionManager")
 	public M getModel(final long resourceId) {
+		log.debug(String.format("Get model for resource %s/%d", getResourceType(), resourceId));
 		final ResourceRoot resourceRoot = getResourceRoot(getResourceType(), resourceId);
+		// TODO: fromResourceRoot will fetch data, even though we're using cached model later
 		final R resource = resourceFactory.fromResourceRoot(resourceRoot);
 		final M cachedModel = getCachedModel(resource);
 		if (cachedModel != null) {
+			log.debug(String.format("Using cached model for resource %s/%d", getResourceType(), resourceId));
 			return cachedModel;
 		}
 		saveResourceElements(resource);
@@ -54,10 +61,14 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 
 	// TODO: test
 	protected M getCachedModel(final R resource) {
-		final ResourceModelDmo modelDmo = resourceModelDmoRepository.findByResourceTypeAndResourceId(resource.getType(), resource.getId());
-		if (modelDmo != null && modelDmo.getVersion().equals(resource.getVersion())) {
-			return modelSerializer.deserialize(modelDmo.getBody(), getModelClass());
+		final ResourceModelId resourceModelId = new ResourceModelId();
+		resourceModelId.setResourceId(resource.getId());
+		resourceModelId.setResourceType(resource.getType());
+		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId);
+		if (resourceModelDmo != null && resourceModelDmo.getVersion().equals(resource.getVersion())) {
+			return modelSerializer.deserialize(resourceModelDmo.getBody(), getModelClass());
 		}
+		// TODO: factory method
 		return null;
 	}
 
@@ -73,17 +84,21 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 
 	private ResourceModelDmo createModelDmo(final R resource, final M model) {
 		final String body = modelSerializer.serialize(model);
-		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findByResourceTypeAndResourceId(resource.getType(), resource.getId());
+		final ResourceModelId resourceModelId = new ResourceModelId();
+		resourceModelId.setResourceId(resource.getId());
+		resourceModelId.setResourceType(resource.getType());
+		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId);
 		if (resourceModelDmo != null) {
 			resourceModelDmo.setBody(body);
 			resourceModelDmo.setVersion(resource.getVersion());
 			return resourceModelDmo;
 		}
-		return resourceModelDmoFactory.fromResourceAndBody(resource, body);
+		return resourceModelDocumentFactory.fromResourceAndBody(resource, body);
 	}
 
 	// TODO: test
 	protected void saveModel(final R resource, final M model) {
+		log.debug(String.format("Save model for resource %s/%d", resource.getType(), resource.getId()));
 		final ResourceModelDmo resourceModelDmo = createModelDmo(resource, model);
 		resourceModelDmoRepository.save(resourceModelDmo);
 	}

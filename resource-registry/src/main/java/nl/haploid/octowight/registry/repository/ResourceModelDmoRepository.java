@@ -1,8 +1,6 @@
 package nl.haploid.octowight.registry.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ResourceModelDmoRepository extends JpaRepository<ResourceModelDmo, Long> {
-
-	ResourceModelDmo findByResourceTypeAndResourceId(final String type, final long id);
+public interface ResourceModelDmoRepository extends MongoRepository<ResourceModelDmo, ResourceModelId> {
 }

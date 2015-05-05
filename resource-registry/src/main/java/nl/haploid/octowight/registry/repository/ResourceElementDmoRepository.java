@@ -9,8 +9,10 @@ public interface ResourceElementDmoRepository extends JpaRepository<ResourceElem
 	ResourceElementDmo findByAtomIdAndAtomTypeAndAtomLocus
 			(final Long atomId, final String atomType, final String atomLocus);
 
+	// TODO: test
 	List<ResourceElementDmo> findByAtomIdInAndAtomTypeAndAtomLocus
 			(final List<Long> atomId, final String atomType, final String atomLocus);
 
+	// TODO: test
 	Long deleteByResourceTypeAndResourceId(final String resourceType, final long resourceId);
 }

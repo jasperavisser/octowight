@@ -28,6 +28,9 @@ public class TestConfiguration {
 		properties.setProperty("octowight.kafka.group.id", TestData.nextString());
 		properties.setProperty("octowight.kafka.topic.events", TestData.topic());
 		properties.setProperty("octowight.kafka.topic.resources.dirty", TestData.topic());
+		properties.setProperty("octowight.registry.mongo.hostname", dockerHostIp);
+		properties.setProperty("octowight.registry.mongo.port", "27017");
+		properties.setProperty("octowight.registry.mongo.database", String.format("integration-test-%s", TestData.nextString()));
 		properties.setProperty("octowight.registry.postgres.hostname", dockerHostIp);
 		properties.setProperty("octowight.registry.postgres.port", "5433");
 		properties.setProperty("octowight.registry.postgres.database", "postgres");

@@ -35,7 +35,7 @@ public class AbstractResourceServiceTest {
 	private ResourceElementDmoFactory resourceElementDmoFactory;
 
 	@Injectable
-	private ResourceModelDmoFactory resourceModelDmoFactory;
+	private ResourceModelDocumentFactory resourceModelDocumentFactory;
 
 	@Injectable
 	private ResourceModelDmoRepository resourceModelDmoRepository;

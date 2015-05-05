@@ -6,11 +6,16 @@ import nl.haploid.octowight.registry.repository.ResourceElementDmo;
 import nl.haploid.octowight.registry.repository.ResourceRootDmo;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class TestData {
 
 	public static long nextLong() {
 		return new Random().nextLong();
+	}
+
+	public static String nextString() {
+		return UUID.randomUUID().toString();
 	}
 
 	public static ResourceRoot resourceRoot(final Long resourceId) {

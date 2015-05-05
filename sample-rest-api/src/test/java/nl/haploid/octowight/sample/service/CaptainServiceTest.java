@@ -34,7 +34,7 @@ public class CaptainServiceTest {
 	private ResourceElementDmoFactory resourceElementDmoFactory;
 
 	@Injectable
-	private ResourceModelDmoFactory resourceModelDmoFactory;
+	private ResourceModelDocumentFactory resourceModelDocumentFactory;
 
 	@Injectable
 	private ResourceModelDmoRepository resourceModelDmoRepository;

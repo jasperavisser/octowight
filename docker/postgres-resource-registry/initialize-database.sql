@@ -29,14 +29,3 @@ create table octowight.resource_element(
 	resource_type varchar(256) not null,
 	unique(atom_id, atom_locus, atom_type, resource_id, resource_type)
 );
-
-create sequence octowight.resource_model_sequence;
-drop table if exists octowight.resource_model;
-create table octowight.resource_model(
-	id bigint not null primary key default nextval('octowight.resource_model_sequence'),
-	resource_id bigint not null,
-	resource_type varchar(256) not null,
-	version bigint not null,
-	body text not null,
-	unique(resource_id, resource_type)
-);

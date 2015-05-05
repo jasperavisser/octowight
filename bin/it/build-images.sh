@@ -4,6 +4,7 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 . names.sh
 
 # Pull requisite images
+docker pull ${MONGO_RESOURCE_REGISRY_TAG}
 docker pull postgres:9.2
 docker pull ${KAFKA_BROKER_TAG}
 docker pull ${ZOOKEEPER_TAG}

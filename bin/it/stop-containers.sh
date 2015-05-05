@@ -12,7 +12,8 @@ if [[ "${DOCKER_REUSE_IT}" == "true" ]]; then
 fi
 
 # Remove containers
+removeContainer ${KAFKA_BROKER_NAME}
+removeContainer ${MONGO_RESOURCE_REGISRY_NAME}
 removeContainer ${POSTGRES_DATA_REPOSITORY_NAME}
 removeContainer ${POSTGRES_RESOURCE_REGISRY_NAME}
-removeContainer ${KAFKA_BROKER_NAME}
 removeContainer ${ZOOKEEPER_NAME}

@@ -12,6 +12,8 @@ DOCKER_REUSE_IT=$1
 bash stop-containers.sh ${DOCKER_REUSE_IT}
 
 # Run containers
+[[ -n $(isRunning ${MONGO_RESOURCE_REGISRY_NAME}) ]] || \
+    docker run -d --publish=27017:27017 --name ${MONGO_RESOURCE_REGISRY_NAME} ${MONGO_RESOURCE_REGISRY_TAG}
 [[ -n $(isRunning ${POSTGRES_DATA_REPOSITORY_NAME}) ]] || {
     docker run -d --publish=5432:5432 --name=${POSTGRES_DATA_REPOSITORY_NAME} ${POSTGRES_DATA_REPOSITORY_TAG}
     waitForPostgresToStart ${POSTGRES_DATA_REPOSITORY_NAME}
