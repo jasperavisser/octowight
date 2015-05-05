@@ -106,7 +106,6 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	// TODO: test
 	protected void saveResourceElements(final R resource) {
 		resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType(), resource.getId());
-		resourceElementDmoRepository.flush();
 		resource.getAtoms().stream()
 				.forEach(atom -> {
 					final ResourceElementDmo dmo = resourceElementDmoFactory.fromResourceAndAtom(resource, atom);

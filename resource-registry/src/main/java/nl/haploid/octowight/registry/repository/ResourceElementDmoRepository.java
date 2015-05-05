@@ -1,18 +1,16 @@
 package nl.haploid.octowight.registry.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface ResourceElementDmoRepository extends JpaRepository<ResourceElementDmo, Long> {
+public interface ResourceElementDmoRepository extends MongoRepository<ResourceElementDmo, String> {
 
 	ResourceElementDmo findByAtomIdAndAtomTypeAndAtomLocus
 			(final Long atomId, final String atomType, final String atomLocus);
 
-	// TODO: test
 	List<ResourceElementDmo> findByAtomIdInAndAtomTypeAndAtomLocus
 			(final List<Long> atomId, final String atomType, final String atomLocus);
 
-	// TODO: test
 	Long deleteByResourceTypeAndResourceId(final String resourceType, final long resourceId);
 }

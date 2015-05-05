@@ -2,34 +2,27 @@ package nl.haploid.octowight.registry.repository;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "resource_element", schema = "octowight")
+@Document(collection = "resourceElement")
 public class ResourceElementDmo {
 
 	@Id
-	@SequenceGenerator(name = "resource_element_sequence", sequenceName = "octowight.resource_element_sequence")
-	@GeneratedValue(generator = "resource_element_sequence")
-	private Long id;
+	private String id;
 
-	@Column(name = "resource_id")
 	private Long resourceId;
 
-	@Column(name = "resource_type")
 	private String resourceType;
 
-	@Column(name = "atom_id")
 	private Long atomId;
 
-	@Column(name = "atom_locus")
 	private String atomLocus;
 
-	@Column(name = "atom_type")
 	private String atomType;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -37,7 +30,7 @@ public class ResourceElementDmo {
 		return resourceId;
 	}
 
-	public void setId(Long id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
