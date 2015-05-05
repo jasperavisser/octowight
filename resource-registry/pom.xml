@@ -11,42 +11,11 @@
 		<relativePath>../spring-boot-parent/pom.xml</relativePath>
 	</parent>
 
-	<properties>
-		<bonecp.version>0.8.0.RELEASE</bonecp.version>
-		<postgresql.version>9.2-1004-jdbc41</postgresql.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>nl.haploid</groupId>
 			<artifactId>atom-change-event</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>${postgresql.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jolbox</groupId>
-			<artifactId>bonecp-spring</artifactId>
-			<version>${bonecp.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-commons</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>

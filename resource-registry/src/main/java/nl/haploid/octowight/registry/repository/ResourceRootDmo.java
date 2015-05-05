@@ -2,9 +2,8 @@ package nl.haploid.octowight.registry.repository;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.Id;
 
 @Document(collection = "resourceRoot")
 public class ResourceRootDmo {

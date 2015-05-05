@@ -7,7 +7,6 @@ import nl.haploid.octowight.sample.data.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 // TODO: separate library for generic API stuff
 public abstract class AbstractResourceService<M extends Model, R extends Resource<M>> {
@@ -42,7 +41,6 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 
 	// TODO: check if it is still a resource (captain resource detector)
 	// TODO: test
-	@Transactional("registryTransactionManager")
 	public M getModel(final long resourceId) {
 		log.debug(String.format("Get model for resource %s/%d", getResourceType(), resourceId));
 		final ResourceRoot resourceRoot = getResourceRoot(getResourceType(), resourceId);

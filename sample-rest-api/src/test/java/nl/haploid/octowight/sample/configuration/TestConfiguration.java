@@ -13,9 +13,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "nl.haploid.octowight", excludeFilters = {
-		// TODO: @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ResourceRegistryConfiguration.class)
-})
+@ComponentScan(basePackages = "nl.haploid.octowight")
 public class TestConfiguration {
 
 	@Autowired
@@ -38,10 +36,6 @@ public class TestConfiguration {
 		properties.setProperty("octowight.registry.mongo.hostname", dockerHostIp);
 		properties.setProperty("octowight.registry.mongo.port", "27017");
 		properties.setProperty("octowight.registry.mongo.database", String.format("integration-test-%s", TestData.nextString()));
-		properties.setProperty("octowight.registry.postgres.hostname", dockerHostIp);
-		properties.setProperty("octowight.registry.postgres.port", "5433");
-		properties.setProperty("octowight.registry.postgres.database", "postgres");
-		properties.setProperty("octowight.registry.postgres.username", "postgres");
 		configurer.setProperties(properties);
 		return configurer;
 	}
