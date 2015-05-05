@@ -61,12 +61,12 @@ public class CaptainServiceTest {
 			service.getResourceRoot(resourceType, resourceId);
 			times = 1;
 			result = resourceRoot;
+			service.getCachedModel(resourceRoot);
+			times = 1;
+			result = null;
 			resourceFactory.fromResourceRoot(resourceRoot);
 			times = 1;
 			result = captainResource;
-			service.getCachedModel(captainResource);
-			times = 1;
-			result = null;
 			service.saveResourceElements(captainResource);
 			times = 1;
 			captainResource.getModel();
@@ -74,6 +74,27 @@ public class CaptainServiceTest {
 			result = expectedCaptainModel;
 			service.saveModel(captainResource, expectedCaptainModel);
 			times = 1;
+		}};
+		final CaptainModel actualCaptainModel = service.getModel(resourceId);
+		assertEquals(expectedCaptainModel, actualCaptainModel);
+	}
+
+	@Test
+	public void testGetModelFromCache(final @Mocked CaptainResource captainResource) {
+		final Long resourceId = TestData.nextLong();
+		final String resourceType = CaptainResource.RESOURCE_TYPE;
+		final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
+		final CaptainModel expectedCaptainModel = TestData.captainModel();
+		new StrictExpectations(service) {{
+			service.getResourceType();
+			times = 1;
+			result = resourceType;
+			service.getResourceRoot(resourceType, resourceId);
+			times = 1;
+			result = resourceRoot;
+			service.getCachedModel(resourceRoot);
+			times = 1;
+			result = expectedCaptainModel;
 		}};
 		final CaptainModel actualCaptainModel = service.getModel(resourceId);
 		assertEquals(expectedCaptainModel, actualCaptainModel);

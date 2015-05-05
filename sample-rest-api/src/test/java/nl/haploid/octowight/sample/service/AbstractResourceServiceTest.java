@@ -42,7 +42,7 @@ public class AbstractResourceServiceTest {
 
 	@Injectable
 	private ResourceModelIdFactory resourceModelIdFactory;
-	
+
 	@Injectable
 	private ModelSerializer<MockModel> modelSerializer;
 

@@ -47,13 +47,12 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	public M getModel(final long resourceId) {
 		log.debug(String.format("Get model for resource %s/%d", getResourceType(), resourceId));
 		final ResourceRoot resourceRoot = getResourceRoot(getResourceType(), resourceId);
-		// TODO: fromResourceRoot will fetch data, even though we're using cached model later
-		final R resource = resourceFactory.fromResourceRoot(resourceRoot);
-		final M cachedModel = getCachedModel(resource);
+		final M cachedModel = getCachedModel(resourceRoot);
 		if (cachedModel != null) {
 			log.debug(String.format("Using cached model for resource %s/%d", getResourceType(), resourceId));
 			return cachedModel;
 		}
+		final R resource = resourceFactory.fromResourceRoot(resourceRoot);
 		saveResourceElements(resource);
 		final M model = resource.getModel();
 		saveModel(resource, model);
@@ -61,10 +60,10 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 	}
 
 	// TODO: test
-	protected M getCachedModel(final R resource) {
-		final ResourceModelId resourceModelId = resourceModelIdFactory.resourceModelId(resource);
+	protected M getCachedModel(final ResourceRoot resourceRoot) {
+		final ResourceModelId resourceModelId = resourceModelIdFactory.resourceModelId(resourceRoot);
 		final ResourceModelDmo resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId);
-		if (resourceModelDmo != null && resourceModelDmo.getVersion().equals(resource.getVersion())) {
+		if (resourceModelDmo != null && resourceModelDmo.getVersion().equals(resourceRoot.getVersion())) {
 			return modelSerializer.deserialize(resourceModelDmo.getBody(), getModelClass());
 		}
 		return null;
