@@ -18,10 +18,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"nl.haploid.octowight.sample.repository"})
+@EnableJpaRepositories(basePackages = "nl.haploid.octowight.sample.repository")
 @EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources(value = {})
-public class SamplePostgresConfiguration {
+public class PostgresConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

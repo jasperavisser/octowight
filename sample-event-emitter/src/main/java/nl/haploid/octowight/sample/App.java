@@ -22,7 +22,7 @@ public class App {
 	private EventChannelService service;
 
 	@Autowired
-	private AtomChangeEventDmoRepository repository;
+	private AtomChangeEventDmoRepository atomChangeEventDmoRepository;
 
 	@Autowired
 	private AtomChangeEventFactory eventFactory;
@@ -34,9 +34,9 @@ public class App {
 	@Scheduled(fixedRate = 1000)
 	@Transactional
 	public void poll() {
-		final List<AtomChangeEventDmo> eventDmos = repository.findAll();
+		final List<AtomChangeEventDmo> eventDmos = atomChangeEventDmoRepository.findAll();
 		final List<AtomChangeEvent> events = eventFactory.fromAtomChangeEventDmos(eventDmos);
 		service.sendEvents(events);
-		repository.delete(eventDmos);
+		atomChangeEventDmoRepository.delete(eventDmos);
 	}
 }

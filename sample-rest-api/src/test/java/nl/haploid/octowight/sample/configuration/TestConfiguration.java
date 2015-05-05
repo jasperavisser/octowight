@@ -2,7 +2,6 @@ package nl.haploid.octowight.sample.configuration;
 
 import nl.haploid.octowight.sample.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +16,9 @@ import java.util.Properties;
 public class TestConfiguration {
 
 	@Autowired
-	@Qualifier("sample")
 	private DataSource dataSource;
 
 	@Autowired
-	@Qualifier("sample")
 	private PlatformTransactionManager transactionManager;
 
 	@Bean

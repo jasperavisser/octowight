@@ -58,6 +58,7 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 			return cachedModel;
 		}
 		final R resource = resourceFactory.fromResourceRoot(resourceRoot);
+		// TODO: if resource not found, tombstone it
 		saveResourceElements(resource);
 		final M model = resource.getModel();
 		saveModel(resource, model);

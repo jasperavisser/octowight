@@ -15,13 +15,13 @@ import static org.junit.Assert.assertNull;
 public class ResourceElementDmoRepositoryIT extends AbstractIT {
 
 	@Autowired
-	private ResourceElementDmoRepository repository;
+	private ResourceElementDmoRepository resourceElementDmoRepository;
 
 	@Test
 	public void testFindByAtomIdAndAtomTypeAndAtomLocus() {
 		final ResourceElementDmo dmo = TestData.resourceElementDmo();
-		final ResourceElementDmo expectedDmo = repository.save(dmo);
-		final ResourceElementDmo actualDmo = repository
+		final ResourceElementDmo expectedDmo = resourceElementDmoRepository.save(dmo);
+		final ResourceElementDmo actualDmo = resourceElementDmoRepository
 				.findByAtomIdAndAtomTypeAndAtomLocus(expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
 		assertEquals(expectedDmo, actualDmo);
 	}
@@ -29,8 +29,8 @@ public class ResourceElementDmoRepositoryIT extends AbstractIT {
 	@Test
 	public void testFindByAtomIdInAndAtomTypeAndAtomLocus() {
 		final ResourceElementDmo dmo = TestData.resourceElementDmo();
-		final ResourceElementDmo expectedDmo = repository.save(dmo);
-		final List<ResourceElementDmo> actualDmos = repository
+		final ResourceElementDmo expectedDmo = resourceElementDmoRepository.save(dmo);
+		final List<ResourceElementDmo> actualDmos = resourceElementDmoRepository
 				.findByAtomIdInAndAtomTypeAndAtomLocus(Collections.singletonList(expectedDmo.getAtomId()), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
 		assertEquals(1, actualDmos.size());
 		assertEquals(expectedDmo, actualDmos.get(0));
@@ -39,11 +39,11 @@ public class ResourceElementDmoRepositoryIT extends AbstractIT {
 	@Test
 	public void testDeleteByResourceTypeAndResourceId() {
 		final ResourceElementDmo dmo = TestData.resourceElementDmo();
-		final ResourceElementDmo expectedDmo = repository.save(dmo);
-		final ResourceElementDmo actualDmoBeforeDelete = repository.findOne(expectedDmo.getId());
+		final ResourceElementDmo expectedDmo = resourceElementDmoRepository.save(dmo);
+		final ResourceElementDmo actualDmoBeforeDelete = resourceElementDmoRepository.findOne(expectedDmo.getId());
 		assertNotNull(actualDmoBeforeDelete);
-		repository.deleteByResourceTypeAndResourceId(expectedDmo.getResourceType(), expectedDmo.getResourceId());
-		final ResourceElementDmo actualDmoAfterDelete = repository.findOne(expectedDmo.getId());
+		resourceElementDmoRepository.deleteByResourceTypeAndResourceId(expectedDmo.getResourceType(), expectedDmo.getResourceId());
+		final ResourceElementDmo actualDmoAfterDelete = resourceElementDmoRepository.findOne(expectedDmo.getId());
 		assertNull(actualDmoAfterDelete);
 	}
 }

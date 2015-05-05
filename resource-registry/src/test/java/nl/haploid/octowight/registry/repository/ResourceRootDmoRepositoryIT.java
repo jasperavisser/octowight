@@ -13,14 +13,14 @@ import static org.junit.Assert.assertEquals;
 public class ResourceRootDmoRepositoryIT extends AbstractIT {
 
 	@Autowired
-	private ResourceRootDmoRepository repository;
+	private ResourceRootDmoRepository resourceRootDmoRepository;
 
 	@Test
 	public void findByAtomIdAndAtomTypeAndAtomLocus() {
-		repository.deleteAll();
+		resourceRootDmoRepository.deleteAll();
 		final ResourceRootDmo dmo = TestData.resourceRootDmo();
-		final ResourceRootDmo expectedDmo = repository.save(dmo);
-		final ResourceRootDmo actualDmo = repository
+		final ResourceRootDmo expectedDmo = resourceRootDmoRepository.save(dmo);
+		final ResourceRootDmo actualDmo = resourceRootDmoRepository
 				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(expectedDmo.getResourceType(),
 						expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
 		assertEquals(expectedDmo, actualDmo);
@@ -28,24 +28,24 @@ public class ResourceRootDmoRepositoryIT extends AbstractIT {
 
 	@Test
 	public void findByResourceType() {
-		repository.deleteAll();
+		resourceRootDmoRepository.deleteAll();
 		final ResourceRootDmo dmo1 = TestData.resourceRootDmo("willow");
 		final ResourceRootDmo dmo2 = TestData.resourceRootDmo("oz");
-		final ResourceRootDmo expectedDmo1 = repository.save(dmo1);
-		repository.save(dmo2);
-		final List<ResourceRootDmo> actualDmos = repository.findByResourceType("willow");
+		final ResourceRootDmo expectedDmo1 = resourceRootDmoRepository.save(dmo1);
+		resourceRootDmoRepository.save(dmo2);
+		final List<ResourceRootDmo> actualDmos = resourceRootDmoRepository.findByResourceType("willow");
 		final List<ResourceRootDmo> expectedDmos = Collections.singletonList(expectedDmo1);
 		assertEquals(expectedDmos, actualDmos);
 	}
 
 	@Test
 	public void findByResourceTypeAndResourceId() {
-		repository.deleteAll();
+		resourceRootDmoRepository.deleteAll();
 		final ResourceRootDmo dmo1 = TestData.resourceRootDmo("willow");
 		final ResourceRootDmo dmo2 = TestData.resourceRootDmo("oz");
-		final ResourceRootDmo expectedDmo = repository.save(dmo1);
-		repository.save(dmo2);
-		final ResourceRootDmo actualDmo = repository.findByResourceTypeAndResourceId("willow", expectedDmo.getResourceId());
+		final ResourceRootDmo expectedDmo = resourceRootDmoRepository.save(dmo1);
+		resourceRootDmoRepository.save(dmo2);
+		final ResourceRootDmo actualDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId("willow", expectedDmo.getResourceId());
 		assertEquals(expectedDmo, actualDmo);
 	}
 }

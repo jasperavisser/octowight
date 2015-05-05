@@ -31,7 +31,7 @@ public class CaptainResourceDetectorIT extends AbstractIT {
 	@Autowired
 	private RoleDmoRepository roleDmoRepository;
 
-	@PersistenceContext(unitName = "sampleEntityManagerFactory")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	@Test

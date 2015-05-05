@@ -15,7 +15,7 @@ public class CaptainResourceFactory implements ResourceFactory<CaptainResource> 
 	private RoleDmoRepository roleDmoRepository;
 
 	@Override
-	@Transactional(value = "sampleTransactionManager", readOnly = true)
+	@Transactional(readOnly = true)
 	public CaptainResource fromResourceRoot(final ResourceRoot resourceRoot) {
 		final RoleDmo roleDmo = roleDmoRepository.findOne(resourceRoot.getAtomId());
 		if (roleDmo == null) {
