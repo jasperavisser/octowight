@@ -11,7 +11,6 @@ bash stop-containers.sh
 # Run containers
 docker run -d --name ${DIRTY_RESOURCE_DETECTOR_NAME} \
 	--link=${KAFKA_BROKER_NAME}:kafka-broker \
-	--link=${POSTGRES_RESOURCE_REGISRY_NAME}:postgres-resource-registry \
 	--link=${MONGO_RESOURCE_REGISRY_NAME}:mongo-resource-registry \
 	--link=${ZOOKEEPER_NAME}:zookeeper \
 	dirty-resource-detector
@@ -22,13 +21,11 @@ docker run -d --name ${EVENT_EMITTER_NAME} \
 docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=${KAFKA_BROKER_NAME}:kafka-broker \
 	--link=${POSTGRES_DATA_REPOSITORY_NAME}:postgres-data-repository \
-	--link=${POSTGRES_RESOURCE_REGISRY_NAME}:postgres-resource-registry \
 	--link=${MONGO_RESOURCE_REGISRY_NAME}:mongo-resource-registry \
 	--link=${ZOOKEEPER_NAME}:zookeeper \
 	sample-new-resource-detector
 docker run -d --name ${REST_API_NAME} \
 	--publish=8080:8080 \
 	--link=${POSTGRES_DATA_REPOSITORY_NAME}:postgres-data-repository \
-	--link=${POSTGRES_RESOURCE_REGISRY_NAME}:postgres-resource-registry \
 	--link=${MONGO_RESOURCE_REGISRY_NAME}:mongo-resource-registry \
 	sample-rest-api

@@ -18,10 +18,6 @@ bash stop-containers.sh ${DOCKER_REUSE_IT}
     docker run -d --publish=5432:5432 --name=${POSTGRES_DATA_REPOSITORY_NAME} ${POSTGRES_DATA_REPOSITORY_TAG}
     waitForPostgresToStart ${POSTGRES_DATA_REPOSITORY_NAME}
 }
-[[ -n $(isRunning ${POSTGRES_RESOURCE_REGISRY_NAME}) ]] || {
-    docker run -d --publish=5433:5432 --name=${POSTGRES_RESOURCE_REGISRY_NAME} ${POSTGRES_RESOURCE_REGISRY_TAG}
-    waitForPostgresToStart ${POSTGRES_RESOURCE_REGISRY_NAME}
-}
 [[ -n $(isRunning ${ZOOKEEPER_NAME}) ]] || docker run -d --publish=2181:2181 --name ${ZOOKEEPER_NAME} ${ZOOKEEPER_TAG}
 [[ -n $(isRunning ${KAFKA_BROKER_NAME}) ]] ||
 docker run -d --publish=9092:9092 --name=${KAFKA_BROKER_NAME} --link=${ZOOKEEPER_NAME}:zk \
