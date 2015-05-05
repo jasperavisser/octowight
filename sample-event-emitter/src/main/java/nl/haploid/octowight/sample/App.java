@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@ComponentScan(basePackages = "nl.haploid.octowight")
 @EnableAutoConfiguration
+@ComponentScan(basePackages = "nl.haploid.octowight")
 public class App {
 
 	@Autowired
