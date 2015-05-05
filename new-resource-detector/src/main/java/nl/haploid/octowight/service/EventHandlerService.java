@@ -41,7 +41,7 @@ public class EventHandlerService {
 				.map(entry -> resourceDetectorsService.detectResources(entry.getKey(), entry.getValue()))
 				.flatMap(Collection::stream)
 				.filter(resourceRegistryService::isNewResource)
-				.map(resourceRegistryService::saveResource)
+				.map(resourceRegistryService::saveNewResource)
 				.map(dirtyResourceProducerService::sendDirtyResource)
 				.collect(Collectors.toList()).stream()
 				.map(dirtyResourceProducerService::resolveFuture)

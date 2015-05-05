@@ -13,7 +13,6 @@ public class ResourceRootFactory {
 		resourceRoot.setAtomLocus(event.getAtomLocus());
 		resourceRoot.setAtomType(event.getAtomType());
 		resourceRoot.setResourceType(resourceType);
-		// TODO: resourceRoot.setVersion(); ?
 		return resourceRoot;
 	}
 

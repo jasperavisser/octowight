@@ -43,10 +43,12 @@ public class TestData {
 
 	public static ResourceRootDmo resourceRootDmo(final String resourceType) {
 		final ResourceRootDmo dmo = new ResourceRootDmo();
+		dmo.setResourceId(nextLong());
 		dmo.setResourceType(resourceType);
 		dmo.setAtomId(nextLong());
 		dmo.setAtomLocus("madison avenue");
 		dmo.setAtomType("draper");
+		dmo.setVersion(nextLong());
 		return dmo;
 	}
 

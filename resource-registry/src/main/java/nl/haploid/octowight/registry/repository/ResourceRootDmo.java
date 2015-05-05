@@ -2,38 +2,30 @@ package nl.haploid.octowight.registry.repository;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 
-@Entity
-@Table(name = "resource_root", schema = "octowight")
+@Document(collection = "resourceRoot")
 public class ResourceRootDmo {
 
-	@Id
-	@SequenceGenerator(name = "resource_root_sequence", sequenceName = "octowight.resource_root_sequence")
-	@GeneratedValue(generator = "resource_root_sequence")
-	private Long id;
+	public static final String ID_SEQUENCE = "resourceId";
 
-	@Column(name = "resource_id")
-	@Generated(value = GenerationTime.INSERT)
+	public static final String VERSION_SEQUENCE = "resourceVersion";
+
+	@Id
+	private String id;
+
 	private Long resourceId;
 
-	@Column(name = "resource_type")
 	private String resourceType;
 
-	@Column(name = "atom_id")
 	private Long atomId;
 
-	@Column(name = "atom_locus")
 	private String atomLocus;
 
-	@Column(name = "atom_type")
 	private String atomType;
 
-	@Column
-	@Generated(value = GenerationTime.INSERT)
 	private Long version;
 
 	public Long getAtomId() {
@@ -64,7 +56,7 @@ public class ResourceRootDmo {
 		return resourceId;
 	}
 
-	public void setResourceId(Long resourceId) {
+	public void setResourceId(final Long resourceId) {
 		this.resourceId = resourceId;
 	}
 
@@ -72,7 +64,7 @@ public class ResourceRootDmo {
 		return resourceType;
 	}
 
-	public void setResourceType(String resourceType) {
+	public void setResourceType(final String resourceType) {
 		this.resourceType = resourceType;
 	}
 
@@ -94,11 +86,11 @@ public class ResourceRootDmo {
 		return HashCodeBuilder.reflectionHashCode(this, false);
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 }

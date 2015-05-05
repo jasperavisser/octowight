@@ -32,7 +32,7 @@ public class ResourceRegistryService {
 	private ResourceRootDmoFactory resourceRootDmoFactory;
 
 	@Autowired
-	private VersionDmoRepository versionDmoRepository;
+	private SequenceService sequenceService;
 
 	public boolean isNewResource(final ResourceRoot resourceRoot) {
 		final ResourceRootDmo dmo = resourceRootDmoRepository
@@ -41,10 +41,12 @@ public class ResourceRegistryService {
 		return dmo == null;
 	}
 
-	public ResourceRoot saveResource(final ResourceRoot resourceRoot) {
+	public ResourceRoot saveNewResource(final ResourceRoot resourceRoot) {
 		final ResourceRootDmo resourceRootDmo = resourceRootDmoFactory.fromResourceRoot(resourceRoot);
-		final ResourceRootDmo dmo = resourceRootDmoRepository.saveAndFlush(resourceRootDmo);
-		log.debug(String.format("Saved resource: %s/%d", dmo.getResourceType(), dmo.getResourceId()));
+		resourceRootDmo.setResourceId(sequenceService.getNextValue(ResourceRootDmo.ID_SEQUENCE));
+		resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VERSION_SEQUENCE));
+		final ResourceRootDmo dmo = resourceRootDmoRepository.save(resourceRootDmo);
+		log.debug(String.format("Saved resource %s/%d", dmo.getResourceType(), dmo.getResourceId()));
 		return resourceRootFactory.fromResourceDmo(dmo);
 	}
 
@@ -68,8 +70,8 @@ public class ResourceRegistryService {
 
 	private ResourceRoot markResourceDirty(final ResourceRootDmo resourceRootDmo) {
 		log.debug(String.format("Mark %s/%d as dirty", resourceRootDmo.getResourceType(), resourceRootDmo.getResourceId()));
-		final VersionDmo versionDmo = versionDmoRepository.findNext();
-		resourceRootDmo.setVersion(versionDmo.getVersion());
-		return resourceRootFactory.fromResourceDmo(resourceRootDmoRepository.saveAndFlush(resourceRootDmo));
+		final long version = sequenceService.getNextValue(ResourceRootDmo.VERSION_SEQUENCE);
+		resourceRootDmo.setVersion(version);
+		return resourceRootFactory.fromResourceDmo(resourceRootDmoRepository.save(resourceRootDmo));
 	}
 }

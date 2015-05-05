@@ -26,6 +26,10 @@ public class MongoConfiguration {
 	@Value("${octowight.registry.mongo.port}")
 	private Integer mongoPort;
 
+	public String getMongoDatabase() {
+		return mongoDatabase;
+	}
+
 	@Bean
 	public MongoDbFactory mongoDbFactory() throws UnknownHostException {
 		final MongoClient mongoClient = new MongoClient(mongoHostname, mongoPort);

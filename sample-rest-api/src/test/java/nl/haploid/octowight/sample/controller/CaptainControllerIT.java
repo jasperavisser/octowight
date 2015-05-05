@@ -57,7 +57,7 @@ public class CaptainControllerIT extends AbstractIT {
 		resourceRootDmo.setAtomLocus("the seven seas");
 		resourceRootDmo.setResourceId(TestData.nextLong());
 		resourceRootDmo.setResourceType(CaptainResource.RESOURCE_TYPE);
-		final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.saveAndFlush(resourceRootDmo);
+		final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.save(resourceRootDmo);
 		tempResourceRootDmos.add(resourceRootDmoWithId);
 		mockMvc.perform(MockMvcRequestBuilders.get(String.format("/captain/%d", resourceRootDmoWithId.getResourceId())))
 				.andExpect(MockMvcResultMatchers.status().isOk())

@@ -3,7 +3,7 @@ package nl.haploid.octowight.registry;
 import nl.haploid.octowight.registry.configuration.MongoConfiguration;
 import nl.haploid.octowight.registry.configuration.ResourceRegistryConfiguration;
 import nl.haploid.octowight.registry.configuration.TestConfiguration;
-import nl.haploid.octowight.registry.repository.ResourceRootDmoRepository;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,10 @@ public abstract class AbstractIT extends AbstractTransactionalJUnit4SpringContex
 	protected Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private ResourceRootDmoRepository repository;
+	private MongoConfiguration mongoConfiguration;
 
-//	@Before
-//	public void setup() {
-//		repository.deleteAllInBatch();
-//	}
+	@Before
+	public void setup() {
+		log.debug(String.format("Using mongo database: %s", mongoConfiguration.getMongoDatabase()));
+	}
 }

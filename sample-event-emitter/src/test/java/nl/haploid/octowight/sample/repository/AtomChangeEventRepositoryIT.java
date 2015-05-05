@@ -13,14 +13,14 @@ import static org.junit.Assert.assertEquals;
 public class AtomChangeEventRepositoryIT extends AbstractIT {
 
 	@Autowired
-	private AtomChangeEventDmoRepository repository;
+	private AtomChangeEventDmoRepository atomChangeEventDmoRepository;
 
 	@Test
 	@Transactional
 	public void testFindAll() {
 		final AtomChangeEventDmo event = TestData.atomChangeEventDmo();
-		repository.saveAndFlush(event);
-		final List<AtomChangeEventDmo> events = repository.findAll();
+		atomChangeEventDmoRepository.saveAndFlush(event);
+		final List<AtomChangeEventDmo> events = atomChangeEventDmoRepository.findAll();
 		assertEquals(1, events.size());
 	}
 }

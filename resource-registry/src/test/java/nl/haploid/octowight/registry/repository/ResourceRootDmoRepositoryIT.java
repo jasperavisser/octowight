@@ -17,6 +17,7 @@ public class ResourceRootDmoRepositoryIT extends AbstractIT {
 
 	@Test
 	public void findByAtomIdAndAtomTypeAndAtomLocus() {
+		repository.deleteAll();
 		final ResourceRootDmo dmo = TestData.resourceRootDmo();
 		final ResourceRootDmo expectedDmo = repository.save(dmo);
 		final ResourceRootDmo actualDmo = repository
@@ -27,6 +28,7 @@ public class ResourceRootDmoRepositoryIT extends AbstractIT {
 
 	@Test
 	public void findByResourceType() {
+		repository.deleteAll();
 		final ResourceRootDmo dmo1 = TestData.resourceRootDmo("willow");
 		final ResourceRootDmo dmo2 = TestData.resourceRootDmo("oz");
 		final ResourceRootDmo expectedDmo1 = repository.save(dmo1);
@@ -38,9 +40,10 @@ public class ResourceRootDmoRepositoryIT extends AbstractIT {
 
 	@Test
 	public void findByResourceTypeAndResourceId() {
+		repository.deleteAll();
 		final ResourceRootDmo dmo1 = TestData.resourceRootDmo("willow");
 		final ResourceRootDmo dmo2 = TestData.resourceRootDmo("oz");
-		final ResourceRootDmo expectedDmo = repository.saveAndFlush(dmo1);
+		final ResourceRootDmo expectedDmo = repository.save(dmo1);
 		repository.save(dmo2);
 		final ResourceRootDmo actualDmo = repository.findByResourceTypeAndResourceId("willow", expectedDmo.getResourceId());
 		assertEquals(expectedDmo, actualDmo);
