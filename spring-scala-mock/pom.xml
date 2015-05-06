@@ -1,37 +1,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>event-emitter</artifactId>
+	<groupId>nl.haploid</groupId>
+	<artifactId>spring-scala-mock</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<parent>
-		<groupId>nl.haploid</groupId>
-		<artifactId>spring-boot-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../spring-boot-parent/pom.xml</relativePath>
-	</parent>
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.testTarget>${java.version}</maven.compiler.testTarget>
+		<maven.compiler.testSource>${java.version}</maven.compiler.testSource>
+		<encoding>UTF-8</encoding>
+		<easymock.version>3.3.1</easymock.version>
+		<scala.version>2.11.6</scala.version>
+		<scalatest.version>2.2.4</scalatest.version>
+		<slf4j.version>1.7.11</slf4j.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>nl.haploid</groupId>
-			<artifactId>atom-change-event</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka-clients</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
-		<!-- TODO: move to parent, once it is needed for most projects -->
 		<dependency>
 			<groupId>org.scalatest</groupId>
 			<artifactId>scalatest_2.11</artifactId>
@@ -44,18 +42,12 @@
 			<version>${easymock.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>nl.haploid</groupId>
-			<artifactId>spring-scala-mock</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
-		<plugins>
 
-			<!-- Add both java & scala files to build path -->
+		<!-- Add both java & scala files to build path -->
+		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -88,7 +80,6 @@
 				</executions>
 			</plugin>
 
-			<!-- TODO: move to parent, once used in most projects -->
 			<!-- Allow maven to compile scala code -->
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
@@ -108,6 +99,42 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Run tests with maven -->
+			<plugin>
+				<groupId>org.scalatest</groupId>
+				<artifactId>scalatest-maven-plugin</artifactId>
+				<configuration>
+					<reportsDirectory>${project.build.directory}/scalatest-reports</reportsDirectory>
+					<junitxml>.</junitxml>
+					<forkMode>never</forkMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>test</id>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<!-- Put the IDE's build output in a folder other than target, so that
+			IDE builds don't interact with Maven builds. -->
+		<!-- See also: http://stackoverflow.com/questions/10208313/eclipse-auto-build-output-interacts-with-maven-command-line-build-output -->
+		<profile>
+			<id>IDE</id>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<directory>target-ide</directory>
+			</build>
+		</profile>
+	</profiles>
 </project>

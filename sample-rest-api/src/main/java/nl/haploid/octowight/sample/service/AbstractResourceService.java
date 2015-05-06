@@ -47,7 +47,7 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 
 	public abstract String getResourceType();
 
-	// TODO: check if it is still a resource (captain resource detector)
+	// TODO: check if it is still a resource (captain resource detectors)
 	// TODO: test
 	public M getModel(final long resourceId) {
 		log.debug(String.format("Get model for resource %s/%d", getResourceType(), resourceId));
