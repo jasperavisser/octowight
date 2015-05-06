@@ -37,7 +37,7 @@ public class TestData {
 	public static ResourceRoot resourceRoot(final Long resourceId) {
 		final ResourceRoot resourceRoot = new ResourceRoot();
 		resourceRoot.setAtomId(nextLong());
-		resourceRoot.setAtomLocus(nextString());
+		resourceRoot.setAtomOrigin(nextString());
 		resourceRoot.setAtomType(nextString());
 		resourceRoot.setResourceId(resourceId);
 		resourceRoot.setResourceType(nextString());

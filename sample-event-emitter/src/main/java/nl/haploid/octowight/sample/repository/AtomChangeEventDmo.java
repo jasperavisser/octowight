@@ -14,8 +14,8 @@ public class AtomChangeEventDmo {
 	@Column(name = "atom_id")
 	private Long atomId;
 
-	@Column(name = "atom_locus")
-	private String atomLocus;
+	@Column(name = "atom_origin")
+	private String atomOrigin;
 
 	@Column(name = "atom_type")
 	private String atomType;
@@ -28,8 +28,8 @@ public class AtomChangeEventDmo {
 		return atomId;
 	}
 
-	public String getAtomLocus() {
-		return atomLocus;
+	public String getAtomOrigin() {
+		return atomOrigin;
 	}
 
 	public String getAtomType() {
@@ -48,7 +48,7 @@ public class AtomChangeEventDmo {
 		this.atomType = atomType;
 	}
 
-	public void setAtomLocus(final String atomLocus) {
-		this.atomLocus = atomLocus;
+	public void setAtomOrigin(final String atomOrigin) {
+		this.atomOrigin = atomOrigin;
 	}
 }

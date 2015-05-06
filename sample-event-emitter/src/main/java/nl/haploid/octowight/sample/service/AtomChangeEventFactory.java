@@ -15,7 +15,7 @@ public class AtomChangeEventFactory {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(eventDmo.getId());
 		event.setAtomId(eventDmo.getAtomId());
-		event.setAtomLocus(eventDmo.getAtomLocus());
+		event.setAtomOrigin(eventDmo.getAtomOrigin());
 		event.setAtomType(eventDmo.getAtomType());
 		return event;
 	}

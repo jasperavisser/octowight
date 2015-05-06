@@ -50,7 +50,7 @@ public class ResourceDetectorsServiceTest {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent("draper");
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("pryce");
 		final AtomGroup atomGroup = new AtomGroup();
-		atomGroup.setAtomLocus(event1.getAtomLocus());
+		atomGroup.setAtomOrigin(event1.getAtomOrigin());
 		atomGroup.setAtomType(event1.getAtomType());
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceRoot> expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(null));

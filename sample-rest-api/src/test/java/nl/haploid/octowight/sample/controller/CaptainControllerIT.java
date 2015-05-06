@@ -54,7 +54,7 @@ public class CaptainControllerIT extends AbstractIT {
 		final ResourceRootDmo resourceRootDmo = new ResourceRootDmo();
 		resourceRootDmo.setAtomId(roleDmo.getId());
 		resourceRootDmo.setAtomType(RoleDmo.ATOM_TYPE);
-		resourceRootDmo.setAtomLocus("the seven seas");
+		resourceRootDmo.setAtomOrigin("the seven seas");
 		resourceRootDmo.setResourceId(TestData.nextLong());
 		resourceRootDmo.setResourceType(CaptainResource.RESOURCE_TYPE);
 		final ResourceRootDmo resourceRootDmoWithId = resourceRootDmoRepository.save(resourceRootDmo);

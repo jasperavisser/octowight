@@ -8,14 +8,14 @@ public class ResourceRoot {
 
 	private Long atomId;
 
-	private String atomLocus;
+	private String atomOrigin;
 
 	private String atomType;
 
 	private Long version;
 
 	public String key() {
-		return String.format("%s:%s/%s->%s", getAtomLocus(), getAtomType(), getAtomId(), getResourceType());
+		return String.format("%s:%s/%s->%s", getAtomOrigin(), getAtomType(), getAtomId(), getResourceType());
 	}
 
 	public Long getResourceId() {
@@ -42,12 +42,12 @@ public class ResourceRoot {
 		this.atomId = atomId;
 	}
 
-	public String getAtomLocus() {
-		return atomLocus;
+	public String getAtomOrigin() {
+		return atomOrigin;
 	}
 
-	public void setAtomLocus(final String atomLocus) {
-		this.atomLocus = atomLocus;
+	public void setAtomOrigin(final String atomOrigin) {
+		this.atomOrigin = atomOrigin;
 	}
 
 	public String getAtomType() {

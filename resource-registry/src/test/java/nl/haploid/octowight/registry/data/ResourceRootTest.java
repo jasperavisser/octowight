@@ -11,7 +11,7 @@ public class ResourceRootTest {
 		final ResourceRoot resourceRoot = new ResourceRoot();
 		resourceRoot.setResourceType("cosgrove");
 		resourceRoot.setAtomId(69l);
-		resourceRoot.setAtomLocus("california");
+		resourceRoot.setAtomOrigin("california");
 		resourceRoot.setAtomType("campbell");
 		final String expectedKey = "california:campbell/69->cosgrove";
 		final String actualKey = resourceRoot.key();

@@ -30,7 +30,7 @@ public class TestData {
 		resourceRoot.setResourceId(resourceId);
 		resourceRoot.setResourceType("olson");
 		resourceRoot.setAtomId(nextLong());
-		resourceRoot.setAtomLocus("madison avenue");
+		resourceRoot.setAtomOrigin("madison avenue");
 		resourceRoot.setAtomType("draper");
 		return resourceRoot;
 	}
@@ -39,7 +39,7 @@ public class TestData {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
 		event.setAtomId(nextLong());
-		event.setAtomLocus(atomGroup.getAtomLocus());
+		event.setAtomOrigin(atomGroup.getAtomOrigin());
 		event.setAtomType(atomGroup.getAtomType());
 		return event;
 	}
@@ -48,7 +48,7 @@ public class TestData {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
 		event.setAtomId(nextLong());
-		event.setAtomLocus("everywhere");
+		event.setAtomOrigin("everywhere");
 		event.setAtomType(atomType);
 		return event;
 	}
@@ -62,7 +62,7 @@ public class TestData {
 		dmo.setResourceId(nextLong());
 		dmo.setResourceType(resourceType);
 		dmo.setAtomId(nextLong());
-		dmo.setAtomLocus("madison avenue");
+		dmo.setAtomOrigin("madison avenue");
 		dmo.setAtomType("draper");
 		dmo.setVersion(nextLong());
 		return dmo;
@@ -73,7 +73,7 @@ public class TestData {
 		dmo.setResourceId(resourceRootDmo.getResourceId());
 		dmo.setResourceType(resourceRootDmo.getResourceType());
 		dmo.setAtomId(atomChangeEvent.getAtomId());
-		dmo.setAtomLocus(atomChangeEvent.getAtomLocus());
+		dmo.setAtomOrigin(atomChangeEvent.getAtomOrigin());
 		dmo.setAtomType(atomChangeEvent.getAtomType());
 		return dmo;
 	}
@@ -83,7 +83,7 @@ public class TestData {
 		dmo.setResourceId(nextLong());
 		dmo.setResourceType("creative director");
 		dmo.setAtomId(nextLong());
-		dmo.setAtomLocus("madison avenue");
+		dmo.setAtomOrigin("madison avenue");
 		dmo.setAtomType("draper");
 		return dmo;
 	}
@@ -100,7 +100,7 @@ public class TestData {
 
 	public static AtomGroup atomGroup() {
 		final AtomGroup atomGroup = new AtomGroup();
-		atomGroup.setAtomLocus("new york");
+		atomGroup.setAtomOrigin("new york");
 		atomGroup.setAtomType("advertising agency");
 		return atomGroup;
 	}

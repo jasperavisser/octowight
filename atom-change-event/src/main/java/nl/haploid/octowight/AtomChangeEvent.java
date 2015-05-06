@@ -10,7 +10,7 @@ public class AtomChangeEvent {
 
 	private Long atomId;
 
-	private String atomLocus;
+	private String atomOrigin;
 
 	private String atomType;
 
@@ -30,12 +30,12 @@ public class AtomChangeEvent {
 		this.atomId = atomId;
 	}
 
-	public String getAtomLocus() {
-		return atomLocus;
+	public String getAtomOrigin() {
+		return atomOrigin;
 	}
 
-	public void setAtomLocus(final String atomLocus) {
-		this.atomLocus = atomLocus;
+	public void setAtomOrigin(final String atomOrigin) {
+		this.atomOrigin = atomOrigin;
 	}
 
 	public String getAtomType() {
@@ -49,7 +49,7 @@ public class AtomChangeEvent {
 	@JsonIgnore
 	public AtomGroup getAtomGroup() {
 		final AtomGroup atomGroup = new AtomGroup();
-		atomGroup.setAtomLocus(getAtomLocus());
+		atomGroup.setAtomOrigin(getAtomOrigin());
 		atomGroup.setAtomType(getAtomType());
 		return atomGroup;
 	}

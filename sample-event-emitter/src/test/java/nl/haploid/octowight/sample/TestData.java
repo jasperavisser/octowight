@@ -18,7 +18,7 @@ public class TestData {
 	public static AtomChangeEventDmo atomChangeEventDmo() {
 		final AtomChangeEventDmo event = new AtomChangeEventDmo();
 		event.setAtomId(nextLong());
-		event.setAtomLocus(ATOM_LOCUS);
+		event.setAtomOrigin(ATOM_LOCUS);
 		event.setAtomType(ATOM_TYPE);
 		return event;
 	}

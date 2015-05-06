@@ -9,7 +9,7 @@ public class ResourceRootDmoFactory {
 	public ResourceRootDmo fromResourceRoot(final ResourceRoot resourceRoot) {
 		final ResourceRootDmo resourceRootDmo = new ResourceRootDmo();
 		resourceRootDmo.setAtomId(resourceRoot.getAtomId());
-		resourceRootDmo.setAtomLocus(resourceRoot.getAtomLocus());
+		resourceRootDmo.setAtomOrigin(resourceRoot.getAtomOrigin());
 		resourceRootDmo.setAtomType(resourceRoot.getAtomType());
 		resourceRootDmo.setResourceId(resourceRoot.getResourceId());
 		resourceRootDmo.setResourceType(resourceRoot.getResourceType());

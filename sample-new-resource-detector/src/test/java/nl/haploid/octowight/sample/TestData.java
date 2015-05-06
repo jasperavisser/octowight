@@ -17,7 +17,7 @@ public class TestData {
 	public static AtomChangeEvent atomChangeEvent(final long atomId) {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setAtomId(atomId);
-		event.setAtomLocus(name());
+		event.setAtomOrigin(name());
 		event.setAtomType(PersonDmo.ATOM_TYPE);
 		return event;
 	}
@@ -46,7 +46,7 @@ public class TestData {
 		resourceRoot.setResourceId(resourceId);
 		resourceRoot.setResourceType("olson");
 		resourceRoot.setAtomId(nextLong());
-		resourceRoot.setAtomLocus("madison avenue");
+		resourceRoot.setAtomOrigin("madison avenue");
 		resourceRoot.setAtomType("draper");
 		return resourceRoot;
 	}

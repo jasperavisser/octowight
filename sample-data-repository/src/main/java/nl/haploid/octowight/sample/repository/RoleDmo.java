@@ -22,7 +22,7 @@ public class RoleDmo implements Atom {
 	@Column(name = "type")
 	private String type;
 
-	private String atomLocus;
+	private String atomOrigin;
 
 	public Long getId() {
 		return id;
@@ -54,12 +54,12 @@ public class RoleDmo implements Atom {
 	}
 
 	@Override
-	public String getAtomLocus() {
-		return atomLocus;
+	public String getAtomOrigin() {
+		return atomOrigin;
 	}
 
-	public void setAtomLocus(String atomLocus) {
-		this.atomLocus = atomLocus;
+	public void setAtomOrigin(String atomOrigin) {
+		this.atomOrigin = atomOrigin;
 	}
 
 	@Override

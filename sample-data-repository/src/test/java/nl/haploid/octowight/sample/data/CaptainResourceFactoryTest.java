@@ -29,7 +29,7 @@ public class CaptainResourceFactoryTest {
 			roleDmoRepository.findOne(resourceRoot.getAtomId());
 			times = 1;
 			result = roleDmo;
-			roleDmo.setAtomLocus(resourceRoot.getAtomLocus());
+			roleDmo.setAtomOrigin(resourceRoot.getAtomOrigin());
 			times = 1;
 			roleDmo.getPerson();
 			times = 1;

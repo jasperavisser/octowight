@@ -53,7 +53,7 @@ public class ResourceDetectorsServiceIT extends AbstractIT {
 		final AtomChangeEvent event1 = TestData.atomChangeEvent(atomType);
 		final AtomChangeEvent event2 = TestData.atomChangeEvent("calvet");
 		final AtomGroup atomGroup = new AtomGroup();
-		atomGroup.setAtomLocus(event1.getAtomLocus());
+		atomGroup.setAtomOrigin(event1.getAtomOrigin());
 		atomGroup.setAtomType(event1.getAtomType());
 		final List<AtomChangeEvent> events = Arrays.asList(event1, event2);
 		final List<ResourceRoot> expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(96l));

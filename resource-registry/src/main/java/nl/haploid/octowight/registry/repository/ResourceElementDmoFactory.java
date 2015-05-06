@@ -10,7 +10,7 @@ public class ResourceElementDmoFactory {
 	public ResourceElementDmo fromResourceAndAtom(final Resource resource, final Atom atom) {
 		final ResourceElementDmo dmo = new ResourceElementDmo();
 		dmo.setAtomId(atom.getAtomId());
-		dmo.setAtomLocus(atom.getAtomLocus());
+		dmo.setAtomOrigin(atom.getAtomOrigin());
 		dmo.setAtomType(atom.getAtomType());
 		dmo.setResourceId(resource.getId());
 		dmo.setResourceType(resource.getType());

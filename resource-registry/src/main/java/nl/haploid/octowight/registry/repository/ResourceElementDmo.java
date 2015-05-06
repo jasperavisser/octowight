@@ -17,7 +17,7 @@ public class ResourceElementDmo {
 
 	private Long atomId;
 
-	private String atomLocus;
+	private String atomOrigin;
 
 	private String atomType;
 
@@ -53,12 +53,12 @@ public class ResourceElementDmo {
 		this.atomId = atomId;
 	}
 
-	public String getAtomLocus() {
-		return atomLocus;
+	public String getAtomOrigin() {
+		return atomOrigin;
 	}
 
-	public void setAtomLocus(final String atomLocus) {
-		this.atomLocus = atomLocus;
+	public void setAtomOrigin(final String atomOrigin) {
+		this.atomOrigin = atomOrigin;
 	}
 
 	public String getAtomType() {

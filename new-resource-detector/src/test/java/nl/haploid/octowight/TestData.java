@@ -16,7 +16,7 @@ public class TestData {
 		resourceRoot.setResourceId(resourceId);
 		resourceRoot.setResourceType("olson");
 		resourceRoot.setAtomId(nextLong());
-		resourceRoot.setAtomLocus("madison avenue");
+		resourceRoot.setAtomOrigin("madison avenue");
 		resourceRoot.setAtomType("draper");
 		return resourceRoot;
 	}
@@ -29,7 +29,7 @@ public class TestData {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setId(nextLong());
 		event.setAtomId(nextLong());
-		event.setAtomLocus("everywhere");
+		event.setAtomOrigin("everywhere");
 		event.setAtomType(atomType);
 		return event;
 	}

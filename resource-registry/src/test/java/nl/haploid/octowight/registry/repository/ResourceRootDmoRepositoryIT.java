@@ -16,13 +16,13 @@ public class ResourceRootDmoRepositoryIT extends AbstractIT {
 	private ResourceRootDmoRepository resourceRootDmoRepository;
 
 	@Test
-	public void findByAtomIdAndAtomTypeAndAtomLocus() {
+	public void findByAtomIdAndAtomTypeAndAtomOrigin() {
 		resourceRootDmoRepository.deleteAll();
 		final ResourceRootDmo dmo = TestData.resourceRootDmo();
 		final ResourceRootDmo expectedDmo = resourceRootDmoRepository.save(dmo);
 		final ResourceRootDmo actualDmo = resourceRootDmoRepository
-				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(expectedDmo.getResourceType(),
-						expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
+				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(expectedDmo.getResourceType(),
+						expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomOrigin());
 		assertEquals(expectedDmo, actualDmo);
 	}
 

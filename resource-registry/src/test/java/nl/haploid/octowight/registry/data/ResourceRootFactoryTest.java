@@ -20,7 +20,7 @@ public class ResourceRootFactoryTest {
 		final String resourceType = "greer";
 		final ResourceRoot resourceRoot = resourceRootFactory.fromAtomChangeEvent(event, resourceType);
 		assertEquals(event.getAtomId(), resourceRoot.getAtomId());
-		assertEquals(event.getAtomLocus(), resourceRoot.getAtomLocus());
+		assertEquals(event.getAtomOrigin(), resourceRoot.getAtomOrigin());
 		assertEquals(event.getAtomType(), resourceRoot.getAtomType());
 		assertNull(resourceRoot.getResourceId());
 		assertEquals(resourceType, resourceRoot.getResourceType());
@@ -32,7 +32,7 @@ public class ResourceRootFactoryTest {
 		final ResourceRoot resourceRoot = resourceRootFactory.fromResourceRootDmo(resourceRootDmo);
 		assertEquals(resourceRootDmo.getAtomId(), resourceRoot.getAtomId());
 		assertEquals(resourceRootDmo.getAtomType(), resourceRoot.getAtomType());
-		assertEquals(resourceRootDmo.getAtomLocus(), resourceRoot.getAtomLocus());
+		assertEquals(resourceRootDmo.getAtomOrigin(), resourceRoot.getAtomOrigin());
 		assertEquals(resourceRootDmo.getResourceId(), resourceRoot.getResourceId());
 		assertEquals(resourceRootDmo.getResourceType(), resourceRoot.getResourceType());
 	}

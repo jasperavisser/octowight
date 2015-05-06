@@ -23,7 +23,7 @@ public class PersonDmo implements Atom {
 	@OneToMany(mappedBy = "person")
 	private List<RoleDmo> roles = new ArrayList<>();
 
-	private String atomLocus;
+	private String atomOrigin;
 
 	public Long getId() {
 		return id;
@@ -55,12 +55,12 @@ public class PersonDmo implements Atom {
 	}
 
 	@Override
-	public String getAtomLocus() {
-		return atomLocus;
+	public String getAtomOrigin() {
+		return atomOrigin;
 	}
 
-	public void setAtomLocus(String atomLocus) {
-		this.atomLocus = atomLocus;
+	public void setAtomOrigin(String atomOrigin) {
+		this.atomOrigin = atomOrigin;
 	}
 
 	@Override

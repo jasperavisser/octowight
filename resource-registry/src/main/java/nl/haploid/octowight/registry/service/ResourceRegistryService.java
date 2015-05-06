@@ -36,8 +36,8 @@ public class ResourceRegistryService {
 
 	public boolean isNewResource(final ResourceRoot resourceRoot) {
 		final ResourceRootDmo dmo = resourceRootDmoRepository
-				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomLocus(resourceRoot.getResourceType(),
-						resourceRoot.getAtomId(), resourceRoot.getAtomType(), resourceRoot.getAtomLocus());
+				.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(resourceRoot.getResourceType(),
+						resourceRoot.getAtomId(), resourceRoot.getAtomType(), resourceRoot.getAtomOrigin());
 		return dmo == null;
 	}
 
@@ -55,7 +55,7 @@ public class ResourceRegistryService {
 				.map(AtomChangeEvent::getAtomId)
 				.collect(Collectors.toList());
 		final List<ResourceElementDmo> resourceElementDmos = resourceElementDmoRepository
-				.findByAtomIdInAndAtomTypeAndAtomLocus(atomIds, atomGroup.getAtomType(), atomGroup.getAtomLocus());
+				.findByAtomIdInAndAtomTypeAndAtomOrigin(atomIds, atomGroup.getAtomType(), atomGroup.getAtomOrigin());
 		return resourceElementDmos.stream()
 				.map(this::getResourceRootDmo)
 				.filter(Objects::nonNull)

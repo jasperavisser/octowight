@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ResourceElementDmoRepository extends MongoRepository<ResourceElementDmo, String> {
 
-	ResourceElementDmo findByAtomIdAndAtomTypeAndAtomLocus
-			(final Long atomId, final String atomType, final String atomLocus);
+	ResourceElementDmo findByAtomIdAndAtomTypeAndAtomOrigin
+			(final Long atomId, final String atomType, final String atomOrigin);
 
-	List<ResourceElementDmo> findByAtomIdInAndAtomTypeAndAtomLocus
-			(final List<Long> atomId, final String atomType, final String atomLocus);
+	List<ResourceElementDmo> findByAtomIdInAndAtomTypeAndAtomOrigin
+			(final List<Long> atomId, final String atomType, final String atomOrigin);
 
 	Long deleteByResourceTypeAndResourceId(final String resourceType, final long resourceId);
 }

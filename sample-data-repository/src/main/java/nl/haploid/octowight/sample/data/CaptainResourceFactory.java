@@ -21,9 +21,9 @@ public class CaptainResourceFactory implements ResourceFactory<CaptainResource> 
 		if (roleDmo == null) {
 			throw new ResourceNotFoundException();
 		}
-		roleDmo.setAtomLocus(resourceRoot.getAtomLocus());
+		roleDmo.setAtomOrigin(resourceRoot.getAtomOrigin());
 		final PersonDmo personDmo = roleDmo.getPerson();
-		personDmo.setAtomLocus(resourceRoot.getAtomLocus());
+		personDmo.setAtomOrigin(resourceRoot.getAtomOrigin());
 		final CaptainResource captainResource = new CaptainResource();
 		captainResource.setId(resourceRoot.getResourceId());
 		captainResource.setPersonDmo(personDmo);

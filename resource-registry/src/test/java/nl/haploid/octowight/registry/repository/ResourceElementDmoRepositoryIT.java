@@ -18,20 +18,20 @@ public class ResourceElementDmoRepositoryIT extends AbstractIT {
 	private ResourceElementDmoRepository resourceElementDmoRepository;
 
 	@Test
-	public void testFindByAtomIdAndAtomTypeAndAtomLocus() {
+	public void testFindByAtomIdAndAtomTypeAndAtomOrigin() {
 		final ResourceElementDmo dmo = TestData.resourceElementDmo();
 		final ResourceElementDmo expectedDmo = resourceElementDmoRepository.save(dmo);
 		final ResourceElementDmo actualDmo = resourceElementDmoRepository
-				.findByAtomIdAndAtomTypeAndAtomLocus(expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
+				.findByAtomIdAndAtomTypeAndAtomOrigin(expectedDmo.getAtomId(), expectedDmo.getAtomType(), expectedDmo.getAtomOrigin());
 		assertEquals(expectedDmo, actualDmo);
 	}
 
 	@Test
-	public void testFindByAtomIdInAndAtomTypeAndAtomLocus() {
+	public void testFindByAtomIdInAndAtomTypeAndAtomOrigin() {
 		final ResourceElementDmo dmo = TestData.resourceElementDmo();
 		final ResourceElementDmo expectedDmo = resourceElementDmoRepository.save(dmo);
 		final List<ResourceElementDmo> actualDmos = resourceElementDmoRepository
-				.findByAtomIdInAndAtomTypeAndAtomLocus(Collections.singletonList(expectedDmo.getAtomId()), expectedDmo.getAtomType(), expectedDmo.getAtomLocus());
+				.findByAtomIdInAndAtomTypeAndAtomOrigin(Collections.singletonList(expectedDmo.getAtomId()), expectedDmo.getAtomType(), expectedDmo.getAtomOrigin());
 		assertEquals(1, actualDmos.size());
 		assertEquals(expectedDmo, actualDmos.get(0));
 	}
