@@ -1,11 +1,8 @@
 package nl.haploid.octowight.sample.repository
 
 import nl.haploid.octowight.sample.{AbstractIT, TestData}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.springframework.beans.factory.annotation.Autowired
 
-@RunWith(classOf[JUnitRunner])
 // TODO: transactional
 class AtomChangeEventRepositoryIT extends AbstractIT {
 

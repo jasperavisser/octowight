@@ -1,18 +1,10 @@
 package nl.haploid.octowight.sample.service
 
 import mockit.Tested
-import nl.haploid.octowight.EasyMockInjection
-import nl.haploid.octowight.sample.TestData
+import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import org.junit.Assert.assertEquals
-import org.junit.runner.RunWith
-import org.scalatest._
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.mock.EasyMockSugar
 
-@RunWith(classOf[JUnitRunner])
-class AtomChangeEventFactoryTest extends FlatSpec with EasyMockSugar
-with ShouldMatchers with EasyMockInjection with BeforeAndAfterEach {
-
+class AtomChangeEventFactoryTest extends AbstractTest {
   @Tested private val eventFactory = new AtomChangeEventFactory
 
   "Atom change event factory" should "build event from DMO" in {

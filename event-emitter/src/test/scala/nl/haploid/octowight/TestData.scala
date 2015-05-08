@@ -3,22 +3,22 @@ package nl.haploid.octowight
 import java.util.{Random, UUID}
 
 object TestData {
-  val ATOM_LOCUS: String = "sunnydale"
-  val ATOM_TYPE: String = "spike"
+  val ATOM_LOCUS = "sunnydale"
+  val ATOM_TYPE = "spike"
 
-  def atomChangeEvent: AtomChangeEvent = {
-    val event: AtomChangeEvent = new AtomChangeEvent
+  def atomChangeEvent = {
+    val event = new AtomChangeEvent
     event.setAtomId(nextLong)
     event.setAtomOrigin(ATOM_LOCUS)
     event.setAtomType(ATOM_TYPE)
     event
   }
 
-  def nextLong: Long = new Random().nextLong
+  def nextLong = new Random().nextLong
 
-  def nextString: String = UUID.randomUUID.toString
+  def nextString = UUID.randomUUID.toString
 
-  def message: String = nextString
+  def message = nextString
 
-  def topic: String = nextString
+  def topic = nextString
 }

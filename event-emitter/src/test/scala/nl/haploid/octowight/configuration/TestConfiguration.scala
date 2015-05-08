@@ -8,10 +8,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
 object TestConfiguration {
 
-  @Bean def propertyPlaceholderConfigurer: PropertySourcesPlaceholderConfigurer = {
-    val configurer: PropertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer
-    val properties: Properties = new Properties
-    val dockerHostIp: String = System.getenv("DOCKER_HOST_IP")
+  @Bean def propertyPlaceholderConfigurer = {
+    val configurer = new PropertySourcesPlaceholderConfigurer
+    val properties = new Properties
+    val dockerHostIp = System.getenv("DOCKER_HOST_IP")
     properties.setProperty("octowight.kafka.topic.events", TestData.topic)
     properties.setProperty("octowight.kafka.hostname", dockerHostIp)
     properties.setProperty("octowight.kafka.port", "9092")
@@ -26,5 +26,5 @@ object TestConfiguration {
 ))
 class TestConfiguration {
 
-  @Bean def jsonMapper: JsonMapper = new JsonMapper
+  @Bean def jsonMapper = new JsonMapper
 }

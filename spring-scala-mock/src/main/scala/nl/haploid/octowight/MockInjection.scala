@@ -34,7 +34,7 @@ trait MockInjection {
 
   private def injectMock(autowiredField: Field, testedObject: AnyRef) = {
     autowiredField.setAccessible(true)
-    val option: Option[Field] = mockeds.get(autowiredField.getType)
+    val option = mockeds.get(autowiredField.getType)
     option match {
       case Some(_) =>
         val field = option.get

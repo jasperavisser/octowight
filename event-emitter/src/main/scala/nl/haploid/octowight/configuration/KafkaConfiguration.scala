@@ -13,7 +13,7 @@ import org.springframework.context.annotation.{Bean, Configuration}
   @Value("${octowight.kafka.port}") private val port: Int = 0
 
   @Bean def kafkaProducer: KafkaProducer[String, String] = {
-    val properties: Properties = new Properties
+    val properties = new Properties
     properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, s"$hostname:$port")
     properties.put(ProducerConfig.RETRIES_CONFIG, "3")
     properties.put(ProducerConfig.ACKS_CONFIG, "all")

@@ -7,12 +7,12 @@ import org.springframework.scheduling.annotation.EnableScheduling
 
 object AppConfiguration {
 
-  @Bean def propertyPlaceholderConfigurer: PropertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer
+  @Bean def propertyPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer
 }
 
 @Configuration
 @EnableScheduling
 class AppConfiguration {
 
-  @Bean def jsonMapper: JsonMapper = new JsonMapper
+  @Bean def jsonMapper = new JsonMapper
 }
