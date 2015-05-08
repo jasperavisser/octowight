@@ -12,10 +12,10 @@ import java.util.Properties
 
 object TestConfiguration {
 
-  @Bean def propertyPlaceholderConfigurer: PropertySourcesPlaceholderConfigurer = {
-    val configurer: PropertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer
-    val properties: Properties = new Properties
-    val dockerHostIp: String = System.getenv("DOCKER_HOST_IP")
+  @Bean def propertyPlaceholderConfigurer = {
+    val configurer = new PropertySourcesPlaceholderConfigurer
+    val properties = new Properties
+    val dockerHostIp = System.getenv("DOCKER_HOST_IP")
     properties.setProperty("octowight.postgres.hostname", dockerHostIp)
     properties.setProperty("octowight.postgres.port", "5432")
     properties.setProperty("octowight.postgres.database", "postgres")
@@ -34,5 +34,5 @@ object TestConfiguration {
 ))
 class TestConfiguration {
 
-  @Bean def jsonMapper: JsonMapper = new JsonMapper
+  @Bean def jsonMapper = new JsonMapper
 }

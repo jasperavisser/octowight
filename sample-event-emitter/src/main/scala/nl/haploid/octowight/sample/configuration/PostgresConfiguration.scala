@@ -29,9 +29,9 @@ class PostgresConfiguration {
   @Value("${octowight.postgres.database}") private val database: String = null
 
   @Bean def dataSource = {
-    val dataSource: BoneCPDataSource = new BoneCPDataSource
+    val dataSource = new BoneCPDataSource
     dataSource.setDriverClass("org.postgresql.Driver")
-    val jdbcUrl: String = s"jdbc:postgresql://$hostname:$port/$database"
+    val jdbcUrl = s"jdbc:postgresql://$hostname:$port/$database"
     dataSource.setJdbcUrl(jdbcUrl)
     dataSource.setUsername(username)
     dataSource.setPassword(username)
@@ -40,10 +40,10 @@ class PostgresConfiguration {
   }
 
   @Bean def entityManagerFactory(dataSource: DataSource) = {
-    val vendorAdapter: HibernateJpaVendorAdapter = new HibernateJpaVendorAdapter
+    val vendorAdapter = new HibernateJpaVendorAdapter
     vendorAdapter.setGenerateDdl(true)
     vendorAdapter.setShowSql(true)
-    val factory: LocalContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean
+    val factory = new LocalContainerEntityManagerFactoryBean
     factory.setJpaVendorAdapter(vendorAdapter)
     factory.setPackagesToScan("nl.haploid.octowight.sample.repository")
     factory.setDataSource(dataSource)
@@ -52,7 +52,7 @@ class PostgresConfiguration {
   }
 
   @Bean def transactionManager(entityManagerFactory: EntityManagerFactory) = {
-    val manager: JpaTransactionManager = new JpaTransactionManager
+    val manager = new JpaTransactionManager
     manager.setEntityManagerFactory(entityManagerFactory)
     manager
   }

@@ -10,8 +10,8 @@ import java.util.stream.Collectors
 @Component
 class AtomChangeEventFactory {
 
-  def fromAtomChangeEventDmo(eventDmo: AtomChangeEventDmo): AtomChangeEvent = {
-    val event: AtomChangeEvent = new AtomChangeEvent
+  def fromAtomChangeEventDmo(eventDmo: AtomChangeEventDmo) = {
+    val event = new AtomChangeEvent
     event.setId(eventDmo.getId)
     event.setAtomId(eventDmo.getAtomId)
     event.setAtomOrigin(eventDmo.getAtomOrigin)
@@ -19,7 +19,5 @@ class AtomChangeEventFactory {
     event
   }
 
-  def fromAtomChangeEventDmos(eventDmos: Traversable[AtomChangeEventDmo]) = {
-    eventDmos.map(fromAtomChangeEventDmo)
-  }
+  def fromAtomChangeEventDmos(eventDmos: Traversable[AtomChangeEventDmo]) = eventDmos.map(fromAtomChangeEventDmo)
 }
