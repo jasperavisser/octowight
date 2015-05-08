@@ -1,8 +1,8 @@
 package nl.haploid.octowight.sample
 
+import java.util.{Random, UUID}
+
 import nl.haploid.octowight.sample.repository.AtomChangeEventDmo
-import java.util.Random
-import java.util.UUID
 
 object TestData {
   val ATOM_LOCUS = "sunnydale"

@@ -1,7 +1,6 @@
 package nl.haploid.octowight
 
-import java.util.Random
-import java.util.UUID
+import java.util.{Random, UUID}
 
 object TestData {
   val ATOM_LOCUS: String = "sunnydale"

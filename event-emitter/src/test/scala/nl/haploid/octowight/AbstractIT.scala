@@ -1,11 +1,9 @@
 package nl.haploid.octowight
 
-import nl.haploid.octowight.configuration.KafkaConfiguration
-import nl.haploid.octowight.configuration.TestConfiguration
-import org.scalatest.{ShouldMatchers, BeforeAndAfterEach, FlatSpec}
-import org.springframework.test.context.{TestContextManager, ContextConfiguration}
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests
+import nl.haploid.octowight.configuration.{KafkaConfiguration, TestConfiguration}
+import org.scalatest.{BeforeAndAfterEach, FlatSpec, ShouldMatchers}
 import org.springframework.test.context.support.AnnotationConfigContextLoader
+import org.springframework.test.context.{ContextConfiguration, TestContextManager}
 
 @ContextConfiguration(classes = Array(classOf[TestConfiguration], classOf[KafkaConfiguration]),
   loader = classOf[AnnotationConfigContextLoader])

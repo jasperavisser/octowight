@@ -1,12 +1,11 @@
 package nl.haploid.octowight.configuration
 
-import org.apache.kafka.clients.producer.KafkaProducer
-import org.apache.kafka.clients.producer.ProducerConfig
+import java.util.Properties
+
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig}
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import java.util.Properties
+import org.springframework.context.annotation.{Bean, Configuration}
 
 @Configuration class KafkaConfiguration {
 

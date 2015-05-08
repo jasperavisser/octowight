@@ -1,6 +1,6 @@
 package nl.haploid.octowight.service
 
-import java.util.concurrent.{TimeUnit, Future}
+import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight._
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}

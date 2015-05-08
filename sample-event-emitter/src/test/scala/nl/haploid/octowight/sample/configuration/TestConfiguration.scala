@@ -1,14 +1,12 @@
 package nl.haploid.octowight.sample.configuration
 
+import java.util.Properties
+
 import nl.haploid.octowight.JsonMapper
 import nl.haploid.octowight.configuration.AppConfiguration
 import nl.haploid.octowight.sample.TestData
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.FilterType
+import org.springframework.context.annotation.{Bean, ComponentScan, Configuration, FilterType}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
-import java.util.Properties
 
 object TestConfiguration {
 

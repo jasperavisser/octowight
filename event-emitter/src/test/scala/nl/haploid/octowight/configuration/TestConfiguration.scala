@@ -1,14 +1,10 @@
 package nl.haploid.octowight.configuration
 
-import nl.haploid.octowight.JsonMapper
-import nl.haploid.octowight.TestData
-import org.apache.kafka.common.config.ConfigDef
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.FilterType
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import java.util.Properties
+
+import nl.haploid.octowight.{JsonMapper, TestData}
+import org.springframework.context.annotation.{Bean, ComponentScan, Configuration, FilterType}
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
 object TestConfiguration {
 

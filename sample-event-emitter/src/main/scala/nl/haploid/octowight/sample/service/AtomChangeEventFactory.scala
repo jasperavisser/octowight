@@ -3,9 +3,6 @@ package nl.haploid.octowight.sample.service
 import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.sample.repository.AtomChangeEventDmo
 import org.springframework.stereotype.Component
-import java.util.Collection
-import java.util.List
-import java.util.stream.Collectors
 
 @Component
 class AtomChangeEventFactory {
