@@ -33,7 +33,7 @@ public class EventHandlerService {
 
 	public long detectNewResources(final int batchSize) {
 		log.debug(String.format("Poll for atom change events on %s", eventConsumerService.getTopic()));
-		final Set<Map.Entry<AtomGroup, List<AtomChangeEvent>>> events = eventConsumerService.consumeMessages(batchSize)
+		final Set<Map.Entry<AtomGroup, List<AtomChangeEvent>>> events = eventConsumerService.consumeMessages().stream()
 				.collect(Collectors.groupingBy(AtomChangeEvent::getAtomGroup))
 				.entrySet();
 		log.debug(String.format("Consumed %d events", events.size()));

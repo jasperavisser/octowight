@@ -7,7 +7,8 @@ import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.{Bean, Configuration}
 
-@Configuration class KafkaConfiguration {
+@Configuration
+class KafkaConfiguration {
 
   @Value("${octowight.kafka.hostname}") private val hostname: String = null
   @Value("${octowight.kafka.port}") private val port: Int = 0

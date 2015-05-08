@@ -25,10 +25,16 @@ trait MockInjection {
         field.set(this, createMockInstance(field))
     }
     testeds.foreach {
-      case (clazz, field) =>
-        getFieldsByAnnotation(clazz, MockInjection.Autowired).foreach {
-          case (autowiredClazz, autowiredField) => injectMock(autowiredField, field.get(this))
+      case (clazz, field) => {
+        val testedObject: AnyRef = field.get(this)
+        if (testedObject == null) {
+          throw new RuntimeException(s"Tested object of ${clazz.getCanonicalName} is null")
         }
+        getFieldsByAnnotation(clazz, MockInjection.Autowired).foreach {
+          case (autowiredClazz, autowiredField) =>
+            injectMock(autowiredField, testedObject)
+        }
+      }
     }
   }
 

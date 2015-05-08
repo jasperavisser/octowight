@@ -30,7 +30,6 @@
 		<easymock.version>3.3.1</easymock.version>
 		<jmockit.version>1.16</jmockit.version>
 		<kafka.version>0.8.2.1</kafka.version>
-		<!--<scala.version>2.10.0</scala.version>-->
 		<scala.version>2.11.6</scala.version>
 		<scalatest.version>2.2.4</scalatest.version>
 		<yammer-metrics.version>2.2.0</yammer-metrics.version>
