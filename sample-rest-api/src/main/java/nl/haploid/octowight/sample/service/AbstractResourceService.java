@@ -67,7 +67,7 @@ public abstract class AbstractResourceService<M extends Model, R extends Resourc
 
 	// TODO: test
 	public List<M> getAllModels() {
-		return resourceRootDmoRepository.findByResourceType(CaptainResource.RESOURCE_TYPE).stream()
+		return resourceRootDmoRepository.findByResourceType(CaptainResource.ResourceType()).stream()
 				.map(ResourceRootDmo::getResourceId)
 				.map(resourceId -> {
 					try {

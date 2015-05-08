@@ -13,16 +13,12 @@ import org.springframework.transaction.annotation.Transactional
 import scala.collection.JavaConverters._
 
 object App {
-
-  def main(args: Array[String]) {
-    SpringApplication.run(classOf[App])
-  }
+  def main(args: Array[String]): Unit = SpringApplication.run(classOf[App])
 }
 
 @EnableAutoConfiguration
 @ComponentScan(basePackages = Array("nl.haploid.octowight"))
 class App {
-
   @Autowired private val service: EventChannelService = null
   @Autowired private val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
   @Autowired private val eventFactory: AtomChangeEventFactory = null

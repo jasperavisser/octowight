@@ -32,7 +32,7 @@ public class CaptainResourceDetector implements ResourceDetector {
 
 	@Override
 	public Collection<String> getAtomTypes() {
-		return Collections.singletonList(RoleDmo.ATOM_TYPE);
+		return Collections.singletonList(RoleDmo.AtomType());
 	}
 
 	@Override

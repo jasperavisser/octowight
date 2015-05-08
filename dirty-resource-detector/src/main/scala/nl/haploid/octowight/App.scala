@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.scheduling.annotation.Scheduled
 
 object App {
-  def main(args: Array[String]) = SpringApplication.run(classOf[App])
+  def main(args: Array[String]): Unit = SpringApplication.run(classOf[App])
 }
 
 @EnableAutoConfiguration

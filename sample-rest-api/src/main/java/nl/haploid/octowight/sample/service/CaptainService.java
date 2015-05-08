@@ -14,6 +14,6 @@ public class CaptainService extends AbstractResourceService<CaptainModel, Captai
 
 	@Override
 	public String getResourceType() {
-		return CaptainResource.RESOURCE_TYPE;
+		return CaptainResource.ResourceType();
 	}
 }

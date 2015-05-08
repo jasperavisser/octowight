@@ -51,7 +51,7 @@ public class CaptainServiceTest {
 	@Test
 	public void testGetModel(final @Mocked CaptainResource captainResource) {
 		final Long resourceId = TestData.nextLong();
-		final String resourceType = CaptainResource.RESOURCE_TYPE;
+		final String resourceType = CaptainResource.ResourceType();
 		final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
 		final CaptainModel expectedCaptainModel = TestData.captainModel();
 		new StrictExpectations(service) {{
@@ -82,7 +82,7 @@ public class CaptainServiceTest {
 	@Test
 	public void testGetModelFromCache(final @Mocked CaptainResource captainResource) {
 		final Long resourceId = TestData.nextLong();
-		final String resourceType = CaptainResource.RESOURCE_TYPE;
+		final String resourceType = CaptainResource.ResourceType();
 		final ResourceRoot resourceRoot = TestData.resourceRoot(resourceId);
 		final CaptainModel expectedCaptainModel = TestData.captainModel();
 		new StrictExpectations(service) {{

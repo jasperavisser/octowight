@@ -18,7 +18,7 @@ public class TestData {
 		final AtomChangeEvent event = new AtomChangeEvent();
 		event.setAtomId(atomId);
 		event.setAtomOrigin(name());
-		event.setAtomType(PersonDmo.ATOM_TYPE);
+		event.setAtomType(PersonDmo.AtomType());
 		return event;
 	}
 

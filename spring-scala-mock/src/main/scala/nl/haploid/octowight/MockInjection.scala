@@ -18,6 +18,8 @@ trait MockInjection {
 
   def createMockInstance(mockedField: Field): AnyRef
 
+  def createPartialMockInstance(mockedField: Field): AnyRef
+
   def injectMocks() = {
     mockeds.foreach {
       case (clazz, field) =>
@@ -25,16 +27,15 @@ trait MockInjection {
         field.set(this, createMockInstance(field))
     }
     testeds.foreach {
-      case (clazz, field) => {
-        val testedObject = field.get(this)
-        if (testedObject == null) {
-          throw new RuntimeException(s"Tested object of ${clazz.getCanonicalName} is null")
+      case (clazz, field) =>
+        if (field.get(this) == null) {
+          log.debug(s"Inject mock instance of ${clazz.getCanonicalName} into ${this.getClass.getCanonicalName}")
+          field.set(this, createPartialMockInstance(field))
         }
         getFieldsByAnnotation(clazz, MockInjection.Autowired).foreach {
           case (autowiredClazz, autowiredField) =>
-            injectMock(autowiredField, testedObject)
+            injectMock(autowiredField, field.get(this))
         }
-      }
     }
   }
 
