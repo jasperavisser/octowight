@@ -1,4 +1,4 @@
-# octowight [![Build Status](https://travis-ci.org/jasperavisser/octowight.svg?branch=master)](https://travis-ci.org/jasperavisser/octowight)
+# octowight [![Build Status](https://travis-ci.org/jasperavisser/octowight.svg?branch=master)](https://travis-ci.org/jasperavisser/octowight) [![Codacy Badge](https://www.codacy.com/project/badge/9541b85030e24d1b9b170e19cec3b0d5)](https://www.codacy.com/app/jasper-a-visser/octowight)
 TODO
 
 ## Requirements
