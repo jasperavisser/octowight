@@ -11,7 +11,7 @@ object MockInjection {
 }
 
 trait MockInjection {
-  protected val log = LoggerFactory.getLogger(getClass)
+  private val log = LoggerFactory.getLogger(getClass)
 
   private val mockeds = getFieldsByAnnotation(getClass, classOf[Mocked])
   private val testeds = getFieldsByAnnotation(getClass, classOf[Tested])
