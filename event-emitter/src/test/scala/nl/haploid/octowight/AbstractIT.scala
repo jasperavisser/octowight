@@ -11,7 +11,5 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader
   loader = classOf[AnnotationConfigContextLoader])
 abstract class AbstractIT extends FlatSpec with BeforeAndAfterEach with ShouldMatchers {
 
-  override def beforeEach() = {
-    new TestContextManager(this.getClass).prepareTestInstance(this)
-  }
+  override def beforeEach() = new TestContextManager(this.getClass).prepareTestInstance(this)
 }
