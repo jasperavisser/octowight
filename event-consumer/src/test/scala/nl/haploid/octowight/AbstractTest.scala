@@ -8,5 +8,5 @@ import org.scalatest.mock.EasyMockSugar
 @RunWith(classOf[JUnitRunner])
 abstract class AbstractTest extends FlatSpec with EasyMockSugar with ShouldMatchers with EasyMockInjection with BeforeAndAfterEach {
 
-   override def beforeEach() = injectMocks()
- }
+  override def beforeEach() = injectMocks()
+}

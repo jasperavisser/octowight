@@ -21,7 +21,7 @@ class EventConsumerService {
   private var kafkaConsumer: ThreadLocal[ConsumerConnector] = null
   private var stream: ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]] = null
 
-  def getStream: KafkaStream[Array[Byte], Array[Byte]] = {
+  def getStream = {
     if (stream == null) {
       log.debug(s"Create new stream for $getTopic}")
       stream = new ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]]

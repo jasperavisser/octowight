@@ -26,7 +26,7 @@ trait MockInjection {
     }
     testeds.foreach {
       case (clazz, field) => {
-        val testedObject: AnyRef = field.get(this)
+        val testedObject = field.get(this)
         if (testedObject == null) {
           throw new RuntimeException(s"Tested object of ${clazz.getCanonicalName} is null")
         }

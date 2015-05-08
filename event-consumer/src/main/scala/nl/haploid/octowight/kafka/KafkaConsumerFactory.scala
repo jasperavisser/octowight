@@ -20,7 +20,7 @@ class KafkaConsumerFactory {
   }
 
   def createStream(kafkaConsumer: ConsumerConnector, topic: String) = {
-    val topicCountMap: util.Map[String, Integer] = new util.HashMap[String, Integer]
+    val topicCountMap = new util.HashMap[String, Integer]
     topicCountMap.put(topic, 1)
     val streamsPerTopic = kafkaConsumer.createMessageStreams(topicCountMap)
     streamsPerTopic.get(topic).get(0)

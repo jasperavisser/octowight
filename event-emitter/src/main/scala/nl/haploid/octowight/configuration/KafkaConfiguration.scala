@@ -13,7 +13,7 @@ class KafkaConfiguration {
   @Value("${octowight.kafka.hostname}") private val hostname: String = null
   @Value("${octowight.kafka.port}") private val port: Int = 0
 
-  @Bean def kafkaProducer: KafkaProducer[String, String] = {
+  @Bean def kafkaProducer =  {
     val properties = new Properties
     properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, s"$hostname:$port")
     properties.put(ProducerConfig.RETRIES_CONFIG, "3")

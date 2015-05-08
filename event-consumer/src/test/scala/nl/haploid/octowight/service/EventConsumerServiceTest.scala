@@ -10,7 +10,7 @@ import nl.haploid.octowight.kafka.KafkaConsumerFactory
 import org.easymock.EasyMock
 
 class EventConsumerServiceTest extends AbstractTest {
-  @Tested val eventConsumerService: EventConsumerService = EasyMock.createMockBuilder(classOf[EventConsumerService])
+  @Tested val eventConsumerService = EasyMock.createMockBuilder(classOf[EventConsumerService])
     .addMockedMethod("getKafkaConsumer")
     .addMockedMethod("getStream")
     .createMock()
@@ -26,7 +26,6 @@ class EventConsumerServiceTest extends AbstractTest {
     val stream = mock[KafkaStream[Array[Byte], Array[Byte]]]
     val iterator = mock[ConsumerIterator[Array[Byte], Array[Byte]]]
     val messageAndMetaData = mock[MessageAndMetadata[Array[Byte], Array[Byte]]]
-    // TODO:, @Injectable("my-topic") topic: String
 
     val expectedEvent = TestData.atomChangeEvent("rick")
     val message = TestData.message
@@ -47,7 +46,6 @@ class EventConsumerServiceTest extends AbstractTest {
     val stream = mock[KafkaStream[Array[Byte], Array[Byte]]]
     val iterator = mock[ConsumerIterator[Array[Byte], Array[Byte]]]
     val messageAndMetaData = mock[MessageAndMetadata[Array[Byte], Array[Byte]]]
-    // TODO:, @Injectable("my-topic") topic: String
 
     val event1 = TestData.atomChangeEvent("carol")
     val event2 = TestData.atomChangeEvent("daryl")

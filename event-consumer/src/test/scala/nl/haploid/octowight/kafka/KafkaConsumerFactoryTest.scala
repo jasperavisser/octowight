@@ -22,7 +22,7 @@ class KafkaConsumerFactoryTest extends AbstractTest {
       kafkaConsumer.createMessageStreams(EasyMock.anyObject(classOf[util.Map[String, Integer]])) andReturn streams once()
     }
     whenExecuting(kafkaConsumer) {
-      val actualStream: KafkaStream[Array[Byte], Array[Byte]] = kafkaConsumerFactory.createStream(kafkaConsumer, topic)
+      val actualStream = kafkaConsumerFactory.createStream(kafkaConsumer, topic)
       actualStream should be(expectedStream)
     }
   }

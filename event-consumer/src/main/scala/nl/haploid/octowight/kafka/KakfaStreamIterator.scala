@@ -8,7 +8,7 @@ class KakfaStreamIterator(stream: KafkaStream[Array[Byte], Array[Byte]]) extends
 
   var nextValue: MessageAndMetadata[Array[Byte], Array[Byte]] = _
 
-  override def hasNext: Boolean = {
+  override def hasNext = {
     try {
       nextValue = iterator.next()
       true
@@ -17,5 +17,5 @@ class KakfaStreamIterator(stream: KafkaStream[Array[Byte], Array[Byte]]) extends
     }
   }
 
-  override def next(): MessageAndMetadata[Array[Byte], Array[Byte]] = nextValue
+  override def next() = nextValue
 }

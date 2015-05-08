@@ -1,7 +1,6 @@
 package nl.haploid.octowight.kafka
 
 import nl.haploid.octowight.{AbstractIT, TestData}
-import org.junit.Assert.assertNotNull
 import org.springframework.beans.factory.annotation.Autowired
 
 class KafkaConsumerFactoryIT extends AbstractIT {
@@ -9,13 +8,13 @@ class KafkaConsumerFactoryIT extends AbstractIT {
 
   "Kafka consumer factory" should "build a consumer" in {
     val kafkaConsumer = kafkaConsumerFactory.createKafkaConsumer
-    assertNotNull(kafkaConsumer) // TODO: not be null
+    kafkaConsumer should not be null
   }
 
   "Kafka consumer factory" should "build a stream" in {
     val topic = TestData.topic
     val kafkaConsumer = kafkaConsumerFactory.createKafkaConsumer
     val stream = kafkaConsumerFactory.createStream(kafkaConsumer, topic)
-    assertNotNull(stream) // TODO: not be null
+    stream should not be null
   }
 }

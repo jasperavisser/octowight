@@ -36,7 +36,7 @@ class ResourceRegistryService {
   }
 
   // TODO: use Traversable
-  def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: util.List[AtomChangeEvent]): util.List[ResourceRoot] = {
+  def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: util.List[AtomChangeEvent]) =  {
     val atomIds = atomChangeEvents.asScala.map(_.getAtomId)
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(atomIds.asJava, atomGroup.getAtomType, atomGroup.getAtomOrigin)
     resourceElementDmos.asScala
