@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class EventConsumerServiceIT extends AbstractIT {
   private val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val service: EventConsumerService = null
+  @Autowired private val eventConsumerService: EventConsumerService = null
   @Autowired private val kafkaProducer: KafkaProducer[String, String] = null
   @Autowired private val jsonMapper: JsonMapper = null
 
@@ -28,34 +28,34 @@ class EventConsumerServiceIT extends AbstractIT {
 
   "Event consumer" should "consume a message" in {
     val topic = TestData.topic
-    service.setTopic(topic)
+    eventConsumerService.setTopic(topic)
     val expectedEvent = TestData.atomChangeEvent("joan")
     sendMessage(topic, expectedEvent)
-    val actualEvent = service.consumeMessage
+    val actualEvent = eventConsumerService.consumeMessage
     actualEvent should be(expectedEvent)
   }
 
   "Event consumer" should "consume multiple messages" in {
     val topic = TestData.topic
-    service.setTopic(topic)
+    eventConsumerService.setTopic(topic)
     val event1 = TestData.atomChangeEvent("bob")
     val event2 = TestData.atomChangeEvent("benson")
     val expectedEvents = util.Arrays.asList(event1, event2)
     sendMessage(topic, event1)
     sendMessage(topic, event2)
-    val actualEvents = service.consumeMessages()
+    val actualEvents = eventConsumerService.consumeMessages()
     actualEvents should be(expectedEvents)
   }
 
   "Event consumer" should "commit stream offset" in {
     val topic = TestData.topic
-    service.setTopic(topic)
+    eventConsumerService.setTopic(topic)
     val event = TestData.atomChangeEvent("harris")
     sendMessage(topic, event)
-    service.consumeMessages()
-    service.commit()
-    service.reset()
-    val actualEvents = service.consumeMessages()
+    eventConsumerService.consumeMessages()
+    eventConsumerService.commit()
+    eventConsumerService.reset()
+    val actualEvents = eventConsumerService.consumeMessages()
     actualEvents should have size 0
   }
 }

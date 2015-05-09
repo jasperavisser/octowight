@@ -55,7 +55,7 @@ public class TestData {
 		final RoleDmo dmo = new RoleDmo();
 		dmo.setId(nextLong());
 		dmo.setPerson(personDmo);
-		dmo.setType(type);
+		dmo.setName(type);
 		return dmo;
 	}
 

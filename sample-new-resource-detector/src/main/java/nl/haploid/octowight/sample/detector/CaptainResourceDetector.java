@@ -55,6 +55,6 @@ public class CaptainResourceDetector implements ResourceDetector {
 	}
 
 	protected boolean isCaptain(final RoleDmo roleDmo) {
-		return ROLE_TYPE.equals(roleDmo.getType());
+		return ROLE_TYPE.equals(roleDmo.getName());
 	}
 }

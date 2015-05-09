@@ -24,8 +24,8 @@ class RoleDmo extends Atom {
   @JoinColumn(name = "person")
   @BeanProperty var person: PersonDmo = null
 
-  @Column(name = "type")
-  @BeanProperty var `type`: String = null
+  @Column(name = "name")
+  @BeanProperty var name: String = null
 
   @BeanProperty var atomOrigin: String = null
 

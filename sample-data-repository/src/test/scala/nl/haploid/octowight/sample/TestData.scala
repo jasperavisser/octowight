@@ -20,11 +20,11 @@ object TestData {
     dmo
   }
 
-  def roleDmo(personDmo: PersonDmo, `type`: String) = {
+  def roleDmo(personDmo: PersonDmo, name: String) = {
     val dmo = new RoleDmo
     dmo.setId(nextLong)
     dmo.setPerson(personDmo)
-    dmo.setType(`type`)
+    dmo.setName(name)
     dmo
   }
 

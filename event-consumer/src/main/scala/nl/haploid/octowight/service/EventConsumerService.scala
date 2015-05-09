@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service
 
 import scala.collection.JavaConverters._
 
+// TODO: with autowired constructors, we can get rid of null assignments
 @Service
 class EventConsumerService {
   private val log = LoggerFactory.getLogger(getClass)
 
-  @Value("${octowight.kafka.topic.events}") private var topic: String = null
   @Autowired private val consumerFactoryService: KafkaConsumerFactory = null
   @Autowired private val jsonMapper: JsonMapper = null
+
+  @Value("${octowight.kafka.topic.events}") private var topic: String = null
 
   private var kafkaConsumer: ThreadLocal[ConsumerConnector] = null
   private var stream: ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]] = null

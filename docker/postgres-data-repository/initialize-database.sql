@@ -32,7 +32,7 @@ drop table if exists octowight.role;
 create table octowight.role(
 	id bigint not null primary key default nextval('octowight.role_sequence'),
 	person bigint not null,
-	type varchar(256) not null,
+	name varchar(256) not null,
 	foreign key (person) references octowight.person(id)
 );
 
