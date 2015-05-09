@@ -4,5 +4,4 @@ import java.lang
 
 import org.springframework.data.jpa.repository.JpaRepository
 
-trait RoleDmoRepository extends JpaRepository[RoleDmo, lang.Long] {
-}
+trait RoleDmoRepository extends JpaRepository[RoleDmo, lang.Long]

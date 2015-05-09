@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-@Service class EventHandlerService {
+@Service
+class EventHandlerService {
   private val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private val eventConsumerService: EventConsumerService = null
@@ -17,6 +18,7 @@ import scala.collection.mutable
   @Autowired private val dirtyResourceProducerService: DirtyResourceProducerService = null
 
   // TODO: batch size is unused
+  // TODO: test
   def detectDirtyResources(batchSize: Int) = {
     log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
     val events: Map[AtomGroup, mutable.Buffer[AtomChangeEvent]] = eventConsumerService.consumeMessages().asScala

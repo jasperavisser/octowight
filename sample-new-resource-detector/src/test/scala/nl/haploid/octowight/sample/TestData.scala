@@ -41,11 +41,11 @@ object TestData {
     resourceRoot
   }
 
-  def roleDmo(personDmo: PersonDmo, `type`: String) = {
+  def roleDmo(personDmo: PersonDmo, name: String) = {
     val dmo = new RoleDmo
     dmo.setId(nextLong)
     dmo.setPerson(personDmo)
-    dmo.setName(`type`)
+    dmo.setName(name)
     dmo
   }
 

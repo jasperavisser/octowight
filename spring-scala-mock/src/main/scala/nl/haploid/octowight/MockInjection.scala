@@ -43,8 +43,7 @@ trait MockInjection {
     autowiredField.setAccessible(true)
     val option = mockeds.get(autowiredField.getType)
     option match {
-      case Some(_) =>
-        val field = option.get
+      case Some(field) =>
         log.debug(s"Inject mock instance of ${field.getType.getCanonicalName} into ${testedObject.getClass.getCanonicalName}")
         autowiredField.set(testedObject, field.get(this))
       case None => throw new RuntimeException(s"No mocked instance found for ${autowiredField.getType.getCanonicalName}!")

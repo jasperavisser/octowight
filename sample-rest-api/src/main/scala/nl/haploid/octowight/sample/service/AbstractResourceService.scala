@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 import scala.collection.JavaConverters._
 
+// TODO: test
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   val log = LoggerFactory.getLogger(getClass)
 

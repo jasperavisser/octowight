@@ -4,7 +4,6 @@ import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
-import org.junit.Test
 
 class AbstractResourceServiceTest extends AbstractTest {
 
@@ -20,8 +19,8 @@ class AbstractResourceServiceTest extends AbstractTest {
   @Mocked private val resourceModelDmoFactory: ResourceModelDmoFactory = null
   @Mocked private val resourceModelDmoRepository: ResourceModelDmoRepository = null
   @Mocked private val resourceModelIdFactory: ResourceModelIdFactory = null
-  @Mocked private var modelSerializer: ModelSerializer[AbstractResourceServiceTest#MockModel] = null
-  @Mocked private var resourceFactory: ResourceFactory[AbstractResourceServiceTest#MockResource] = null
+  @Mocked private val modelSerializer: ModelSerializer[AbstractResourceServiceTest#MockModel] = null
+  @Mocked private val resourceFactory: ResourceFactory[AbstractResourceServiceTest#MockResource] = null
 
   "Abstract resource service" should "get resource root" in {
     val resourceId = TestData.nextLong
@@ -36,14 +35,5 @@ class AbstractResourceServiceTest extends AbstractTest {
       val actualResourceRoot = service.getResourceRoot(resourceType, resourceId)
       actualResourceRoot should be(expectedResourceRoot)
     }
-  }
-
-  @Test def testSaveModel {
-  }
-
-  @Test def testSaveResourceElements {
-  }
-
-  @Test def testSaveResourceElement {
   }
 }

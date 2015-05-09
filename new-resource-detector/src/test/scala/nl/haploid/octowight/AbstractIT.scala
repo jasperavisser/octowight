@@ -11,7 +11,7 @@ import org.springframework.test.context.{ContextConfiguration, TestContextManage
 @RunWith(classOf[JUnitRunner])
 @ContextConfiguration(classes = Array(classOf[TestConfiguration], classOf[KafkaConfiguration]), loader = classOf[AnnotationConfigContextLoader])
 abstract class AbstractIT extends FlatSpec with BeforeAndAfterEach with ShouldMatchers {
-  protected var log = LoggerFactory.getLogger(getClass)
+  protected val log = LoggerFactory.getLogger(getClass)
 
   override def beforeEach() = new TestContextManager(this.getClass).prepareTestInstance(this)
 }

@@ -5,7 +5,6 @@ import java.util
 import nl.haploid.octowight.registry.data.ResourceRootFactory
 import nl.haploid.octowight.registry.repository.{ResourceElementDmoRepository, ResourceRootDmoRepository}
 import nl.haploid.octowight.registry.{AbstractIT, TestData}
-import org.junit.Assert.{assertFalse, assertNotNull}
 import org.springframework.beans.factory.annotation.Autowired
 
 class ResourceRegistryServiceIT extends AbstractIT {
@@ -18,13 +17,13 @@ class ResourceRegistryServiceIT extends AbstractIT {
     val resourceRootDmo = resourceRootDmoRepository.save(TestData.resourceRootDmo)
     val resourceRoot = resourceRootFactory.fromResourceRootDmo(resourceRootDmo)
     val isNewResource = resourceRegistryService.isNewResource(resourceRoot)
-    assertFalse(isNewResource)
+    isNewResource should be(right = false)
   }
 
   "Resource registry service" should "save a new resource" in {
     val resourceRoot = resourceRegistryService.saveNewResource(TestData.resourceRoot)
-    assertNotNull(resourceRoot.getResourceId)
-    assertNotNull(resourceRoot.getVersion)
+    resourceRoot.getResourceId should not be null
+    resourceRoot.getVersion should not be null
   }
 
   "Resource registry service" should "mark resources as dirty" in {

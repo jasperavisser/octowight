@@ -8,13 +8,9 @@ class TestSubject {
   @Autowired val collaborator2: Collaborator2 = null
 }
 
-class Collaborator1 {
+class Collaborator1
 
-}
-
-class Collaborator2 {
-
-}
+class Collaborator2
 
 class EasyMockInjectionTest extends FlatSpec with EasyMockInjection with ShouldMatchers with BeforeAndAfterEach {
   @Tested val testSubject: TestSubject = null

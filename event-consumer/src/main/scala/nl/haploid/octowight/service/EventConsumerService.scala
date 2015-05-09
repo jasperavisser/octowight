@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service
 
 import scala.collection.JavaConverters._
 
-// TODO: with autowired constructors, we can get rid of null assignments
 @Service
 class EventConsumerService {
   private val log = LoggerFactory.getLogger(getClass)
@@ -42,6 +41,7 @@ class EventConsumerService {
 
   def getTopic = topic
 
+  // TODO: topic should be read only; we only write to it for IT
   def setTopic(topic: String) {
     this.topic = topic
     reset()

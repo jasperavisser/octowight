@@ -17,7 +17,7 @@ class EventConsumerServiceIT extends AbstractIT {
   @Autowired private val kafkaProducer: KafkaProducer[String, String] = null
   @Autowired private val jsonMapper: JsonMapper = null
 
-  @Rule var globalTimeout = new Timeout(10, TimeUnit.SECONDS)
+  @Rule val globalTimeout = new Timeout(10, TimeUnit.SECONDS)
 
   def sendMessage(topic: String, event: AtomChangeEvent) {
     val message = jsonMapper.serialize(event)
