@@ -28,9 +28,9 @@
 		<!-- Versions -->
 		<docker-maven-plugin.version>0.0.21</docker-maven-plugin.version>
 		<easymock.version>3.3.1</easymock.version>
-		<jmockit.version>1.16</jmockit.version>
 		<kafka.version>0.8.2.1</kafka.version>
 		<scala.version>2.11.6</scala.version>
+		<scala.version.minor>2.11</scala.version.minor>
 		<scalatest.version>2.2.4</scalatest.version>
 		<yammer-metrics.version>2.2.0</yammer-metrics.version>
 		<zkclient.version>0.3</zkclient.version>
@@ -54,7 +54,7 @@
 			<!-- Scalatest -->
 			<dependency>
 				<groupId>org.scalatest</groupId>
-				<artifactId>scalatest_2.11</artifactId>
+				<artifactId>scalatest_${scala.version.minor}</artifactId>
 				<version>${scalatest.version}</version>
 			</dependency>
 			<dependency>
@@ -62,11 +62,16 @@
 				<artifactId>easymock</artifactId>
 				<version>${easymock.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>nl.haploid</groupId>
+				<artifactId>spring-scala-mock</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- Kafka consumer -->
 			<dependency>
 				<groupId>org.apache.kafka</groupId>
-				<artifactId>kafka_2.11</artifactId>
+				<artifactId>kafka_${scala.version.minor}</artifactId>
 				<version>${kafka.version}</version>
 				<exclusions>
 					<exclusion>
@@ -92,13 +97,6 @@
 				<artifactId>kafka-clients</artifactId>
 				<version>${kafka.version}</version>
 			</dependency>
-
-			<!-- JMockit -->
-			<dependency>
-				<groupId>org.jmockit</groupId>
-				<artifactId>jmockit</artifactId>
-				<version>${jmockit.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -108,9 +106,8 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jmockit</groupId>
-			<artifactId>jmockit</artifactId>
-			<scope>test</scope>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -122,10 +119,45 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_${scala.version.minor}</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>nl.haploid</groupId>
+			<artifactId>spring-scala-mock</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+
+			<!-- Allow maven to compile scala code -->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<args>
+								<arg>-dependencyfile</arg>
+								<arg>${project.build.directory}/.scala_dependencies</arg>
+							</args>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 			<!-- Run unit tests during test phase -->
 			<plugin>
@@ -241,9 +273,8 @@
 	</build>
 
 	<profiles>
-		<!-- Put the IDE's build output in a folder other than target, so that
-			IDE builds don't interact with Maven builds. -->
-		<!-- See also: http://stackoverflow.com/questions/10208313/eclipse-auto-build-output-interacts-with-maven-command-line-build-output -->
+
+		<!-- Put IDE build output in a separate folder -->
 		<profile>
 			<id>IDE</id>
 			<activation>
