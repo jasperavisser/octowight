@@ -17,7 +17,7 @@ class Collaborator2 {
 }
 
 class EasyMockInjectionTest extends FlatSpec with EasyMockInjection with ShouldMatchers with BeforeAndAfterEach {
-  @Tested val testSubject = new TestSubject
+  @Tested val testSubject: TestSubject = null
   @Mocked val collaborator1: Collaborator1 = null
   @Mocked val collaborator2: Collaborator2 = null
 

@@ -9,7 +9,7 @@ import nl.haploid.octowight.{AbstractTest, Mocked, TestData, Tested}
 import org.easymock.EasyMock
 
 class KafkaConsumerFactoryTest extends AbstractTest {
-  @Tested private val kafkaConsumerFactory = new KafkaConsumerFactory
+  @Tested private val kafkaConsumerFactory: KafkaConsumerFactory = null
   @Mocked private val consumerConfig: ConsumerConfig = null
 
   "Kafka consumer factory" should "build a stream" in {

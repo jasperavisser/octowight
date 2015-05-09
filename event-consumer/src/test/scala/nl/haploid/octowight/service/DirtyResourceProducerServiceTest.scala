@@ -5,16 +5,18 @@ import java.util.concurrent.Future
 import nl.haploid.octowight._
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import org.easymock.EasyMock
+import org.slf4j.Logger
 import org.springframework.test.util.ReflectionTestUtils
 
 class DirtyResourceProducerServiceTest extends AbstractTest {
-  @Tested private val dirtyResourceProducerService = new DirtyResourceProducerService
+  @Tested private val dirtyResourceProducerService: DirtyResourceProducerService = null
   @Mocked private val kafkaProducer: KafkaProducer[String, String] = null
   @Mocked private val jsonMapper: JsonMapper = null
 
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(dirtyResourceProducerService, "topic", TestData.topic)
+    ReflectionTestUtils.setField(dirtyResourceProducerService, "log", mock[Logger])
   }
 
   "Dirty resource producer" should "send dirty resource" in {

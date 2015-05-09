@@ -5,7 +5,7 @@ import nl.haploid.octowight.registry.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
 
 class ResourceModelDmoFactoryTest extends AbstractTest {
-  @Tested private val resourceModelDmoFactory = new ResourceModelDmoFactory
+  @Tested private val resourceModelDmoFactory: ResourceModelDmoFactory = null
   @Mocked private val resourceModelIdFactory: ResourceModelIdFactory = null
 
   "Resource model DMO factory" should "build DMO from resource" in {

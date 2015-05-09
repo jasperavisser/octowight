@@ -4,13 +4,13 @@ import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.stereotype.Service
 
 @Service
 class EventChannelService {
-  private final val log =  LoggerFactory.getLogger(getClass)
+  private final val log = LoggerFactory.getLogger(getClass)
 
   @Value("${octowight.kafka.topic.events}") private val topic: String = null
 

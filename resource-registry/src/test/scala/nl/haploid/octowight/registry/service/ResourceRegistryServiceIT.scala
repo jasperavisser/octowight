@@ -5,7 +5,7 @@ import java.util
 import nl.haploid.octowight.registry.data.ResourceRootFactory
 import nl.haploid.octowight.registry.repository.{ResourceElementDmoRepository, ResourceRootDmoRepository}
 import nl.haploid.octowight.registry.{AbstractIT, TestData}
-import org.junit.Assert.{assertEquals, assertFalse, assertNotNull}
+import org.junit.Assert.{assertFalse, assertNotNull}
 import org.springframework.beans.factory.annotation.Autowired
 
 class ResourceRegistryServiceIT extends AbstractIT {
@@ -35,6 +35,6 @@ class ResourceRegistryServiceIT extends AbstractIT {
     val atomChangeEvents = util.Arrays.asList(atomChangeEvent1, atomChangeEvent2)
     resourceElementDmoRepository.save(TestData.resourceElementDmo(resourceRootDmo, atomChangeEvent1))
     val resourceRoots = resourceRegistryService.markResourcesDirty(atomGroup, atomChangeEvents)
-    assertEquals(1, resourceRoots.size)
+    resourceRoots should have size 1
   }
 }

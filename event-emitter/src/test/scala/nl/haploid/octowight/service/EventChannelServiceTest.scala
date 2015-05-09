@@ -5,16 +5,18 @@ import java.util.concurrent.{Future, TimeUnit}
 import nl.haploid.octowight._
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import org.easymock.EasyMock
+import org.slf4j.Logger
 import org.springframework.test.util.ReflectionTestUtils
 
 class EventChannelServiceTest extends AbstractTest {
-  @Tested private val eventChannelService = new EventChannelService
+  @Tested private val eventChannelService: EventChannelService = null
   @Mocked private val kafkaProducer: KafkaProducer[String, String] = null
   @Mocked private val jsonMapper: JsonMapper = null
 
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(eventChannelService, "topic", TestData.topic)
+    ReflectionTestUtils.setField(eventChannelService, "log", mock[Logger])
   }
 
   "Channel" should "send events" in {

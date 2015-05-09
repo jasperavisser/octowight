@@ -3,7 +3,6 @@ package nl.haploid.octowight.registry.repository
 import java.util.Collections
 
 import nl.haploid.octowight.registry.{AbstractIT, TestData}
-import org.junit.Assert.assertEquals
 import org.springframework.beans.factory.annotation.Autowired
 
 class ResourceRootDmoRepositoryIT extends AbstractIT {
@@ -14,7 +13,7 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     val dmo = TestData.resourceRootDmo
     val expectedDmo = resourceRootDmoRepository.save(dmo)
     val actualDmo = resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(expectedDmo.getResourceType, expectedDmo.getAtomId, expectedDmo.getAtomType, expectedDmo.getAtomOrigin)
-    assertEquals(expectedDmo, actualDmo)
+    actualDmo should be(expectedDmo)
   }
 
   "Resource root DMO repository" should "find by resource type" in {
@@ -25,7 +24,7 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     resourceRootDmoRepository.save(dmo2)
     val actualDmos = resourceRootDmoRepository.findByResourceType("willow")
     val expectedDmos = Collections.singletonList(expectedDmo1)
-    assertEquals(expectedDmos, actualDmos)
+    actualDmos should be(expectedDmos)
   }
 
   "Resource root DMO repository" should "find by resource type & id" in {
@@ -35,6 +34,6 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     val expectedDmo = resourceRootDmoRepository.save(dmo1)
     resourceRootDmoRepository.save(dmo2)
     val actualDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId("willow", expectedDmo.getResourceId)
-    assertEquals(expectedDmo, actualDmo)
+    actualDmo should be(expectedDmo)
   }
 }

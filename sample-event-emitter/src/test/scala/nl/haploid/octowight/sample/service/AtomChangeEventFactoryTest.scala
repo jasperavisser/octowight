@@ -1,18 +1,17 @@
 package nl.haploid.octowight.sample.service
 
-import mockit.Tested
+import nl.haploid.octowight.Tested
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
-import org.junit.Assert.assertEquals
 
 class AtomChangeEventFactoryTest extends AbstractTest {
-  @Tested private val eventFactory = new AtomChangeEventFactory
+  @Tested private val eventFactory: AtomChangeEventFactory = null
 
   "Atom change event factory" should "build event from DMO" in {
     val eventDmo = TestData.atomChangeEventDmo
     val event = eventFactory.fromAtomChangeEventDmo(eventDmo)
-    assertEquals(eventDmo.getId, event.getId)
-    assertEquals(eventDmo.getAtomId, event.getAtomId)
-    assertEquals(eventDmo.getAtomType, event.getAtomType)
+    event.getId should be(eventDmo.getId)
+    event.getAtomId should be(eventDmo.getAtomId)
+    event.getAtomType should be(eventDmo.getAtomType)
   }
 
   "Atom change event factory" should "build event from multiple DMOs" in {
