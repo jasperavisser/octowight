@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, Re
 @RequestMapping(Array("/captain"))
 @ResponseBody
 class CaptainController extends AbstractController {
-  @Autowired private val captainService: CaptainService = null
+  @Autowired private[this] val captainService: CaptainService = null
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def getCaptains = captainService.getAllModels

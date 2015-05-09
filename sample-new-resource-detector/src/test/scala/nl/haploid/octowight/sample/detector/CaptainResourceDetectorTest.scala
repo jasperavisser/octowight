@@ -11,9 +11,9 @@ import org.easymock.EasyMock
 import org.springframework.test.util.ReflectionTestUtils
 
 class CaptainResourceDetectorTest extends AbstractTest {
-  @Tested private val detector: CaptainResourceDetector = null
-  @Mocked private val roleDmoRepository: RoleDmoRepository = null
-  @Mocked private val resourceRootFactory: ResourceRootFactory = null
+  @Tested private[this] val detector: CaptainResourceDetector = null
+  @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
+  @Mocked private[this] val resourceRootFactory: ResourceRootFactory = null
 
   "Captain resource detector" should "have an atom type" in {
     detector.getAtomTypes should have size 1

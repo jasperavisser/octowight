@@ -11,10 +11,10 @@ object MockInjection {
 }
 
 trait MockInjection {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  private val mockeds = getFieldsByAnnotation(getClass, classOf[Mocked])
-  private val testeds = getFieldsByAnnotation(getClass, classOf[Tested])
+  private[this] val mockeds = getFieldsByAnnotation(getClass, classOf[Mocked])
+  private[this] val testeds = getFieldsByAnnotation(getClass, classOf[Tested])
 
   def createMockInstance(mockedField: Field): AnyRef
 
@@ -39,7 +39,7 @@ trait MockInjection {
     }
   }
 
-  private def injectMock(autowiredField: Field, testedObject: AnyRef) = {
+  private[this] def injectMock(autowiredField: Field, testedObject: AnyRef) = {
     autowiredField.setAccessible(true)
     val option = mockeds.get(autowiredField.getType)
     option match {
@@ -50,7 +50,7 @@ trait MockInjection {
     }
   }
 
-  private def getFieldsByAnnotation(clazz: Class[_], annotation: Class[_ <: Annotation]): Map[Class[_], Field] = {
+  private[this] def getFieldsByAnnotation(clazz: Class[_], annotation: Class[_ <: Annotation]): Map[Class[_], Field] = {
     val fields = clazz.getDeclaredFields.filter(_ hasAnnotation annotation)
     val mapField = (f: Field) => {
       f.setAccessible(true)

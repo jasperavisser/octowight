@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class DirtyResourceProducerService {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Value("${octowight.kafka.topic.resources.dirty}") private val topic: String = null
+  @Value("${octowight.kafka.topic.resources.dirty}") private[this] val topic: String = null
 
-  @Autowired private val kafkaProducer: KafkaProducer[String, String] = null
-  @Autowired private val jsonMapper: JsonMapper = null
+  @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Autowired private[this] val jsonMapper: JsonMapper = null
 
   def sendDirtyResource(resourceRoot: ResourceRoot) = {
     val message = jsonMapper.serialize(resourceRoot)

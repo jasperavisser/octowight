@@ -4,7 +4,7 @@ import nl.haploid.octowight.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class KafkaConsumerFactoryIT extends AbstractIT {
-  @Autowired private val kafkaConsumerFactory: KafkaConsumerFactory = null
+  @Autowired private[this] val kafkaConsumerFactory: KafkaConsumerFactory = null
 
   "Kafka consumer factory" should "build a consumer" in {
     val kafkaConsumer = kafkaConsumerFactory.createKafkaConsumer

@@ -14,15 +14,15 @@ import scala.collection.JavaConverters._
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val resourceRootDmoRepository: ResourceRootDmoRepository = null
-  @Autowired private val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Autowired private val resourceRootFactory: ResourceRootFactory = null
-  @Autowired private val resourceElementDmoFactory: ResourceElementDmoFactory = null
-  @Autowired private val resourceModelDmoFactory: ResourceModelDmoFactory = null
-  @Autowired private val resourceModelDmoRepository: ResourceModelDmoRepository = null
-  @Autowired private val resourceModelIdFactory: ResourceModelIdFactory = null
-  @Autowired private val modelSerializer: ModelSerializer[M] = null
-  @Autowired private val resourceFactory: ResourceFactory[R] = null
+  @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
+  @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
+  @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
+  @Autowired private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
+  @Autowired private[this] val resourceModelDmoFactory: ResourceModelDmoFactory = null
+  @Autowired private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
+  @Autowired private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
+  @Autowired private[this] val modelSerializer: ModelSerializer[M] = null
+  @Autowired private[this] val resourceFactory: ResourceFactory[R] = null
 
   def getResourceType: String
 
@@ -42,7 +42,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     }
   }
 
-  private def getModelOption(resourceId: Long) = {
+  private[this] def getModelOption(resourceId: Long) = {
     try {
       Some(getModel(resourceId))
     } catch {
@@ -77,7 +77,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     resourceRootFactory.fromResourceRootDmo(resourceRootDmo)
   }
 
-  private def createModelDmo(resource: R, model: M) = {
+  private[this] def createModelDmo(resource: R, model: M) = {
     val body = modelSerializer.serialize(model)
     val resourceModelId = resourceModelIdFactory.resourceModelId(resource)
     val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)

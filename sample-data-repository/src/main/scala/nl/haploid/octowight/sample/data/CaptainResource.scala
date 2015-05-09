@@ -12,8 +12,8 @@ object CaptainResource {
 }
 
 class CaptainResource extends Resource[CaptainModel] {
-  private var personDmo: PersonDmo = null
-  private var roleDmo: RoleDmo = null
+  private[this] var personDmo: PersonDmo = null
+  private[this] var roleDmo: RoleDmo = null
   @BeanProperty var id: lang.Long = null
 
   def getAtoms = util.Arrays.asList(personDmo, roleDmo)

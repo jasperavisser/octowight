@@ -6,9 +6,9 @@ import nl.haploid.octowight.sample.{AbstractTransactionalIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class PersonDmoRepositoryIT extends AbstractTransactionalIT {
-  @Autowired private val personDmoRepository: PersonDmoRepository = null
-  @Autowired private val roleDmoRepository: RoleDmoRepository = null
-  @PersistenceContext private val entityManager: EntityManager = null
+  @Autowired private[this] val personDmoRepository: PersonDmoRepository = null
+  @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
+  @PersistenceContext private[this] val entityManager: EntityManager = null
 
   "Person DMO repository" should "find all" in {
     roleDmoRepository.deleteAll()

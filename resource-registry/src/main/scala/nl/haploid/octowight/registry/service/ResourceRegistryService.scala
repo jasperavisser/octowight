@@ -13,13 +13,13 @@ import scala.collection.JavaConverters._
 
 @Service
 class ResourceRegistryService {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val resourceRootDmoRepository: ResourceRootDmoRepository = null
-  @Autowired private val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Autowired private val resourceRootFactory: ResourceRootFactory = null
-  @Autowired private val resourceRootDmoFactory: ResourceRootDmoFactory = null
-  @Autowired private val sequenceService: SequenceService = null
+  @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
+  @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
+  @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
+  @Autowired private[this] val resourceRootDmoFactory: ResourceRootDmoFactory = null
+  @Autowired private[this] val sequenceService: SequenceService = null
 
   def isNewResource(resourceRoot: ResourceRoot) = {
     val dmo = resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(resourceRoot.getResourceType, resourceRoot.getAtomId, resourceRoot.getAtomType, resourceRoot.getAtomOrigin)
@@ -46,11 +46,11 @@ class ResourceRegistryService {
       .asJava
   }
 
-  private def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
+  private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
     resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceElementDmo.getResourceType, resourceElementDmo.getResourceId)
   }
 
-  private def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {
+  private[this] def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {
     log.debug(s"Mark ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId} as dirty")
     val version = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
     resourceRootDmo.setVersion(version)

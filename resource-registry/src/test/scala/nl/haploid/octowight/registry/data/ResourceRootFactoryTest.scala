@@ -4,7 +4,7 @@ import nl.haploid.octowight.Tested
 import nl.haploid.octowight.registry.{AbstractTest, TestData}
 
 class ResourceRootFactoryTest extends AbstractTest {
-  @Tested private val resourceRootFactory: ResourceRootFactory = null
+  @Tested private[this] val resourceRootFactory: ResourceRootFactory = null
 
   "Resource root factory" should "build from event & resource type" in {
     val event = TestData.atomChangeEvent("pam")

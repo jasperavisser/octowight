@@ -4,7 +4,7 @@ import nl.haploid.octowight.Tested
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
 
 class AtomChangeEventFactoryTest extends AbstractTest {
-  @Tested private val eventFactory: AtomChangeEventFactory = null
+  @Tested private[this] val eventFactory: AtomChangeEventFactory = null
 
   "Atom change event factory" should "build event from DMO" in {
     val eventDmo = TestData.atomChangeEventDmo

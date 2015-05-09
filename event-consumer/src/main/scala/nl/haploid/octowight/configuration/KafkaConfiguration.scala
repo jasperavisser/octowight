@@ -10,12 +10,12 @@ import org.springframework.context.annotation.{Bean, Configuration}
 
 @Configuration
 class KafkaConfiguration {
-  @Value("${octowight.kafka.hostname}") private val kafkaHostname: String = null
-  @Value("${octowight.kafka.port}") private val kafkaPort: Int = 0
-  @Value("${octowight.kafka.consumer.timeout.ms}") private val consumerTimeoutMs: Integer = null
-  @Value("${octowight.kafka.group.id}") private val kafkaGroupId: String = null
-  @Value("${octowight.zookeeper.hostname}") private val zookeeperHostname: String = null
-  @Value("${octowight.zookeeper.port}") private val zookeeperPort: Int = 0
+  @Value("${octowight.kafka.hostname}") private[this] val kafkaHostname: String = null
+  @Value("${octowight.kafka.port}") private[this] val kafkaPort: Int = 0
+  @Value("${octowight.kafka.consumer.timeout.ms}") private[this] val consumerTimeoutMs: Integer = null
+  @Value("${octowight.kafka.group.id}") private[this] val kafkaGroupId: String = null
+  @Value("${octowight.zookeeper.hostname}") private[this] val zookeeperHostname: String = null
+  @Value("${octowight.zookeeper.port}") private[this] val zookeeperPort: Int = 0
 
   @Bean def consumerConfig = {
     val properties = new Properties

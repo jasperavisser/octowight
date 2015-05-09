@@ -11,7 +11,7 @@ import scala.collection.JavaConverters._
 
 @Service
 class ResourceDetectorsService {
-  @Autowired private val detectors: util.List[ResourceDetector] = null
+  @Autowired private[this] val detectors: util.List[ResourceDetector] = null
 
   def getDetectors = detectors.asScala
 

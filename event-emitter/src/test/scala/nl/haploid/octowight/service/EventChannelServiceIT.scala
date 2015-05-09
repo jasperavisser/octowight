@@ -4,7 +4,7 @@ import nl.haploid.octowight.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class EventChannelServiceIT extends AbstractIT {
-  @Autowired private val service: EventChannelService = null
+  @Autowired private[this] val service: EventChannelService = null
 
   "Channel" should "send an event" in {
     val event = TestData.atomChangeEvent

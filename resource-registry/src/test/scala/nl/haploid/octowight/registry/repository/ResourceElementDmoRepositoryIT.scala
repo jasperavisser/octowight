@@ -6,7 +6,7 @@ import nl.haploid.octowight.registry.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class ResourceElementDmoRepositoryIT extends AbstractIT {
-  @Autowired private val resourceElementDmoRepository: ResourceElementDmoRepository = null
+  @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
 
   "Resource element DMO repository" should "find by atom id, type & origin" in {
     val dmo = TestData.resourceElementDmo

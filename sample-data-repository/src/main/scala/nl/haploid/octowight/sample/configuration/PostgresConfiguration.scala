@@ -20,10 +20,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 class PostgresConfiguration {
   private final val log = LoggerFactory.getLogger(getClass)
 
-  @Value("${octowight.postgres.hostname}") private val hostname: String = null
-  @Value("${octowight.postgres.port}") private val port: Int = 0
-  @Value("${octowight.postgres.username}") private val username: String = null
-  @Value("${octowight.postgres.database}") private val database: String = null
+  @Value("${octowight.postgres.hostname}") private[this] val hostname: String = null
+  @Value("${octowight.postgres.port}") private[this] val port: Int = 0
+  @Value("${octowight.postgres.username}") private[this] val username: String = null
+  @Value("${octowight.postgres.database}") private[this] val database: String = null
 
   @Bean def dataSource = {
     val dataSource = new BoneCPDataSource

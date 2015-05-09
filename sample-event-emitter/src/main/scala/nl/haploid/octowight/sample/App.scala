@@ -19,9 +19,9 @@ object App {
 @EnableAutoConfiguration
 @ComponentScan(basePackages = Array("nl.haploid.octowight"))
 class App {
-  @Autowired private val service: EventChannelService = null
-  @Autowired private val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
-  @Autowired private val eventFactory: AtomChangeEventFactory = null
+  @Autowired private[this] val service: EventChannelService = null
+  @Autowired private[this] val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
+  @Autowired private[this] val eventFactory: AtomChangeEventFactory = null
 
   @Scheduled(fixedRate = 1000)
   @Transactional

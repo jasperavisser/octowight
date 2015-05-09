@@ -14,8 +14,8 @@ class EventConsumerServiceTest extends AbstractTest {
     .addMockedMethod("getKafkaConsumer")
     .addMockedMethod("getStream")
     .createMock()
-  @Mocked private val consumerFactoryService: KafkaConsumerFactory = null
-  @Mocked private val jsonMapper: JsonMapper = null
+  @Mocked private[this] val consumerFactoryService: KafkaConsumerFactory = null
+  @Mocked private[this] val jsonMapper: JsonMapper = null
 
   override def beforeEach() = {
     EasyMock.reset(eventConsumerService)

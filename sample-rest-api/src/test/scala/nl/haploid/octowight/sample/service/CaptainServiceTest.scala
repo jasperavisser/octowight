@@ -10,15 +10,15 @@ import org.slf4j.Logger
 import org.springframework.test.util.ReflectionTestUtils
 
 class CaptainServiceTest extends AbstractTest {
-  @Mocked private val resourceRootDmoRepository: ResourceRootDmoRepository = null
-  @Mocked private val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Mocked private val resourceRootFactory: ResourceRootFactory = null
-  @Mocked private val resourceElementDmoFactory: ResourceElementDmoFactory = null
-  @Mocked private val resourceModelDmoFactory: ResourceModelDmoFactory = null
-  @Mocked private val resourceModelDmoRepository: ResourceModelDmoRepository = null
-  @Mocked private val resourceModelIdFactory: ResourceModelIdFactory = null
-  @Mocked private val modelSerializer: ModelSerializer[CaptainModel] = null
-  @Mocked private val resourceFactory: ResourceFactory[CaptainResource] = null
+  @Mocked private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
+  @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
+  @Mocked private[this] val resourceRootFactory: ResourceRootFactory = null
+  @Mocked private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
+  @Mocked private[this] val resourceModelDmoFactory: ResourceModelDmoFactory = null
+  @Mocked private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
+  @Mocked private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
+  @Mocked private[this] val modelSerializer: ModelSerializer[CaptainModel] = null
+  @Mocked private[this] val resourceFactory: ResourceFactory[CaptainResource] = null
 
   "Captain service" should "get model from origin" in {
     val captainService = EasyMock.createMockBuilder(classOf[CaptainService])

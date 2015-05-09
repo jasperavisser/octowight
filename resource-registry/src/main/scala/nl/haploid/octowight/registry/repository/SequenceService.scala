@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 // TODO: test
 @Service
 class SequenceService {
-  @Autowired private val mongoOperations: MongoOperations = null
+  @Autowired private[this] val mongoOperations: MongoOperations = null
 
   def getNextValue(key: String) = {
     val sequence = incrementSequence(key)

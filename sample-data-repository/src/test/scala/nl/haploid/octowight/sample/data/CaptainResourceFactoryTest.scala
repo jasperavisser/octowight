@@ -5,8 +5,8 @@ import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
 
 class CaptainResourceFactoryTest extends AbstractTest {
-  @Tested private val captainResourceFactory: CaptainResourceFactory = null
-  @Mocked private val roleDmoRepository: RoleDmoRepository = null
+  @Tested private[this] val captainResourceFactory: CaptainResourceFactory = null
+  @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
 
   "Captain resource factory" should "build from a resource root" in {
     val roleDmo = mock[RoleDmo]

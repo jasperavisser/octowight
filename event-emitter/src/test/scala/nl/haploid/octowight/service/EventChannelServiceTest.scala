@@ -9,9 +9,9 @@ import org.slf4j.Logger
 import org.springframework.test.util.ReflectionTestUtils
 
 class EventChannelServiceTest extends AbstractTest {
-  @Tested private val eventChannelService: EventChannelService = null
-  @Mocked private val kafkaProducer: KafkaProducer[String, String] = null
-  @Mocked private val jsonMapper: JsonMapper = null
+  @Tested private[this] val eventChannelService: EventChannelService = null
+  @Mocked private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Mocked private[this] val jsonMapper: JsonMapper = null
 
   override def beforeEach() = {
     super.beforeEach()

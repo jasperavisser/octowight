@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class KafkaConsumerFactory {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val consumerConfig: ConsumerConfig = null
+  @Autowired private[this] val consumerConfig: ConsumerConfig = null
 
   def createKafkaConsumer = {
     log.debug(s"Create kafka consumer for ${consumerConfig.zkConnect}")

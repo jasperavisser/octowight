@@ -11,9 +11,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = Array("nl.haploid.octowight.registry.repository"))
 class MongoConfiguration {
 
-  @Value("${octowight.registry.mongo.database}") private val mongoDatabase: String = null
-  @Value("${octowight.registry.mongo.hostname}") private val mongoHostname: String = null
-  @Value("${octowight.registry.mongo.port}") private val mongoPort: Integer = null
+  @Value("${octowight.registry.mongo.database}") private[this] val mongoDatabase: String = null
+  @Value("${octowight.registry.mongo.hostname}") private[this] val mongoHostname: String = null
+  @Value("${octowight.registry.mongo.port}") private[this] val mongoPort: Integer = null
 
   def getMongoDatabase = mongoDatabase
 

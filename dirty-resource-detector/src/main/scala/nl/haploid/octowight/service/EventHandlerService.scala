@@ -11,11 +11,11 @@ import scala.collection.mutable
 
 @Service
 class EventHandlerService {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val eventConsumerService: EventConsumerService = null
-  @Autowired private val resourceRegistryService: ResourceRegistryService = null
-  @Autowired private val dirtyResourceProducerService: DirtyResourceProducerService = null
+  @Autowired private[this] val eventConsumerService: EventConsumerService = null
+  @Autowired private[this] val resourceRegistryService: ResourceRegistryService = null
+  @Autowired private[this] val dirtyResourceProducerService: DirtyResourceProducerService = null
 
   // TODO: batch size is unused
   // TODO: test

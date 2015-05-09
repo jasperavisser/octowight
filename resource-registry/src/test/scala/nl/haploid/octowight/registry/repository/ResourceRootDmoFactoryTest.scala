@@ -4,7 +4,7 @@ import nl.haploid.octowight.Tested
 import nl.haploid.octowight.registry.{AbstractTest, TestData}
 
 class ResourceRootDmoFactoryTest extends AbstractTest {
-  @Tested private val resourceRootDmoFactory: ResourceRootDmoFactory = null
+  @Tested private[this] val resourceRootDmoFactory: ResourceRootDmoFactory = null
 
   "Resource root DMO factory" should "build DMO from resource root" in {
     val resourceRoot = TestData.resourceRoot(123l)

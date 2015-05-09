@@ -17,7 +17,7 @@ object MockResourceDetector {
 
 @Component
 class MockResourceDetector extends ResourceDetector {
-  @Autowired private val resourceRootFactory: ResourceRootFactory = null
+  @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
 
   def getAtomTypes = Collections.singletonList(MockResourceDetector.AtomType)
 

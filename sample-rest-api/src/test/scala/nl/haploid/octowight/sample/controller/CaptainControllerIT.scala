@@ -14,13 +14,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 class CaptainControllerIT extends AbstractTransactionalIT {
-  @Autowired private val controller: CaptainController = null
-  @Autowired private val personDmoRepository: PersonDmoRepository = null
-  @Autowired private val resourceRootDmoRepository: ResourceRootDmoRepository = null
-  @Autowired private val roleDmoRepository: RoleDmoRepository = null
+  @Autowired private[this] val controller: CaptainController = null
+  @Autowired private[this] val personDmoRepository: PersonDmoRepository = null
+  @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
+  @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
 
-  private val tempResourceRootDmos = new util.ArrayList[ResourceRootDmo]
-  private var mockMvc: MockMvc = null
+  private[this] val tempResourceRootDmos = new util.ArrayList[ResourceRootDmo]
+  private[this] var mockMvc: MockMvc = null
 
   override def beforeEach() {
     super.beforeEach()

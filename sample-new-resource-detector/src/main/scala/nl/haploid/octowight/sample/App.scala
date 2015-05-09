@@ -14,8 +14,8 @@ object App {
 @ComponentScan(basePackages = Array("nl.haploid.octowight"))
 @EnableAutoConfiguration
 class App {
-  @Value("${octowight.kafka.batch.size}") private val batchSize: Int = 0
-  @Autowired private val eventHandlerService: EventHandlerService = null
+  @Value("${octowight.kafka.batch.size}") private[this] val batchSize: Int = 0
+  @Autowired private[this] val eventHandlerService: EventHandlerService = null
 
   @Scheduled(fixedRate = 1000)
   def poll(): Unit = eventHandlerService.detectNewResources(batchSize)

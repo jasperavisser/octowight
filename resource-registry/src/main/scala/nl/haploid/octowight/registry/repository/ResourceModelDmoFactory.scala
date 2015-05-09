@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ResourceModelDmoFactory {
-  @Autowired private val resourceModelIdFactory: ResourceModelIdFactory = null
+  @Autowired private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
 
   def fromResourceAndBody(resource: Resource[_], body: String) = {
     val resourceModelDmo = new ResourceModelDmo

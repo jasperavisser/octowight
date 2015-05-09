@@ -10,7 +10,7 @@ import org.easymock.EasyMock
 import scala.collection.mutable
 
 class ResourceDetectorsServiceTest extends AbstractTest {
-  @Mocked private val detectors: util.List[ResourceDetector] = null
+  @Mocked private[this] val detectors: util.List[ResourceDetector] = null
 
   override def beforeEach() = {
     super.beforeEach()

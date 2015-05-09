@@ -9,8 +9,8 @@ import org.springframework.context.annotation.{Bean, Configuration}
 
 @Configuration
 class KafkaConfiguration {
-  @Value("${octowight.kafka.hostname}") private val hostname: String = null
-  @Value("${octowight.kafka.port}") private val port: Int = 0
+  @Value("${octowight.kafka.hostname}") private[this] val hostname: String = null
+  @Value("${octowight.kafka.port}") private[this] val port: Int = 0
 
   @Bean def kafkaProducer = {
     val properties = new Properties

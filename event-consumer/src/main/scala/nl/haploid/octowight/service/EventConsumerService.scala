@@ -12,15 +12,15 @@ import scala.collection.JavaConverters._
 
 @Service
 class EventConsumerService {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val consumerFactoryService: KafkaConsumerFactory = null
-  @Autowired private val jsonMapper: JsonMapper = null
+  @Autowired private[this] val consumerFactoryService: KafkaConsumerFactory = null
+  @Autowired private[this] val jsonMapper: JsonMapper = null
 
-  @Value("${octowight.kafka.topic.events}") private var topic: String = null
+  @Value("${octowight.kafka.topic.events}") private[this] var topic: String = null
 
-  private var kafkaConsumer: ThreadLocal[ConsumerConnector] = null
-  private var stream: ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]] = null
+  private[this] var kafkaConsumer: ThreadLocal[ConsumerConnector] = null
+  private[this] var stream: ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]] = null
 
   def getStream = {
     if (stream == null) {

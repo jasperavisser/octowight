@@ -8,10 +8,10 @@ import nl.haploid.octowight.registry.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class ResourceRegistryServiceIT extends AbstractIT {
-  @Autowired private val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Autowired private val resourceRegistryService: ResourceRegistryService = null
-  @Autowired private val resourceRootDmoRepository: ResourceRootDmoRepository = null
-  @Autowired private val resourceRootFactory: ResourceRootFactory = null
+  @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
+  @Autowired private[this] val resourceRegistryService: ResourceRegistryService = null
+  @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
+  @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
 
   "Resource registry service" should "return if a resource is new" in {
     val resourceRootDmo = resourceRootDmoRepository.save(TestData.resourceRootDmo)

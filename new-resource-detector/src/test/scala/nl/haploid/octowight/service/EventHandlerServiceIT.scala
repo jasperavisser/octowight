@@ -6,10 +6,10 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.springframework.beans.factory.annotation.Autowired
 
 class EventHandlerServiceIT extends AbstractIT {
-  @Autowired private val eventHandlerService: EventHandlerService = null
-  @Autowired private val eventConsumerService: EventConsumerService = null
-  @Autowired private val kafkaProducer: KafkaProducer[String, String] = null
-  @Autowired private val jsonMapper: JsonMapper = null
+  @Autowired private[this] val eventHandlerService: EventHandlerService = null
+  @Autowired private[this] val eventConsumerService: EventConsumerService = null
+  @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Autowired private[this] val jsonMapper: JsonMapper = null
 
   "Event handler service" should "handle no events" in {
     val actualCount = eventHandlerService.detectNewResources(10)

@@ -15,7 +15,7 @@ import org.springframework.test.context.{ContextConfiguration, TestContextManage
 abstract class AbstractIT extends FlatSpec with BeforeAndAfterEach with ShouldMatchers {
   protected var log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val mongoConfiguration: MongoConfiguration = null
+  @Autowired private[this] val mongoConfiguration: MongoConfiguration = null
 
   override def beforeEach() = {
     new TestContextManager(this.getClass).prepareTestInstance(this)

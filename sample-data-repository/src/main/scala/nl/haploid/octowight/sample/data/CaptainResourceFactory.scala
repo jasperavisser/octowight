@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class CaptainResourceFactory extends ResourceFactory[CaptainResource] {
-  @Autowired private val roleDmoRepository: RoleDmoRepository = null
+  @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
 
   @Transactional(readOnly = true)
   def fromResourceRoot(resourceRoot: ResourceRoot) = {

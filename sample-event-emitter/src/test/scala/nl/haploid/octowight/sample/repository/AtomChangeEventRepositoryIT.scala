@@ -4,7 +4,7 @@ import nl.haploid.octowight.sample.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class AtomChangeEventRepositoryIT extends AbstractIT {
-  @Autowired private val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
+  @Autowired private[this] val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
 
   "Atom change event repository" should "find all events" in {
     atomChangeEventDmoRepository.deleteAll()

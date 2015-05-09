@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 
 class EventConsumerServiceIT extends AbstractIT {
-  private val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private val eventConsumerService: EventConsumerService = null
-  @Autowired private val kafkaProducer: KafkaProducer[String, String] = null
-  @Autowired private val jsonMapper: JsonMapper = null
+  @Autowired private[this] val eventConsumerService: EventConsumerService = null
+  @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Autowired private[this] val jsonMapper: JsonMapper = null
 
   @Rule val globalTimeout = new Timeout(10, TimeUnit.SECONDS)
 

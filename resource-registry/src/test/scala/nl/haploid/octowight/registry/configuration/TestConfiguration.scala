@@ -15,7 +15,7 @@ object TestConfiguration {
     configurer
   }
 
-  private def getTestProperties = {
+  private[this] def getTestProperties = {
     val properties = new Properties
     val dockerHostIp = System.getenv("DOCKER_HOST_IP")
     properties.setProperty("octowight.registry.mongo.hostname", dockerHostIp)

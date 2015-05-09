@@ -4,7 +4,7 @@ import nl.haploid.octowight.registry.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class SequenceServiceIT extends AbstractIT {
-  @Autowired private val sequenceService: SequenceService = null
+  @Autowired private[this] val sequenceService: SequenceService = null
 
   "Sequence service" should "get the next value from a sequence" in {
     val key = s"test-${TestData.nextString}"

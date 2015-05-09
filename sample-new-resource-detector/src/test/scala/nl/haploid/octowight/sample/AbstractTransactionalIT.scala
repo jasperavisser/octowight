@@ -5,9 +5,9 @@ import org.springframework.transaction.support.DefaultTransactionDefinition
 import org.springframework.transaction.{PlatformTransactionManager, TransactionStatus}
 
 abstract class AbstractTransactionalIT extends AbstractIT {
-  @Autowired private val platformTransactionManager: PlatformTransactionManager = null
+  @Autowired private[this] val platformTransactionManager: PlatformTransactionManager = null
 
-  private var transactionStatus: TransactionStatus = null
+  private[this] var transactionStatus: TransactionStatus = null
 
   override def beforeEach() = {
     super.beforeEach()

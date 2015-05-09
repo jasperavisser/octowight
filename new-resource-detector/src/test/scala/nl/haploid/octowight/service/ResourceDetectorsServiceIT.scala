@@ -12,8 +12,8 @@ import org.springframework.test.util.ReflectionTestUtils
 
 @DirtiesContext
 class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with EasyMockInjection {
-  @Autowired private val service: ResourceDetectorsService = null
-  @Mocked private val mockDetector: ResourceDetector = null
+  @Autowired private[this] val service: ResourceDetectorsService = null
+  @Mocked private[this] val mockDetector: ResourceDetector = null
 
   override def beforeEach() = {
     super.beforeEach()

@@ -11,16 +11,16 @@ class AbstractResourceServiceTest extends AbstractTest {
 
   private abstract class MockResource extends Resource[AbstractResourceServiceTest#MockModel]
 
-  @Tested private val service: AbstractResourceService[AbstractResourceServiceTest#MockModel, AbstractResourceServiceTest#MockResource] = null
-  @Mocked private val resourceRootDmoRepository: ResourceRootDmoRepository = null
-  @Mocked private val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Mocked private val resourceRootFactory: ResourceRootFactory = null
-  @Mocked private val resourceElementDmoFactory: ResourceElementDmoFactory = null
-  @Mocked private val resourceModelDmoFactory: ResourceModelDmoFactory = null
-  @Mocked private val resourceModelDmoRepository: ResourceModelDmoRepository = null
-  @Mocked private val resourceModelIdFactory: ResourceModelIdFactory = null
-  @Mocked private val modelSerializer: ModelSerializer[AbstractResourceServiceTest#MockModel] = null
-  @Mocked private val resourceFactory: ResourceFactory[AbstractResourceServiceTest#MockResource] = null
+  @Tested private[this] val service: AbstractResourceService[AbstractResourceServiceTest#MockModel, AbstractResourceServiceTest#MockResource] = null
+  @Mocked private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
+  @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
+  @Mocked private[this] val resourceRootFactory: ResourceRootFactory = null
+  @Mocked private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
+  @Mocked private[this] val resourceModelDmoFactory: ResourceModelDmoFactory = null
+  @Mocked private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
+  @Mocked private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
+  @Mocked private[this] val modelSerializer: ModelSerializer[AbstractResourceServiceTest#MockModel] = null
+  @Mocked private[this] val resourceFactory: ResourceFactory[AbstractResourceServiceTest#MockResource] = null
 
   "Abstract resource service" should "get resource root" in {
     val resourceId = TestData.nextLong

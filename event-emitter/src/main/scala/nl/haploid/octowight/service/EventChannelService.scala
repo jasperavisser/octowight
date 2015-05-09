@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service
 class EventChannelService {
   private final val log = LoggerFactory.getLogger(getClass)
 
-  @Value("${octowight.kafka.topic.events}") private val topic: String = null
+  @Value("${octowight.kafka.topic.events}") private[this] val topic: String = null
 
-  @Autowired private val kafkaProducer: KafkaProducer[String, String] = null
-  @Autowired private val jsonMapper: JsonMapper = null
+  @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Autowired private[this] val jsonMapper: JsonMapper = null
 
   def sendEvents(events: Traversable[AtomChangeEvent]) = {
     log.debug(s"Send ${events.size} messages")
@@ -31,7 +31,7 @@ class EventChannelService {
     kafkaProducer.send(record)
   }
 
-  private def resolveFuture(future: Future[RecordMetadata]) = {
+  private[this] def resolveFuture(future: Future[RecordMetadata]) = {
     future.get(5, TimeUnit.SECONDS)
   }
 }
