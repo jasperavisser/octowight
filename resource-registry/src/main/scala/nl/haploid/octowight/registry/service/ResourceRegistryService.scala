@@ -28,8 +28,8 @@ class ResourceRegistryService {
 
   def saveNewResource(resourceRoot: ResourceRoot) = {
     val resourceRootDmo = resourceRootDmoFactory.fromResourceRoot(resourceRoot)
-    resourceRootDmo.setResourceId(sequenceService.getNextValue(ResourceRootDmo.ID_SEQUENCE))
-    resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VERSION_SEQUENCE))
+    resourceRootDmo.setResourceId(sequenceService.getNextValue(ResourceRootDmo.IdSequence))
+    resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VersionSequence))
     val dmo = resourceRootDmoRepository.save(resourceRootDmo)
     log.debug(s"Saved resource ${dmo.getResourceType}/${dmo.getResourceId}")
     resourceRootFactory.fromResourceRootDmo(dmo)
@@ -52,7 +52,7 @@ class ResourceRegistryService {
 
   private def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {
     log.debug(s"Mark ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId} as dirty")
-    val version = sequenceService.getNextValue(ResourceRootDmo.VERSION_SEQUENCE)
+    val version = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
     resourceRootDmo.setVersion(version)
     resourceRootFactory.fromResourceRootDmo(resourceRootDmoRepository.save(resourceRootDmo))
   }

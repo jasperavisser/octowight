@@ -5,7 +5,6 @@ import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
 
 class CaptainResourceFactoryTest extends AbstractTest {
-  // TODO: all @Tested can be null again, hurrah!
   @Tested private val captainResourceFactory: CaptainResourceFactory = null
   @Mocked private val roleDmoRepository: RoleDmoRepository = null
 

@@ -21,7 +21,7 @@ class KafkaConfiguration {
     val properties = new Properties
     properties.put("zookeeper.connect", s"$zookeeperHostname:$zookeeperPort")
     properties.put("group.id", kafkaGroupId)
-    properties.put("zookeeper.session.timeout.ms", "400")
+    properties.put("zookeeper.session.timeout.ms", "2500")
     properties.put("zookeeper.sync.time.ms", "200")
     properties.put("auto.commit.enable", "false")
     properties.put("auto.offset.reset", "smallest")

@@ -13,7 +13,7 @@ class ResourceRootFactoryTest extends AbstractTest {
     resourceRoot.getAtomId should be(event.getAtomId)
     resourceRoot.getAtomOrigin should be(event.getAtomOrigin)
     resourceRoot.getAtomType should be(event.getAtomType)
-    // TODO: resourceRoot.getResourceId should not be null
+    resourceRoot.getResourceId should be(null)
     resourceRoot.getResourceType should be(resourceType)
   }
 

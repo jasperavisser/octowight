@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document
 import scala.beans.BeanProperty
 
 object ResourceRootDmo {
-  val ID_SEQUENCE = "resourceId"
-  val VERSION_SEQUENCE = "resourceVersion"
+  val IdSequence = "resourceId"
+  val VersionSequence = "resourceVersion"
 }
 
 @Document(collection = "resourceRoot") class ResourceRootDmo {

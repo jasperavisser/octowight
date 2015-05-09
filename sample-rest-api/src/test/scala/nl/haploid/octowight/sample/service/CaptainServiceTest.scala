@@ -1,9 +1,9 @@
 package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.Mocked
-import nl.haploid.octowight.registry.data.{ModelSerializer, ResourceRootFactory}
+import nl.haploid.octowight.registry.data.{ResourceFactory, ModelSerializer, ResourceRootFactory}
 import nl.haploid.octowight.registry.repository._
-import nl.haploid.octowight.sample.data.{CaptainModel, CaptainResource, ResourceFactory}
+import nl.haploid.octowight.sample.data.{CaptainModel, CaptainResource}
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import org.easymock.EasyMock
 import org.slf4j.Logger

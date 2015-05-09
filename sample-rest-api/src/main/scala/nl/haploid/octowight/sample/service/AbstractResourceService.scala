@@ -4,7 +4,7 @@ import java.lang
 
 import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
-import nl.haploid.octowight.sample.data.{CaptainResource, ResourceFactory, ResourceNotFoundException}
+import nl.haploid.octowight.sample.data.{CaptainResource, ResourceNotFoundException}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 

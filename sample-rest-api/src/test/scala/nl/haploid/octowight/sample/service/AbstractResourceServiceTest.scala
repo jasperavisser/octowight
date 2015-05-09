@@ -2,7 +2,6 @@ package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
-import nl.haploid.octowight.sample.data.ResourceFactory
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
 import org.junit.Test

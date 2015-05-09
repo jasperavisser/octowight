@@ -18,5 +18,5 @@ class App {
   @Autowired private val eventHandlerService: EventHandlerService = null
 
   @Scheduled(fixedRate = 1000)
-  def poll() = eventHandlerService.detectNewResources(batchSize)
+  def poll(): Unit = eventHandlerService.detectNewResources(batchSize)
 }

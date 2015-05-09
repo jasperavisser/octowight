@@ -27,6 +27,7 @@ class RoleDmo extends Atom {
   @Column(name = "name")
   @BeanProperty var name: String = null
 
+  @Transient
   @BeanProperty var atomOrigin: String = null
 
   def getAtomId = id

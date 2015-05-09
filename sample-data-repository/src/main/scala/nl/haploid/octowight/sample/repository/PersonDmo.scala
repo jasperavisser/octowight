@@ -26,6 +26,7 @@ class PersonDmo extends Atom {
   @OneToMany(mappedBy = "person")
   @BeanProperty var roles: util.List[RoleDmo] = new util.ArrayList[RoleDmo]
 
+  @Transient
   @BeanProperty var atomOrigin: String = null
 
   override def getAtomId = id

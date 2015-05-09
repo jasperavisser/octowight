@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service
 // TODO: test
 @Service
 class SequenceService {
-
   @Autowired private val mongoOperations: MongoOperations = null
 
   def getNextValue(key: String) = {
     val sequence = incrementSequence(key)
     if (sequence != null) {
       sequence.getValue
+    } else {
+      startSequence(key).getValue
     }
-    startSequence(key).getValue
   }
 
   protected def startSequence(key: String) = {

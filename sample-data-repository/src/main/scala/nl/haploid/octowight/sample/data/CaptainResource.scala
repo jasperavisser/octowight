@@ -7,7 +7,6 @@ import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}
 
 import scala.beans.BeanProperty
 
-// TODO: all constants should be upper camelcase
 object CaptainResource {
   val ResourceType: String = "captain"
 }

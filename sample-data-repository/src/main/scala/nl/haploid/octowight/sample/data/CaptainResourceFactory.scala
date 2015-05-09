@@ -1,6 +1,6 @@
 package nl.haploid.octowight.sample.data
 
-import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.registry.data.{ResourceFactory, ResourceRoot}
 import nl.haploid.octowight.sample.repository.RoleDmoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
