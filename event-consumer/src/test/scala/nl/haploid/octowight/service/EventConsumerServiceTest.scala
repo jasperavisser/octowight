@@ -8,6 +8,8 @@ import _root_.kafka.message.MessageAndMetadata
 import nl.haploid.octowight._
 import nl.haploid.octowight.kafka.KafkaConsumerFactory
 import org.easymock.EasyMock
+import org.slf4j.Logger
+import org.springframework.test.util.ReflectionTestUtils
 
 class EventConsumerServiceTest extends AbstractTest {
   @Tested val eventConsumerService = EasyMock.createMockBuilder(classOf[EventConsumerService])
@@ -19,6 +21,7 @@ class EventConsumerServiceTest extends AbstractTest {
 
   override def beforeEach() = {
     EasyMock.reset(eventConsumerService)
+    ReflectionTestUtils.setField(eventConsumerService, "log", mock[Logger])
     super.beforeEach()
   }
 
@@ -51,7 +54,7 @@ class EventConsumerServiceTest extends AbstractTest {
     val event2 = TestData.atomChangeEvent("daryl")
     val message1 = TestData.message
     val message2 = TestData.message
-    val expectedEvents = util.Arrays.asList(event1, event2)
+    val expectedEvents = List(event1, event2)
     expecting {
       eventConsumerService.getStream andReturn stream once()
       stream.iterator andReturn iterator once()

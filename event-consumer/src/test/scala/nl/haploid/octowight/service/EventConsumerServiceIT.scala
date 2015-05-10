@@ -40,7 +40,7 @@ class EventConsumerServiceIT extends AbstractIT {
     eventConsumerService.setTopic(topic)
     val event1 = TestData.atomChangeEvent("bob")
     val event2 = TestData.atomChangeEvent("benson")
-    val expectedEvents = util.Arrays.asList(event1, event2)
+    val expectedEvents = List(event1, event2)
     sendMessage(topic, event1)
     sendMessage(topic, event2)
     val actualEvents = eventConsumerService.consumeMessages()

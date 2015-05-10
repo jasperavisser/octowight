@@ -1,18 +1,18 @@
 package nl.haploid.octowight.registry.data
 
-import java.{lang, util}
+import java.lang
 
 import scala.beans.BeanProperty
 
-abstract class Resource[T <: Model] {
+abstract class Resource[M <: Model] {
 
   @BeanProperty var version: lang.Long = _
 
-  def getAtoms: util.Collection[Atom] // TODO: Traversable
+  def getAtoms: Traversable[Atom]
 
   def getId: lang.Long
 
   def getType: String
 
-  def getModel: T
+  def getModel: M
 }

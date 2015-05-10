@@ -8,7 +8,7 @@ trait ResourceElementDmoRepository extends MongoRepository[ResourceElementDmo, S
 
   def findByAtomIdAndAtomTypeAndAtomOrigin(atomId: lang.Long, atomType: String, atomOrigin: String): ResourceElementDmo
 
-  def findByAtomIdInAndAtomTypeAndAtomOrigin(atomId: util.List[lang.Long], atomType: String, atomOrigin: String): util.List[ResourceElementDmo]
+  def findByAtomIdInAndAtomTypeAndAtomOrigin(atomId: lang.Iterable[lang.Long], atomType: String, atomOrigin: String): util.List[ResourceElementDmo]
 
   def deleteByResourceTypeAndResourceId(resourceType: String, resourceId: lang.Long): Long
 }

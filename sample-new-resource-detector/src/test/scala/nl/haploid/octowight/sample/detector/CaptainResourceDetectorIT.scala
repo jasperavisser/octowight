@@ -1,7 +1,5 @@
 package nl.haploid.octowight.sample.detector
 
-import java.util
-import java.util.Collections
 import javax.persistence.{EntityManager, PersistenceContext}
 
 import nl.haploid.octowight.sample.repository.{PersonDmoRepository, RoleDmoRepository}
@@ -19,7 +17,7 @@ class CaptainResourceDetectorIT extends AbstractTransactionalIT {
     val roleDmo1 = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, "first mate"))
     roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, "harpooner"))
     val event1 = TestData.atomChangeEvent(roleDmo1.getId)
-    val events = Collections.singletonList(event1)
+    val events = List(event1)
     val dmosById = detector.getRolesById(events)
     dmosById should have size 1
     dmosById.get(roleDmo1.getId).orNull should be(roleDmo1)
@@ -32,9 +30,9 @@ class CaptainResourceDetectorIT extends AbstractTransactionalIT {
     entityManager.clear()
     val event1 = TestData.atomChangeEvent(dmo1.getId)
     val event2 = TestData.atomChangeEvent(dmo2.getId)
-    val events = util.Arrays.asList(event1, event2)
+    val events = List(event1, event2)
     val actualResourceRoots = detector.detect(events)
     actualResourceRoots should have size 1
-    actualResourceRoots.get(0).getAtomId should be(dmo1.getId)
+    actualResourceRoots.map(_.getAtomId) should be(List(dmo1.getId))
   }
 }

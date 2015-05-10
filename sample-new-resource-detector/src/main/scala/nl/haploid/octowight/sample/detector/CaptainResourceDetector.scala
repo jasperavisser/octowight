@@ -1,12 +1,8 @@
 package nl.haploid.octowight.sample.detector
 
-import java.lang.Long
-import java.util
-import java.util.Collections
-
 import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.detector.ResourceDetector
-import nl.haploid.octowight.registry.data.ResourceRootFactory
+import nl.haploid.octowight.registry.data.{ResourceRoot, ResourceRootFactory}
 import nl.haploid.octowight.sample.repository.{RoleDmo, RoleDmoRepository}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -24,12 +20,12 @@ class CaptainResourceDetector extends ResourceDetector {
   @Autowired protected val roleDmoRepository: RoleDmoRepository = null
   @Autowired protected val resourceRootFactory: ResourceRootFactory = null
 
-  override def getAtomTypes = Collections.singletonList(RoleDmo.AtomType)
+  override def getAtomTypes = List(RoleDmo.AtomType)
 
   @Transactional(readOnly = true)
-  override def detect(events: util.List[AtomChangeEvent]) = {
+  override def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot] = {
     val rolesById = getRolesById(events)
-    events.asScala
+    events
       .filter(event => {
       rolesById.get(event.getAtomId) match {
         case Some(roleDmo) => isCaptain(roleDmo)
@@ -37,16 +33,11 @@ class CaptainResourceDetector extends ResourceDetector {
       }
     })
       .map(resourceRootFactory.fromAtomChangeEvent(_, CaptainResourceDetector.ResourceType))
-      .toList
-      .asJava
   }
 
-  def getRolesById(events: util.List[AtomChangeEvent]) = {
-    val roleIds: util.List[Long] = events.asScala
-      .map(_.getAtomId)
-      .toList
-      .asJava
-    roleDmoRepository.findAll(roleIds)
+  def getRolesById(events: Traversable[AtomChangeEvent]) = {
+    val roleIds = events.map(_.getAtomId).toList
+    roleDmoRepository.findAll(roleIds.asJava)
       .asScala
       .map(roleDmo => roleDmo.getAtomId -> roleDmo)
       .toMap

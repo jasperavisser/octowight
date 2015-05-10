@@ -1,7 +1,5 @@
 package nl.haploid.octowight.registry.service
 
-import java.util
-
 import nl.haploid.octowight.registry.data.{ResourceRoot, ResourceRootFactory}
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
@@ -36,14 +34,13 @@ class ResourceRegistryService {
   }
 
   // TODO: use Traversable
-  def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: util.List[AtomChangeEvent]) =  {
-    val atomIds = atomChangeEvents.asScala.map(_.getAtomId)
+  def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: Iterable[AtomChangeEvent]) = {
+    val atomIds = atomChangeEvents.map(_.getAtomId)
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(atomIds.asJava, atomGroup.getAtomType, atomGroup.getAtomOrigin)
     resourceElementDmos.asScala
       .map(getResourceRootDmo)
       .filter(_ != null)
       .map(markResourceDirty)
-      .asJava
   }
 
   private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {

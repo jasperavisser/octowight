@@ -1,7 +1,6 @@
 package nl.haploid.octowight.sample.detector
 
 import java.util
-import java.util.Collections
 
 import nl.haploid.octowight.registry.data.ResourceRootFactory
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmoRepository}
@@ -28,14 +27,14 @@ class CaptainResourceDetectorTest extends AbstractTest {
     val event1 = TestData.atomChangeEvent
     val event2 = TestData.atomChangeEvent
     val event3 = TestData.atomChangeEvent
-    val events = util.Arrays.asList(event1, event2, event3)
+    val events = List(event1, event2, event3)
     val id1 = event1.getAtomId
     val id2 = event2.getAtomId
     val roleDmo1 = TestData.roleDmo(id1)
     val roleDmo2 = TestData.roleDmo(id2)
     val rolesById = Map((id1, roleDmo1), (id2, roleDmo2))
     val resourceRoot = TestData.resourceRoot(id2)
-    val expectedResourceRoots = Collections.singletonList(resourceRoot)
+    val expectedResourceRoots = List(resourceRoot)
     expecting {
       detector.getRolesById(events) andReturn rolesById once()
       detector.isCaptain(roleDmo1) andReturn false once()
@@ -51,12 +50,13 @@ class CaptainResourceDetectorTest extends AbstractTest {
   "Captain resource detector" should "get roles by id" in {
     val event1 = TestData.atomChangeEvent
     val event2 = TestData.atomChangeEvent
-    val events = util.Arrays.asList(event1, event2)
+    val events = List(event1, event2)
     val id1 = event1.getAtomId
     val id2 = event2.getAtomId
     val roleDmo1 = TestData.roleDmo(id1)
     val roleDmo2 = TestData.roleDmo(id2)
     expecting {
+      // TODO: can these be scala Iterables?
       roleDmoRepository.findAll(util.Arrays.asList(id1, id2)) andReturn util.Arrays.asList(roleDmo1, roleDmo2) once()
     }
     whenExecuting(roleDmoRepository) {

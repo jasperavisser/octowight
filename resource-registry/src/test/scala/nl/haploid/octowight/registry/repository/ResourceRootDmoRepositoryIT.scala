@@ -1,6 +1,6 @@
 package nl.haploid.octowight.registry.repository
 
-import java.util.Collections
+import java.util
 
 import nl.haploid.octowight.registry.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,7 +23,7 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     val expectedDmo1 = resourceRootDmoRepository.save(dmo1)
     resourceRootDmoRepository.save(dmo2)
     val actualDmos = resourceRootDmoRepository.findByResourceType("willow")
-    val expectedDmos = Collections.singletonList(expectedDmo1)
+    val expectedDmos = util.Collections.singletonList(expectedDmo1)
     actualDmos should be(expectedDmos)
   }
 

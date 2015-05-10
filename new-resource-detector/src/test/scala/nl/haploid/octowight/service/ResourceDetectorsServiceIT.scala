@@ -1,7 +1,6 @@
 package nl.haploid.octowight.service
 
 import java.util
-import java.util.Collections
 
 import nl.haploid.octowight._
 import nl.haploid.octowight.detector.ResourceDetector
@@ -18,14 +17,14 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
   override def beforeEach() = {
     super.beforeEach()
     injectMocks()
-    ReflectionTestUtils.setField(service, "detectors", Collections.singletonList(mockDetector))
+    ReflectionTestUtils.setField(service, "detectors", util.Collections.singletonList(mockDetector))
   }
 
   "Resource detectors service" should "get detectors for atom type" in {
-    val expectedDetectors = Collections.singletonList(mockDetector)
+    val expectedDetectors = List(mockDetector)
     val atomType = "kinsey"
     expecting {
-      mockDetector.getAtomTypes andReturn util.Arrays.asList("crane", atomType) once()
+      mockDetector.getAtomTypes andReturn List("crane", atomType) once()
     }
     whenExecuting(mockDetector) {
       val actualDetectors = service.getDetectorsForAtomType(atomType)
@@ -40,10 +39,10 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
     val atomGroup = new AtomGroup
     atomGroup.setAtomOrigin(event1.getAtomOrigin)
     atomGroup.setAtomType(event1.getAtomType)
-    val events = util.Arrays.asList(event1, event2)
-    val expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(96l))
+    val events = List(event1, event2)
+    val expectedResourceRoots = List(TestData.resourceRoot(96l))
     expecting {
-      mockDetector.getAtomTypes andReturn util.Arrays.asList("holloway", atomType) once()
+      mockDetector.getAtomTypes andReturn List("holloway", atomType) once()
       mockDetector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(mockDetector) {

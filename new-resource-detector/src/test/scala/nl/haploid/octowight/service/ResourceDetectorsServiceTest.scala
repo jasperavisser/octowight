@@ -1,7 +1,6 @@
 package nl.haploid.octowight.service
 
 import java.util
-import java.util.Collections
 
 import nl.haploid.octowight._
 import nl.haploid.octowight.detector.ResourceDetector
@@ -22,12 +21,12 @@ class ResourceDetectorsServiceTest extends AbstractTest {
       .createMock()
     val detector1 = mock[ResourceDetector]
     val detector2 = mock[ResourceDetector]
-    val expectedDetectors = Collections.singletonList(detector1)
+    val expectedDetectors = List(detector1)
     val atomType = "sterling"
     expecting {
       resourceDetectorsService.getDetectors andReturn mutable.Buffer(detector1, detector2) once()
-      detector1.getAtomTypes andReturn Collections.singletonList(atomType) once()
-      detector2.getAtomTypes andReturn Collections.singletonList("cooper") once()
+      detector1.getAtomTypes andReturn List(atomType) once()
+      detector2.getAtomTypes andReturn List("cooper") once()
     }
     whenExecuting(resourceDetectorsService, detector1, detector2) {
       val actualDetectors = resourceDetectorsService.getDetectorsForAtomType(atomType)
@@ -45,10 +44,10 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val atomGroup = new AtomGroup
     atomGroup.setAtomOrigin(event1.getAtomOrigin)
     atomGroup.setAtomType(event1.getAtomType)
-    val events = util.Arrays.asList(event1, event2)
-    val expectedResourceRoots = Collections.singletonList(TestData.resourceRoot(null))
+    val events = List(event1, event2)
+    val expectedResourceRoots = List(TestData.resourceRoot(null))
     expecting {
-      resourceDetectorsService.getDetectorsForAtomType("draper") andReturn Collections.singletonList(detector) once()
+      resourceDetectorsService.getDetectorsForAtomType("draper") andReturn mutable.Buffer(detector) once()
       detector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(resourceDetectorsService, detector) {

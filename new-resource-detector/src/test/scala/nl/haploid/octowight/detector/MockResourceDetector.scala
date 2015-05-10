@@ -1,14 +1,9 @@
 package nl.haploid.octowight.detector
 
-import java.util
-import java.util.Collections
-
 import nl.haploid.octowight.AtomChangeEvent
-import nl.haploid.octowight.registry.data.ResourceRootFactory
+import nl.haploid.octowight.registry.data.{ResourceRoot, ResourceRootFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-
-import scala.collection.JavaConverters._
 
 object MockResourceDetector {
   val AtomType = "john"
@@ -19,12 +14,8 @@ object MockResourceDetector {
 class MockResourceDetector extends ResourceDetector {
   @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
 
-  def getAtomTypes = Collections.singletonList(MockResourceDetector.AtomType)
+  override def getAtomTypes = List(MockResourceDetector.AtomType)
 
-  def detect(events: util.List[AtomChangeEvent]) = {
-    events.asScala
-      .map(resourceRootFactory.fromAtomChangeEvent(_, MockResourceDetector.ResourceType))
-      .toList
-      .asJava
-  }
+  override def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot] =
+    events.map(resourceRootFactory.fromAtomChangeEvent(_, MockResourceDetector.ResourceType))
 }

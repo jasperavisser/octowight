@@ -1,6 +1,6 @@
 package nl.haploid.octowight.registry.repository
 
-import java.util.Collections
+import java.util
 
 import nl.haploid.octowight.registry.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +18,7 @@ class ResourceElementDmoRepositoryIT extends AbstractIT {
   "Resource element DMO repository" should "find by atom ids, type & origin" in {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
-    val actualDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(Collections.singletonList(expectedDmo.getAtomId), expectedDmo.getAtomType, expectedDmo.getAtomOrigin)
+    val actualDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(util.Collections.singletonList(expectedDmo.getAtomId), expectedDmo.getAtomType, expectedDmo.getAtomOrigin)
     actualDmos should have size 1
     actualDmos.get(0) should be(expectedDmo)
   }

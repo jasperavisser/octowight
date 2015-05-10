@@ -1,7 +1,5 @@
 package nl.haploid.octowight.registry.service
 
-import java.util
-
 import nl.haploid.octowight.registry.data.ResourceRootFactory
 import nl.haploid.octowight.registry.repository.{ResourceElementDmoRepository, ResourceRootDmoRepository}
 import nl.haploid.octowight.registry.{AbstractIT, TestData}
@@ -31,7 +29,7 @@ class ResourceRegistryServiceIT extends AbstractIT {
     val atomGroup = TestData.atomGroup
     val atomChangeEvent1 = TestData.atomChangeEvent(atomGroup)
     val atomChangeEvent2 = TestData.atomChangeEvent(atomGroup)
-    val atomChangeEvents = util.Arrays.asList(atomChangeEvent1, atomChangeEvent2)
+    val atomChangeEvents = List(atomChangeEvent1, atomChangeEvent2)
     resourceElementDmoRepository.save(TestData.resourceElementDmo(resourceRootDmo, atomChangeEvent1))
     val resourceRoots = resourceRegistryService.markResourcesDirty(atomGroup, atomChangeEvents)
     resourceRoots should have size 1

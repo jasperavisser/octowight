@@ -1,7 +1,7 @@
 package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.Mocked
-import nl.haploid.octowight.registry.data.{ResourceFactory, ModelSerializer, ResourceRootFactory}
+import nl.haploid.octowight.registry.data.{ModelSerializer, ResourceFactory, ResourceRootFactory}
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.sample.data.{CaptainModel, CaptainResource}
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
@@ -46,7 +46,7 @@ class CaptainServiceTest extends AbstractTest {
     expecting {
       captainService.getResourceType andReturn resourceType times 2
       captainService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
-      captainService.getCachedModel(resourceRoot) andReturn null once()
+      captainService.getCachedModel(resourceRoot) andReturn None once()
       resourceFactory.fromResourceRoot(resourceRoot) andReturn captainResource once()
       captainService.saveResourceElements(captainResource) once()
       captainResource.getModel andReturn expectedCaptainModel once()
@@ -77,8 +77,7 @@ class CaptainServiceTest extends AbstractTest {
     expecting {
       captainService.getResourceType andReturn resourceType times 2
       captainService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
-      captainService.getCachedModel(resourceRoot) andReturn expectedCaptainModel once()
-      captainService.getResourceType andReturn resourceType once()
+      captainService.getCachedModel(resourceRoot) andReturn Some(expectedCaptainModel) once()
     }
     whenExecuting(captainService) {
       val actualCaptainModel = captainService.getModel(resourceId)

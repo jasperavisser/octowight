@@ -24,6 +24,7 @@ class PersonDmo extends Atom {
   @BeanProperty var name: String = null
 
   @OneToMany(mappedBy = "person")
+  // TODO: can this be a scala Iterable?
   @BeanProperty var roles: util.List[RoleDmo] = new util.ArrayList[RoleDmo]
 
   @Transient

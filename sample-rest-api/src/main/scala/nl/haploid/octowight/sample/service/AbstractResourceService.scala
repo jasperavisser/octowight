@@ -22,27 +22,23 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   @Autowired private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
   @Autowired private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
   @Autowired private[this] val modelSerializer: ModelSerializer[M] = null
-  @Autowired private[this] val resourceFactory: ResourceFactory[R] = null
+  @Autowired protected[this] val resourceFactory: ResourceFactory[R] = null
 
   def getResourceType: String
 
-  def getModel(resourceId: lang.Long) = {
+  def getModel(resourceId: lang.Long): M = {
     log.debug(s"Get model for resource $getResourceType/$resourceId")
     val resourceRoot = getResourceRoot(getResourceType, resourceId)
-    val cachedModel = getCachedModel(resourceRoot)
-    if (cachedModel != null) {
-      log.debug(s"Using cached model for resource $getResourceType/$resourceId")
-      cachedModel
-    } else {
+    getCachedModel(resourceRoot).getOrElse({
       val resource = resourceFactory.fromResourceRoot(resourceRoot)
       saveResourceElements(resource)
       val model = resource.getModel
       saveModel(resource, model)
       model
-    }
+    })
   }
 
-  private[this] def getModelOption(resourceId: Long) = {
+  private[this] def getModelOption(resourceId: Long): Option[M] = {
     try {
       Some(getModel(resourceId))
     } catch {
@@ -50,20 +46,20 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     }
   }
 
-  def getAllModels = {
+  def getAllModels: Iterable[M] = {
     resourceRootDmoRepository.findByResourceType(CaptainResource.ResourceType).asScala
       .map(_.getResourceId)
       .flatMap(getModelOption(_))
-      .asJava
   }
 
-  def getCachedModel(resourceRoot: ResourceRoot) = {
+  def getCachedModel(resourceRoot: ResourceRoot): Option[M] = {
     val resourceModelId = resourceModelIdFactory.resourceModelId(resourceRoot)
     val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)
     if (resourceModelDmo != null && (resourceModelDmo.getVersion == resourceRoot.getVersion)) {
-      modelSerializer.deserialize(resourceModelDmo.getBody, getModelClass)
+      log.debug(s"Using cached model for resource $getResourceType/${resourceRoot.getResourceId}")
+      Some(modelSerializer.deserialize(resourceModelDmo.getBody, getModelClass))
     } else {
-      null
+      None
     }
   }
 
@@ -77,7 +73,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     resourceRootFactory.fromResourceRootDmo(resourceRootDmo)
   }
 
-  private[this] def createModelDmo(resource: R, model: M) = {
+  private[this] def createModelDmo(resource: R, model: M): ResourceModelDmo = {
     val body = modelSerializer.serialize(model)
     val resourceModelId = resourceModelIdFactory.resourceModelId(resource)
     val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)
@@ -90,15 +86,15 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     }
   }
 
-  def saveModel(resource: R, model: M) {
+  def saveModel(resource: R, model: M) = {
     log.debug(s"Save model for resource ${resource.getType}/${resource.getId}")
     val resourceModelDmo = createModelDmo(resource, model)
     resourceModelDmoRepository.save(resourceModelDmo)
   }
 
-  def saveResourceElements(resource: R) {
+  def saveResourceElements(resource: R) = {
     resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId)
-    resource.getAtoms.asScala
+    resource.getAtoms
       .foreach(atom => resourceElementDmoRepository.save(resourceElementDmoFactory.fromResourceAndAtom(resource, atom)))
   }
 }

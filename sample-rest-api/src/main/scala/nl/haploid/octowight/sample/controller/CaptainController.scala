@@ -13,7 +13,7 @@ class CaptainController extends AbstractController {
   @Autowired private[this] val captainService: CaptainService = null
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array(MediaType.APPLICATION_JSON_VALUE))
-  def getCaptains = captainService.getAllModels
+  def getCaptains = captainService.getAllModels // TODO: asJava?
 
   @RequestMapping(value = Array("/{id}"), method = Array(RequestMethod.GET), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def getCaptain(@PathVariable id: Long) = captainService.getModel(id)

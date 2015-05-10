@@ -1,13 +1,11 @@
 package nl.haploid.octowight.detector
 
-import java.util
-
 import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.registry.data.ResourceRoot
 
 trait ResourceDetector {
 
-  def getAtomTypes: util.Collection[String]
+  def getAtomTypes: List[String]
 
-  def detect(events: util.List[AtomChangeEvent]): util.List[ResourceRoot]
+  def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot]
 }

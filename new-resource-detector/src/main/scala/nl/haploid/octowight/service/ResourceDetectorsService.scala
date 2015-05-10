@@ -11,20 +11,14 @@ import scala.collection.JavaConverters._
 
 @Service
 class ResourceDetectorsService {
+  // TODO: can we autowire scala buffer?
   @Autowired private[this] val detectors: util.List[ResourceDetector] = null
 
   def getDetectors = detectors.asScala
 
-  def getDetectorsForAtomType(atomType: String) = {
-    getDetectors
-      .filter(_.getAtomTypes.contains(atomType))
-      .asJava
-  }
+  def getDetectorsForAtomType(atomType: String) = getDetectors.filter(_.getAtomTypes.contains(atomType))
 
-  def detectResources(atomGroup: AtomGroup, events: util.List[AtomChangeEvent]) = {
-    getDetectorsForAtomType(atomGroup.getAtomType)
-      .asScala
-      .flatMap(_.detect(events).asScala)
-      .asJava
+  def detectResources(atomGroup: AtomGroup, events: Traversable[AtomChangeEvent]) = {
+    getDetectorsForAtomType(atomGroup.getAtomType).flatMap(_.detect(events))
   }
 }

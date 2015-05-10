@@ -17,9 +17,9 @@ class EventChannelService {
   @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
 
-  def sendEvents(events: Traversable[AtomChangeEvent]) = {
+  def sendEvents(events: Traversable[AtomChangeEvent]): Traversable[RecordMetadata] = {
     log.debug(s"Send ${events.size} messages")
-    events.toList
+    events
       .map(sendEvent)
       .map(resolveFuture)
   }

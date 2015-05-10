@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.stereotype.Service
 
-import scala.collection.JavaConverters._
-
 @Service
 class EventConsumerService {
   private[this] val log = LoggerFactory.getLogger(getClass)
@@ -57,12 +55,11 @@ class EventConsumerService {
     new KakfaStreamIterator(getStream)
       .map(m => new String(m.message()))
       .map(parseMessage)
-      .toList
-      .asJava // TODO: after we convert other projects, this can be a scala iteratable
+      .toIterable
   }
 
   protected def parseMessage(message: String) = {
-    // TODO: log.debug(s"Consume message: $message")
+    log.debug(s"Consume message: $message")
     jsonMapper.deserialize(message, classOf[AtomChangeEvent])
   }
 
