@@ -4,12 +4,12 @@ import javax.persistence.EntityManagerFactory
 import javax.sql.DataSource
 
 import com.jolbox.bonecp.BoneCPDataSource
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.{Bean, Configuration, PropertySources}
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.orm.jpa.{JpaTransactionManager, LocalContainerEntityManagerFactoryBean}
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
+import org.springframework.orm.jpa.{JpaTransactionManager, LocalContainerEntityManagerFactoryBean}
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources(value = Array())
 class PostgresConfiguration {
-  private final val log: Logger = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
   @Value("${octowight.postgres.hostname}") private[this] val hostname: String = null
   @Value("${octowight.postgres.port}") private[this] val port: Int = 0

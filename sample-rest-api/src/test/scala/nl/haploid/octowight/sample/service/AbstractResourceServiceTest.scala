@@ -2,14 +2,14 @@ package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
-import nl.haploid.octowight.sample.{AbstractTest, TestData}
+import nl.haploid.octowight.sample.{TestData, AbstractTest}
 import nl.haploid.octowight.{Mocked, Tested}
 
 class AbstractResourceServiceTest extends AbstractTest {
 
-  private abstract class MockModel extends Model
+  abstract class MockModel extends Model
 
-  private abstract class MockResource extends Resource[AbstractResourceServiceTest#MockModel]
+  abstract class MockResource extends Resource[AbstractResourceServiceTest#MockModel]
 
   @Tested private[this] val service: AbstractResourceService[AbstractResourceServiceTest#MockModel, AbstractResourceServiceTest#MockResource] = null
   @Mocked private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null

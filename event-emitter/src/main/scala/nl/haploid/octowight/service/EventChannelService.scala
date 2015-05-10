@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class EventChannelService {
-  private final val log = LoggerFactory.getLogger(getClass)
+  private[this] val log = LoggerFactory.getLogger(getClass)
 
   @Value("${octowight.kafka.topic.events}") private[this] val topic: String = null
 

@@ -1,6 +1,5 @@
 package nl.haploid.octowight.service
 
-import java.util
 import java.util.concurrent.TimeUnit
 
 import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper, TestData}
@@ -19,7 +18,7 @@ class EventConsumerServiceIT extends AbstractIT {
 
   @Rule val globalTimeout = new Timeout(10, TimeUnit.SECONDS)
 
-  def sendMessage(topic: String, event: AtomChangeEvent) {
+  def sendMessage(topic: String, event: AtomChangeEvent): Unit = {
     val message = jsonMapper.serialize(event)
     log.debug(s"Send message: $message")
     val record = new ProducerRecord[String, String](topic, message)

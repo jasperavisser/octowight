@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 
 import scala.collection.JavaConverters._
+import scala.util.{Failure, Success, Try}
 
 // TODO: test
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
@@ -39,10 +40,10 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   }
 
   private[this] def getModelOption(resourceId: Long): Option[M] = {
-    try {
-      Some(getModel(resourceId))
-    } catch {
-      case e: ResourceNotFoundException => None
+    val result = Try(getModel(resourceId))
+    result match {
+      case Success(model) => Some(model)
+      case Failure(e: ResourceNotFoundException) => None
     }
   }
 
@@ -86,7 +87,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     }
   }
 
-  def saveModel(resource: R, model: M) = {
+  def saveModel(resource: R, model: M): Unit = {
     log.debug(s"Save model for resource ${resource.getType}/${resource.getId}")
     val resourceModelDmo = createModelDmo(resource, model)
     resourceModelDmoRepository.save(resourceModelDmo)
