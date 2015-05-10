@@ -2,14 +2,13 @@ package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
-import nl.haploid.octowight.sample.data.{CaptainResource, ResourceNotFoundException}
+import nl.haploid.octowight.sample.data.ResourceNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 
 import scala.collection.JavaConverters._
 import scala.util.{Success, Try}
 
-// TODO: test
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   val log = LoggerFactory.getLogger(getClass)
 
@@ -37,7 +36,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     })
   }
 
-  private[this] def getModelOption(resourceId: Long): Option[M] = {
+  def getModelOption(resourceId: Long): Option[M] = {
     val result = Try(getModel(resourceId))
     result match {
       case Success(model) => Some(model)
@@ -46,11 +45,12 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   }
 
   def getAllModels: Iterable[M] = {
-    resourceRootDmoRepository.findByResourceType(CaptainResource.ResourceType).asScala
+    resourceRootDmoRepository.findByResourceType(getResourceType).asScala
       .map(_.getResourceId)
       .flatMap(getModelOption(_))
   }
 
+  // TODO: test
   def getCachedModel(resourceRoot: ResourceRoot): Option[M] = {
     val resourceModelId = resourceModelIdFactory.resourceModelId(resourceRoot)
     val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)
@@ -85,12 +85,14 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     }
   }
 
+  // TODO: test
   def saveModel(resource: R, model: M): Unit = {
     log.debug(s"Save model for resource ${resource.getType}/${resource.getId}")
     val resourceModelDmo = createModelDmo(resource, model)
     resourceModelDmoRepository.save(resourceModelDmo)
   }
 
+  // TODO: test
   def saveResourceElements(resource: R) = {
     resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId)
     resource.getAtoms

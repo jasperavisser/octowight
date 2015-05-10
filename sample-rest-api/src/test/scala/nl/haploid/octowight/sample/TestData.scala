@@ -36,7 +36,11 @@ object TestData {
 
   def captainModel = new CaptainModel
 
-  def resourceRootDmo = new ResourceRootDmo
+  def resourceRootDmo = {
+    val resourceRootDmo = new ResourceRootDmo
+    resourceRootDmo.setResourceId(nextLong)
+    resourceRootDmo
+  }
 
   def roleDmo(personDmo: PersonDmo, name: String) = {
     val dmo = new RoleDmo
