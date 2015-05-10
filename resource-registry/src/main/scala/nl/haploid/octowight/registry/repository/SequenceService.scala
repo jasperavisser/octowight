@@ -1,7 +1,5 @@
 package nl.haploid.octowight.registry.repository
 
-import java.lang
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.{Criteria, Query, Update}
 import org.springframework.data.mongodb.core.{FindAndModifyOptions, MongoOperations}
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Service
 class SequenceService {
   @Autowired private[this] val mongoOperations: MongoOperations = null
 
-  def getNextValue(key: String): lang.Long = incrementSequence(key).getOrElse(startSequence(key)).getValue
+  def getNextValue(key: String): Long = incrementSequence(key).getOrElse(startSequence(key)).getValue
 
   protected def startSequence(key: String): Sequence = {
     val sequence = new Sequence

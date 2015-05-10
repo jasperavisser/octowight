@@ -7,7 +7,7 @@ import nl.haploid.octowight.registry.data.ResourceRoot
 
 object TestData {
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def resourceRoot(resourceId: lang.Long) = {
     val resourceRoot = new ResourceRoot

@@ -11,7 +11,6 @@ import scala.collection.JavaConverters._
 
 @Service
 class ResourceDetectorsService {
-  // TODO: can we autowire scala buffer?
   @Autowired private[this] val detectors: util.List[ResourceDetector] = null
 
   def getDetectors = detectors.asScala

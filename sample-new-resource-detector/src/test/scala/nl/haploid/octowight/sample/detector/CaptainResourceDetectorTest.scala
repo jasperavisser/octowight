@@ -54,7 +54,6 @@ class CaptainResourceDetectorTest extends AbstractTest {
     val roleDmo1 = TestData.roleDmo(id1)
     val roleDmo2 = TestData.roleDmo(id2)
     expecting {
-      // TODO: can these be scala Iterables?
       roleDmoRepository.findAll(util.Arrays.asList(id1, id2)) andReturn util.Arrays.asList(roleDmo1, roleDmo2) once()
     }
     whenExecuting(roleDmoRepository) {

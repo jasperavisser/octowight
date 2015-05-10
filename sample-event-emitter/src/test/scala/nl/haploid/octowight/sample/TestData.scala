@@ -5,16 +5,16 @@ import java.util.{Random, UUID}
 import nl.haploid.octowight.sample.repository.AtomChangeEventDmo
 
 object TestData {
-  val ATOM_LOCUS = "sunnydale"
-  val ATOM_TYPE = "spike"
+  val AtomLocus = "sunnydale"
+  val AtomType = "spike"
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def atomChangeEventDmo = {
     val event = new AtomChangeEventDmo
     event.setAtomId(nextLong)
-    event.setAtomOrigin(ATOM_LOCUS)
-    event.setAtomType(ATOM_TYPE)
+    event.setAtomOrigin(AtomLocus)
+    event.setAtomType(AtomType)
     event
   }
 

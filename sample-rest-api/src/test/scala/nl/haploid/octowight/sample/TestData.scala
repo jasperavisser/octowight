@@ -20,11 +20,11 @@ object TestData {
 
   def nextString = UUID.randomUUID.toString
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def resourceRoot: ResourceRoot = resourceRoot(nextLong)
 
-  def resourceRoot(resourceId: lang.Long) = {
+  def resourceRoot(resourceId: Long) = {
     val resourceRoot = new ResourceRoot
     resourceRoot.setAtomId(nextLong)
     resourceRoot.setAtomOrigin(nextString)

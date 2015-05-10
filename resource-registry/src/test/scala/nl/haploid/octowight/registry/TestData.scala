@@ -8,7 +8,7 @@ import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 
 object TestData {
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def nextString = UUID.randomUUID.toString
 

@@ -1,15 +1,14 @@
 package nl.haploid.octowight
 
-import java.lang
 import java.util.{Random, UUID}
 
 import nl.haploid.octowight.registry.data.ResourceRoot
 
 object TestData {
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
-  def resourceRoot(resourceId: lang.Long) = {
+  def resourceRoot(resourceId: Long) = {
     val resourceRoot = new ResourceRoot
     resourceRoot.setResourceId(resourceId)
     resourceRoot.setResourceType("olson")

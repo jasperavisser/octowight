@@ -20,7 +20,7 @@ object TestData {
 
   def name = nextString
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def personDmo: PersonDmo = personDmo(nextLong)
 

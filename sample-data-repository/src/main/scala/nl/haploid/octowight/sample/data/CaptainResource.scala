@@ -1,6 +1,6 @@
 package nl.haploid.octowight.sample.data
 
-import java.{lang, util}
+import java.lang
 
 import nl.haploid.octowight.registry.data.Resource
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}

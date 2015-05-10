@@ -30,7 +30,7 @@ class RoleDmo extends Atom {
   @Transient
   @BeanProperty var atomOrigin: String = null
 
-  def getAtomId = id
+  override def getAtomId = id
 
-  def getAtomType = RoleDmo.AtomType
+  override def getAtomType = RoleDmo.AtomType
 }

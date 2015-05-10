@@ -11,10 +11,6 @@ import scala.collection.mutable
 class ResourceDetectorsServiceTest extends AbstractTest {
   @Mocked private[this] val detectors: util.List[ResourceDetector] = null
 
-  override def beforeEach() = {
-    super.beforeEach()
-  }
-
   "Resource detectors service" should "get detectors for atom type" in {
     val resourceDetectorsService = EasyMock.createMockBuilder(classOf[ResourceDetectorsService])
       .addMockedMethod("getDetectors")

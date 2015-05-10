@@ -1,6 +1,6 @@
 package nl.haploid.octowight.service
 
-import java.util.concurrent.Future
+import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight.JsonMapper
 import nl.haploid.octowight.registry.data.ResourceRoot
@@ -24,6 +24,5 @@ class DirtyResourceProducerService {
     kafkaProducer.send(new ProducerRecord[String, String](topic, message))
   }
 
-  // TODO: we don't need this in scala
-  def resolveFuture(future: Future[RecordMetadata]) = future.get
+  def resolveFuture(future: Future[RecordMetadata]) = future.get(5, TimeUnit.SECONDS)
 }

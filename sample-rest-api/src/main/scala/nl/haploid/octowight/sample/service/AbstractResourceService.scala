@@ -1,7 +1,5 @@
 package nl.haploid.octowight.sample.service
 
-import java.lang
-
 import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.sample.data.{CaptainResource, ResourceNotFoundException}
@@ -9,7 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 
 import scala.collection.JavaConverters._
-import scala.util.{Failure, Success, Try}
+import scala.util.{Success, Try}
 
 // TODO: test
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
@@ -27,7 +25,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
 
   def getResourceType: String
 
-  def getModel(resourceId: lang.Long): M = {
+  def getModel(resourceId: Long): M = {
     log.debug(s"Get model for resource $getResourceType/$resourceId")
     val resourceRoot = getResourceRoot(getResourceType, resourceId)
     getCachedModel(resourceRoot).getOrElse({
@@ -43,7 +41,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     val result = Try(getModel(resourceId))
     result match {
       case Success(model) => Some(model)
-      case Failure(e: ResourceNotFoundException) => None
+      case _ => None
     }
   }
 

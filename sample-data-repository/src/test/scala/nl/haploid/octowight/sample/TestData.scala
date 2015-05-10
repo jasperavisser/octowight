@@ -11,7 +11,7 @@ object TestData {
 
   def nextString = UUID.randomUUID.toString
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def personDmo = {
     val dmo = new PersonDmo

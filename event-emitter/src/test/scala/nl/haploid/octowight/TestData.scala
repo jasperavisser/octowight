@@ -14,7 +14,7 @@ object TestData {
     event
   }
 
-  def nextLong = new Random().nextLong
+  def nextLong: Long = new Random().nextLong
 
   def nextString = UUID.randomUUID.toString
 
