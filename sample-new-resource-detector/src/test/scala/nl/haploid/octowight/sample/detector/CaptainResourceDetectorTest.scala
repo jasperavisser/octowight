@@ -7,7 +7,6 @@ import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmoRepository}
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
 import org.easymock.EasyMock
-import org.springframework.test.util.ReflectionTestUtils
 
 class CaptainResourceDetectorTest extends AbstractTest {
   @Tested private[this] val detector: CaptainResourceDetector = null
@@ -19,11 +18,10 @@ class CaptainResourceDetectorTest extends AbstractTest {
   }
 
   "Captain resource detector" should "detect captains" in {
-    val detector = EasyMock.createMockBuilder(classOf[CaptainResourceDetector])
+    val detector = withMocks(EasyMock.createMockBuilder(classOf[CaptainResourceDetector])
       .addMockedMethod("getRolesById")
       .addMockedMethod("isCaptain")
-      .createMock()
-    ReflectionTestUtils.setField(detector, "resourceRootFactory", resourceRootFactory)
+      .createMock())
     val event1 = TestData.atomChangeEvent
     val event2 = TestData.atomChangeEvent
     val event3 = TestData.atomChangeEvent

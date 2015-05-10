@@ -21,21 +21,14 @@ class CaptainServiceTest extends AbstractTest {
   @Mocked private[this] val resourceFactory: ResourceFactory[CaptainResource] = null
 
   "Captain service" should "get model from origin" in {
-    val captainService = EasyMock.createMockBuilder(classOf[CaptainService])
+    val captainService = withMocks(EasyMock.createMockBuilder(classOf[CaptainService])
       .addMockedMethod("getResourceType")
       .addMockedMethod("getResourceRoot")
       .addMockedMethod("getCachedModel")
       .addMockedMethod("saveResourceElements")
       .addMockedMethod("saveModel")
-      .createMock()
+      .createMock())
     val log = EasyMock.createMock(classOf[Logger])
-
-    System.out.println(captainService.getClass.getDeclaredFields.length)
-
-    // TODO: use MockInjection to inject these
-    //    injectMocks(captainService)
-    ReflectionTestUtils.setField(captainService, "resourceRootFactory", resourceRootFactory)
-    ReflectionTestUtils.setField(captainService, "resourceFactory", resourceFactory)
     ReflectionTestUtils.setField(captainService, "log", log)
 
     val captainResource = mock[CaptainResource]
@@ -59,15 +52,12 @@ class CaptainServiceTest extends AbstractTest {
   }
 
   "Captain service" should "get model from cache" in {
-    val captainService = EasyMock.createMockBuilder(classOf[CaptainService])
+    val captainService = withMocks(EasyMock.createMockBuilder(classOf[CaptainService])
       .addMockedMethod("getResourceType")
       .addMockedMethod("getResourceRoot")
       .addMockedMethod("getCachedModel")
-      .createMock()
-
+      .createMock())
     val log = EasyMock.createMock(classOf[Logger])
-
-    // TODO: use MockInjection to inject these
     ReflectionTestUtils.setField(captainService, "log", log)
 
     val resourceId = TestData.nextLong
