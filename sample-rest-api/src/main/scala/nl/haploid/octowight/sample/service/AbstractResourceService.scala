@@ -50,7 +50,6 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
       .flatMap(getModelOption(_))
   }
 
-  // TODO: test
   def getCachedModel(resourceRoot: ResourceRoot): Option[M] = {
     val resourceModelId = resourceModelIdFactory.resourceModelId(resourceRoot)
     val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)
