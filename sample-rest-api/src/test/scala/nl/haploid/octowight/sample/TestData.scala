@@ -3,10 +3,11 @@ package nl.haploid.octowight.sample
 import java.lang
 import java.util.{Random, UUID}
 
-import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.registry.data.{Model, Resource, ResourceRoot}
 import nl.haploid.octowight.registry.repository.{ResourceModelId, ResourceRootDmo}
 import nl.haploid.octowight.sample.data.CaptainModel
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}
+import nl.haploid.octowight.sample.service.AbstractResourceService
 
 object TestData {
   def personDmo: PersonDmo = personDmo(null)
@@ -23,7 +24,7 @@ object TestData {
   def nextLong: Long = new Random().nextLong
 
   // TODO: maybe return mock[ResourceModelId] so we don't accidentally have equivalents
-  def resourceModelId : ResourceModelId = new ResourceModelId
+  def resourceModelId: ResourceModelId = new ResourceModelId
 
   def resourceRoot: ResourceRoot = resourceRoot(nextLong)
 
@@ -53,3 +54,9 @@ object TestData {
     dmo
   }
 }
+
+abstract class MockModel extends Model
+
+abstract class MockResource extends Resource[MockModel]
+
+abstract class MockResourceService extends AbstractResourceService[MockModel, MockResource]

@@ -19,6 +19,7 @@ class EventHandlerService {
     log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
     val events: Map[AtomGroup, Iterable[AtomChangeEvent]] = eventConsumerService.consumeMessages()
       .groupBy(_.getAtomGroup)
+    // TODO: distinct events, we don't need to handle duplicate atoms
     log.debug(s"Consumed ${events.size} events")
     val count = events
       .flatMap { case (atomGroup, atomChangeEvents) => resourceDetectorsService.detectResources(atomGroup, atomChangeEvents) }

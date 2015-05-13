@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component
 @Component
 class ResourceModelIdFactory {
 
+  // TODO: these methods could use the same interface for the parameter
   def resourceModelId(resource: Resource[_]) = {
     val resourceModelId = new ResourceModelId
     resourceModelId.setResourceId(resource.getId)

@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 class ResourceDetectorsService {
   @Autowired private[this] val detectors: util.List[ResourceDetector] = null
 
-  def getDetectors = detectors.asScala
+  def getDetectors: List[ResourceDetector] = detectors.asScala.toList
 
   def getDetectorsForAtomType(atomType: String) = getDetectors.filter(_.getAtomTypes.contains(atomType))
 

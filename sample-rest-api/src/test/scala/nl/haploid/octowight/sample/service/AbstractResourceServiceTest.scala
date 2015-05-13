@@ -4,7 +4,7 @@ import java.util
 
 import nl.haploid.octowight.registry.data._
 import nl.haploid.octowight.registry.repository._
-import nl.haploid.octowight.sample.{AbstractTest, TestData}
+import nl.haploid.octowight.sample._
 import nl.haploid.octowight.{Mocked, Tested}
 import org.easymock.EasyMock
 import org.slf4j.Logger
@@ -12,30 +12,20 @@ import org.springframework.test.util.ReflectionTestUtils
 
 class AbstractResourceServiceTest extends AbstractTest {
 
-  abstract class MockModel extends Model
-
-  abstract class MockResource extends Resource[MockModel]
-
-  abstract class MockResourceService extends AbstractResourceService[MockModel, MockResource]
-
   @Tested private[this] val resourceService: MockResourceService = null
+  @Mocked private[this] val modelCacheService: ModelCacheService[MockModel, MockResource] = null
   @Mocked private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
   @Mocked private[this] val resourceRootFactory: ResourceRootFactory = null
   @Mocked private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
-  @Mocked private[this] val resourceModelDmoFactory: ResourceModelDmoFactory = null
-  @Mocked private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
-  @Mocked private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
-  @Mocked private[this] val modelSerializer: ModelSerializer[MockModel] = null
   @Mocked private[this] val resourceFactory: ResourceFactory[MockResource] = null
 
   "Abstract resource service" should "get model from origin" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
+      .addMockedMethod("getModelClass")
       .addMockedMethod("getResourceType")
       .addMockedMethod("getResourceRoot")
-      .addMockedMethod("getCachedModel")
       .addMockedMethod("saveResourceElements")
-      .addMockedMethod("saveModel")
       .createMock())
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(abstractResourceService, "log", log)
@@ -47,13 +37,14 @@ class AbstractResourceServiceTest extends AbstractTest {
     expecting {
       abstractResourceService.getResourceType andReturn resourceType times 2
       abstractResourceService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
-      abstractResourceService.getCachedModel(resourceRoot) andReturn None once()
+      abstractResourceService.getModelClass andReturn classOf[MockModel] once()
+      modelCacheService.get(resourceRoot, classOf[MockModel]) andReturn None once()
       resourceFactory.fromResourceRoot(resourceRoot) andReturn resource once()
       abstractResourceService.saveResourceElements(resource) once()
       resource.getModel andReturn expectedModel once()
-      abstractResourceService.saveModel(resource, expectedModel) once()
+      modelCacheService.put(resource, expectedModel) once()
     }
-    whenExecuting(abstractResourceService, resourceFactory, resource) {
+    whenExecuting(abstractResourceService, resourceFactory, resource, modelCacheService) {
       val actualModel = abstractResourceService.getModel(resourceId)
       actualModel should be(expectedModel)
     }
@@ -61,9 +52,9 @@ class AbstractResourceServiceTest extends AbstractTest {
 
   "Abstract resource service" should "get model from cache" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
+      .addMockedMethod("getModelClass")
       .addMockedMethod("getResourceType")
       .addMockedMethod("getResourceRoot")
-      .addMockedMethod("getCachedModel")
       .createMock())
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(abstractResourceService, "log", log)
@@ -75,9 +66,10 @@ class AbstractResourceServiceTest extends AbstractTest {
     expecting {
       abstractResourceService.getResourceType andReturn resourceType times 2
       abstractResourceService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
-      abstractResourceService.getCachedModel(resourceRoot) andReturn Some(expectedModel) once()
+      abstractResourceService.getModelClass andReturn classOf[MockModel] once()
+      modelCacheService.get(resourceRoot, classOf[MockModel]) andReturn Some(expectedModel) once()
     }
-    whenExecuting(abstractResourceService) {
+    whenExecuting(abstractResourceService, modelCacheService) {
       val actualModel = abstractResourceService.getModel(resourceId)
       actualModel should be(expectedModel)
     }
@@ -109,36 +101,6 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
     whenExecuting(abstractResourceService, resourceRootDmoRepository, modelOption1, modelOption2) {
       abstractResourceService.getAllModels should be(expectedModels)
-    }
-  }
-
-  "Abstract resource service" should "get cached model" in {
-    val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
-      .addMockedMethod("getModelClass")
-      .addMockedMethod("getResourceType")
-      .createMock())
-    val log = EasyMock.createMock(classOf[Logger])
-    ReflectionTestUtils.setField(abstractResourceService, "log", log)
-
-    val resourceType = TestData.nextString
-    val resourceRoot = TestData.resourceRoot
-    val resourceModelId = TestData.resourceModelId
-    val resourceModelDmo = mock[ResourceModelDmo]
-    val body = TestData.nextString
-    val modelClass = classOf[MockModel]
-    val expectedModel = mock[MockModel]
-    expecting {
-      resourceModelIdFactory.resourceModelId(resourceRoot) andReturn resourceModelId once()
-      resourceModelDmoRepository.findOne(resourceModelId) andReturn resourceModelDmo once()
-      resourceModelDmo.getVersion andReturn resourceRoot.getVersion once()
-      abstractResourceService.getResourceType andReturn resourceType once()
-      resourceModelDmo.getBody andReturn body once()
-      abstractResourceService.getModelClass andReturn modelClass once()
-      modelSerializer.deserialize(body, modelClass) andReturn expectedModel once()
-    }
-    whenExecuting(abstractResourceService, resourceModelIdFactory, resourceModelDmoRepository, resourceModelDmo, modelSerializer) {
-      val modelOption: Option[MockModel] = abstractResourceService.getCachedModel(resourceRoot)
-      modelOption.orNull should be(expectedModel)
     }
   }
 

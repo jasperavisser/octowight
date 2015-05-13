@@ -6,8 +6,6 @@ import nl.haploid.octowight._
 import nl.haploid.octowight.detector.ResourceDetector
 import org.easymock.EasyMock
 
-import scala.collection.mutable
-
 class ResourceDetectorsServiceTest extends AbstractTest {
   @Mocked private[this] val detectors: util.List[ResourceDetector] = null
 
@@ -20,7 +18,7 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val expectedDetectors = List(detector1)
     val atomType = "sterling"
     expecting {
-      resourceDetectorsService.getDetectors andReturn mutable.Buffer(detector1, detector2) once()
+      resourceDetectorsService.getDetectors andReturn List(detector1, detector2) once()
       detector1.getAtomTypes andReturn List(atomType) once()
       detector2.getAtomTypes andReturn List("cooper") once()
     }
@@ -43,7 +41,7 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val events = List(event1, event2)
     val expectedResourceRoots = List(TestData.resourceRoot(null))
     expecting {
-      resourceDetectorsService.getDetectorsForAtomType("draper") andReturn mutable.Buffer(detector) once()
+      resourceDetectorsService.getDetectorsForAtomType("draper") andReturn List(detector) once()
       detector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(resourceDetectorsService, detector) {

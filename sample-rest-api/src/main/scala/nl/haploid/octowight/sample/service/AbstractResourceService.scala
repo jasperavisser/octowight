@@ -12,14 +12,11 @@ import scala.util.{Success, Try}
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   val log = LoggerFactory.getLogger(getClass)
 
+  @Autowired private[this] val modelCacheService: ModelCacheService[M, R] = null
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
   @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
   @Autowired private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
-  @Autowired private[this] val resourceModelDmoFactory: ResourceModelDmoFactory = null
-  @Autowired private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
-  @Autowired private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
-  @Autowired private[this] val modelSerializer: ModelSerializer[M] = null
   @Autowired protected[this] val resourceFactory: ResourceFactory[R] = null
 
   def getResourceType: String
@@ -50,16 +47,8 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
       .flatMap(getModelOption(_))
   }
 
-  def getCachedModel(resourceRoot: ResourceRoot): Option[M] = {
-    val resourceModelId = resourceModelIdFactory.resourceModelId(resourceRoot)
-    val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)
-    if (resourceModelDmo != null && (resourceModelDmo.getVersion == resourceRoot.getVersion)) {
-      log.debug(s"Using cached model for resource $getResourceType/${resourceRoot.getResourceId}")
-      Some(modelSerializer.deserialize(resourceModelDmo.getBody, getModelClass))
-    } else {
-      None
-    }
-  }
+  // TODO: inline
+  def getCachedModel(resourceRoot: ResourceRoot): Option[M] = modelCacheService.get(resourceRoot, getModelClass)
 
   def getModelClass: Class[M]
 
@@ -71,25 +60,8 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     resourceRootFactory.fromResourceRootDmo(resourceRootDmo)
   }
 
-  private[this] def createModelDmo(resource: R, model: M): ResourceModelDmo = {
-    val body = modelSerializer.serialize(model)
-    val resourceModelId = resourceModelIdFactory.resourceModelId(resource)
-    val resourceModelDmo = resourceModelDmoRepository.findOne(resourceModelId)
-    if (resourceModelDmo != null) {
-      resourceModelDmo.setBody(body)
-      resourceModelDmo.setVersion(resource.getVersion)
-      resourceModelDmo
-    } else {
-      resourceModelDmoFactory.fromResourceAndBody(resource, body)
-    }
-  }
-
-  // TODO: test
-  def saveModel(resource: R, model: M): Unit = {
-    log.debug(s"Save model for resource ${resource.getType}/${resource.getId}")
-    val resourceModelDmo = createModelDmo(resource, model)
-    resourceModelDmoRepository.save(resourceModelDmo)
-  }
+  // TODO: inline
+  def saveModel(resource: R, model: M): Unit = modelCacheService.put(resource, model)
 
   // TODO: test
   def saveResourceElements(resource: R) = {

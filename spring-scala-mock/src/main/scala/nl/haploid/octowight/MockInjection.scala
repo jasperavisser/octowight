@@ -51,6 +51,7 @@ trait MockInjection {
 
   private[this] def injectMocks(testedType: Class[_], testedObject: AnyRef): Unit = {
     val fields = getFieldsByAnnotation(testedType, MockInjection.Autowired)
+    log.debug(s"Found ${fields.size} autowired fields in ${testedType.getCanonicalName}")
     fields.foreach {
       case (autowiredClazz, autowiredField) =>
         injectMock(autowiredField, testedObject)
