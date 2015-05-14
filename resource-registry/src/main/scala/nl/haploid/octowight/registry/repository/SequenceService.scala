@@ -11,18 +11,18 @@ class SequenceService {
 
   def getNextValue(key: String): Long = incrementSequence(key).getOrElse(startSequence(key)).getValue
 
-  protected def startSequence(key: String): Sequence = {
-    val sequence = new Sequence
-    sequence.setKey(key)
-    sequence.setValue(0l)
-    mongoOperations.save(sequence)
-    sequence
+  protected def startSequence(key: String): SequenceDmo = {
+    val sequenceDmo = new SequenceDmo
+    sequenceDmo.setKey(key)
+    sequenceDmo.setValue(0l)
+    mongoOperations.save(sequenceDmo)
+    sequenceDmo
   }
 
-  protected def incrementSequence(key: String): Option[Sequence] = {
+  protected def incrementSequence(key: String): Option[SequenceDmo] = {
     val query = new Query(Criteria.where("_id").is(key))
     val update = new Update().inc("value", 1)
     val options = new FindAndModifyOptions().returnNew(true)
-    Option(mongoOperations.findAndModify(query, update, options, classOf[Sequence]))
+    Option(mongoOperations.findAndModify(query, update, options, classOf[SequenceDmo]))
   }
 }

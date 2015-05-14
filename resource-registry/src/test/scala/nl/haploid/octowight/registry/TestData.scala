@@ -3,7 +3,7 @@ package nl.haploid.octowight.registry
 import java.util.{Random, UUID}
 
 import nl.haploid.octowight.registry.data.ResourceRoot
-import nl.haploid.octowight.registry.repository.{ResourceElementDmo, ResourceModelDmo, ResourceModelId, ResourceRootDmo}
+import nl.haploid.octowight.registry.repository.{ResourceElementDmo, ResourceModelDmo, ResourceModelDmoId, ResourceRootDmo}
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 
 object TestData {
@@ -77,7 +77,7 @@ object TestData {
 
   def resourceModelDmo = {
     val expectedResourceModelDmo = new ResourceModelDmo
-    val resourceModelId = new ResourceModelId
+    val resourceModelId = new ResourceModelDmoId
     resourceModelId.setResourceId(TestData.nextLong)
     resourceModelId.setResourceType(TestData.nextString)
     expectedResourceModelDmo.setId(resourceModelId)
@@ -86,7 +86,7 @@ object TestData {
   }
 
   def resourceModelId = {
-    val resourceModelId = new ResourceModelId
+    val resourceModelId = new ResourceModelDmoId
     resourceModelId.setResourceId(nextLong)
     resourceModelId.setResourceType(nextString)
     resourceModelId

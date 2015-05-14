@@ -14,7 +14,7 @@ class ModelCacheService[M <: Model, R <: Resource[M]] {
   @Autowired private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
 
   def get(resourceRoot: ResourceRoot, modelClass: Class[M]): Option[M] = {
-    val id = ResourceModelId(resourceRoot)
+    val id = ResourceModelDmoId(resourceRoot)
     Option(resourceModelDmoRepository.findByIdAndVersion(id, resourceRoot.getVersion)) match {
       case Some(dmo) =>
         log.debug(s"Using cached model for resource ${resourceRoot.getResourceType}/${resourceRoot.getResourceId} version ${resourceRoot.getVersion}")
@@ -31,7 +31,7 @@ class ModelCacheService[M <: Model, R <: Resource[M]] {
 
   private[this] def resourceModelDmo(resource: R, model: M): ResourceModelDmo = {
     val body = modelSerializer.serialize(model)
-    Option(resourceModelDmoRepository.findOne(ResourceModelId(resource))) match {
+    Option(resourceModelDmoRepository.findOne(ResourceModelDmoId(resource))) match {
       case Some(dmo) =>
         dmo.setBody(body)
         dmo.setVersion(resource.getVersion)

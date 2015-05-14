@@ -7,9 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 import scala.beans.BeanProperty
 
-// TODO: this is a dmo
 @Document(collection = "sequence")
-class Sequence {
+class SequenceDmo {
 
   @Id
   @BeanProperty var key: String = _

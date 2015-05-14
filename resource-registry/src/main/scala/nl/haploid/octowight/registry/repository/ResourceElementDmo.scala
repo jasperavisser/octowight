@@ -3,7 +3,7 @@ package nl.haploid.octowight.registry.repository
 import java.lang
 
 import nl.haploid.octowight.registry.data.{Atom, Resource}
-import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder}
+import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder, ToStringBuilder}
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -13,9 +13,9 @@ object ResourceElementDmo {
 
   def apply(resource: Resource[_], atom: Atom) = {
     val dmo = new ResourceElementDmo
-    dmo.setAtomId(atom.getAtomId)
-    dmo.setAtomOrigin(atom.getAtomOrigin)
-    dmo.setAtomType(atom.getAtomType)
+    dmo.setAtomId(atom.id)
+    dmo.setAtomOrigin(atom.origin)
+    dmo.setAtomType(atom.`type`)
     dmo.setResourceId(resource.getId)
     dmo.setResourceType(resource.getType)
     dmo
@@ -36,4 +36,6 @@ class ResourceElementDmo {
   override def equals(that: Any) = EqualsBuilder.reflectionEquals(this, that, false)
 
   override def hashCode = HashCodeBuilder.reflectionHashCode(this, false)
+
+  override def toString = ToStringBuilder.reflectionToString(this)
 }

@@ -3,7 +3,7 @@ package nl.haploid.octowight.sample.repository
 import java.{lang, util}
 import javax.persistence._
 
-import nl.haploid.octowight.registry.data.Atom
+import nl.haploid.octowight.registry.data.{Atom, Atomizable}
 
 import scala.beans.BeanProperty
 
@@ -13,7 +13,7 @@ object PersonDmo {
 
 @Entity
 @Table(name = "person", schema = "octowight")
-class PersonDmo extends Atom {
+class PersonDmo extends Atomizable {
 
   @Id
   @SequenceGenerator(name = "person_sequence", sequenceName = "octowight.person_sequence")
@@ -27,9 +27,7 @@ class PersonDmo extends Atom {
   @BeanProperty var roles: util.List[RoleDmo] = new util.ArrayList[RoleDmo]
 
   @Transient
-  @BeanProperty var atomOrigin: String = null
+  @BeanProperty var origin: String = null
 
-  override def getAtomId = id
-
-  override def getAtomType = PersonDmo.AtomType
+  override def toAtom = new Atom(id, origin, RoleDmo.AtomType)
 }

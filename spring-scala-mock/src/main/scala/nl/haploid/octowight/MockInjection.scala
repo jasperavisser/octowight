@@ -32,7 +32,7 @@ trait MockInjection {
     }
     testeds.foreach {
       case (testedType, testedField) =>
-        if (testedField.get(this) == null) {
+        if (Option(testedField.get(this)).isEmpty) {
           log.debug(s"Inject mock instance of ${testedType.getCanonicalName} into ${this.getClass.getCanonicalName}")
           testedField.set(this, createPartialMockInstance(testedField))
         }
@@ -78,15 +78,13 @@ trait MockInjection {
 
   private[this] def getFieldsByAnnotation(clazz: Class[_], annotation: Class[_ <: Annotation]): Map[Class[_], Field] = {
     getSuperClassesAndInterfaces(clazz)
-    val fields = clazz.getDeclaredFields.filter(_ hasAnnotation annotation)
+    val fields = clazz.getDeclaredFields.filter {
+      f => Option(f.getAnnotation(annotation)).nonEmpty
+    }
     val mapField = (f: Field) => {
       f.setAccessible(true)
       f.getType -> f
     }
     fields.map(mapField).toMap
-  }
-
-  private implicit def fieldHasAnnotation(field: Field): Object {def hasAnnotation(annotation: Class[_ <: Annotation]): Boolean} = new {
-    def hasAnnotation(annotation: Class[_ <: Annotation]): Boolean = field.getAnnotation(annotation) != null
   }
 }

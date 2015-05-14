@@ -65,7 +65,7 @@ class EventConsumerService {
 
   def commit() = getKafkaConsumer.commitOffsets()
 
-  def reset() {
+  def reset() = {
     if (kafkaConsumer != null) {
       kafkaConsumer.get.shutdown()
     }

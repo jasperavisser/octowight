@@ -16,7 +16,7 @@ class CaptainResource extends Resource[CaptainModel] {
   private[this] var roleDmo: RoleDmo = null
   @BeanProperty var id: lang.Long = null
 
-  override def getAtoms = List(personDmo, roleDmo)
+  override def getAtoms = List(personDmo.toAtom, roleDmo.toAtom)
 
   def setPersonDmo(personDmo: PersonDmo) = this.personDmo = personDmo
 

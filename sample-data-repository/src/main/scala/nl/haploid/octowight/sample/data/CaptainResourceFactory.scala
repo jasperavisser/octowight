@@ -12,18 +12,19 @@ class CaptainResourceFactory extends ResourceFactory[CaptainResource] {
 
   @Transactional(readOnly = true)
   def fromResourceRoot(resourceRoot: ResourceRoot) = {
-    val roleDmo = roleDmoRepository.findOne(resourceRoot.getAtomId)
-    if (roleDmo == null) {
-      throw new ResourceNotFoundException
+    Option(roleDmoRepository.findOne(resourceRoot.getAtomId)) match {
+      case Some(roleDmo) =>
+        roleDmo.setOrigin(resourceRoot.getAtomOrigin)
+        val personDmo = roleDmo.getPerson
+        personDmo.setOrigin(resourceRoot.getAtomOrigin)
+        val captainResource = new CaptainResource
+        captainResource.setId(resourceRoot.getResourceId)
+        captainResource.setPersonDmo(personDmo)
+        captainResource.setRoleDmo(roleDmo)
+        captainResource.setVersion(resourceRoot.getVersion)
+        captainResource
+      case None =>
+        throw new ResourceNotFoundException
     }
-    roleDmo.setAtomOrigin(resourceRoot.getAtomOrigin)
-    val personDmo = roleDmo.getPerson
-    personDmo.setAtomOrigin(resourceRoot.getAtomOrigin)
-    val captainResource = new CaptainResource
-    captainResource.setId(resourceRoot.getResourceId)
-    captainResource.setPersonDmo(personDmo)
-    captainResource.setRoleDmo(roleDmo)
-    captainResource.setVersion(resourceRoot.getVersion)
-    captainResource
   }
 }

@@ -13,7 +13,7 @@ object ResourceModelDmo {
 
   def apply(resource: Resource[_], body: String) = {
     val resourceModelDmo = new ResourceModelDmo
-    resourceModelDmo.setId(ResourceModelId(resource))
+    resourceModelDmo.setId(ResourceModelDmoId(resource))
     resourceModelDmo.setBody(body)
     resourceModelDmo.setVersion(resource.getVersion)
     resourceModelDmo
@@ -24,7 +24,7 @@ object ResourceModelDmo {
 class ResourceModelDmo {
 
   @Id
-  @BeanProperty var id: ResourceModelId = _
+  @BeanProperty var id: ResourceModelDmoId = _
   @BeanProperty var version: lang.Long = _
   @BeanProperty var body: String = _
 

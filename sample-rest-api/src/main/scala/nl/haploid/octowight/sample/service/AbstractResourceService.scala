@@ -15,8 +15,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   @Autowired private[this] val modelCacheService: ModelCacheService[M, R] = null
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  // TODO: why is this protected?
-  @Autowired protected[this] val resourceFactory: ResourceFactory[R] = null
+  @Autowired private[this] val resourceFactory: ResourceFactory[R] = null
 
   def getModelClass: Class[M]
 

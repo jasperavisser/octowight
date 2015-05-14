@@ -21,7 +21,7 @@ class ModelCacheServiceTest extends AbstractTest {
 
   "Model cache service" should "get a model" in {
     val resourceRoot = TestData.resourceRoot
-    val resourceModelId = ResourceModelId(resourceRoot)
+    val resourceModelId = ResourceModelDmoId(resourceRoot)
     resourceModelId should not be null
     val resourceModelDmo = mock[ResourceModelDmo]
     val body = TestData.nextString
@@ -42,7 +42,7 @@ class ModelCacheServiceTest extends AbstractTest {
     val resource = TestData.mockResource()
     val model = mock[MockModel]
     val body = TestData.nextString
-    val resourceModelId = ResourceModelId(resource)
+    val resourceModelId = ResourceModelDmoId(resource)
     val resourceModelDmo = ResourceModelDmo(resource, body)
     expecting {
       modelSerializer.serialize(model) andReturn body once()

@@ -18,8 +18,8 @@ class ResourceRegistryService {
   @Autowired private[this] val sequenceService: SequenceService = null
 
   def isNewResource(resourceRoot: ResourceRoot) = {
-    val dmo = resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(resourceRoot.getResourceType, resourceRoot.getAtomId, resourceRoot.getAtomType, resourceRoot.getAtomOrigin)
-    dmo == null
+    val resourceRootDmo: ResourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(resourceRoot.getResourceType, resourceRoot.getAtomId, resourceRoot.getAtomType, resourceRoot.getAtomOrigin)
+    Option(resourceRootDmo).isEmpty
   }
 
   def saveNewResource(resourceRoot: ResourceRoot) = {
@@ -35,13 +35,12 @@ class ResourceRegistryService {
     val atomIds = atomChangeEvents.map(_.getAtomId)
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(atomIds.asJava, atomGroup.getAtomType, atomGroup.getAtomOrigin)
     resourceElementDmos.asScala
-      .map(getResourceRootDmo)
-      .filter(_ != null)
+      .flatMap(getResourceRootDmo)
       .map(markResourceDirty)
   }
 
   private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
-    resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceElementDmo.getResourceType, resourceElementDmo.getResourceId)
+    Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceElementDmo.getResourceType, resourceElementDmo.getResourceId))
   }
 
   private[this] def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {

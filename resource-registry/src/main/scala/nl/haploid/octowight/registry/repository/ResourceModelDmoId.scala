@@ -8,17 +8,17 @@ import org.apache.commons.lang3.builder.{ToStringBuilder, EqualsBuilder, HashCod
 
 import scala.beans.BeanProperty
 
-object ResourceModelId {
+object ResourceModelDmoId {
 
   def apply(resource: ResourceIdentifier) = {
-    val resourceModelId = new ResourceModelId
+    val resourceModelId = new ResourceModelDmoId
     resourceModelId.setResourceId(resource.getId)
     resourceModelId.setResourceType(resource.getType)
     resourceModelId
   }
 }
 
-class ResourceModelId extends Serializable {
+class ResourceModelDmoId extends Serializable {
   @BeanProperty var resourceId: lang.Long = _
   @BeanProperty var resourceType: String = _
 

@@ -4,7 +4,7 @@ import java.lang
 
 import org.springframework.data.mongodb.repository.MongoRepository
 
-trait ResourceModelDmoRepository extends MongoRepository[ResourceModelDmo, ResourceModelId] {
+trait ResourceModelDmoRepository extends MongoRepository[ResourceModelDmo, ResourceModelDmoId] {
 
-  def findByIdAndVersion(id: ResourceModelId, version: lang.Long): ResourceModelDmo
+  def findByIdAndVersion(id: ResourceModelDmoId, version: lang.Long): ResourceModelDmo
 }
