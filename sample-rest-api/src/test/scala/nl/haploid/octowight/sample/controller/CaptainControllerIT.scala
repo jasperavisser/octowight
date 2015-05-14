@@ -22,14 +22,14 @@ class CaptainControllerIT extends AbstractTransactionalIT {
   private[this] val tempResourceRootDmos = new util.ArrayList[ResourceRootDmo]
   private[this] var mockMvc: MockMvc = null
 
-  override def beforeEach() {
+  override def beforeEach() = {
     super.beforeEach()
     this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build
     roleDmoRepository.deleteAllInBatch()
     personDmoRepository.deleteAllInBatch()
   }
 
-  override def afterEach() {
+  override def afterEach() = {
     resourceRootDmoRepository.delete(tempResourceRootDmos)
   }
 

@@ -7,16 +7,13 @@ import org.springframework.transaction.{PlatformTransactionManager, TransactionS
 abstract class AbstractTransactionalIT extends AbstractIT {
   @Autowired private[this] val platformTransactionManager: PlatformTransactionManager = null
 
-  private[this] lazy val transactionStatus: TransactionStatus = {
-    platformTransactionManager.getTransaction(new DefaultTransactionDefinition)
-  }
+  private[this] var transactionStatus: TransactionStatus = null
 
   override def beforeEach() = {
     super.beforeEach()
+    transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition)
     transactionStatus.setRollbackOnly()
   }
 
-  override def afterEach() = {
-    platformTransactionManager.rollback(transactionStatus)
-  }
+  override def afterEach() = platformTransactionManager.rollback(transactionStatus)
 }

@@ -15,7 +15,5 @@ abstract class AbstractTransactionalIT extends AbstractIT {
     transactionStatus.setRollbackOnly()
   }
 
-  override def afterEach() = {
-    platformTransactionManager.rollback(transactionStatus)
-  }
+  override def afterEach() = platformTransactionManager.rollback(transactionStatus)
 }

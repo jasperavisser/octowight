@@ -17,7 +17,6 @@ class App {
   @Autowired private[this] val eventHandlerService: EventHandlerService = null
   @Value("${octowight.kafka.batch.size}") private[this] val batchSize: Int = 0
 
-  @Scheduled(fixedRate = 1000) def poll() = {
-    eventHandlerService.detectDirtyResources(batchSize)
-  }
+  @Scheduled(fixedRate = 1000)
+  def poll(): Unit = eventHandlerService.detectDirtyResources(batchSize)
 }

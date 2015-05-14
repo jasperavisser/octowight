@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.transaction.annotation.Transactional
 
 import scala.collection.JavaConverters._
 
@@ -22,8 +21,7 @@ class App {
   @Autowired private[this] val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
 
   @Scheduled(fixedRate = 1000)
-  @Transactional
-  def poll() {
+  def poll(): Unit = {
     val eventDmos = atomChangeEventDmoRepository.findAll
     val events = eventDmos.asScala.map(_.toAtomChangeEvent)
     eventChannelService.sendEvents(events)

@@ -34,10 +34,10 @@ object TestData {
   def resourceRoot(resourceId: Long) = {
     val resourceRoot = new ResourceRoot
     resourceRoot.setResourceId(resourceId)
-    resourceRoot.setResourceType("olson")
+    resourceRoot.setResourceType(nextString)
     resourceRoot.setAtomId(nextLong)
-    resourceRoot.setAtomOrigin("madison avenue")
-    resourceRoot.setAtomType("draper")
+    resourceRoot.setAtomOrigin(nextString)
+    resourceRoot.setAtomType(nextString)
     resourceRoot
   }
 

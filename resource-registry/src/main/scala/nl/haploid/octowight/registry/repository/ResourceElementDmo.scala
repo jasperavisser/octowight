@@ -12,13 +12,13 @@ import scala.beans.BeanProperty
 object ResourceElementDmo {
 
   def apply(resource: Resource[_], atom: Atom) = {
-    val dmo = new ResourceElementDmo
-    dmo.setAtomId(atom.id)
-    dmo.setAtomOrigin(atom.origin)
-    dmo.setAtomType(atom.`type`)
-    dmo.setResourceId(resource.getId)
-    dmo.setResourceType(resource.getType)
-    dmo
+    val d = new ResourceElementDmo
+    d.setAtomId(atom.id)
+    d.setAtomOrigin(atom.origin)
+    d.setAtomType(atom.typ)
+    d.setResourceId(resource.getId)
+    d.setResourceType(resource.getType)
+    d
   }
 }
 

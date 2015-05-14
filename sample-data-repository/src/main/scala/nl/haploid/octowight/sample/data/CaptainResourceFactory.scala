@@ -11,7 +11,7 @@ class CaptainResourceFactory extends ResourceFactory[CaptainResource] {
   @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
 
   @Transactional(readOnly = true)
-  def fromResourceRoot(resourceRoot: ResourceRoot) = {
+  def fromResourceRoot(resourceRoot: ResourceRoot): Option[CaptainResource] = {
     Option(roleDmoRepository.findOne(resourceRoot.getAtomId)) match {
       case Some(roleDmo) =>
         roleDmo.setOrigin(resourceRoot.getAtomOrigin)
@@ -22,9 +22,8 @@ class CaptainResourceFactory extends ResourceFactory[CaptainResource] {
         captainResource.setPersonDmo(personDmo)
         captainResource.setRoleDmo(roleDmo)
         captainResource.setVersion(resourceRoot.getVersion)
-        captainResource
-      case None =>
-        throw new ResourceNotFoundException
+        Some(captainResource)
+      case None => None
     }
   }
 }

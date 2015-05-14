@@ -20,8 +20,7 @@ class EventHandlerService {
       .groupBy(_.getAtomGroup)
     val count = eventsByGroup
       .flatMap { case (atomGroup, atomChangeEvents) => resourceDetectorsService.detectResources(atomGroup, atomChangeEvents) }
-      .filter(resourceRegistryService.isNewResource)
-      .map(resourceRegistryService.saveNewResource)
+      .flatMap(resourceRegistryService.saveResource)
       .map(dirtyResourceProducerService.sendDirtyResource)
       .map(dirtyResourceProducerService.resolveFuture)
       .size

@@ -2,7 +2,7 @@ package nl.haploid.octowight.service
 
 import kafka.consumer.KafkaStream
 import kafka.javaapi.consumer.ConsumerConnector
-import nl.haploid.octowight.kafka.{KafkaConsumerFactory, KakfaStreamIterator}
+import nl.haploid.octowight.kafka.{KafkaConsumerFactory, KafkaStreamIterator}
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
@@ -40,7 +40,7 @@ class EventConsumerService {
   def getTopic = topic
 
   // TODO: topic should be read only; we only write to it for IT
-  def setTopic(topic: String) {
+  def setTopic(topic: String) = {
     this.topic = topic
     reset()
   }
@@ -52,14 +52,14 @@ class EventConsumerService {
 
   // TODO: reinstate batch size?
   def consumeDistinctEvents(): Set[AtomChangeEvent] = {
-    val events = new KakfaStreamIterator(getStream)
+    val events = new KafkaStreamIterator(getStream)
       .map(m => new String(m.message()))
       .map(parseMessage)
       .toIterable
     log.debug(s"Consumed ${events.size} events")
     events
       .groupBy(f => (f.getAtomId, f.getAtomOrigin, f.getAtomType))
-      .map(_._2.head)
+      .map { case (_, similarEvents) => similarEvents.head }
       .toSet
   }
 

@@ -3,7 +3,7 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 # Build artifacts
 pushd ../..
-mvn clean install -DskipTests
+mvn $1 install -DskipTests
 popd
 
 # Build images

@@ -11,12 +11,12 @@ import scala.beans.BeanProperty
 object ResourceRoot {
 
   def apply(event: AtomChangeEvent, resourceType: String) = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setAtomId(event.getAtomId)
-    resourceRoot.setAtomOrigin(event.getAtomOrigin)
-    resourceRoot.setAtomType(event.getAtomType)
-    resourceRoot.setResourceType(resourceType)
-    resourceRoot
+    val r = new ResourceRoot
+    r.setAtomId(event.getAtomId)
+    r.setAtomOrigin(event.getAtomOrigin)
+    r.setAtomType(event.getAtomType)
+    r.setResourceType(resourceType)
+    r
   }
 
   def apply(resourceRootDmo: ResourceRootDmo) = {
@@ -26,6 +26,7 @@ object ResourceRoot {
     resourceRoot.setAtomType(resourceRootDmo.getAtomType)
     resourceRoot.setResourceId(resourceRootDmo.getResourceId)
     resourceRoot.setResourceType(resourceRootDmo.getResourceType)
+    resourceRoot.setTombstone(resourceRootDmo.getTombstone)
     resourceRoot.setVersion(resourceRootDmo.getVersion)
     resourceRoot
   }
@@ -38,6 +39,7 @@ class ResourceRoot extends ResourceIdentifier {
   @BeanProperty var atomId: lang.Long = _
   @BeanProperty var atomOrigin: String = _
   @BeanProperty var atomType: String = _
+  @BeanProperty var tombstone: Boolean = false
   @BeanProperty var version: lang.Long = _
 
   override def getId: lang.Long = resourceId

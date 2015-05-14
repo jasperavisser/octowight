@@ -17,36 +17,49 @@ class ResourceRegistryService {
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
   @Autowired private[this] val sequenceService: SequenceService = null
 
-  def isNewResource(resourceRoot: ResourceRoot) = {
-    val resourceRootDmo: ResourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(resourceRoot.getResourceType, resourceRoot.getAtomId, resourceRoot.getAtomType, resourceRoot.getAtomOrigin)
-    Option(resourceRootDmo).isEmpty
-  }
-
-  def saveNewResource(resourceRoot: ResourceRoot) = {
-    val resourceRootDmo = ResourceRootDmo(resourceRoot)
-    resourceRootDmo.setResourceId(sequenceService.getNextValue(ResourceRootDmo.IdSequence))
-    resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VersionSequence))
-    val dmo = resourceRootDmoRepository.save(resourceRootDmo)
-    log.debug(s"Saved resource ${dmo.getResourceType}/${dmo.getResourceId}")
-    ResourceRoot(dmo)
+  def saveResource(resourceRoot: ResourceRoot): Option[ResourceRoot] = {
+    Option(getResourceRootDmo(resourceRoot)) match {
+      case Some(resourceRootDmo) => if (resourceRootDmo.tombstone) Some(untombstoneResource(resourceRootDmo)) else None
+      case None => Some(saveNewResource(resourceRoot))
+    }
   }
 
   def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: Iterable[AtomChangeEvent]) = {
     val atomIds = atomChangeEvents.map(_.getAtomId)
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(atomIds.asJava, atomGroup.getAtomType, atomGroup.getAtomOrigin)
     resourceElementDmos.asScala
-      .flatMap(getResourceRootDmo)
+      .flatMap(element => getResourceRootDmo(element))
       .map(markResourceDirty)
   }
 
+  private[this] def getResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {
+    resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(
+      resourceRoot.getResourceType, resourceRoot.getAtomId, resourceRoot.getAtomType, resourceRoot.getAtomOrigin)
+  }
+
   private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
-    Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceElementDmo.getResourceType, resourceElementDmo.getResourceId))
+    Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(
+      resourceElementDmo.getResourceType, resourceElementDmo.getResourceId))
   }
 
   private[this] def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {
-    log.debug(s"Mark ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId} as dirty")
+    log.info(s"Mark ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId} as dirty")
     val version = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
     resourceRootDmo.setVersion(version)
+    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmo))
+  }
+
+  private[this] def saveNewResource(resourceRoot: ResourceRoot): ResourceRoot = {
+    val resourceRootDmo = ResourceRootDmo(resourceRoot)
+    resourceRootDmo.setResourceId(sequenceService.getNextValue(ResourceRootDmo.IdSequence))
+    resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VersionSequence))
+    log.info(s"Save resource ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId}")
+    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmo))
+  }
+
+  private[this] def untombstoneResource(resourceRootDmo: ResourceRootDmo): ResourceRoot = {
+    log.info(s"Remove tombstone for ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId}")
+    resourceRootDmo.tombstone = false
     ResourceRoot(resourceRootDmoRepository.save(resourceRootDmo))
   }
 }

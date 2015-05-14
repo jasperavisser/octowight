@@ -5,8 +5,8 @@ import java.util.{Random, UUID}
 import nl.haploid.octowight.sample.repository.AtomChangeEventDmo
 
 object TestData {
-  val AtomLocus = "sunnydale"
-  val AtomType = "spike"
+  val AtomLocus = nextString
+  val AtomType = nextString
 
   def nextLong: Long = new Random().nextLong
 
@@ -18,5 +18,7 @@ object TestData {
     event
   }
 
-  def topic = UUID.randomUUID.toString
+  def topic = nextString
+
+  def nextString = UUID.randomUUID.toString
 }

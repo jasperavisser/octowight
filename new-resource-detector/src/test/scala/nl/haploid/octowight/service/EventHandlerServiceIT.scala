@@ -29,7 +29,7 @@ class EventHandlerServiceIT extends AbstractIT {
     actualCount should be(2)
   }
 
-  def sendMessage(topic: String, event: AtomChangeEvent) {
+  def sendMessage(topic: String, event: AtomChangeEvent) = {
     val message = jsonMapper.serialize(event)
     log.debug(s"Send message: $message")
     val record = new ProducerRecord[String, String](topic, message)

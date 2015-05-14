@@ -25,12 +25,16 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     log.debug(s"Get model for resource $getResourceType/$resourceId")
     val resourceRoot = getResourceRoot(getResourceType, resourceId)
     modelCacheService.get(resourceRoot, getModelClass).getOrElse({
-      // TODO: tombstone resource if not found
-      val resource = resourceFactory.fromResourceRoot(resourceRoot)
-      saveResourceElements(resource)
-      val model = resource.getModel
-      modelCacheService.put(resource, model)
-      model
+      resourceFactory.fromResourceRoot(resourceRoot) match {
+        case Some(resource) =>
+          saveResourceElements(resource)
+          val model = resource.getModel
+          modelCacheService.put(resource, model)
+          model
+        case None =>
+          tombstoneResource(resourceRoot)
+          throw new ResourceNotFoundException
+      }
     })
   }
 
@@ -43,7 +47,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   }
 
   def getAllModels: Iterable[M] = {
-    resourceRootDmoRepository.findByResourceType(getResourceType).asScala
+    resourceRootDmoRepository.findByResourceTypeAndTombstone(getResourceType, tombstone = false).asScala
       .map(_.getResourceId)
       .flatMap(getModelOption(_))
   }
@@ -59,5 +63,13 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId)
     resource.getAtoms
       .foreach(atom => resourceElementDmoRepository.save(ResourceElementDmo(resource, atom)))
+  }
+
+  // TODO: test
+  def tombstoneResource(resourceRoot: ResourceRoot): Unit = {
+    log.debug(s"Tombstone resource ${resourceRoot.getType}/${resourceRoot.getId}")
+    val resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.getResourceType, resourceRoot.getResourceId)
+    resourceRootDmo.setTombstone(true)
+    resourceRootDmoRepository.save(resourceRootDmo)
   }
 }

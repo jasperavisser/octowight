@@ -36,7 +36,7 @@ class AbstractResourceServiceTest extends AbstractTest {
       abstractResourceService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
       abstractResourceService.getModelClass andReturn classOf[MockModel] once()
       modelCacheService.get(resourceRoot, classOf[MockModel]) andReturn None once()
-      resourceFactory.fromResourceRoot(resourceRoot) andReturn resource once()
+      resourceFactory.fromResourceRoot(resourceRoot) andReturn Some(resource) once()
       abstractResourceService.saveResourceElements(resource) once()
       resource.getModel andReturn expectedModel once()
       modelCacheService.put(resource, expectedModel) once()
@@ -90,7 +90,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     val expectedModels = List(model1, model2)
     expecting {
       abstractResourceService.getResourceType andReturn resourceType once()
-      resourceRootDmoRepository.findByResourceType(resourceType) andReturn resourceRootDmos once()
+      resourceRootDmoRepository.findByResourceTypeAndTombstone(resourceType, tombstone = false) andReturn resourceRootDmos once()
       abstractResourceService.getModelOption(resourceRootDmo1.getResourceId) andReturn modelOption1 once()
       abstractResourceService.getModelOption(resourceRootDmo2.getResourceId) andReturn modelOption2 once()
       modelOption1.toList andReturn List(model1) once()

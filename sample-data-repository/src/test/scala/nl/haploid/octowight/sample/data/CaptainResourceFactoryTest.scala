@@ -21,7 +21,7 @@ class CaptainResourceFactoryTest extends AbstractTest {
       roleDmo.toAtom andReturn roleAtom once()
     }
     whenExecuting(roleDmo, roleDmoRepository) {
-      val captainResource = captainResourceFactory.fromResourceRoot(resourceRoot)
+      val captainResource = captainResourceFactory.fromResourceRoot(resourceRoot).getOrElse(fail())
       captainResource.getId should be(resourceRoot.getResourceId)
       captainResource.getAtoms should have size 2
       captainResource.getVersion should be(resourceRoot.getVersion)

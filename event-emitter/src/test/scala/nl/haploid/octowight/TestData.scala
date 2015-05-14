@@ -3,8 +3,8 @@ package nl.haploid.octowight
 import java.util.{Random, UUID}
 
 object TestData {
-  val ATOM_LOCUS = "sunnydale"
-  val ATOM_TYPE = "spike"
+  val ATOM_LOCUS = nextString
+  val ATOM_TYPE = nextString
 
   def atomChangeEvent = {
     val event = new AtomChangeEvent
