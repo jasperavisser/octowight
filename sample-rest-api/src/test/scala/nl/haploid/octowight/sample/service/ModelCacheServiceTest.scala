@@ -39,7 +39,7 @@ class ModelCacheServiceTest extends AbstractTest {
   }
 
   "Model cache service" should "put a new model" in {
-    val resource = TestData.mockResource()
+    val resource = TestData.mockResource(Set())
     val model = mock[MockModel]
     val body = TestData.nextString
     val resourceModelId = ResourceModelDmoId(resource)

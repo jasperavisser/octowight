@@ -114,4 +114,20 @@ class AbstractResourceServiceTest extends AbstractTest {
       actualResourceRoot should be(expectedResourceRoot)
     }
   }
+
+  "Abstract resource service" should "save resource elements" in {
+    val atom1 = TestData.atom
+    val atom2 = TestData.atom
+    val resource = TestData.mockResource(Set(atom1, atom2))
+    val resourceElementDmo1 = ResourceElementDmo(resource, atom1)
+    val resourceElementDmo2 = ResourceElementDmo(resource, atom2)
+    expecting {
+      resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId) andReturn 0 once()
+      resourceElementDmoRepository.save(resourceElementDmo1) andReturn mock[ResourceElementDmo] once()
+      resourceElementDmoRepository.save(resourceElementDmo2) andReturn mock[ResourceElementDmo] once()
+    }
+    whenExecuting(resourceElementDmoRepository) {
+      resourceService.saveResourceElements(resource)
+    }
+  }
 }

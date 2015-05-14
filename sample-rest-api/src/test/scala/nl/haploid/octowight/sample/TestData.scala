@@ -9,6 +9,9 @@ import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}
 import nl.haploid.octowight.sample.service.AbstractResourceService
 
 object TestData {
+
+  def atom = new Atom(nextLong, nextString, nextString)
+
   def personDmo: PersonDmo = personDmo(null)
 
   def personDmo(id: lang.Long) = {
@@ -51,11 +54,10 @@ object TestData {
 
   def mockModel() = new MockModel {}
 
-  def mockResource() = {
+  def mockResource(atoms: Set[Atom]) = {
     new MockResource {
       val id = nextLong
       val model = mockModel()
-      val atoms = List()
 
       override def getType: String = MockResource.Type
 

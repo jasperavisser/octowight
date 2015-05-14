@@ -55,7 +55,6 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     }
   }
 
-  // TODO: test
   def saveResourceElements(resource: R) = {
     resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId)
     resource.getAtoms
