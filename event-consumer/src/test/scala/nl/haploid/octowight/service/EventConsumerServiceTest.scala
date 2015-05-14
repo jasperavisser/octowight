@@ -11,10 +11,10 @@ import org.springframework.test.util.ReflectionTestUtils
 
 class EventConsumerServiceTest extends AbstractTest {
   @Tested val eventConsumerService = EasyMock.createMockBuilder(classOf[EventConsumerService])
-    .addMockedMethod("getKafkaConsumer")
-    .addMockedMethod("getStream")
+    .addMockedMethod("consumerConnector")
+    .addMockedMethod("stream")
     .createMock()
-  @Mocked private[this] val consumerFactoryService: KafkaConsumerFactory = null
+  @Mocked private[this] val kafkaConsumerFactory: KafkaConsumerFactory = null
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
   override def beforeEach() = {
@@ -31,7 +31,7 @@ class EventConsumerServiceTest extends AbstractTest {
     val expectedEvent = TestData.atomChangeEvent("rick")
     val message = TestData.message
     expecting {
-      eventConsumerService.getStream andReturn stream once()
+      eventConsumerService.stream andReturn stream once()
       stream.iterator andReturn iterator once()
       iterator.next andReturn messageAndMetaData once()
       messageAndMetaData.message andReturn message.getBytes once()
@@ -54,7 +54,7 @@ class EventConsumerServiceTest extends AbstractTest {
     val message2 = TestData.message
     val expectedEvents = Set(event1, event2)
     expecting {
-      eventConsumerService.getStream andReturn stream once()
+      eventConsumerService.stream andReturn stream once()
       stream.iterator andReturn iterator once()
       iterator.next andReturn messageAndMetaData once()
       messageAndMetaData.message andReturn message1.getBytes once()
@@ -73,7 +73,7 @@ class EventConsumerServiceTest extends AbstractTest {
   "Event consumer" should "commit stream offset" in {
     val kafkaConsumer = mock[ConsumerConnector]
     expecting {
-      eventConsumerService.getKafkaConsumer andReturn kafkaConsumer once()
+      eventConsumerService.consumerConnector andReturn kafkaConsumer once()
       kafkaConsumer.commitOffsets() once()
     }
     whenExecuting(kafkaConsumer, eventConsumerService) {

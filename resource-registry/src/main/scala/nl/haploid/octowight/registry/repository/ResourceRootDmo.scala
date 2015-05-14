@@ -3,7 +3,7 @@ package nl.haploid.octowight.registry.repository
 import java.lang
 
 import nl.haploid.octowight.registry.data.ResourceRoot
-import org.apache.commons.lang3.builder.{ToStringBuilder, EqualsBuilder, HashCodeBuilder}
+import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder, ToStringBuilder}
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 

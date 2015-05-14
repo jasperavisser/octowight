@@ -1,5 +1,7 @@
 package nl.haploid.octowight.service
 
+import java.util.concurrent.TimeUnit
+
 import nl.haploid.octowight.detector.MockResourceDetector
 import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper, TestData}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
@@ -18,7 +20,7 @@ class EventHandlerServiceIT extends AbstractIT {
 
   "Event handler service" should "handle some events" in {
     val topic = TestData.topic
-    eventConsumerService.setTopic(topic)
+    eventConsumerService.reset(topic)
     val event1 = TestData.atomChangeEvent(MockResourceDetector.AtomType)
     val event2 = TestData.atomChangeEvent(MockResourceDetector.AtomType)
     val event3 = TestData.atomChangeEvent("jack")
@@ -33,6 +35,6 @@ class EventHandlerServiceIT extends AbstractIT {
     val message = jsonMapper.serialize(event)
     log.debug(s"Send message: $message")
     val record = new ProducerRecord[String, String](topic, message)
-    kafkaProducer.send(record).get
+    kafkaProducer.send(record).get(5, TimeUnit.SECONDS)
   }
 }

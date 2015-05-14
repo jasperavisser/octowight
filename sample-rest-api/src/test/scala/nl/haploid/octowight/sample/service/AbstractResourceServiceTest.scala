@@ -17,6 +17,12 @@ class AbstractResourceServiceTest extends AbstractTest {
   @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
   @Mocked private[this] val resourceFactory: ResourceFactory[MockResource] = null
 
+  override def beforeEach() = {
+    super.beforeEach()
+    val log = EasyMock.createMock(classOf[Logger])
+    ReflectionTestUtils.setField(resourceService, "log", log)
+  }
+
   "Abstract resource service" should "get model from origin" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
       .addMockedMethod("getModelClass")
@@ -128,6 +134,21 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
     whenExecuting(resourceElementDmoRepository) {
       resourceService.saveResourceElements(resource)
+    }
+  }
+
+  "Abstract resource service" should "tombstone a resource" in {
+    val resourceRoot = TestData.resourceRoot
+    val resourceRootDmo = TestData.resourceRootDmo
+    val tombstonedResourceRootDmo = TestData.resourceRootDmo
+    tombstonedResourceRootDmo.setResourceId(resourceRootDmo.getResourceId)
+    tombstonedResourceRootDmo.setTombstone(true)
+    expecting {
+      resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.getResourceType, resourceRoot.getResourceId) andReturn resourceRootDmo once()
+      resourceRootDmoRepository.save(tombstonedResourceRootDmo) andReturn tombstonedResourceRootDmo once()
+    }
+    whenExecuting(resourceRootDmoRepository) {
+      resourceService.tombstoneResource(resourceRoot)
     }
   }
 }

@@ -6,53 +6,50 @@ import nl.haploid.octowight.kafka.{KafkaConsumerFactory, KafkaStreamIterator}
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
+import org.springframework.beans.factory.config.ConfigurableBeanFactory
+import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
 @Service
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 class EventConsumerService {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  protected[this] val log = LoggerFactory.getLogger(getClass)
 
-  @Autowired private[this] val consumerFactoryService: KafkaConsumerFactory = null
+  @Autowired private[this] val kafkaConsumerFactory: KafkaConsumerFactory = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
 
   @Value("${octowight.kafka.topic.events}") private[this] var topic: String = null
 
-  private[this] var kafkaConsumer: ThreadLocal[ConsumerConnector] = null
-  private[this] var stream: ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]] = null
-
-  def getStream = {
-    if (stream == null) {
-      log.debug(s"Create new stream for $getTopic}")
-      stream = new ThreadLocal[KafkaStream[Array[Byte], Array[Byte]]]
-      stream.set(consumerFactoryService.createStream(getKafkaConsumer, getTopic))
-    }
-    stream.get
-  }
-
-  def getKafkaConsumer = {
-    if (kafkaConsumer == null) {
-      kafkaConsumer = new ThreadLocal[ConsumerConnector]
-      kafkaConsumer.set(consumerFactoryService.createKafkaConsumer)
-    }
-    kafkaConsumer.get
-  }
+  private[this] var consumerConnectorOption: Option[ConsumerConnector] = None
+  private[this] var streamOption: Option[KafkaStream[Array[Byte], Array[Byte]]] = None
 
   def getTopic = topic
 
-  // TODO: topic should be read only; we only write to it for IT
-  def setTopic(topic: String) = {
-    this.topic = topic
-    reset()
+  def stream: KafkaStream[Array[Byte], Array[Byte]] = {
+    streamOption.getOrElse {
+      log.debug(s"Create new stream for $getTopic}")
+      val stream: KafkaStream[Array[Byte], Array[Byte]] = kafkaConsumerFactory.createStream(consumerConnector, getTopic)
+      streamOption = Some(stream)
+      stream
+    }
+  }
+
+  def consumerConnector: ConsumerConnector = {
+    consumerConnectorOption.getOrElse {
+      val consumerConnector: ConsumerConnector = kafkaConsumerFactory.createKafkaConsumer
+      consumerConnectorOption = Some(consumerConnector)
+      consumerConnector
+    }
   }
 
   def consumeEvent = {
-    val message = new String(getStream.iterator().next().message())
+    val message = new String(stream.iterator().next().message())
     parseMessage(message)
   }
 
   // TODO: reinstate batch size?
   def consumeDistinctEvents(): Set[AtomChangeEvent] = {
-    val events = new KafkaStreamIterator(getStream)
+    val events = new KafkaStreamIterator(stream)
       .map(m => new String(m.message()))
       .map(parseMessage)
       .toIterable
@@ -68,13 +65,15 @@ class EventConsumerService {
     jsonMapper.deserialize(message, classOf[AtomChangeEvent])
   }
 
-  def commit() = getKafkaConsumer.commitOffsets()
+  def commit() = consumerConnector.commitOffsets()
 
-  def reset() = {
-    if (kafkaConsumer != null) {
-      kafkaConsumer.get.shutdown()
+  def reset(topic: String) = {
+    this.topic = topic
+    consumerConnectorOption match {
+      case Some(consumerConnector) => consumerConnector.shutdown()
+      case None =>
     }
-    kafkaConsumer = null
-    stream = null
+    consumerConnectorOption = None
+    streamOption = None
   }
 }

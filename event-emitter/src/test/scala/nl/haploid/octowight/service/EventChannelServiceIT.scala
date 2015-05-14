@@ -1,5 +1,7 @@
 package nl.haploid.octowight.service
 
+import java.util.concurrent.TimeUnit
+
 import nl.haploid.octowight.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -9,7 +11,7 @@ class EventChannelServiceIT extends AbstractIT {
   "Channel" should "send an event" in {
     val event = TestData.atomChangeEvent
     val future = eventChannelService.sendEvent(event)
-    future.get should not be null
+    future.get(5, TimeUnit.SECONDS) should not be null
   }
 
   "Channel" should "send multiple events" in {

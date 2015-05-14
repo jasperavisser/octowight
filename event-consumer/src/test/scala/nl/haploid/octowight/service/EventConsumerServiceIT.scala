@@ -27,7 +27,7 @@ class EventConsumerServiceIT extends AbstractIT {
 
   "Event consumer" should "consume a message" in {
     val topic = TestData.topic
-    eventConsumerService.setTopic(topic)
+    eventConsumerService.reset(topic)
     val expectedEvent = TestData.atomChangeEvent("joan")
     sendMessage(topic, expectedEvent)
     val actualEvent = eventConsumerService.consumeEvent
@@ -36,7 +36,7 @@ class EventConsumerServiceIT extends AbstractIT {
 
   "Event consumer" should "consume multiple messages" in {
     val topic = TestData.topic
-    eventConsumerService.setTopic(topic)
+    eventConsumerService.reset(topic)
     val event1 = TestData.atomChangeEvent("bob")
     val event2 = TestData.atomChangeEvent("benson")
     val expectedEvents = Set(event1, event2)
@@ -48,12 +48,12 @@ class EventConsumerServiceIT extends AbstractIT {
 
   "Event consumer" should "commit stream offset" in {
     val topic = TestData.topic
-    eventConsumerService.setTopic(topic)
+    eventConsumerService.reset(topic)
     val event = TestData.atomChangeEvent("harris")
     sendMessage(topic, event)
     eventConsumerService.consumeDistinctEvents()
     eventConsumerService.commit()
-    eventConsumerService.reset()
+    eventConsumerService.reset(topic)
     val actualEvents = eventConsumerService.consumeDistinctEvents()
     actualEvents should have size 0
   }

@@ -65,7 +65,6 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
       .foreach(atom => resourceElementDmoRepository.save(ResourceElementDmo(resource, atom)))
   }
 
-  // TODO: test
   def tombstoneResource(resourceRoot: ResourceRoot): Unit = {
     log.debug(s"Tombstone resource ${resourceRoot.getType}/${resourceRoot.getId}")
     val resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.getResourceType, resourceRoot.getResourceId)

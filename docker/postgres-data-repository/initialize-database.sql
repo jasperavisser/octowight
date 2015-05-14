@@ -18,7 +18,7 @@ create or replace function log_atom_change_event(atom_id bigint, atom_origin var
 			values(nextval('octowight.event_sequence'), atom_id, atom_origin, atom_type);
 	end; $$ language plpgsql;
 
--- Create person table (TODO: move to another script)
+-- Create person table
 create sequence octowight.person_sequence;
 drop table if exists octowight.person;
 create table octowight.person(
