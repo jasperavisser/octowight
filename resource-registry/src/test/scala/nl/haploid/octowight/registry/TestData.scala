@@ -17,10 +17,10 @@ object TestData {
   def resourceRoot(resourceId: Long) = {
     val resourceRoot = new ResourceRoot
     resourceRoot.setResourceId(resourceId)
-    resourceRoot.setResourceType("olson")
+    resourceRoot.setResourceType(nextString)
     resourceRoot.setAtomId(nextLong)
-    resourceRoot.setAtomOrigin("madison avenue")
-    resourceRoot.setAtomType("draper")
+    resourceRoot.setAtomOrigin(nextString)
+    resourceRoot.setAtomType(nextString)
     resourceRoot
   }
 
@@ -37,20 +37,20 @@ object TestData {
     val event = new AtomChangeEvent
     event.setId(nextLong)
     event.setAtomId(nextLong)
-    event.setAtomOrigin("everywhere")
+    event.setAtomOrigin(nextString)
     event.setAtomType(atomType)
     event
   }
 
-  def resourceRootDmo: ResourceRootDmo = resourceRootDmo("olson")
+  def resourceRootDmo: ResourceRootDmo = resourceRootDmo(nextString)
 
   def resourceRootDmo(resourceType: String) = {
     val dmo = new ResourceRootDmo
     dmo.setResourceId(nextLong)
     dmo.setResourceType(resourceType)
     dmo.setAtomId(nextLong)
-    dmo.setAtomOrigin("madison avenue")
-    dmo.setAtomType("draper")
+    dmo.setAtomOrigin(nextString)
+    dmo.setAtomType(nextString)
     dmo.setVersion(nextLong)
     dmo
   }
@@ -68,10 +68,10 @@ object TestData {
   def resourceElementDmo = {
     val dmo = new ResourceElementDmo
     dmo.setResourceId(nextLong)
-    dmo.setResourceType("creative director")
+    dmo.setResourceType(nextString)
     dmo.setAtomId(nextLong)
-    dmo.setAtomOrigin("madison avenue")
-    dmo.setAtomType("draper")
+    dmo.setAtomOrigin(nextString)
+    dmo.setAtomType(nextString)
     dmo
   }
 
@@ -85,17 +85,17 @@ object TestData {
     expectedResourceModelDmo
   }
 
-  def atomGroup = {
-    val atomGroup = new AtomGroup
-    atomGroup.setAtomOrigin("new york")
-    atomGroup.setAtomType("advertising agency")
-    atomGroup
-  }
-
   def resourceModelId = {
     val resourceModelId = new ResourceModelId
     resourceModelId.setResourceId(nextLong)
     resourceModelId.setResourceType(nextString)
     resourceModelId
+  }
+
+  def atomGroup = {
+    val atomGroup = new AtomGroup
+    atomGroup.setAtomOrigin(TestData.nextString)
+    atomGroup.setAtomType(TestData.nextString)
+    atomGroup
   }
 }

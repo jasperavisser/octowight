@@ -2,7 +2,7 @@ package nl.haploid.octowight.sample.detector
 
 import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.detector.ResourceDetector
-import nl.haploid.octowight.registry.data.{ResourceRoot, ResourceRootFactory}
+import nl.haploid.octowight.registry.data.ResourceRoot
 import nl.haploid.octowight.sample.repository.{RoleDmo, RoleDmoRepository}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -18,7 +18,6 @@ object CaptainResourceDetector {
 @Component
 class CaptainResourceDetector extends ResourceDetector {
   @Autowired protected val roleDmoRepository: RoleDmoRepository = null
-  @Autowired protected val resourceRootFactory: ResourceRootFactory = null
 
   override def getAtomTypes = List(RoleDmo.AtomType)
 
@@ -32,7 +31,7 @@ class CaptainResourceDetector extends ResourceDetector {
         case None => false
       }
     })
-      .map(resourceRootFactory.fromAtomChangeEvent(_, CaptainResourceDetector.ResourceType))
+      .map(ResourceRoot(_, CaptainResourceDetector.ResourceType))
   }
 
   def getRolesById(events: Traversable[AtomChangeEvent]) = {

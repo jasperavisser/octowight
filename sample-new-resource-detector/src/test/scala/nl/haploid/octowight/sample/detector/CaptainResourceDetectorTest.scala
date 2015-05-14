@@ -2,7 +2,8 @@ package nl.haploid.octowight.sample.detector
 
 import java.util
 
-import nl.haploid.octowight.registry.data.ResourceRootFactory
+import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.sample.data.CaptainResource
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmoRepository}
 import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
@@ -11,7 +12,6 @@ import org.easymock.EasyMock
 class CaptainResourceDetectorTest extends AbstractTest {
   @Tested private[this] val detector: CaptainResourceDetector = null
   @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
-  @Mocked private[this] val resourceRootFactory: ResourceRootFactory = null
 
   "Captain resource detector" should "have an atom type" in {
     detector.getAtomTypes should have size 1
@@ -26,20 +26,17 @@ class CaptainResourceDetectorTest extends AbstractTest {
     val event2 = TestData.atomChangeEvent
     val event3 = TestData.atomChangeEvent
     val events = List(event1, event2, event3)
-    val id1 = event1.getAtomId
-    val id2 = event2.getAtomId
-    val roleDmo1 = TestData.roleDmo(id1)
-    val roleDmo2 = TestData.roleDmo(id2)
-    val rolesById = Map((id1, roleDmo1), (id2, roleDmo2))
-    val resourceRoot = TestData.resourceRoot(id2)
+    val roleDmo1 = TestData.roleDmo(event1.getAtomId)
+    val roleDmo2 = TestData.roleDmo(event2.getAtomId)
+    val rolesById = Map((event1.getAtomId, roleDmo1), (event2.getAtomId, roleDmo2))
+    val resourceRoot = ResourceRoot(event2, CaptainResource.ResourceType)
     val expectedResourceRoots = List(resourceRoot)
     expecting {
       detector.getRolesById(events) andReturn rolesById once()
       detector.isCaptain(roleDmo1) andReturn false once()
       detector.isCaptain(roleDmo2) andReturn true once()
-      resourceRootFactory.fromAtomChangeEvent(event2, CaptainResourceDetector.ResourceType) andReturn resourceRoot once()
     }
-    whenExecuting(detector, resourceRootFactory) {
+    whenExecuting(detector) {
       val actualResourceRoots = detector.detect(events)
       actualResourceRoots should be(expectedResourceRoots)
     }

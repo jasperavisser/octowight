@@ -11,13 +11,10 @@ import org.slf4j.Logger
 import org.springframework.test.util.ReflectionTestUtils
 
 class AbstractResourceServiceTest extends AbstractTest {
-
   @Tested private[this] val resourceService: MockResourceService = null
   @Mocked private[this] val modelCacheService: ModelCacheService[MockModel, MockResource] = null
   @Mocked private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Mocked private[this] val resourceRootFactory: ResourceRootFactory = null
-  @Mocked private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
   @Mocked private[this] val resourceFactory: ResourceFactory[MockResource] = null
 
   "Abstract resource service" should "get model from origin" in {
@@ -108,12 +105,11 @@ class AbstractResourceServiceTest extends AbstractTest {
     val resourceId = TestData.nextLong
     val resourceType = TestData.nextString
     val resourceRootDmo = TestData.resourceRootDmo
-    val expectedResourceRoot = TestData.resourceRoot
+    val expectedResourceRoot = ResourceRoot(resourceRootDmo)
     expecting {
       resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId) andReturn resourceRootDmo once()
-      resourceRootFactory.fromResourceRootDmo(resourceRootDmo) andReturn expectedResourceRoot once()
     }
-    whenExecuting(resourceRootDmoRepository, resourceRootFactory) {
+    whenExecuting(resourceRootDmoRepository) {
       val actualResourceRoot = resourceService.getResourceRoot(resourceType, resourceId)
       actualResourceRoot should be(expectedResourceRoot)
     }

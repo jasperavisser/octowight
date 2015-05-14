@@ -11,11 +11,11 @@ object TestConfiguration {
 
   @Bean def propertyPlaceholderConfigurer = {
     val configurer = new PropertySourcesPlaceholderConfigurer
-    configurer.setProperties(getTestProperties)
+    configurer.setProperties(properties)
     configurer
   }
 
-  private[this] def getTestProperties = {
+  private[this] def properties = {
     val properties = new Properties
     val dockerHostIp = System.getenv("DOCKER_HOST_IP")
     properties.setProperty("octowight.registry.mongo.hostname", dockerHostIp)

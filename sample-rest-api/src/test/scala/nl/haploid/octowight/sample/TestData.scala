@@ -3,9 +3,8 @@ package nl.haploid.octowight.sample
 import java.lang
 import java.util.{Random, UUID}
 
-import nl.haploid.octowight.registry.data.{Model, Resource, ResourceRoot}
-import nl.haploid.octowight.registry.repository.{ResourceModelId, ResourceRootDmo}
-import nl.haploid.octowight.sample.data.CaptainModel
+import nl.haploid.octowight.registry.data.{Atom, Model, Resource, ResourceRoot}
+import nl.haploid.octowight.registry.repository.ResourceRootDmo
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}
 import nl.haploid.octowight.sample.service.AbstractResourceService
 
@@ -23,9 +22,6 @@ object TestData {
 
   def nextLong: Long = new Random().nextLong
 
-  // TODO: maybe return mock[ResourceModelId] so we don't accidentally have equivalents
-  def resourceModelId: ResourceModelId = new ResourceModelId
-
   def resourceRoot: ResourceRoot = resourceRoot(nextLong)
 
   def resourceRoot(resourceId: Long) = {
@@ -35,10 +31,9 @@ object TestData {
     resourceRoot.setAtomType(nextString)
     resourceRoot.setResourceId(resourceId)
     resourceRoot.setResourceType(nextString)
+    resourceRoot.setVersion(nextLong)
     resourceRoot
   }
-
-  def captainModel = new CaptainModel
 
   def resourceRootDmo = {
     val resourceRootDmo = new ResourceRootDmo
@@ -53,9 +48,31 @@ object TestData {
     dmo.setName(name)
     dmo
   }
+
+  def mockModel() = new MockModel {}
+
+  def mockResource() = {
+    new MockResource {
+      val id = nextLong
+      val model = mockModel()
+      val atoms = List()
+
+      override def getType: String = MockResource.Type
+
+      override def getId: lang.Long = id
+
+      override def getModel: MockModel = model
+
+      override def getAtoms: Traversable[Atom] = atoms
+    }
+  }
 }
 
 abstract class MockModel extends Model
+
+object MockResource {
+  val Type = TestData.nextString
+}
 
 abstract class MockResource extends Resource[MockModel]
 

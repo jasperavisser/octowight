@@ -1,7 +1,6 @@
 package nl.haploid.octowight.sample
 
 import nl.haploid.octowight.sample.repository.AtomChangeEventDmoRepository
-import nl.haploid.octowight.sample.service.AtomChangeEventFactory
 import nl.haploid.octowight.service.EventChannelService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
@@ -19,16 +18,15 @@ object App {
 @EnableAutoConfiguration
 @ComponentScan(basePackages = Array("nl.haploid.octowight"))
 class App {
-  @Autowired private[this] val service: EventChannelService = null
+  @Autowired private[this] val eventChannelService: EventChannelService = null
   @Autowired private[this] val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
-  @Autowired private[this] val eventFactory: AtomChangeEventFactory = null
 
   @Scheduled(fixedRate = 1000)
   @Transactional
   def poll() {
     val eventDmos = atomChangeEventDmoRepository.findAll
-    val events = eventFactory.fromAtomChangeEventDmos(eventDmos.asScala)
-    service.sendEvents(events)
+    val events = eventDmos.asScala.map(_.toAtomChangeEvent)
+    eventChannelService.sendEvents(events)
     atomChangeEventDmoRepository.delete(eventDmos)
   }
 }

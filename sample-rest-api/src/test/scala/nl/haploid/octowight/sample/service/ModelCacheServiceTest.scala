@@ -11,9 +11,7 @@ import org.springframework.test.util.ReflectionTestUtils
 class ModelCacheServiceTest extends AbstractTest {
   @Tested private[this] val modelCacheService: ModelCacheService[MockModel, MockResource] = null
   @Mocked private[this] val modelSerializer: ModelSerializer[MockModel] = null
-  @Mocked private[this] val resourceModelDmoFactory: ResourceModelDmoFactory = null
   @Mocked private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
-  @Mocked private[this] val resourceModelIdFactory: ResourceModelIdFactory = null
 
   override def beforeEach() = {
     super.beforeEach()
@@ -23,39 +21,35 @@ class ModelCacheServiceTest extends AbstractTest {
 
   "Model cache service" should "get a model" in {
     val resourceRoot = TestData.resourceRoot
-    val resourceModelId = TestData.resourceModelId
+    val resourceModelId = ResourceModelId(resourceRoot)
+    resourceModelId should not be null
     val resourceModelDmo = mock[ResourceModelDmo]
     val body = TestData.nextString
     val modelClass = classOf[MockModel]
     val expectedModel = mock[MockModel]
     expecting {
-      resourceModelIdFactory.resourceModelId(resourceRoot) andReturn resourceModelId once()
       resourceModelDmoRepository.findByIdAndVersion(resourceModelId, resourceRoot.getVersion) andReturn resourceModelDmo once()
       resourceModelDmo.getBody andReturn body once()
       modelSerializer.deserialize(body, modelClass) andReturn expectedModel once()
     }
-    whenExecuting(resourceModelIdFactory, resourceModelDmoRepository, resourceModelDmo, modelSerializer) {
+    whenExecuting(resourceModelDmoRepository, resourceModelDmo, modelSerializer) {
       val modelOption: Option[MockModel] = modelCacheService.get(resourceRoot, modelClass)
       modelOption.orNull should be(expectedModel)
     }
   }
 
   "Model cache service" should "put a new model" in {
-    val resource = mock[MockResource]
+    val resource = TestData.mockResource()
     val model = mock[MockModel]
     val body = TestData.nextString
-    val resourceModelId = mock[ResourceModelId]
-    val resourceModelDmo = mock[ResourceModelDmo]
+    val resourceModelId = ResourceModelId(resource)
+    val resourceModelDmo = ResourceModelDmo(resource, body)
     expecting {
-      resource.getType andReturn TestData.nextString once()
-      resource.getId andReturn TestData.nextLong once()
       modelSerializer.serialize(model) andReturn body once()
-      resourceModelIdFactory.resourceModelId(resource) andReturn resourceModelId once()
       resourceModelDmoRepository.findOne(resourceModelId) andReturn null once()
-      resourceModelDmoFactory.fromResourceAndBody(resource, body) andReturn resourceModelDmo once()
       resourceModelDmoRepository.save(resourceModelDmo) andReturn resourceModelDmo once()
     }
-    whenExecuting(resource, modelSerializer, resourceModelIdFactory, resourceModelDmoRepository, resourceModelDmoFactory) {
+    whenExecuting(modelSerializer, resourceModelDmoRepository) {
       modelCacheService.put(resource, model)
     }
   }

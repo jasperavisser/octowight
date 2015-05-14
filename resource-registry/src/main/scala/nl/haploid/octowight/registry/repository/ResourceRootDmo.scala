@@ -2,6 +2,7 @@ package nl.haploid.octowight.registry.repository
 
 import java.lang
 
+import nl.haploid.octowight.registry.data.ResourceRoot
 import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder}
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -11,9 +12,20 @@ import scala.beans.BeanProperty
 object ResourceRootDmo {
   val IdSequence = "resourceId"
   val VersionSequence = "resourceVersion"
+
+  def apply(resourceRoot: ResourceRoot) = {
+    val resourceRootDmo = new ResourceRootDmo
+    resourceRootDmo.setAtomId(resourceRoot.getAtomId)
+    resourceRootDmo.setAtomOrigin(resourceRoot.getAtomOrigin)
+    resourceRootDmo.setAtomType(resourceRoot.getAtomType)
+    resourceRootDmo.setResourceId(resourceRoot.getResourceId)
+    resourceRootDmo.setResourceType(resourceRoot.getResourceType)
+    resourceRootDmo
+  }
 }
 
-@Document(collection = "resourceRoot") class ResourceRootDmo {
+@Document(collection = "resourceRoot")
+class ResourceRootDmo {
 
   @Id
   @BeanProperty var id: String = _

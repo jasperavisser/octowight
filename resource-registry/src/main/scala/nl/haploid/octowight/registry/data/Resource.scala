@@ -4,15 +4,15 @@ import java.lang
 
 import scala.beans.BeanProperty
 
-abstract class Resource[M <: Model] {
+abstract class Resource[M <: Model] extends ResourceIdentifier {
 
   @BeanProperty var version: lang.Long = _
 
   def getAtoms: Traversable[Atom]
 
-  def getId: lang.Long
+  override def getId: lang.Long
 
-  def getType: String
+  override def getType: String
 
   def getModel: M
 }

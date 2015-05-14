@@ -1,6 +1,6 @@
 package nl.haploid.octowight
 
-import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder}
+import org.apache.commons.lang3.builder.{ToStringBuilder, EqualsBuilder, HashCodeBuilder}
 
 import scala.beans.BeanProperty
 
@@ -11,4 +11,6 @@ class AtomGroup {
   override def equals(that: Any) = EqualsBuilder.reflectionEquals(this, that, false)
 
   override def hashCode = HashCodeBuilder.reflectionHashCode(this, false)
+
+  override def toString = ToStringBuilder.reflectionToString(this)
 }

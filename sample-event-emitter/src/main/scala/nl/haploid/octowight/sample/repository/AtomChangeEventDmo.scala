@@ -3,6 +3,8 @@ package nl.haploid.octowight.sample.repository
 import java.lang
 import javax.persistence._
 
+import nl.haploid.octowight.AtomChangeEvent
+
 import scala.beans.BeanProperty
 
 @Entity
@@ -22,4 +24,13 @@ class AtomChangeEventDmo {
 
   @Column(name = "atom_type")
   @BeanProperty var atomType: String = _
+
+  def toAtomChangeEvent = {
+    val event = new AtomChangeEvent
+    event.setId(getId)
+    event.setAtomId(getAtomId)
+    event.setAtomOrigin(getAtomOrigin)
+    event.setAtomType(getAtomType)
+    event
+  }
 }

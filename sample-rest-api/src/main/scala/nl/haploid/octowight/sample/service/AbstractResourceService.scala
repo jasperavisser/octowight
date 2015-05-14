@@ -15,20 +15,21 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   @Autowired private[this] val modelCacheService: ModelCacheService[M, R] = null
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
-  @Autowired private[this] val resourceRootFactory: ResourceRootFactory = null
-  @Autowired private[this] val resourceElementDmoFactory: ResourceElementDmoFactory = null
+  // TODO: why is this protected?
   @Autowired protected[this] val resourceFactory: ResourceFactory[R] = null
+
+  def getModelClass: Class[M]
 
   def getResourceType: String
 
   def getModel(resourceId: Long): M = {
     log.debug(s"Get model for resource $getResourceType/$resourceId")
     val resourceRoot = getResourceRoot(getResourceType, resourceId)
-    getCachedModel(resourceRoot).getOrElse({
+    modelCacheService.get(resourceRoot, getModelClass).getOrElse({
       val resource = resourceFactory.fromResourceRoot(resourceRoot)
       saveResourceElements(resource)
       val model = resource.getModel
-      saveModel(resource, model)
+      modelCacheService.put(resource, model)
       model
     })
   }
@@ -47,26 +48,17 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
       .flatMap(getModelOption(_))
   }
 
-  // TODO: inline
-  def getCachedModel(resourceRoot: ResourceRoot): Option[M] = modelCacheService.get(resourceRoot, getModelClass)
-
-  def getModelClass: Class[M]
-
   def getResourceRoot(resourceType: String, resourceId: Long) = {
-    val resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId)
-    if (resourceRootDmo == null) {
-      throw new ResourceNotFoundException
+    Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId)) match {
+      case Some(dmo) => ResourceRoot(dmo)
+      case None => throw new ResourceNotFoundException
     }
-    resourceRootFactory.fromResourceRootDmo(resourceRootDmo)
   }
-
-  // TODO: inline
-  def saveModel(resource: R, model: M): Unit = modelCacheService.put(resource, model)
 
   // TODO: test
   def saveResourceElements(resource: R) = {
     resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId)
     resource.getAtoms
-      .foreach(atom => resourceElementDmoRepository.save(resourceElementDmoFactory.fromResourceAndAtom(resource, atom)))
+      .foreach(atom => resourceElementDmoRepository.save(ResourceElementDmo(resource, atom)))
   }
 }

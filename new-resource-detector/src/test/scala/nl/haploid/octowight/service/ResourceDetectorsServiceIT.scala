@@ -11,13 +11,13 @@ import org.springframework.test.util.ReflectionTestUtils
 
 @DirtiesContext
 class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with EasyMockInjection {
-  @Autowired private[this] val service: ResourceDetectorsService = null
+  @Autowired private[this] val resourceDetectorsService: ResourceDetectorsService = null
   @Mocked private[this] val mockDetector: ResourceDetector = null
 
   override def beforeEach() = {
     super.beforeEach()
     injectMocks()
-    ReflectionTestUtils.setField(service, "detectors", util.Collections.singletonList(mockDetector))
+    ReflectionTestUtils.setField(resourceDetectorsService, "detectors", util.Collections.singletonList(mockDetector))
   }
 
   "Resource detectors service" should "get detectors for atom type" in {
@@ -27,7 +27,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
       mockDetector.getAtomTypes andReturn List("crane", atomType) once()
     }
     whenExecuting(mockDetector) {
-      val actualDetectors = service.getDetectorsForAtomType(atomType)
+      val actualDetectors = resourceDetectorsService.getDetectorsForAtomType(atomType)
       actualDetectors should be(expectedDetectors)
     }
   }
@@ -46,7 +46,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
       mockDetector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(mockDetector) {
-      val actualResourceRoots = service.detectResources(atomGroup, events)
+      val actualResourceRoots = resourceDetectorsService.detectResources(atomGroup, events)
       actualResourceRoots should be(expectedResourceRoots)
     }
   }
