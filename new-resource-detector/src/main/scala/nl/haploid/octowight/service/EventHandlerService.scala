@@ -1,7 +1,6 @@
 package nl.haploid.octowight.service
 
 import nl.haploid.octowight.registry.service.ResourceRegistryService
-import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -17,11 +16,9 @@ class EventHandlerService {
 
   def detectNewResources(batchSize: Int) = {
     log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
-    val events: Map[AtomGroup, Iterable[AtomChangeEvent]] = eventConsumerService.consumeMessages()
+    val eventsByGroup = eventConsumerService.consumeDistinctEvents()
       .groupBy(_.getAtomGroup)
-    // TODO: distinct events, we don't need to handle duplicate atoms
-    log.debug(s"Consumed ${events.size} events")
-    val count = events
+    val count = eventsByGroup
       .flatMap { case (atomGroup, atomChangeEvents) => resourceDetectorsService.detectResources(atomGroup, atomChangeEvents) }
       .filter(resourceRegistryService.isNewResource)
       .map(resourceRegistryService.saveNewResource)

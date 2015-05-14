@@ -26,7 +26,7 @@ class CaptainResourceDetector extends ResourceDetector {
     val rolesById = getRolesById(events)
     events
       .filter(event => {
-      rolesById.get(event.getId) match {
+      rolesById.get(event.getAtomId) match {
         case Some(roleDmo) => isCaptain(roleDmo)
         case None => false
       }

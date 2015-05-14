@@ -45,17 +45,22 @@ class EventConsumerService {
     reset()
   }
 
-  def consumeMessage = {
+  def consumeEvent = {
     val message = new String(getStream.iterator().next().message())
     parseMessage(message)
   }
 
   // TODO: reinstate batch size?
-  def consumeMessages() = {
-    new KakfaStreamIterator(getStream)
+  def consumeDistinctEvents(): Set[AtomChangeEvent] = {
+    val events = new KakfaStreamIterator(getStream)
       .map(m => new String(m.message()))
       .map(parseMessage)
       .toIterable
+    log.debug(s"Consumed ${events.size} events")
+    events
+      .groupBy(f => (f.getAtomId, f.getAtomOrigin, f.getAtomType))
+      .map(_._2.head)
+      .toSet
   }
 
   protected def parseMessage(message: String) = {

@@ -18,10 +18,9 @@ class EventHandlerService {
   // TODO: test
   def detectDirtyResources(batchSize: Int) = {
     log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
-    val events: Map[AtomGroup, Iterable[AtomChangeEvent]] = eventConsumerService.consumeMessages()
+    val eventsByGroup: Map[AtomGroup, Iterable[AtomChangeEvent]] = eventConsumerService.consumeDistinctEvents()
       .groupBy(_.getAtomGroup)
-    log.debug(s"Consumed ${events.size} events")
-    val count = events
+    val count = eventsByGroup
       .flatMap { case (atomGroup, atomChangeEvents) => resourceRegistryService.markResourcesDirty(atomGroup, atomChangeEvents) }
       .map(dirtyResourceProducerService.sendDirtyResource)
       .map(dirtyResourceProducerService.resolveFuture)

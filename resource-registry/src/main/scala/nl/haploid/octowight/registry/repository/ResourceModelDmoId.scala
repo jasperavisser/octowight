@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.lang
 
 import nl.haploid.octowight.registry.data.ResourceIdentifier
-import org.apache.commons.lang3.builder.{ToStringBuilder, EqualsBuilder, HashCodeBuilder}
+import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder, ToStringBuilder}
 
 import scala.beans.BeanProperty
 

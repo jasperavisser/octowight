@@ -25,6 +25,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
     log.debug(s"Get model for resource $getResourceType/$resourceId")
     val resourceRoot = getResourceRoot(getResourceType, resourceId)
     modelCacheService.get(resourceRoot, getModelClass).getOrElse({
+      // TODO: tombstone resource if not found
       val resource = resourceFactory.fromResourceRoot(resourceRoot)
       saveResourceElements(resource)
       val model = resource.getModel

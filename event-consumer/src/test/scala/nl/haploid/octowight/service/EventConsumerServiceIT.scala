@@ -30,7 +30,7 @@ class EventConsumerServiceIT extends AbstractIT {
     eventConsumerService.setTopic(topic)
     val expectedEvent = TestData.atomChangeEvent("joan")
     sendMessage(topic, expectedEvent)
-    val actualEvent = eventConsumerService.consumeMessage
+    val actualEvent = eventConsumerService.consumeEvent
     actualEvent should be(expectedEvent)
   }
 
@@ -39,10 +39,10 @@ class EventConsumerServiceIT extends AbstractIT {
     eventConsumerService.setTopic(topic)
     val event1 = TestData.atomChangeEvent("bob")
     val event2 = TestData.atomChangeEvent("benson")
-    val expectedEvents = List(event1, event2)
+    val expectedEvents = Set(event1, event2)
     sendMessage(topic, event1)
     sendMessage(topic, event2)
-    val actualEvents = eventConsumerService.consumeMessages()
+    val actualEvents = eventConsumerService.consumeDistinctEvents()
     actualEvents should be(expectedEvents)
   }
 
@@ -51,10 +51,10 @@ class EventConsumerServiceIT extends AbstractIT {
     eventConsumerService.setTopic(topic)
     val event = TestData.atomChangeEvent("harris")
     sendMessage(topic, event)
-    eventConsumerService.consumeMessages()
+    eventConsumerService.consumeDistinctEvents()
     eventConsumerService.commit()
     eventConsumerService.reset()
-    val actualEvents = eventConsumerService.consumeMessages()
+    val actualEvents = eventConsumerService.consumeDistinctEvents()
     actualEvents should have size 0
   }
 }

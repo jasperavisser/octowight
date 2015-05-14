@@ -1,7 +1,5 @@
 package nl.haploid.octowight.service
 
-import java.util
-
 import _root_.kafka.consumer.{ConsumerIterator, ConsumerTimeoutException, KafkaStream}
 import _root_.kafka.javaapi.consumer.ConsumerConnector
 import _root_.kafka.message.MessageAndMetadata
@@ -40,7 +38,7 @@ class EventConsumerServiceTest extends AbstractTest {
       jsonMapper.deserialize(message, classOf[AtomChangeEvent]) andReturn expectedEvent once()
     }
     whenExecuting(eventConsumerService, stream, iterator, messageAndMetaData, jsonMapper) {
-      val actualEvent = eventConsumerService.consumeMessage
+      val actualEvent = eventConsumerService.consumeEvent
       actualEvent should be(expectedEvent)
     }
   }
@@ -54,7 +52,7 @@ class EventConsumerServiceTest extends AbstractTest {
     val event2 = TestData.atomChangeEvent("daryl")
     val message1 = TestData.message
     val message2 = TestData.message
-    val expectedEvents = List(event1, event2)
+    val expectedEvents = Set(event1, event2)
     expecting {
       eventConsumerService.getStream andReturn stream once()
       stream.iterator andReturn iterator once()
@@ -67,7 +65,7 @@ class EventConsumerServiceTest extends AbstractTest {
       iterator.next andThrow new ConsumerTimeoutException once()
     }
     whenExecuting(eventConsumerService, stream, iterator, messageAndMetaData, jsonMapper) {
-      val actualEvents = eventConsumerService.consumeMessages()
+      val actualEvents = eventConsumerService.consumeDistinctEvents()
       actualEvents should be(expectedEvents)
     }
   }

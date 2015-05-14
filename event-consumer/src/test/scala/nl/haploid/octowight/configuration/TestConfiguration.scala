@@ -3,7 +3,6 @@ package nl.haploid.octowight.configuration
 import java.util.Properties
 
 import nl.haploid.octowight.{JsonMapper, TestData}
-import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 

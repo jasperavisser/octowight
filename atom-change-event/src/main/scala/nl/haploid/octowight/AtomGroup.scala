@@ -1,6 +1,6 @@
 package nl.haploid.octowight
 
-import org.apache.commons.lang3.builder.{ToStringBuilder, EqualsBuilder, HashCodeBuilder}
+import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder, ToStringBuilder}
 
 import scala.beans.BeanProperty
 
