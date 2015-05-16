@@ -7,9 +7,7 @@ class ResourceRootTest extends AbstractTest {
   "Resource root" should "return a key" in {
     val resourceRoot = new ResourceRoot
     resourceRoot.setResourceType("cosgrove")
-    resourceRoot.setAtomId(69l)
-    resourceRoot.setAtomOrigin("california")
-    resourceRoot.setAtomCategory("campbell")
+    resourceRoot.setRoot(new Atom(69l, "california", "campbell"))
     val expectedKey = "california:campbell/69->cosgrove"
     val actualKey = resourceRoot.key
     actualKey should be(expectedKey)

@@ -26,7 +26,7 @@ class ResourceRegistryService {
 
   def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: Iterable[AtomChangeEvent]) = {
     val atomIds = atomChangeEvents.map(_.getAtomId)
-    val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(atomIds.asJava, atomGroup.getAtomCategory, atomGroup.getAtomOrigin)
+    val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(atomIds.asJava, atomGroup.getCategory, atomGroup.getOrigin)
     resourceElementDmos.asScala
       .flatMap(element => getResourceRootDmo(element))
       .map(markResourceDirty)
@@ -34,7 +34,7 @@ class ResourceRegistryService {
 
   private[this] def getResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {
     resourceRootDmoRepository.findByResourceTypeAndRootIdAndRootCategoryAndRootOrigin(
-      resourceRoot.getResourceType, resourceRoot.getAtomId, resourceRoot.getAtomCategory, resourceRoot.getAtomOrigin)
+      resourceRoot.getResourceType, resourceRoot.getRoot.id, resourceRoot.getRoot.category, resourceRoot.getRoot.origin)
   }
 
   private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {

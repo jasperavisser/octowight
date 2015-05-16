@@ -8,16 +8,15 @@ object AtomGroup {
 
   def apply(origin: String, category: String): AtomGroup = {
     val g = new AtomGroup
-    g.setAtomCategory(category)
-    g.setAtomOrigin(origin)
+    g.setCategory(category)
+    g.setOrigin(origin)
     g
   }
 }
 
 class AtomGroup {
-  // TODO: remove atom prefix
-  @BeanProperty var atomOrigin: String = _
-  @BeanProperty var atomCategory: String = _
+  @BeanProperty var origin: String = _
+  @BeanProperty var category: String = _
 
   override def equals(that: Any) = EqualsBuilder.reflectionEquals(this, that, false)
 

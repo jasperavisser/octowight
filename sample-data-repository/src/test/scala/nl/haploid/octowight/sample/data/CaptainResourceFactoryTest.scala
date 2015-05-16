@@ -15,8 +15,8 @@ class CaptainResourceFactoryTest extends AbstractTest {
     val personDmo = TestData.personDmo
     val roleAtom = mock[Atom]
     expecting {
-      roleDmoRepository.findOne(resourceRoot.getAtomId) andReturn roleDmo once()
-      roleDmo.setOrigin(resourceRoot.getAtomOrigin) once()
+      roleDmoRepository.findOne(resourceRoot.getRoot.id) andReturn roleDmo once()
+      roleDmo.setOrigin(resourceRoot.getRoot.origin) once()
       roleDmo.getPerson andReturn personDmo once()
       roleDmo.toAtom andReturn roleAtom once()
     }

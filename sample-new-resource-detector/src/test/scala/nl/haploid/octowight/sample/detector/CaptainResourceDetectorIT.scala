@@ -33,6 +33,6 @@ class CaptainResourceDetectorIT extends AbstractTransactionalIT {
     val events = List(event1, event2)
     val actualResourceRoots = detector.detect(events)
     actualResourceRoots should have size 1
-    actualResourceRoots.map(_.getAtomId) should be(List(dmo1.getId))
+    actualResourceRoots.map(_.getRoot.id) should be(List(dmo1.getId))
   }
 }

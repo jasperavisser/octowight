@@ -15,8 +15,8 @@ class AtomChangeEvent {
 
   @JsonIgnore def getAtomGroup = {
     val atomGroup = new AtomGroup
-    atomGroup.setAtomOrigin(getAtomOrigin)
-    atomGroup.setAtomCategory(getAtomCategory)
+    atomGroup.setOrigin(getAtomOrigin)
+    atomGroup.setCategory(getAtomCategory)
     atomGroup
   }
 

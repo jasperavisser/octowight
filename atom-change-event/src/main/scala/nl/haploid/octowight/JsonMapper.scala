@@ -1,5 +1,7 @@
 package nl.haploid.octowight
 
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility
+import org.codehaus.jackson.annotate.JsonMethod
 import org.codehaus.jackson.map.ObjectMapper
 
 import scala.util.{Failure, Success, Try}
@@ -8,6 +10,7 @@ class JsonMapException(message: String, cause: Throwable = null) extends Runtime
 
 class JsonMapper {
   private[this] val mapper = new ObjectMapper
+  mapper.setVisibility(JsonMethod.FIELD, Visibility.ANY)
 
   def deserialize[T](serialized: String, targetClass: Class[T]) = {
     val result = Try(mapper.readValue(serialized, targetClass))
@@ -22,8 +25,8 @@ class JsonMapper {
     val result = Try(mapper.writeValueAsString(deserialized))
     result match {
       case Success(value) => value
-      case Failure(e) => throw new JsonMapException(s"Could not serialize object of type $deserialized.getClass.getCanonicalName!", e)
-      case _ => throw new JsonMapException(s"Could not serialize object of type $deserialized.getClass.getCanonicalName!")
+      case Failure(e) => throw new JsonMapException(s"Could not serialize object of type ${deserialized.getClass.getCanonicalName}!", e)
+      case _ => throw new JsonMapException(s"Could not serialize object of type ${deserialized.getClass.getCanonicalName}!")
     }
   }
 }

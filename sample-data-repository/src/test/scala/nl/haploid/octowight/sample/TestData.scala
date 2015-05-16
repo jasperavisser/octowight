@@ -2,7 +2,7 @@ package nl.haploid.octowight.sample
 
 import java.util.{Random, UUID}
 
-import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}
 
 object TestData {
@@ -30,9 +30,7 @@ object TestData {
 
   def resourceRoot = {
     val resourceRoot = new ResourceRoot
-    resourceRoot.setAtomId(nextLong)
-    resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomCategory(nextString)
+    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
     resourceRoot.setResourceId(nextLong)
     resourceRoot.setResourceType(nextString)
     resourceRoot.setVersion(nextLong)

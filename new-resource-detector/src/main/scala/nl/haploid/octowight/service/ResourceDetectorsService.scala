@@ -18,6 +18,6 @@ class ResourceDetectorsService {
   def getDetectorsForAtomCategory(atomCategory: String) = getDetectors.filter(_.getAtomCategories.contains(atomCategory))
 
   def detectResources(atomGroup: AtomGroup, events: Traversable[AtomChangeEvent]) = {
-    getDetectorsForAtomCategory(atomGroup.getAtomCategory).flatMap(_.detect(events))
+    getDetectorsForAtomCategory(atomGroup.getCategory).flatMap(_.detect(events))
   }
 }

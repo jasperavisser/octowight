@@ -3,9 +3,9 @@ package nl.haploid.octowight.kafka
 import java.util
 import java.util.Collections
 
-import kafka.consumer.{ConsumerConfig, KafkaStream}
-import kafka.javaapi.consumer.ConsumerConnector
-import nl.haploid.octowight.{AbstractTest, Mocked, TestData, Tested}
+import _root_.kafka.consumer.{ConsumerConfig, KafkaStream}
+import _root_.kafka.javaapi.consumer.ConsumerConnector
+import nl.haploid.octowight._
 import org.easymock.EasyMock
 
 class KafkaConsumerFactoryTest extends AbstractTest {

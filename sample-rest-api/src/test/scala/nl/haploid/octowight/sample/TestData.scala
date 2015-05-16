@@ -29,9 +29,7 @@ object TestData {
 
   def resourceRoot(resourceId: Long) = {
     val resourceRoot = new ResourceRoot
-    resourceRoot.setAtomId(nextLong)
-    resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomCategory(nextString)
+    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
     resourceRoot.setResourceId(resourceId)
     resourceRoot.setResourceType(nextString)
     resourceRoot.setVersion(nextLong)

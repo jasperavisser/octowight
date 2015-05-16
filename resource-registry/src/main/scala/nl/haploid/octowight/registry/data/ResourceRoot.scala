@@ -12,18 +12,14 @@ object ResourceRoot {
 
   def apply(event: AtomChangeEvent, resourceType: String) = {
     val r = new ResourceRoot
-    r.setAtomId(event.getAtomId)
-    r.setAtomOrigin(event.getAtomOrigin)
-    r.setAtomCategory(event.getAtomCategory)
+    r.setRoot(new Atom(event.getAtomId, event.getAtomOrigin, event.getAtomCategory))
     r.setResourceType(resourceType)
     r
   }
 
   def apply(resourceRootDmo: ResourceRootDmo) = {
     val r = new ResourceRoot
-    r.setAtomId(resourceRootDmo.getRoot.getId)
-    r.setAtomOrigin(resourceRootDmo.getRoot.getOrigin)
-    r.setAtomCategory(resourceRootDmo.getRoot.getCategory)
+    r.setRoot(new Atom(resourceRootDmo.getRoot.getId, resourceRootDmo.getRoot.getOrigin, resourceRootDmo.getRoot.getCategory))
     r.setResourceId(resourceRootDmo.getResourceId)
     r.setResourceType(resourceRootDmo.getResourceType)
     r.setTombstone(resourceRootDmo.getTombstone)
@@ -32,14 +28,11 @@ object ResourceRoot {
   }
 }
 
+// TODO: consider making most data objects immutable
 class ResourceRoot extends ResourceIdentifier with Atomizable {
-
   @BeanProperty var resourceId: lang.Long = _
   @BeanProperty var resourceType: String = _
-  // TODO: use Atom, also Type->Category
-  @BeanProperty var atomId: lang.Long = _
-  @BeanProperty var atomOrigin: String = _
-  @BeanProperty var atomCategory: String = _
+  @BeanProperty var root: Atom = _
   @BeanProperty var tombstone: Boolean = false
   @BeanProperty var version: lang.Long = _
 
@@ -47,7 +40,7 @@ class ResourceRoot extends ResourceIdentifier with Atomizable {
 
   override def getType: String = resourceType
 
-  def key = s"$getAtomOrigin:$getAtomCategory/$getAtomId->$getResourceType"
+  def key = s"${root.origin}:${root.category}/${root.id}->$resourceType"
 
   override def equals(that: Any) = EqualsBuilder.reflectionEquals(this, that, false)
 
@@ -55,5 +48,5 @@ class ResourceRoot extends ResourceIdentifier with Atomizable {
 
   override def toString = ToStringBuilder.reflectionToString(this)
 
-  override def toAtom: Atom = new Atom(getAtomId, getAtomOrigin, getAtomCategory)
+  override def toAtom: Atom = new Atom(getRoot.id, getRoot.origin, getRoot.category)
 }

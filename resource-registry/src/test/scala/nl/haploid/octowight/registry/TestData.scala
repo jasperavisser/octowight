@@ -18,9 +18,7 @@ object TestData {
     val resourceRoot = new ResourceRoot
     resourceRoot.setResourceId(resourceId)
     resourceRoot.setResourceType(nextString)
-    resourceRoot.setAtomId(nextLong)
-    resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomCategory(nextString)
+    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
     resourceRoot
   }
 
@@ -28,8 +26,8 @@ object TestData {
     val event = new AtomChangeEvent
     event.setId(nextLong)
     event.setAtomId(nextLong)
-    event.setAtomOrigin(atomGroup.getAtomOrigin)
-    event.setAtomCategory(atomGroup.getAtomCategory)
+    event.setAtomOrigin(atomGroup.getOrigin)
+    event.setAtomCategory(atomGroup.getCategory)
     event
   }
 
@@ -89,8 +87,8 @@ object TestData {
 
   def atomGroup = {
     val atomGroup = new AtomGroup
-    atomGroup.setAtomOrigin(TestData.nextString)
-    atomGroup.setAtomCategory(TestData.nextString)
+    atomGroup.setOrigin(TestData.nextString)
+    atomGroup.setCategory(TestData.nextString)
     atomGroup
   }
 }
