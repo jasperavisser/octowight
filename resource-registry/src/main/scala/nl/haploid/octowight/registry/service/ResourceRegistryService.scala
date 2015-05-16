@@ -20,7 +20,7 @@ class ResourceRegistryService {
   @Autowired private[this] val sequenceService: SequenceService = null
 
   def saveResource(resourceRoot: ResourceRoot): Option[ResourceRoot] = {
-    Option(getResourceRootDmo(resourceRoot)) match {
+    Option(findResourceRootDmo(resourceRoot)) match {
       case Some(resourceRootDmo) => if (resourceRootDmo.tombstone) Some(untombstoneResource(resourceRootDmo)) else None
       case None => Some(saveNewResource(resourceRoot))
     }
@@ -31,16 +31,16 @@ class ResourceRegistryService {
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(
       atomIds.asJava, atomGroup.category, atomGroup.origin)
     resourceElementDmos.asScala
-      .flatMap(element => getResourceRootDmo(element))
+      .flatMap(element => findResourceRootDmo(element))
       .map(markResourceDirty)
   }
 
-  private[this] def getResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {
+  private[this] def findResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {
     resourceRootDmoRepository.findByResourceCollectionAndRootIdAndRootCategoryAndRootOrigin(
       resourceRoot.resourceCollection, resourceRoot.root.id, resourceRoot.root.category, resourceRoot.root.origin)
   }
 
-  private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
+  private[this] def findResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
     Option(resourceRootDmoRepository.findByResourceCollectionAndResourceId(
       resourceElementDmo.resourceCollection, resourceElementDmo.resourceId))
   }

@@ -11,13 +11,12 @@ import scala.collection.JavaConverters._
 
 @Service
 class ResourceDetectorsService {
-  @Autowired private[this] val detectors: util.List[ResourceDetector] = null
+  @Autowired private[this] val _detectors: util.List[ResourceDetector] = null
 
-  def getDetectors: List[ResourceDetector] = detectors.asScala.toList
+  def detectors = _detectors.asScala.toList
 
-  def getDetectorsForAtomCategory(atomCategory: String) = getDetectors.filter(_.atomCategories.contains(atomCategory))
+  def detectorsForAtomCategory(atomCategory: String) = detectors.filter(_.atomCategories.contains(atomCategory))
 
-  def detectResources(atomGroup: AtomGroup, events: Traversable[AtomChangeEvent]) = {
-    getDetectorsForAtomCategory(atomGroup.category).flatMap(_.detect(events))
-  }
+  def detectResources(atomGroup: AtomGroup, events: Traversable[AtomChangeEvent]) =
+    detectorsForAtomCategory(atomGroup.category).flatMap(_.detect(events))
 }

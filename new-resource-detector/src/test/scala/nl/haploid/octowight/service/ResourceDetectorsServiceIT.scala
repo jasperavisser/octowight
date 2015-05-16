@@ -17,7 +17,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
   override def beforeEach() = {
     super.beforeEach()
     injectMocks()
-    ReflectionTestUtils.setField(resourceDetectorsService, "detectors", util.Collections.singletonList(mockDetector))
+    ReflectionTestUtils.setField(resourceDetectorsService, "_detectors", util.Collections.singletonList(mockDetector))
   }
 
   "Resource detectors service" should "get detectors for atom category" in {
@@ -27,7 +27,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
       mockDetector.atomCategories andReturn List("crane", atomCategory) once()
     }
     whenExecuting(mockDetector) {
-      val actualDetectors = resourceDetectorsService.getDetectorsForAtomCategory(atomCategory)
+      val actualDetectors = resourceDetectorsService.detectorsForAtomCategory(atomCategory)
       actualDetectors should be(expectedDetectors)
     }
   }

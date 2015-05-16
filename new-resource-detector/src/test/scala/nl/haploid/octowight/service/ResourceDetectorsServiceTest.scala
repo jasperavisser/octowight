@@ -1,36 +1,33 @@
 package nl.haploid.octowight.service
 
-import java.util
-
 import nl.haploid.octowight._
 import nl.haploid.octowight.detector.ResourceDetector
 import org.easymock.EasyMock
 
 class ResourceDetectorsServiceTest extends AbstractTest {
-  @Mocked private[this] val detectors: util.List[ResourceDetector] = null
 
   "Resource detectors service" should "get detectors for atom category" in {
     val resourceDetectorsService = EasyMock.createMockBuilder(classOf[ResourceDetectorsService])
-      .addMockedMethod("getDetectors")
+      .addMockedMethod("detectors")
       .createMock()
     val detector1 = mock[ResourceDetector]
     val detector2 = mock[ResourceDetector]
     val expectedDetectors = List(detector1)
     val atomCategory = "sterling"
     expecting {
-      resourceDetectorsService.getDetectors andReturn List(detector1, detector2) once()
+      resourceDetectorsService.detectors andReturn List(detector1, detector2) once()
       detector1.atomCategories andReturn List(atomCategory) once()
       detector2.atomCategories andReturn List("cooper") once()
     }
     whenExecuting(resourceDetectorsService, detector1, detector2) {
-      val actualDetectors = resourceDetectorsService.getDetectorsForAtomCategory(atomCategory)
+      val actualDetectors = resourceDetectorsService.detectorsForAtomCategory(atomCategory)
       actualDetectors should be(expectedDetectors)
     }
   }
 
   "Resource detectors service" should "detect resources" in {
     val resourceDetectorsService = EasyMock.createMockBuilder(classOf[ResourceDetectorsService])
-      .addMockedMethod("getDetectorsForAtomCategory", classOf[String])
+      .addMockedMethod("detectorsForAtomCategory", classOf[String])
       .createMock()
     val detector = mock[ResourceDetector]
     val event1 = TestData.atomChangeEvent("draper")
@@ -39,7 +36,7 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val events = List(event1, event2)
     val expectedResourceRoots = List(TestData.resourceRoot(null))
     expecting {
-      resourceDetectorsService.getDetectorsForAtomCategory("draper") andReturn List(detector) once()
+      resourceDetectorsService.detectorsForAtomCategory("draper") andReturn List(detector) once()
       detector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(resourceDetectorsService, detector) {
