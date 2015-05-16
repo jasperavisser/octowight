@@ -9,13 +9,10 @@ object TestData {
 
   def nextLong: Long = new Random().nextLong
 
-  def resourceRoot(resourceId: lang.Long) = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setResourceId(resourceId)
-    resourceRoot.setResourceType(nextString)
-    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
-    resourceRoot
-  }
+  def resourceRoot(resourceId: lang.Long) =
+    new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
+
+  def atom: Atom = new Atom(nextLong, nextString, nextString)
 
   def topic = nextString
 

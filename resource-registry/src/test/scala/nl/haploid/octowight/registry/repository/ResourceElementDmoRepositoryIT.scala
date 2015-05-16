@@ -12,7 +12,7 @@ class ResourceElementDmoRepositoryIT extends AbstractIT {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
     val actualDmo = resourceElementDmoRepository.findByAtomIdAndAtomCategoryAndAtomOrigin(
-      expectedDmo.getAtom.getId, expectedDmo.getAtom.getCategory, expectedDmo.getAtom.getOrigin)
+      expectedDmo.atom.id, expectedDmo.atom.category, expectedDmo.atom.origin)
     actualDmo should be(expectedDmo)
   }
 
@@ -20,7 +20,7 @@ class ResourceElementDmoRepositoryIT extends AbstractIT {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
     val actualDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(
-      util.Collections.singletonList(expectedDmo.getAtom.getId), expectedDmo.getAtom.getCategory, expectedDmo.getAtom.getOrigin)
+      util.Collections.singletonList(expectedDmo.atom.id), expectedDmo.atom.category, expectedDmo.atom.origin)
     actualDmos should have size 1
     actualDmos.get(0) should be(expectedDmo)
   }
@@ -28,10 +28,10 @@ class ResourceElementDmoRepositoryIT extends AbstractIT {
   "Resource element DMO repository" should "delete by resource id & type" in {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
-    val actualDmoBeforeDelete = resourceElementDmoRepository.findOne(expectedDmo.getId)
+    val actualDmoBeforeDelete = resourceElementDmoRepository.findOne(expectedDmo.id)
     actualDmoBeforeDelete should not be null
-    resourceElementDmoRepository.deleteByResourceTypeAndResourceId(expectedDmo.getResourceType, expectedDmo.getResourceId)
-    val actualDmoAfterDelete = resourceElementDmoRepository.findOne(expectedDmo.getId)
+    resourceElementDmoRepository.deleteByResourceTypeAndResourceId(expectedDmo.resourceType, expectedDmo.resourceId)
+    val actualDmoAfterDelete = resourceElementDmoRepository.findOne(expectedDmo.id)
     actualDmoAfterDelete should be(null)
   }
 }

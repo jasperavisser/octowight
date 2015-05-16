@@ -31,13 +31,10 @@ object TestData {
     dmo
   }
 
-  def resourceRoot(resourceId: Long) = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setResourceId(resourceId)
-    resourceRoot.setResourceType(nextString)
-    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
-    resourceRoot
-  }
+  def resourceRoot(resourceId: Long) =
+    new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
+
+  def atom = new Atom(nextLong, nextString, nextString)
 
   def roleDmo(personDmo: PersonDmo, name: String) = {
     val dmo = new RoleDmo

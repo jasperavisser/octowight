@@ -48,7 +48,7 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
 
   def getAllModels: Iterable[M] = {
     resourceRootDmoRepository.findByResourceTypeAndTombstone(getResourceType, tombstone = false).asScala
-      .map(_.getResourceId)
+      .map(_.resourceId)
       .flatMap(getModelOption(_))
   }
 
@@ -67,8 +67,8 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
 
   def tombstoneResource(resourceRoot: ResourceRoot): Unit = {
     log.debug(s"Tombstone resource ${resourceRoot.getType}/${resourceRoot.getId}")
-    val resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.getResourceType, resourceRoot.getResourceId)
-    resourceRootDmo.setTombstone(true)
-    resourceRootDmoRepository.save(resourceRootDmo)
+    val resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.resourceType, resourceRoot.resourceId)
+    val resourceRootDmoToSave = resourceRootDmo.copy(tombstone = true)
+    resourceRootDmoRepository.save(resourceRootDmoToSave)
   }
 }

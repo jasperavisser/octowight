@@ -14,13 +14,8 @@ object TestData {
 
   def resourceRoot: ResourceRoot = resourceRoot(nextLong)
 
-  def resourceRoot(resourceId: Long) = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setResourceId(resourceId)
-    resourceRoot.setResourceType(nextString)
-    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
-    resourceRoot
-  }
+  def resourceRoot(resourceId: Long) =
+    new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
 
   def atomChangeEvent(atomGroup: AtomGroup) = {
     val event = new AtomChangeEvent
@@ -43,47 +38,28 @@ object TestData {
   def resourceRootDmo: ResourceRootDmo = resourceRootDmo(nextString)
 
   def resourceRootDmo(resourceType: String) = {
-    val dmo = new ResourceRootDmo
-    dmo.setResourceId(nextLong)
-    dmo.setResourceType(resourceType)
-    dmo.setRoot(AtomDmo(new Atom(nextLong, nextString, nextString)))
-    dmo.setVersion(nextLong)
-    dmo
+    new ResourceRootDmo(
+      resourceId = nextLong,
+      resourceType = resourceType,
+      root = AtomDmo(atom),
+      version = nextLong)
   }
 
   // TODO: not random, so this could be an apply method
   def resourceElementDmo(resourceRootDmo: ResourceRootDmo, atomChangeEvent: AtomChangeEvent) = {
-    val dmo = new ResourceElementDmo
-    dmo.setResourceId(resourceRootDmo.getResourceId)
-    dmo.setResourceType(resourceRootDmo.getResourceType)
-    dmo.setAtom(AtomDmo(new Atom(atomChangeEvent.getAtomId, atomChangeEvent.getAtomOrigin, atomChangeEvent.getAtomCategory)))
-    dmo
+    val atomDmo: AtomDmo = AtomDmo(new Atom(atomChangeEvent.getAtomId, atomChangeEvent.getAtomOrigin, atomChangeEvent.getAtomCategory))
+    new ResourceElementDmo(resourceId = resourceRootDmo.resourceId, resourceType = resourceRootDmo.resourceType, atom = atomDmo)
   }
 
   def resourceElementDmo = {
-    val dmo = new ResourceElementDmo
-    dmo.setResourceId(nextLong)
-    dmo.setResourceType(nextString)
-    dmo.setAtom(AtomDmo(new Atom(nextLong, nextString, nextString)))
-    dmo
+    new ResourceElementDmo(resourceId = nextLong, resourceType = nextString, atom = AtomDmo(atom))
   }
 
-  def resourceModelDmo = {
-    val expectedResourceModelDmo = new ResourceModelDmo
-    val resourceModelId = new ResourceModelDmoId
-    resourceModelId.setResourceId(TestData.nextLong)
-    resourceModelId.setResourceType(TestData.nextString)
-    expectedResourceModelDmo.setId(resourceModelId)
-    expectedResourceModelDmo.setBody(TestData.nextString)
-    expectedResourceModelDmo
-  }
+  def atom = new Atom(nextLong, nextString, nextString)
 
-  def resourceModelId = {
-    val resourceModelId = new ResourceModelDmoId
-    resourceModelId.setResourceId(nextLong)
-    resourceModelId.setResourceType(nextString)
-    resourceModelId
-  }
+  def resourceModelDmo = new ResourceModelDmo(id = resourceModelDmoId, body = nextString, version = nextLong)
+
+  def resourceModelDmoId = new ResourceModelDmoId(resourceId = nextLong, resourceType = nextString)
 
   def atomGroup = {
     val atomGroup = new AtomGroup

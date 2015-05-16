@@ -38,12 +38,15 @@ class CaptainControllerIT extends AbstractTransactionalIT {
   "Captain controller" should "get a captain" in {
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
     val roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.ResourceType))
-    val resourceRootDmo = new ResourceRootDmo
-    resourceRootDmo.setRoot(AtomDmo(new Atom(roleDmo.getId, RoleDmo.AtomCategory, "the seven seas")))
-    resourceRootDmo.setResourceId(TestData.nextLong)
-    resourceRootDmo.setResourceType(CaptainResource.ResourceType)
+    val resourceRootDmo = new ResourceRootDmo(
+      root = AtomDmo(new Atom(roleDmo.getId, RoleDmo.AtomCategory, "the seven seas")),
+      resourceId = TestData.nextLong,
+      resourceType = CaptainResource.ResourceType,
+      version = TestData.nextLong)
     val resourceRootDmoWithId = resourceRootDmoRepository.save(resourceRootDmo)
     tempResourceRootDmos.add(resourceRootDmoWithId)
-    mockMvc.perform(MockMvcRequestBuilders.get(s"/captain/${resourceRootDmoWithId.getResourceId}")).andExpect(MockMvcResultMatchers.status.isOk).andExpect(MockMvcResultMatchers.content.contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(MockMvcRequestBuilders.get(s"/captain/${resourceRootDmoWithId.resourceId}"))
+      .andExpect(MockMvcResultMatchers.status.isOk)
+      .andExpect(MockMvcResultMatchers.content.contentType(MediaType.APPLICATION_JSON))
   }
 }

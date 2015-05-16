@@ -27,20 +27,11 @@ object TestData {
 
   def resourceRoot: ResourceRoot = resourceRoot(nextLong)
 
-  def resourceRoot(resourceId: Long) = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
-    resourceRoot.setResourceId(resourceId)
-    resourceRoot.setResourceType(nextString)
-    resourceRoot.setVersion(nextLong)
-    resourceRoot
-  }
+  def resourceRoot(resourceId: Long) =
+    new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
 
   def resourceRootDmo = {
-    val resourceRootDmo = new ResourceRootDmo
-    resourceRootDmo.setRoot(new AtomDmo)
-    resourceRootDmo.setResourceId(nextLong)
-    resourceRootDmo
+    new ResourceRootDmo(root = AtomDmo(atom), resourceId = nextLong, resourceType = nextString, version = nextLong)
   }
 
   def roleDmo(personDmo: PersonDmo, name: String) = {

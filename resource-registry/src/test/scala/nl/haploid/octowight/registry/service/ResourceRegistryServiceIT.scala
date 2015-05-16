@@ -11,8 +11,8 @@ class ResourceRegistryServiceIT extends AbstractIT {
 
   "Resource registry service" should "save a new resource" in {
     val resourceRoot = resourceRegistryService.saveResource(TestData.resourceRoot).getOrElse(fail())
-    resourceRoot.getResourceId should not be null
-    resourceRoot.getVersion should not be null
+    resourceRoot.resourceId should not be null
+    resourceRoot.version should not be null
   }
 
   "Resource registry service" should "mark resources as dirty" in {

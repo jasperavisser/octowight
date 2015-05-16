@@ -5,12 +5,10 @@ import java.lang
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
-import scala.beans.BeanProperty
+import scala.annotation.meta.field
 
 @Document(collection = "sequence")
-class SequenceDmo {
-
-  @Id
-  @BeanProperty var key: String = _
-  @BeanProperty var value: lang.Long = _
-}
+case class SequenceDmo
+(
+  @(Id@field) key: String,
+  value: lang.Long)

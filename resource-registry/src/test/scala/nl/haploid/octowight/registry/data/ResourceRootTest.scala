@@ -5,9 +5,8 @@ import nl.haploid.octowight.registry.AbstractTest
 class ResourceRootTest extends AbstractTest {
 
   "Resource root" should "return a key" in {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setResourceType("cosgrove")
-    resourceRoot.setRoot(new Atom(69l, "california", "campbell"))
+    val atom = new Atom(69l, "california", "campbell")
+    val resourceRoot = new ResourceRoot(resourceId = null, resourceType = "cosgrove", root = atom, version = null)
     val expectedKey = "california:campbell/69->cosgrove"
     val actualKey = resourceRoot.key
     actualKey should be(expectedKey)

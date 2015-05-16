@@ -97,8 +97,8 @@ class AbstractResourceServiceTest extends AbstractTest {
     expecting {
       abstractResourceService.getResourceType andReturn resourceType once()
       resourceRootDmoRepository.findByResourceTypeAndTombstone(resourceType, tombstone = false) andReturn resourceRootDmos once()
-      abstractResourceService.getModelOption(resourceRootDmo1.getResourceId) andReturn modelOption1 once()
-      abstractResourceService.getModelOption(resourceRootDmo2.getResourceId) andReturn modelOption2 once()
+      abstractResourceService.getModelOption(resourceRootDmo1.resourceId) andReturn modelOption1 once()
+      abstractResourceService.getModelOption(resourceRootDmo2.resourceId) andReturn modelOption2 once()
       modelOption1.toList andReturn List(model1) once()
       modelOption2.toList andReturn List(model2) once()
     }
@@ -140,11 +140,9 @@ class AbstractResourceServiceTest extends AbstractTest {
   "Abstract resource service" should "tombstone a resource" in {
     val resourceRoot = TestData.resourceRoot
     val resourceRootDmo = TestData.resourceRootDmo
-    val tombstonedResourceRootDmo = TestData.resourceRootDmo
-    tombstonedResourceRootDmo.setResourceId(resourceRootDmo.getResourceId)
-    tombstonedResourceRootDmo.setTombstone(true)
+    val tombstonedResourceRootDmo = resourceRootDmo.copy(tombstone = true)
     expecting {
-      resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.getResourceType, resourceRoot.getResourceId) andReturn resourceRootDmo once()
+      resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.resourceType, resourceRoot.resourceId) andReturn resourceRootDmo once()
       resourceRootDmoRepository.save(tombstonedResourceRootDmo) andReturn tombstonedResourceRootDmo once()
     }
     whenExecuting(resourceRootDmoRepository) {

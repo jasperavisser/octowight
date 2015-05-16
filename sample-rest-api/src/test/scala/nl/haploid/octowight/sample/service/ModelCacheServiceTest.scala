@@ -28,8 +28,8 @@ class ModelCacheServiceTest extends AbstractTest {
     val modelClass = classOf[MockModel]
     val expectedModel = mock[MockModel]
     expecting {
-      resourceModelDmoRepository.findByIdAndVersion(resourceModelId, resourceRoot.getVersion) andReturn resourceModelDmo once()
-      resourceModelDmo.getBody andReturn body once()
+      resourceModelDmoRepository.findByIdAndVersion(resourceModelId, resourceRoot.version) andReturn resourceModelDmo once()
+      resourceModelDmo.body andReturn body once()
       modelSerializer.deserialize(body, modelClass) andReturn expectedModel once()
     }
     whenExecuting(resourceModelDmoRepository, resourceModelDmo, modelSerializer) {

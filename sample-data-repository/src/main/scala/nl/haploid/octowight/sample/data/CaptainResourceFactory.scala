@@ -12,16 +12,16 @@ class CaptainResourceFactory extends ResourceFactory[CaptainResource] {
 
   @Transactional(readOnly = true)
   def fromResourceRoot(resourceRoot: ResourceRoot): Option[CaptainResource] = {
-    Option(roleDmoRepository.findOne(resourceRoot.getRoot.id)) match {
+    Option(roleDmoRepository.findOne(resourceRoot.root.id)) match {
       case Some(roleDmo) =>
-        roleDmo.setOrigin(resourceRoot.getRoot.origin)
+        roleDmo.setOrigin(resourceRoot.root.origin)
         val personDmo = roleDmo.getPerson
-        personDmo.setOrigin(resourceRoot.getRoot.origin)
+        personDmo.setOrigin(resourceRoot.root.origin)
         val captainResource = new CaptainResource
-        captainResource.setId(resourceRoot.getResourceId)
+        captainResource.setId(resourceRoot.resourceId)
         captainResource.setPersonDmo(personDmo)
         captainResource.setRoleDmo(roleDmo)
-        captainResource.setVersion(resourceRoot.getVersion)
+        captainResource.setVersion(resourceRoot.version)
         Some(captainResource)
       case None => None
     }

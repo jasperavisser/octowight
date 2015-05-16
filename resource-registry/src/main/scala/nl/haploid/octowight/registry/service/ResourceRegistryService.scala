@@ -1,5 +1,7 @@
 package nl.haploid.octowight.registry.service
 
+import java.lang.Long
+
 import nl.haploid.octowight.registry.data.ResourceRoot
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
@@ -34,32 +36,32 @@ class ResourceRegistryService {
 
   private[this] def getResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {
     resourceRootDmoRepository.findByResourceTypeAndRootIdAndRootCategoryAndRootOrigin(
-      resourceRoot.getResourceType, resourceRoot.getRoot.id, resourceRoot.getRoot.category, resourceRoot.getRoot.origin)
+      resourceRoot.resourceType, resourceRoot.root.id, resourceRoot.root.category, resourceRoot.root.origin)
   }
 
   private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
     Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(
-      resourceElementDmo.getResourceType, resourceElementDmo.getResourceId))
+      resourceElementDmo.resourceType, resourceElementDmo.resourceId))
   }
 
   private[this] def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {
-    log.info(s"Mark ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId} as dirty")
+    log.info(s"Mark ${resourceRootDmo.resourceType}/${resourceRootDmo.resourceId} as dirty")
     val version = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
-    resourceRootDmo.setVersion(version)
-    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmo))
+    val resourceRootDmoToSave = resourceRootDmo.copy(version = version)
+    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmoToSave))
   }
 
   private[this] def saveNewResource(resourceRoot: ResourceRoot): ResourceRoot = {
-    val resourceRootDmo = ResourceRootDmo(resourceRoot)
-    resourceRootDmo.setResourceId(sequenceService.getNextValue(ResourceRootDmo.IdSequence))
-    resourceRootDmo.setVersion(sequenceService.getNextValue(ResourceRootDmo.VersionSequence))
-    log.info(s"Save resource ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId}")
-    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmo))
+    val resourceId: Long = sequenceService.getNextValue(ResourceRootDmo.IdSequence)
+    val version: Long = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
+    val resourceRootDmoToSave = ResourceRootDmo(resourceRoot).copy(resourceId = resourceId, version = version)
+    log.info(s"Save resource ${resourceRootDmoToSave.resourceType}/${resourceRootDmoToSave.resourceId}")
+    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmoToSave))
   }
 
   private[this] def untombstoneResource(resourceRootDmo: ResourceRootDmo): ResourceRoot = {
-    log.info(s"Remove tombstone for ${resourceRootDmo.getResourceType}/${resourceRootDmo.getResourceId}")
-    resourceRootDmo.tombstone = false
-    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmo))
+    log.info(s"Remove tombstone for ${resourceRootDmo.resourceType}/${resourceRootDmo.resourceId}")
+    val resourceRootDmoToSave = resourceRootDmo.copy(tombstone = false)
+    ResourceRoot(resourceRootDmoRepository.save(resourceRootDmoToSave))
   }
 }

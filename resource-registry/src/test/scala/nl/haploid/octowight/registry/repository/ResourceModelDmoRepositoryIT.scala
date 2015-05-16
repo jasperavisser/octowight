@@ -9,7 +9,7 @@ class ResourceModelDmoRepositoryIT extends AbstractIT {
   "Resource model DMO repository" should "find one" in {
     val expectedResourceModelDmo = TestData.resourceModelDmo
     resourceModelDmoRepository.save(expectedResourceModelDmo)
-    val actualResourceModelDmo = resourceModelDmoRepository.findOne(expectedResourceModelDmo.getId)
-    actualResourceModelDmo.getBody should be(expectedResourceModelDmo.getBody)
+    val actualResourceModelDmo = resourceModelDmoRepository.findOne(expectedResourceModelDmo.id)
+    actualResourceModelDmo.body should be(expectedResourceModelDmo.body)
   }
 }

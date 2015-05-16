@@ -15,16 +15,16 @@ class CaptainResourceFactoryTest extends AbstractTest {
     val personDmo = TestData.personDmo
     val roleAtom = mock[Atom]
     expecting {
-      roleDmoRepository.findOne(resourceRoot.getRoot.id) andReturn roleDmo once()
-      roleDmo.setOrigin(resourceRoot.getRoot.origin) once()
+      roleDmoRepository.findOne(resourceRoot.root.id) andReturn roleDmo once()
+      roleDmo.setOrigin(resourceRoot.root.origin) once()
       roleDmo.getPerson andReturn personDmo once()
       roleDmo.toAtom andReturn roleAtom once()
     }
     whenExecuting(roleDmo, roleDmoRepository) {
       val captainResource = captainResourceFactory.fromResourceRoot(resourceRoot).getOrElse(fail())
-      captainResource.getId should be(resourceRoot.getResourceId)
+      captainResource.getId should be(resourceRoot.resourceId)
       captainResource.getAtoms should have size 2
-      captainResource.getVersion should be(resourceRoot.getVersion)
+      captainResource.getVersion should be(resourceRoot.version)
     }
   }
 }

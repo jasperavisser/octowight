@@ -28,12 +28,8 @@ object TestData {
     dmo
   }
 
-  def resourceRoot = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setRoot(new Atom(nextLong, nextString, nextString))
-    resourceRoot.setResourceId(nextLong)
-    resourceRoot.setResourceType(nextString)
-    resourceRoot.setVersion(nextLong)
-    resourceRoot
-  }
+  def resourceRoot =
+    new ResourceRoot(resourceId = nextLong, resourceType = nextString, root = atom, version = null)
+
+  def atom = new Atom(nextLong, nextString, nextString)
 }
