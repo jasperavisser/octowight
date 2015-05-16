@@ -6,8 +6,6 @@ import nl.haploid.octowight.kafka.{KafkaConsumerFactory, KafkaStreamIterator}
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
-import org.springframework.beans.factory.config.ConfigurableBeanFactory
-import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
 @Service
@@ -55,7 +53,7 @@ class EventConsumerService {
       .toIterable
     log.debug(s"Consumed ${events.size} events")
     events
-      .groupBy(e => (e.getAtomId, e.getAtomOrigin, e.getAtomCategory))
+      .groupBy(e => (e.atomId, e.atomOrigin, e.atomCategory))
       .map { case (_, similarEvents) => similarEvents.head }
       .toSet
   }

@@ -5,32 +5,26 @@ import javax.persistence._
 
 import nl.haploid.octowight.AtomChangeEvent
 
-import scala.beans.BeanProperty
+import scala.annotation.meta.field
 
 @Entity
 @Table(name = "atom_change_event", schema = "octowight")
-class AtomChangeEventDmo {
+case class AtomChangeEventDmo
+(
+  @(Id@field)
+  @(SequenceGenerator@field)(name = "event_sequence", sequenceName = "octowight.event_sequence")
+  @(GeneratedValue@field)(generator = "event_sequence")
+  id: lang.Long,
+  @(Column@field)(name = "atom_id")
+  atomId: lang.Long,
+  @(Column@field)(name = "atom_origin")
+  atomOrigin: String,
+  @(Column@field)(name = "atom_category")
+  atomCategory: String) {
 
-  @Id
-  @SequenceGenerator(name = "event_sequence", sequenceName = "octowight.event_sequence")
-  @GeneratedValue(generator = "event_sequence")
-  @BeanProperty var id: lang.Long = _
+  def this() =
+    this(id = null, atomId = null, atomOrigin = null, atomCategory = null)
 
-  @Column(name = "atom_id")
-  @BeanProperty var atomId: lang.Long = _
-
-  @Column(name = "atom_origin")
-  @BeanProperty var atomOrigin: String = _
-
-  @Column(name = "atom_category")
-  @BeanProperty var atomCategory: String = _
-
-  def toAtomChangeEvent = {
-    val e = new AtomChangeEvent
-    e.setId(getId)
-    e.setAtomId(getAtomId)
-    e.setAtomOrigin(getAtomOrigin)
-    e.setAtomCategory(getAtomCategory)
-    e
-  }
+  def toAtomChangeEvent =
+    new AtomChangeEvent(id = id, atomId = atomId, atomOrigin = atomOrigin, atomCategory = atomCategory)
 }

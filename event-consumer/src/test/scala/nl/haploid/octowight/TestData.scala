@@ -17,14 +17,8 @@ object TestData {
 
   def topic = nextString
 
-  def atomChangeEvent(atomCategory: String) = {
-    val event = new AtomChangeEvent
-    event.setId(nextLong)
-    event.setAtomId(nextLong)
-    event.setAtomOrigin(nextString)
-    event.setAtomCategory(atomCategory)
-    event
-  }
+  def atomChangeEvent(atomCategory: String) =
+    new AtomChangeEvent(id = nextLong, atomId = nextLong, atomOrigin = nextString, atomCategory = atomCategory)
 
   def nextString = UUID.randomUUID.toString
 }

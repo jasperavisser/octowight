@@ -18,9 +18,9 @@ class EventConsumerServiceTest extends AbstractTest {
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
   override def beforeEach() = {
+    super.beforeEach()
     EasyMock.reset(eventConsumerService)
     ReflectionTestUtils.setField(eventConsumerService, "log", mock[Logger])
-    super.beforeEach()
   }
 
   "Event consumer" should "consume a message" in {

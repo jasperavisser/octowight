@@ -17,23 +17,11 @@ object TestData {
   def resourceRoot(resourceId: Long) =
     new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
 
-  def atomChangeEvent(atomGroup: AtomGroup) = {
-    val event = new AtomChangeEvent
-    event.setId(nextLong)
-    event.setAtomId(nextLong)
-    event.setAtomOrigin(atomGroup.getOrigin)
-    event.setAtomCategory(atomGroup.getCategory)
-    event
-  }
+  def atomChangeEvent(atomCategory: String) =
+    new AtomChangeEvent(id = nextLong, atomId = nextLong, atomOrigin = nextString, atomCategory = atomCategory)
 
-  def atomChangeEvent(atomCategory: String) = {
-    val event = new AtomChangeEvent
-    event.setId(nextLong)
-    event.setAtomId(nextLong)
-    event.setAtomOrigin(nextString)
-    event.setAtomCategory(atomCategory)
-    event
-  }
+  def atomChangeEvent(atomGroup: AtomGroup) =
+    new AtomChangeEvent(id = nextLong, atomId = nextLong, atomOrigin = atomGroup.origin, atomCategory = atomGroup.category)
 
   def resourceRootDmo: ResourceRootDmo = resourceRootDmo(nextString)
 
@@ -47,7 +35,7 @@ object TestData {
 
   // TODO: not random, so this could be an apply method
   def resourceElementDmo(resourceRootDmo: ResourceRootDmo, atomChangeEvent: AtomChangeEvent) = {
-    val atomDmo: AtomDmo = AtomDmo(new Atom(atomChangeEvent.getAtomId, atomChangeEvent.getAtomOrigin, atomChangeEvent.getAtomCategory))
+    val atomDmo: AtomDmo = AtomDmo(new Atom(atomChangeEvent.atomId, atomChangeEvent.atomOrigin, atomChangeEvent.atomCategory))
     new ResourceElementDmo(resourceId = resourceRootDmo.resourceId, resourceType = resourceRootDmo.resourceType, atom = atomDmo)
   }
 
@@ -61,10 +49,5 @@ object TestData {
 
   def resourceModelDmoId = new ResourceModelDmoId(resourceId = nextLong, resourceType = nextString)
 
-  def atomGroup = {
-    val atomGroup = new AtomGroup
-    atomGroup.setOrigin(TestData.nextString)
-    atomGroup.setCategory(TestData.nextString)
-    atomGroup
-  }
+  def atomGroup = new AtomGroup(origin = TestData.nextString, category = TestData.nextString)
 }

@@ -26,7 +26,7 @@ class CaptainResourceDetector extends ResourceDetector {
     val rolesById = getRolesById(events)
     events
       .filter(event => {
-      rolesById.get(event.getAtomId) match {
+      rolesById.get(event.atomId) match {
         case Some(roleDmo) => isCaptain(roleDmo)
         case None => false
       }
@@ -35,7 +35,7 @@ class CaptainResourceDetector extends ResourceDetector {
   }
 
   def getRolesById(events: Traversable[AtomChangeEvent]) = {
-    val roleIds = events.map(_.getAtomId).toList
+    val roleIds = events.map(_.atomId).toList
     roleDmoRepository.findAll(roleIds.asJava)
       .asScala
       .map(roleDmo => roleDmo.getId -> roleDmo)

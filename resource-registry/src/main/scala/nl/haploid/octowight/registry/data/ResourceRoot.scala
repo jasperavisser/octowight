@@ -8,7 +8,7 @@ import nl.haploid.octowight.registry.repository.ResourceRootDmo
 object ResourceRoot {
 
   def apply(event: AtomChangeEvent, resourceType: String) = {
-    val atom: Atom = new Atom(event.getAtomId, event.getAtomOrigin, event.getAtomCategory)
+    val atom: Atom = new Atom(event.atomId, event.atomOrigin, event.atomCategory)
     new ResourceRoot(
       resourceId = null,
       resourceType = resourceType,

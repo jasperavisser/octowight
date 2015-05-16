@@ -10,13 +10,8 @@ object TestData {
 
   def atomChangeEvent: AtomChangeEvent = atomChangeEvent(nextLong)
 
-  def atomChangeEvent(atomId: Long) = {
-    val event = new AtomChangeEvent
-    event.setAtomId(atomId)
-    event.setAtomOrigin(name)
-    event.setAtomCategory(PersonDmo.AtomCategory)
-    event
-  }
+  def atomChangeEvent(atomId: Long) =
+    new AtomChangeEvent(id = nextLong, atomId = atomId, atomOrigin = nextString, atomCategory = PersonDmo.AtomCategory)
 
   def name = nextString
 

@@ -14,7 +14,7 @@
 		<maven.compiler.testSource>${java.version}</maven.compiler.testSource>
 		<encoding>UTF-8</encoding>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
-		<jackson-mapper.version>1.9.13</jackson-mapper.version>
+		<jackson.version>2.5.1</jackson.version>
 		<jmockit.version>1.16</jmockit.version>
 		<junit.version>4.12</junit.version>
 		<scala.version>2.11.6</scala.version>
@@ -32,9 +32,19 @@
 			<version>${commons-lang3.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson-mapper.version}</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-scala_2.11</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jmockit</groupId>

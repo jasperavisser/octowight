@@ -26,9 +26,9 @@ class CaptainResourceDetectorTest extends AbstractTest {
     val event2 = TestData.atomChangeEvent
     val event3 = TestData.atomChangeEvent
     val events = List(event1, event2, event3)
-    val roleDmo1 = TestData.roleDmo(event1.getAtomId)
-    val roleDmo2 = TestData.roleDmo(event2.getAtomId)
-    val rolesById = Map((event1.getAtomId, roleDmo1), (event2.getAtomId, roleDmo2))
+    val roleDmo1 = TestData.roleDmo(event1.atomId)
+    val roleDmo2 = TestData.roleDmo(event2.atomId)
+    val rolesById = Map((event1.atomId, roleDmo1), (event2.atomId, roleDmo2))
     val resourceRoot = ResourceRoot(event2, CaptainResource.ResourceType)
     val expectedResourceRoots = List(resourceRoot)
     expecting {
@@ -46,8 +46,8 @@ class CaptainResourceDetectorTest extends AbstractTest {
     val event1 = TestData.atomChangeEvent
     val event2 = TestData.atomChangeEvent
     val events = List(event1, event2)
-    val id1 = event1.getAtomId
-    val id2 = event2.getAtomId
+    val id1 = event1.atomId
+    val id2 = event2.atomId
     val roleDmo1 = TestData.roleDmo(id1)
     val roleDmo2 = TestData.roleDmo(id2)
     expecting {

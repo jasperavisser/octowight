@@ -1,8 +1,9 @@
 package nl.haploid.octowight
 
-import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility
-import org.codehaus.jackson.annotate.JsonMethod
-import org.codehaus.jackson.map.ObjectMapper
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility
+import com.fasterxml.jackson.annotation.PropertyAccessor
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 import scala.util.{Failure, Success, Try}
 
@@ -10,7 +11,8 @@ class JsonMapException(message: String, cause: Throwable = null) extends Runtime
 
 class JsonMapper {
   private[this] val mapper = new ObjectMapper
-  mapper.setVisibility(JsonMethod.FIELD, Visibility.ANY)
+  mapper.registerModule(DefaultScalaModule)
+  mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
 
   def deserialize[T](serialized: String, targetClass: Class[T]) = {
     val result = Try(mapper.readValue(serialized, targetClass))

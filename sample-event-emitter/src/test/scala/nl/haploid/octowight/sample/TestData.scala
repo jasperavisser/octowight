@@ -10,13 +10,8 @@ object TestData {
 
   def nextLong: Long = new Random().nextLong
 
-  def atomChangeEventDmo = {
-    val event = new AtomChangeEventDmo
-    event.setAtomId(nextLong)
-    event.setAtomOrigin(AtomLocus)
-    event.setAtomCategory(AtomCategory)
-    event
-  }
+  def atomChangeEventDmo =
+    new AtomChangeEventDmo(id = null, atomId = nextLong, atomOrigin = AtomLocus, atomCategory = AtomCategory)
 
   def topic = nextString
 

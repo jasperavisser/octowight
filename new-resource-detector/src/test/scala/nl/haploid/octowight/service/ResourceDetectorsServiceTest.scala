@@ -35,9 +35,7 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val detector = mock[ResourceDetector]
     val event1 = TestData.atomChangeEvent("draper")
     val event2 = TestData.atomChangeEvent("pryce")
-    val atomGroup = new AtomGroup
-    atomGroup.setOrigin(event1.getAtomOrigin)
-    atomGroup.setCategory(event1.getAtomCategory)
+    val atomGroup = new AtomGroup(origin = event1.atomOrigin, category = event1.atomCategory)
     val events = List(event1, event2)
     val expectedResourceRoots = List(TestData.resourceRoot(null))
     expecting {

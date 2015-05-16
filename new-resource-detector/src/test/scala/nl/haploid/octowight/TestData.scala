@@ -12,20 +12,14 @@ object TestData {
   def resourceRoot(resourceId: lang.Long) =
     new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
 
-  def atom: Atom = new Atom(nextLong, nextString, nextString)
+  def atom = new Atom(nextLong, nextString, nextString)
 
   def topic = nextString
 
   def atomChangeEvent(atomCategory: String): AtomChangeEvent = atomChangeEvent(nextString, atomCategory)
 
-  def atomChangeEvent(atomOrigin: String, atomCategory: String) = {
-    val event = new AtomChangeEvent
-    event.setId(nextLong)
-    event.setAtomId(nextLong)
-    event.setAtomOrigin(atomOrigin)
-    event.setAtomCategory(atomCategory)
-    event
-  }
+  def atomChangeEvent(atomOrigin: String, atomCategory: String) =
+    new AtomChangeEvent(id = nextLong, atomId = nextLong, atomOrigin = atomOrigin, atomCategory = atomCategory)
 
   def nextString = UUID.randomUUID.toString
 }

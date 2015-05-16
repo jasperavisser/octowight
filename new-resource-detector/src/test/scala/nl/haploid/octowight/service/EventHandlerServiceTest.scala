@@ -42,8 +42,8 @@ class EventHandlerServiceTest extends AbstractTest {
     expecting {
       eventConsumerService.getTopic andReturn topic once()
       eventConsumerService.consumeDistinctEvents() andReturn events once()
-      resourceDetectorsService.detectResources(AtomGroup(origin, category1), Set(event1, event2)) andReturn resourceRoots once()
-      resourceDetectorsService.detectResources(AtomGroup(origin, category2), Set(event3)) andReturn List() once()
+      resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category1), Set(event1, event2)) andReturn resourceRoots once()
+      resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category2), Set(event3)) andReturn List() once()
       resourceRegistryService.saveResource(resourceRoot1) andReturn Some(resourceRoot1) once()
       resourceRegistryService.saveResource(resourceRoot2) andReturn Some(resourceRoot2) once()
       dirtyResourceProducerService.sendDirtyResource(resourceRoot1) andReturn future1 once()

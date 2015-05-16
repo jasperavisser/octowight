@@ -3,16 +3,11 @@ package nl.haploid.octowight
 import java.util.{Random, UUID}
 
 object TestData {
-  val ATOM_LOCUS = nextString
-  val ATOM_TYPE = nextString
+  val AtomCategory = nextString
+  val AtomOrigin = nextString
 
-  def atomChangeEvent = {
-    val event = new AtomChangeEvent
-    event.setAtomId(nextLong)
-    event.setAtomOrigin(ATOM_LOCUS)
-    event.setAtomCategory(ATOM_TYPE)
-    event
-  }
+  def atomChangeEvent =
+    new AtomChangeEvent(id = nextLong, atomId = nextLong, atomOrigin = AtomOrigin, atomCategory = AtomCategory)
 
   def nextLong: Long = new Random().nextLong
 

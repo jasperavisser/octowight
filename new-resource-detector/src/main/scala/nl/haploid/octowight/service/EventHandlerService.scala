@@ -17,7 +17,7 @@ class EventHandlerService {
   def detectNewResources(batchSize: Int) = {
     log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
     val eventsByGroup = eventConsumerService.consumeDistinctEvents()
-      .groupBy(_.getAtomGroup)
+      .groupBy(_.atomGroup)
     val count = eventsByGroup
       .flatMap { case (atomGroup, atomChangeEvents) => resourceDetectorsService.detectResources(atomGroup, atomChangeEvents) }
       .flatMap(resourceRegistryService.saveResource)
