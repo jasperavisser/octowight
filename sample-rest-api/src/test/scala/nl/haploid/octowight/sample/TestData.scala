@@ -28,10 +28,10 @@ object TestData {
   def resourceRoot: ResourceRoot = resourceRoot(nextLong)
 
   def resourceRoot(resourceId: Long) =
-    new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
+    new ResourceRoot(resourceId = resourceId, resourceCollection = nextString, root = atom, version = null)
 
   def resourceRootDmo = {
-    new ResourceRootDmo(root = AtomDmo(atom), resourceId = nextLong, resourceType = nextString, version = nextLong)
+    new ResourceRootDmo(root = AtomDmo(atom), resourceId = nextLong, resourceCollection = nextString, version = nextLong)
   }
 
   def roleDmo(personDmo: PersonDmo, name: String) = {
@@ -44,18 +44,13 @@ object TestData {
 
   def mockModel() = new MockModel {}
 
-  def mockResource(atoms: Set[Atom]) = {
-    new MockResource {
-      val id = nextLong
+  def mockResource(_atoms: Set[Atom]) = {
+    new MockResource(nextLong, nextLong) {
       val model = mockModel()
 
-      override def getType: String = MockResource.Type
+      override def atoms: Traversable[Atom] = _atoms
 
-      override def getId: lang.Long = id
-
-      override def getModel: MockModel = model
-
-      override def getAtoms: Traversable[Atom] = atoms
+      override def collection: String = MockResource.ResourceCollection
     }
   }
 }
@@ -63,9 +58,9 @@ object TestData {
 abstract class MockModel extends Model
 
 object MockResource {
-  val Type = TestData.nextString
+  val ResourceCollection = TestData.nextString
 }
 
-abstract class MockResource extends Resource[MockModel]
+abstract case class MockResource(id: lang.Long, version: lang.Long) extends Resource[MockModel]
 
 abstract class MockResourceService extends AbstractResourceService[MockModel, MockResource]

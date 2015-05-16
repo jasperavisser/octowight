@@ -8,9 +8,9 @@ class SequenceServiceIT extends AbstractIT {
 
   "Sequence service" should "get the next value from a sequence" in {
     val key = s"test-${TestData.nextString}"
-    sequenceService.getNextValue(key) should be(0)
-    sequenceService.getNextValue(key) should be(1)
-    sequenceService.getNextValue(key) should be(2)
-    sequenceService.getNextValue(key) should be(3)
+    sequenceService.nextValue(key) should be(0)
+    sequenceService.nextValue(key) should be(1)
+    sequenceService.nextValue(key) should be(2)
+    sequenceService.nextValue(key) should be(3)
   }
 }

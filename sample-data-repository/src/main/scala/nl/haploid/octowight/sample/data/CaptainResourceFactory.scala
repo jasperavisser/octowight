@@ -17,11 +17,7 @@ class CaptainResourceFactory extends ResourceFactory[CaptainResource] {
         roleDmo.setOrigin(resourceRoot.root.origin)
         val personDmo = roleDmo.getPerson
         personDmo.setOrigin(resourceRoot.root.origin)
-        val captainResource = new CaptainResource
-        captainResource.setId(resourceRoot.resourceId)
-        captainResource.setPersonDmo(personDmo)
-        captainResource.setRoleDmo(roleDmo)
-        captainResource.setVersion(resourceRoot.version)
+        val captainResource = new CaptainResource(id = resourceRoot.resourceId, personDmo = personDmo, roleDmo = roleDmo, version = resourceRoot.version)
         Some(captainResource)
       case None => None
     }

@@ -17,18 +17,18 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
   @Autowired private[this] val resourceFactory: ResourceFactory[R] = null
 
-  def getModelClass: Class[M]
+  def modelClass: Class[M]
 
-  def getResourceType: String
+  def collection: String
 
   def getModel(resourceId: Long): M = {
-    log.debug(s"Get model for resource $getResourceType/$resourceId")
-    val resourceRoot = getResourceRoot(getResourceType, resourceId)
-    modelCacheService.get(resourceRoot, getModelClass).getOrElse({
+    log.debug(s"Get model for resource $collection/$resourceId")
+    val resourceRoot = getResourceRoot(collection, resourceId)
+    modelCacheService.get(resourceRoot, modelClass).getOrElse({
       resourceFactory.fromResourceRoot(resourceRoot) match {
         case Some(resource) =>
           saveResourceElements(resource)
-          val model = resource.getModel
+          val model = resource.model
           modelCacheService.put(resource, model)
           model
         case None =>
@@ -47,27 +47,27 @@ abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
   }
 
   def getAllModels: Iterable[M] = {
-    resourceRootDmoRepository.findByResourceTypeAndTombstone(getResourceType, tombstone = false).asScala
+    resourceRootDmoRepository.findByResourceCollectionAndTombstone(collection, tombstone = false).asScala
       .map(_.resourceId)
       .flatMap(getModelOption(_))
   }
 
-  def getResourceRoot(resourceType: String, resourceId: Long) = {
-    Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId)) match {
+  def getResourceRoot(resourceCollection: String, resourceId: Long) = {
+    Option(resourceRootDmoRepository.findByResourceCollectionAndResourceId(resourceCollection, resourceId)) match {
       case Some(dmo) => ResourceRoot(dmo)
       case None => throw new ResourceNotFoundException
     }
   }
 
   def saveResourceElements(resource: R) = {
-    resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId)
-    resource.getAtoms
+    resourceElementDmoRepository.deleteByResourceCollectionAndResourceId(resource.collection, resource.id)
+    resource.atoms
       .foreach(atom => resourceElementDmoRepository.save(ResourceElementDmo(resource, atom)))
   }
 
   def tombstoneResource(resourceRoot: ResourceRoot): Unit = {
-    log.debug(s"Tombstone resource ${resourceRoot.getType}/${resourceRoot.getId}")
-    val resourceRootDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.resourceType, resourceRoot.resourceId)
+    log.debug(s"Tombstone resource ${resourceRoot.resourceCollection}/${resourceRoot.resourceId}")
+    val resourceRootDmo = resourceRootDmoRepository.findByResourceCollectionAndResourceId(resourceRoot.resourceCollection, resourceRoot.resourceId)
     val resourceRootDmoToSave = resourceRootDmo.copy(tombstone = true)
     resourceRootDmoRepository.save(resourceRootDmoToSave)
   }

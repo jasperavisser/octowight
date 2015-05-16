@@ -22,9 +22,9 @@ class CaptainResourceFactoryTest extends AbstractTest {
     }
     whenExecuting(roleDmo, roleDmoRepository) {
       val captainResource = captainResourceFactory.fromResourceRoot(resourceRoot).getOrElse(fail())
-      captainResource.getId should be(resourceRoot.resourceId)
-      captainResource.getAtoms should have size 2
-      captainResource.getVersion should be(resourceRoot.version)
+      captainResource.id should be(resourceRoot.resourceId)
+      captainResource.atoms should have size 2
+      captainResource.version should be(resourceRoot.version)
     }
   }
 }

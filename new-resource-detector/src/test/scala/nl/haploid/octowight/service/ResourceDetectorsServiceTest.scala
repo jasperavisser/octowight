@@ -19,8 +19,8 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val atomCategory = "sterling"
     expecting {
       resourceDetectorsService.getDetectors andReturn List(detector1, detector2) once()
-      detector1.getAtomCategories andReturn List(atomCategory) once()
-      detector2.getAtomCategories andReturn List("cooper") once()
+      detector1.atomCategories andReturn List(atomCategory) once()
+      detector2.atomCategories andReturn List("cooper") once()
     }
     whenExecuting(resourceDetectorsService, detector1, detector2) {
       val actualDetectors = resourceDetectorsService.getDetectorsForAtomCategory(atomCategory)

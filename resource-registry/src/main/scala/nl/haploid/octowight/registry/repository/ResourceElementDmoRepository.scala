@@ -10,5 +10,5 @@ trait ResourceElementDmoRepository extends MongoRepository[ResourceElementDmo, S
 
   def findByAtomIdInAndAtomCategoryAndAtomOrigin(atomId: lang.Iterable[lang.Long], atomCategory: String, atomOrigin: String): util.List[ResourceElementDmo]
 
-  def deleteByResourceTypeAndResourceId(resourceType: String, resourceId: lang.Long): Long
+  def deleteByResourceCollectionAndResourceId(resourceCollection: String, resourceId: lang.Long): Long
 }

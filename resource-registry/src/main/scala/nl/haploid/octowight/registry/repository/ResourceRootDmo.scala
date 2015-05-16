@@ -16,7 +16,7 @@ object ResourceRootDmo {
     new ResourceRootDmo(
       root = AtomDmo(resourceRoot),
       resourceId = resourceRoot.resourceId,
-      resourceType = resourceRoot.resourceType,
+      resourceCollection = resourceRoot.resourceCollection,
       tombstone = resourceRoot.tombstone,
       version = resourceRoot.version)
   }
@@ -26,8 +26,8 @@ object ResourceRootDmo {
 case class ResourceRootDmo
 (
   @(Id@field) id: String = null,
+  resourceCollection: String,
   resourceId: lang.Long,
-  resourceType: String,
   root: AtomDmo,
   tombstone: Boolean = false,
   version: lang.Long

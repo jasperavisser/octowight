@@ -12,30 +12,30 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     resourceRootDmoRepository.deleteAll()
     val dmo = TestData.resourceRootDmo
     val expectedDmo = resourceRootDmoRepository.save(dmo)
-    val actualDmo = resourceRootDmoRepository.findByResourceTypeAndRootIdAndRootCategoryAndRootOrigin(
-      expectedDmo.resourceType, expectedDmo.root.id, expectedDmo.root.category, expectedDmo.root.origin)
+    val actualDmo = resourceRootDmoRepository.findByResourceCollectionAndRootIdAndRootCategoryAndRootOrigin(
+      expectedDmo.resourceCollection, expectedDmo.root.id, expectedDmo.root.category, expectedDmo.root.origin)
     actualDmo should be(expectedDmo)
     println(actualDmo)
   }
 
-  "Resource root DMO repository" should "find by resource type" in {
+  "Resource root DMO repository" should "find by resource collection" in {
     resourceRootDmoRepository.deleteAll()
     val dmo1 = TestData.resourceRootDmo("willow")
     val dmo2 = TestData.resourceRootDmo("oz")
     val expectedDmo1 = resourceRootDmoRepository.save(dmo1)
     resourceRootDmoRepository.save(dmo2)
-    val actualDmos = resourceRootDmoRepository.findByResourceType("willow")
+    val actualDmos = resourceRootDmoRepository.findByResourceCollection("willow")
     val expectedDmos = util.Collections.singletonList(expectedDmo1)
     actualDmos should be(expectedDmos)
   }
 
-  "Resource root DMO repository" should "find by resource type & id" in {
+  "Resource root DMO repository" should "find by resource collection & id" in {
     resourceRootDmoRepository.deleteAll()
     val dmo1 = TestData.resourceRootDmo("willow")
     val dmo2 = TestData.resourceRootDmo("oz")
     val expectedDmo = resourceRootDmoRepository.save(dmo1)
     resourceRootDmoRepository.save(dmo2)
-    val actualDmo = resourceRootDmoRepository.findByResourceTypeAndResourceId("willow", expectedDmo.resourceId)
+    val actualDmo = resourceRootDmoRepository.findByResourceCollectionAndResourceId("willow", expectedDmo.resourceId)
     actualDmo should be(expectedDmo)
   }
 }

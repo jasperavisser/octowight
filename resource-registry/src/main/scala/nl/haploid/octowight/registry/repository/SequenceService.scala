@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class SequenceService {
   @Autowired private[this] val mongoOperations: MongoOperations = null
 
-  def getNextValue(key: String): Long = incrementSequence(key).getOrElse(startSequence(key)).value
+  def nextValue(key: String): Long = incrementSequence(key).getOrElse(startSequence(key)).value
 
   protected def startSequence(key: String): SequenceDmo = {
     val sequenceDmo = new SequenceDmo(key = key, value = 0L)

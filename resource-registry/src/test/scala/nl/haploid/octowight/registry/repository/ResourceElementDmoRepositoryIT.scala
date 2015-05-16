@@ -25,12 +25,12 @@ class ResourceElementDmoRepositoryIT extends AbstractIT {
     actualDmos.get(0) should be(expectedDmo)
   }
 
-  "Resource element DMO repository" should "delete by resource id & type" in {
+  "Resource element DMO repository" should "delete by resource id & collection" in {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
     val actualDmoBeforeDelete = resourceElementDmoRepository.findOne(expectedDmo.id)
     actualDmoBeforeDelete should not be null
-    resourceElementDmoRepository.deleteByResourceTypeAndResourceId(expectedDmo.resourceType, expectedDmo.resourceId)
+    resourceElementDmoRepository.deleteByResourceCollectionAndResourceId(expectedDmo.resourceCollection, expectedDmo.resourceId)
     val actualDmoAfterDelete = resourceElementDmoRepository.findOne(expectedDmo.id)
     actualDmoAfterDelete should be(null)
   }

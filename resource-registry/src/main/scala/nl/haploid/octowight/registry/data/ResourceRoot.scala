@@ -7,11 +7,11 @@ import nl.haploid.octowight.registry.repository.ResourceRootDmo
 
 object ResourceRoot {
 
-  def apply(event: AtomChangeEvent, resourceType: String) = {
+  def apply(event: AtomChangeEvent, resourceCollection: String) = {
     val atom: Atom = new Atom(event.atomId, event.atomOrigin, event.atomCategory)
     new ResourceRoot(
       resourceId = null,
-      resourceType = resourceType,
+      resourceCollection = resourceCollection,
       root = atom,
       version = null)
   }
@@ -21,27 +21,22 @@ object ResourceRoot {
     new ResourceRoot(
       root = atom,
       resourceId = resourceRootDmo.resourceId,
-      resourceType = resourceRootDmo.resourceType,
+      resourceCollection = resourceRootDmo.resourceCollection,
       tombstone = resourceRootDmo.tombstone,
       version = resourceRootDmo.version)
   }
 }
 
-// TODO: consider making most data objects immutable
 case class ResourceRoot
 (
   resourceId: lang.Long,
-  resourceType: String,
+  resourceCollection: String, // TODO: collection
   root: Atom,
   tombstone: Boolean = false,
   version: lang.Long
-  ) extends ResourceIdentifier with Atomizable {
+  ) extends Atomizable {
 
-  override def getId: lang.Long = resourceId
-
-  override def getType: String = resourceType
-
-  def key = s"${root.origin}:${root.category}/${root.id}->$resourceType"
+  def key = s"${root.origin}:${root.category}/${root.id}->$resourceCollection"
 
   override def toAtom: Atom = new Atom(root.id, root.origin, root.category)
 }

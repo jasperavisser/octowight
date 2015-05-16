@@ -10,15 +10,14 @@ import scala.annotation.meta.field
 
 object ResourceElementDmo {
 
-  def apply(resource: Resource[_], atom: Atom) = {
-    new ResourceElementDmo(resourceId = resource.getId, resourceType = resource.getType, atom = AtomDmo(atom))
-  }
+  def apply(resource: Resource[_], atom: Atom) =
+    new ResourceElementDmo(resourceCollection = resource.collection, resourceId = resource.id, atom = AtomDmo(atom))
 }
 
 @Document(collection = "resourceElement")
 case class ResourceElementDmo
 (
   @(Id@field) id: String = null,
+  resourceCollection: String,
   resourceId: lang.Long,
-  resourceType: String,
   atom: AtomDmo)

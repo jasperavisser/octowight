@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 trait ResourceRootDmoRepository extends MongoRepository[ResourceRootDmo, lang.Long] {
 
-  def findByResourceType(resourceType: String): util.List[ResourceRootDmo]
+  def findByResourceCollection(resourceCollection: String): util.List[ResourceRootDmo]
 
-  def findByResourceTypeAndRootIdAndRootCategoryAndRootOrigin(resourceType: String, atomId: lang.Long, atomCategory: String, atomOrigin: String): ResourceRootDmo
+  def findByResourceCollectionAndRootIdAndRootCategoryAndRootOrigin(resourceCollection: String, atomId: lang.Long, atomCategory: String, atomOrigin: String): ResourceRootDmo
 
-  def findByResourceTypeAndTombstone(resourceType: String, tombstone: Boolean): util.List[ResourceRootDmo]
+  def findByResourceCollectionAndTombstone(resourceCollection: String, tombstone: Boolean): util.List[ResourceRootDmo]
 
-  def findByResourceTypeAndResourceId(resourceType: String, resourceId: lang.Long): ResourceRootDmo
+  def findByResourceCollectionAndResourceId(resourceCollection: String, resourceId: lang.Long): ResourceRootDmo
 }

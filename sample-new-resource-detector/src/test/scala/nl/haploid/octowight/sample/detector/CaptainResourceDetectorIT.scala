@@ -18,7 +18,7 @@ class CaptainResourceDetectorIT extends AbstractTransactionalIT {
     roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, "harpooner"))
     val event1 = TestData.atomChangeEvent(roleDmo1.getId)
     val events = List(event1)
-    val dmosById = detector.getRolesById(events)
+    val dmosById = detector.findRolesById(events)
     dmosById should have size 1
     dmosById.get(roleDmo1.getId).orNull should be(roleDmo1)
   }

@@ -11,7 +11,7 @@ import scala.annotation.meta.field
 object ResourceModelDmo {
 
   def apply(resource: Resource[_], body: String) = {
-    new ResourceModelDmo(id = ResourceModelDmoId(resource), body = body, version = resource.getVersion)
+    new ResourceModelDmo(id = new ResourceModelDmoId(resource.id, resource.collection), body = body, version = resource.version)
   }
 }
 

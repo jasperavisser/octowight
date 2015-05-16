@@ -36,32 +36,32 @@ class ResourceRegistryService {
   }
 
   private[this] def getResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {
-    resourceRootDmoRepository.findByResourceTypeAndRootIdAndRootCategoryAndRootOrigin(
-      resourceRoot.resourceType, resourceRoot.root.id, resourceRoot.root.category, resourceRoot.root.origin)
+    resourceRootDmoRepository.findByResourceCollectionAndRootIdAndRootCategoryAndRootOrigin(
+      resourceRoot.resourceCollection, resourceRoot.root.id, resourceRoot.root.category, resourceRoot.root.origin)
   }
 
   private[this] def getResourceRootDmo(resourceElementDmo: ResourceElementDmo) = {
-    Option(resourceRootDmoRepository.findByResourceTypeAndResourceId(
-      resourceElementDmo.resourceType, resourceElementDmo.resourceId))
+    Option(resourceRootDmoRepository.findByResourceCollectionAndResourceId(
+      resourceElementDmo.resourceCollection, resourceElementDmo.resourceId))
   }
 
   private[this] def markResourceDirty(resourceRootDmo: ResourceRootDmo) = {
-    log.info(s"Mark ${resourceRootDmo.resourceType}/${resourceRootDmo.resourceId} as dirty")
-    val version = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
+    log.info(s"Mark ${resourceRootDmo.resourceCollection}/${resourceRootDmo.resourceId} as dirty")
+    val version = sequenceService.nextValue(ResourceRootDmo.VersionSequence)
     val resourceRootDmoToSave = resourceRootDmo.copy(version = version)
     ResourceRoot(resourceRootDmoRepository.save(resourceRootDmoToSave))
   }
 
   private[this] def saveNewResource(resourceRoot: ResourceRoot): ResourceRoot = {
-    val resourceId: Long = sequenceService.getNextValue(ResourceRootDmo.IdSequence)
-    val version: Long = sequenceService.getNextValue(ResourceRootDmo.VersionSequence)
+    val resourceId: Long = sequenceService.nextValue(ResourceRootDmo.IdSequence)
+    val version: Long = sequenceService.nextValue(ResourceRootDmo.VersionSequence)
     val resourceRootDmoToSave = ResourceRootDmo(resourceRoot).copy(resourceId = resourceId, version = version)
-    log.info(s"Save resource ${resourceRootDmoToSave.resourceType}/${resourceRootDmoToSave.resourceId}")
+    log.info(s"Save resource ${resourceRootDmoToSave.resourceCollection}/${resourceRootDmoToSave.resourceId}")
     ResourceRoot(resourceRootDmoRepository.save(resourceRootDmoToSave))
   }
 
   private[this] def untombstoneResource(resourceRootDmo: ResourceRootDmo): ResourceRoot = {
-    log.info(s"Remove tombstone for ${resourceRootDmo.resourceType}/${resourceRootDmo.resourceId}")
+    log.info(s"Remove tombstone for ${resourceRootDmo.resourceCollection}/${resourceRootDmo.resourceId}")
     val resourceRootDmoToSave = resourceRootDmo.copy(tombstone = false)
     ResourceRoot(resourceRootDmoRepository.save(resourceRootDmoToSave))
   }

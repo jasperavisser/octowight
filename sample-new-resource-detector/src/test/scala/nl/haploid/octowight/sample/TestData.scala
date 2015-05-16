@@ -27,7 +27,7 @@ object TestData {
   }
 
   def resourceRoot(resourceId: Long) =
-    new ResourceRoot(resourceId = resourceId, resourceType = nextString, root = atom, version = null)
+    new ResourceRoot(resourceId = resourceId, resourceCollection = nextString, root = atom, version = null)
 
   def atom = new Atom(nextLong, nextString, nextString)
 

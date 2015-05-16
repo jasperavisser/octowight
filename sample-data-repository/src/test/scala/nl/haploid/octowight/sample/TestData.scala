@@ -29,7 +29,7 @@ object TestData {
   }
 
   def resourceRoot =
-    new ResourceRoot(resourceId = nextLong, resourceType = nextString, root = atom, version = null)
+    new ResourceRoot(resourceId = nextLong, resourceCollection = nextString, root = atom, version = null)
 
   def atom = new Atom(nextLong, nextString, nextString)
 }

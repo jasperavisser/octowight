@@ -25,26 +25,26 @@ class AbstractResourceServiceTest extends AbstractTest {
 
   "Abstract resource service" should "get model from origin" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
-      .addMockedMethod("getModelClass")
-      .addMockedMethod("getResourceType")
+      .addMockedMethod("collection")
       .addMockedMethod("getResourceRoot")
+      .addMockedMethod("modelClass")
       .addMockedMethod("saveResourceElements")
       .createMock())
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(abstractResourceService, "log", log)
     val resource = mock[MockResource]
     val resourceId = TestData.nextLong
-    val resourceType = TestData.nextString
+    val resourceCollection = TestData.nextString
     val resourceRoot = TestData.resourceRoot(resourceId)
     val expectedModel = mock[MockModel]
     expecting {
-      abstractResourceService.getResourceType andReturn resourceType times 2
-      abstractResourceService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
-      abstractResourceService.getModelClass andReturn classOf[MockModel] once()
+      abstractResourceService.collection andReturn resourceCollection times 2
+      abstractResourceService.getResourceRoot(resourceCollection, resourceId) andReturn resourceRoot once()
+      abstractResourceService.modelClass andReturn classOf[MockModel] once()
       modelCacheService.get(resourceRoot, classOf[MockModel]) andReturn None once()
       resourceFactory.fromResourceRoot(resourceRoot) andReturn Some(resource) once()
       abstractResourceService.saveResourceElements(resource) once()
-      resource.getModel andReturn expectedModel once()
+      resource.model andReturn expectedModel once()
       modelCacheService.put(resource, expectedModel) once()
     }
     whenExecuting(abstractResourceService, resourceFactory, resource, modelCacheService) {
@@ -55,21 +55,21 @@ class AbstractResourceServiceTest extends AbstractTest {
 
   "Abstract resource service" should "get model from cache" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
-      .addMockedMethod("getModelClass")
-      .addMockedMethod("getResourceType")
+      .addMockedMethod("collection")
       .addMockedMethod("getResourceRoot")
+      .addMockedMethod("modelClass")
       .createMock())
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(abstractResourceService, "log", log)
 
     val resourceId = TestData.nextLong
-    val resourceType = TestData.nextString
+    val resourceCollection = TestData.nextString
     val resourceRoot = TestData.resourceRoot(resourceId)
     val expectedModel = mock[MockModel]
     expecting {
-      abstractResourceService.getResourceType andReturn resourceType times 2
-      abstractResourceService.getResourceRoot(resourceType, resourceId) andReturn resourceRoot once()
-      abstractResourceService.getModelClass andReturn classOf[MockModel] once()
+      abstractResourceService.collection andReturn resourceCollection times 2
+      abstractResourceService.getResourceRoot(resourceCollection, resourceId) andReturn resourceRoot once()
+      abstractResourceService.modelClass andReturn classOf[MockModel] once()
       modelCacheService.get(resourceRoot, classOf[MockModel]) andReturn Some(expectedModel) once()
     }
     whenExecuting(abstractResourceService, modelCacheService) {
@@ -85,7 +85,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(abstractResourceService, "log", log)
 
-    val resourceType = TestData.nextString
+    val resourceCollection = TestData.nextString
     val resourceRootDmo1: ResourceRootDmo = TestData.resourceRootDmo
     val resourceRootDmo2: ResourceRootDmo = TestData.resourceRootDmo
     val resourceRootDmos = util.Arrays.asList(resourceRootDmo1, resourceRootDmo2)
@@ -95,8 +95,8 @@ class AbstractResourceServiceTest extends AbstractTest {
     val model2 = mock[MockModel]
     val expectedModels = List(model1, model2)
     expecting {
-      abstractResourceService.getResourceType andReturn resourceType once()
-      resourceRootDmoRepository.findByResourceTypeAndTombstone(resourceType, tombstone = false) andReturn resourceRootDmos once()
+      abstractResourceService.collection andReturn resourceCollection once()
+      resourceRootDmoRepository.findByResourceCollectionAndTombstone(resourceCollection, tombstone = false) andReturn resourceRootDmos once()
       abstractResourceService.getModelOption(resourceRootDmo1.resourceId) andReturn modelOption1 once()
       abstractResourceService.getModelOption(resourceRootDmo2.resourceId) andReturn modelOption2 once()
       modelOption1.toList andReturn List(model1) once()
@@ -109,14 +109,14 @@ class AbstractResourceServiceTest extends AbstractTest {
 
   "Abstract resource service" should "get resource root" in {
     val resourceId = TestData.nextLong
-    val resourceType = TestData.nextString
+    val resourceCollection = TestData.nextString
     val resourceRootDmo = TestData.resourceRootDmo
     val expectedResourceRoot = ResourceRoot(resourceRootDmo)
     expecting {
-      resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceType, resourceId) andReturn resourceRootDmo once()
+      resourceRootDmoRepository.findByResourceCollectionAndResourceId(resourceCollection, resourceId) andReturn resourceRootDmo once()
     }
     whenExecuting(resourceRootDmoRepository) {
-      val actualResourceRoot = resourceService.getResourceRoot(resourceType, resourceId)
+      val actualResourceRoot = resourceService.getResourceRoot(resourceCollection, resourceId)
       actualResourceRoot should be(expectedResourceRoot)
     }
   }
@@ -128,7 +128,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     val resourceElementDmo1 = ResourceElementDmo(resource, atom1)
     val resourceElementDmo2 = ResourceElementDmo(resource, atom2)
     expecting {
-      resourceElementDmoRepository.deleteByResourceTypeAndResourceId(resource.getType, resource.getId) andReturn 0 once()
+      resourceElementDmoRepository.deleteByResourceCollectionAndResourceId(resource.collection, resource.id) andReturn 0 once()
       resourceElementDmoRepository.save(resourceElementDmo1) andReturn mock[ResourceElementDmo] once()
       resourceElementDmoRepository.save(resourceElementDmo2) andReturn mock[ResourceElementDmo] once()
     }
@@ -142,7 +142,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     val resourceRootDmo = TestData.resourceRootDmo
     val tombstonedResourceRootDmo = resourceRootDmo.copy(tombstone = true)
     expecting {
-      resourceRootDmoRepository.findByResourceTypeAndResourceId(resourceRoot.resourceType, resourceRoot.resourceId) andReturn resourceRootDmo once()
+      resourceRootDmoRepository.findByResourceCollectionAndResourceId(resourceRoot.resourceCollection, resourceRoot.resourceId) andReturn resourceRootDmo once()
       resourceRootDmoRepository.save(tombstonedResourceRootDmo) andReturn tombstonedResourceRootDmo once()
     }
     whenExecuting(resourceRootDmoRepository) {

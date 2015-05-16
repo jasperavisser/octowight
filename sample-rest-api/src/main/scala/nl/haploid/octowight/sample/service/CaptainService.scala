@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 @Service
 class CaptainService extends AbstractResourceService[CaptainModel, CaptainResource] {
 
-  def getModelClass = classOf[CaptainModel]
+  def modelClass = classOf[CaptainModel]
 
-  def getResourceType = CaptainResource.ResourceType
+  def collection = CaptainResource.ResourceCollection
 }

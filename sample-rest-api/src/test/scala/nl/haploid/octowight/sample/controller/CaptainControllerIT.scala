@@ -37,11 +37,11 @@ class CaptainControllerIT extends AbstractTransactionalIT {
 
   "Captain controller" should "get a captain" in {
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
-    val roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.ResourceType))
+    val roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.ResourceCollection))
     val resourceRootDmo = new ResourceRootDmo(
       root = AtomDmo(new Atom(roleDmo.getId, RoleDmo.AtomCategory, "the seven seas")),
       resourceId = TestData.nextLong,
-      resourceType = CaptainResource.ResourceType,
+      resourceCollection = CaptainResource.ResourceCollection,
       version = TestData.nextLong)
     val resourceRootDmoWithId = resourceRootDmoRepository.save(resourceRootDmo)
     tempResourceRootDmos.add(resourceRootDmoWithId)
