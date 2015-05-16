@@ -10,7 +10,7 @@ object TestData {
     val event = new AtomChangeEvent
     event.setAtomId(nextLong)
     event.setAtomOrigin(ATOM_LOCUS)
-    event.setAtomType(ATOM_TYPE)
+    event.setAtomCategory(ATOM_TYPE)
     event
   }
 

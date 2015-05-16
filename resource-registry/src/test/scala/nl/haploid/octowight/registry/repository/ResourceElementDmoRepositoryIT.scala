@@ -11,14 +11,16 @@ class ResourceElementDmoRepositoryIT extends AbstractIT {
   "Resource element DMO repository" should "find by atom id, type & origin" in {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
-    val actualDmo = resourceElementDmoRepository.findByAtomIdAndAtomTypeAndAtomOrigin(expectedDmo.getAtomId, expectedDmo.getAtomType, expectedDmo.getAtomOrigin)
+    val actualDmo = resourceElementDmoRepository.findByAtomIdAndAtomCategoryAndAtomOrigin(
+      expectedDmo.getAtom.getId, expectedDmo.getAtom.getCategory, expectedDmo.getAtom.getOrigin)
     actualDmo should be(expectedDmo)
   }
 
   "Resource element DMO repository" should "find by atom ids, type & origin" in {
     val dmo = TestData.resourceElementDmo
     val expectedDmo = resourceElementDmoRepository.save(dmo)
-    val actualDmos = resourceElementDmoRepository.findByAtomIdInAndAtomTypeAndAtomOrigin(util.Collections.singletonList(expectedDmo.getAtomId), expectedDmo.getAtomType, expectedDmo.getAtomOrigin)
+    val actualDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(
+      util.Collections.singletonList(expectedDmo.getAtom.getId), expectedDmo.getAtom.getCategory, expectedDmo.getAtom.getOrigin)
     actualDmos should have size 1
     actualDmos.get(0) should be(expectedDmo)
   }

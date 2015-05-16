@@ -2,8 +2,8 @@ package nl.haploid.octowight.registry
 
 import java.util.{Random, UUID}
 
-import nl.haploid.octowight.registry.data.ResourceRoot
-import nl.haploid.octowight.registry.repository.{ResourceElementDmo, ResourceModelDmo, ResourceModelDmoId, ResourceRootDmo}
+import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
+import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 
 object TestData {
@@ -20,7 +20,7 @@ object TestData {
     resourceRoot.setResourceType(nextString)
     resourceRoot.setAtomId(nextLong)
     resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomType(nextString)
+    resourceRoot.setAtomCategory(nextString)
     resourceRoot
   }
 
@@ -29,16 +29,16 @@ object TestData {
     event.setId(nextLong)
     event.setAtomId(nextLong)
     event.setAtomOrigin(atomGroup.getAtomOrigin)
-    event.setAtomType(atomGroup.getAtomType)
+    event.setAtomCategory(atomGroup.getAtomCategory)
     event
   }
 
-  def atomChangeEvent(atomType: String) = {
+  def atomChangeEvent(atomCategory: String) = {
     val event = new AtomChangeEvent
     event.setId(nextLong)
     event.setAtomId(nextLong)
     event.setAtomOrigin(nextString)
-    event.setAtomType(atomType)
+    event.setAtomCategory(atomCategory)
     event
   }
 
@@ -48,20 +48,17 @@ object TestData {
     val dmo = new ResourceRootDmo
     dmo.setResourceId(nextLong)
     dmo.setResourceType(resourceType)
-    dmo.setAtomId(nextLong)
-    dmo.setAtomOrigin(nextString)
-    dmo.setAtomType(nextString)
+    dmo.setRoot(AtomDmo(new Atom(nextLong, nextString, nextString)))
     dmo.setVersion(nextLong)
     dmo
   }
 
+  // TODO: not random, so this could be an apply method
   def resourceElementDmo(resourceRootDmo: ResourceRootDmo, atomChangeEvent: AtomChangeEvent) = {
     val dmo = new ResourceElementDmo
     dmo.setResourceId(resourceRootDmo.getResourceId)
     dmo.setResourceType(resourceRootDmo.getResourceType)
-    dmo.setAtomId(atomChangeEvent.getAtomId)
-    dmo.setAtomOrigin(atomChangeEvent.getAtomOrigin)
-    dmo.setAtomType(atomChangeEvent.getAtomType)
+    dmo.setAtom(AtomDmo(new Atom(atomChangeEvent.getAtomId, atomChangeEvent.getAtomOrigin, atomChangeEvent.getAtomCategory)))
     dmo
   }
 
@@ -69,9 +66,7 @@ object TestData {
     val dmo = new ResourceElementDmo
     dmo.setResourceId(nextLong)
     dmo.setResourceType(nextString)
-    dmo.setAtomId(nextLong)
-    dmo.setAtomOrigin(nextString)
-    dmo.setAtomType(nextString)
+    dmo.setAtom(AtomDmo(new Atom(nextLong, nextString, nextString)))
     dmo
   }
 
@@ -95,7 +90,7 @@ object TestData {
   def atomGroup = {
     val atomGroup = new AtomGroup
     atomGroup.setAtomOrigin(TestData.nextString)
-    atomGroup.setAtomType(TestData.nextString)
+    atomGroup.setAtomCategory(TestData.nextString)
     atomGroup
   }
 }

@@ -12,7 +12,8 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     resourceRootDmoRepository.deleteAll()
     val dmo = TestData.resourceRootDmo
     val expectedDmo = resourceRootDmoRepository.save(dmo)
-    val actualDmo = resourceRootDmoRepository.findByResourceTypeAndAtomIdAndAtomTypeAndAtomOrigin(expectedDmo.getResourceType, expectedDmo.getAtomId, expectedDmo.getAtomType, expectedDmo.getAtomOrigin)
+    val actualDmo = resourceRootDmoRepository.findByResourceTypeAndRootIdAndRootCategoryAndRootOrigin(
+      expectedDmo.getResourceType, expectedDmo.getRoot.getId, expectedDmo.getRoot.getCategory, expectedDmo.getRoot.getOrigin)
     actualDmo should be(expectedDmo)
   }
 

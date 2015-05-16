@@ -32,7 +32,7 @@ object TestData {
     val resourceRoot = new ResourceRoot
     resourceRoot.setAtomId(nextLong)
     resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomType(nextString)
+    resourceRoot.setAtomCategory(nextString)
     resourceRoot.setResourceId(nextLong)
     resourceRoot.setResourceType(nextString)
     resourceRoot.setVersion(nextLong)

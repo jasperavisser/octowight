@@ -4,7 +4,7 @@ import java.lang
 import java.util.{Random, UUID}
 
 import nl.haploid.octowight.registry.data.{Atom, Model, Resource, ResourceRoot}
-import nl.haploid.octowight.registry.repository.ResourceRootDmo
+import nl.haploid.octowight.registry.repository.{AtomDmo, ResourceRootDmo}
 import nl.haploid.octowight.sample.repository.{PersonDmo, RoleDmo}
 import nl.haploid.octowight.sample.service.AbstractResourceService
 
@@ -31,7 +31,7 @@ object TestData {
     val resourceRoot = new ResourceRoot
     resourceRoot.setAtomId(nextLong)
     resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomType(nextString)
+    resourceRoot.setAtomCategory(nextString)
     resourceRoot.setResourceId(resourceId)
     resourceRoot.setResourceType(nextString)
     resourceRoot.setVersion(nextLong)
@@ -40,6 +40,7 @@ object TestData {
 
   def resourceRootDmo = {
     val resourceRootDmo = new ResourceRootDmo
+    resourceRootDmo.setRoot(new AtomDmo)
     resourceRootDmo.setResourceId(nextLong)
     resourceRootDmo
   }

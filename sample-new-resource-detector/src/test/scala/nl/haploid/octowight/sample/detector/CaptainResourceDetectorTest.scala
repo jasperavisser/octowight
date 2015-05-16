@@ -13,8 +13,8 @@ class CaptainResourceDetectorTest extends AbstractTest {
   @Tested private[this] val detector: CaptainResourceDetector = null
   @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
 
-  "Captain resource detector" should "have an atom type" in {
-    detector.getAtomTypes should have size 1
+  "Captain resource detector" should "have an atom category" in {
+    detector.getAtomCategories should have size 1
   }
 
   "Captain resource detector" should "detect captains" in {

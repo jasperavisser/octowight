@@ -2,7 +2,8 @@ package nl.haploid.octowight.sample.controller
 
 import java.util
 
-import nl.haploid.octowight.registry.repository.{ResourceRootDmo, ResourceRootDmoRepository}
+import nl.haploid.octowight.registry.data.Atom
+import nl.haploid.octowight.registry.repository.{AtomDmo, ResourceRootDmo, ResourceRootDmoRepository}
 import nl.haploid.octowight.sample.data.CaptainResource
 import nl.haploid.octowight.sample.repository.{PersonDmoRepository, RoleDmo, RoleDmoRepository}
 import nl.haploid.octowight.sample.{AbstractTransactionalIT, TestData}
@@ -31,15 +32,14 @@ class CaptainControllerIT extends AbstractTransactionalIT {
 
   override def afterEach() = {
     resourceRootDmoRepository.delete(tempResourceRootDmos)
+    super.afterEach()
   }
 
   "Captain controller" should "get a captain" in {
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
     val roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.ResourceType))
     val resourceRootDmo = new ResourceRootDmo
-    resourceRootDmo.setAtomId(roleDmo.getId)
-    resourceRootDmo.setAtomType(RoleDmo.AtomType)
-    resourceRootDmo.setAtomOrigin("the seven seas")
+    resourceRootDmo.setRoot(AtomDmo(new Atom(roleDmo.getId, RoleDmo.AtomCategory, "the seven seas")))
     resourceRootDmo.setResourceId(TestData.nextLong)
     resourceRootDmo.setResourceType(CaptainResource.ResourceType)
     val resourceRootDmoWithId = resourceRootDmoRepository.save(resourceRootDmo)

@@ -13,5 +13,4 @@ docker pull ${ZOOKEEPER_TAG}
 pushd ../../docker
 docker build --tag oracle-java8 oracle-java8
 docker build --tag ${POSTGRES_DATA_REPOSITORY_TAG} postgres-data-repository
-docker build --tag ${POSTGRES_RESOURCE_REGISRY_TAG} postgres-resource-registry
 popd

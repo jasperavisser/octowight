@@ -10,13 +10,13 @@ import scala.beans.BeanProperty
 class AtomChangeEvent {
   @BeanProperty var id: lang.Long = _
   @BeanProperty var atomId: lang.Long = _
+  @BeanProperty var atomCategory: String = _
   @BeanProperty var atomOrigin: String = _
-  @BeanProperty var atomType: String = _
 
   @JsonIgnore def getAtomGroup = {
     val atomGroup = new AtomGroup
     atomGroup.setAtomOrigin(getAtomOrigin)
-    atomGroup.setAtomType(getAtomType)
+    atomGroup.setAtomCategory(getAtomCategory)
     atomGroup
   }
 

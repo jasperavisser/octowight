@@ -1,17 +1,17 @@
 package nl.haploid.octowight.sample
 
+import org.scalatest.OneInstancePerTest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.DefaultTransactionDefinition
-import org.springframework.transaction.{PlatformTransactionManager, TransactionStatus}
 
-abstract class AbstractTransactionalIT extends AbstractIT {
+abstract class AbstractTransactionalIT extends AbstractIT with OneInstancePerTest {
   @Autowired private[this] val platformTransactionManager: PlatformTransactionManager = null
 
-  private[this] var transactionStatus: TransactionStatus = null
+  private[this] lazy val transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition)
 
   override def beforeEach() = {
     super.beforeEach()
-    transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition)
     transactionStatus.setRollbackOnly()
   }
 

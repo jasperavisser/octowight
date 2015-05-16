@@ -15,18 +15,20 @@ object TestData {
     resourceRoot.setResourceType(nextString)
     resourceRoot.setAtomId(nextLong)
     resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomType(nextString)
+    resourceRoot.setAtomCategory(nextString)
     resourceRoot
   }
 
   def topic = nextString
 
-  def atomChangeEvent(atomType: String) = {
+  def atomChangeEvent(atomCategory: String): AtomChangeEvent = atomChangeEvent(nextString, atomCategory)
+
+  def atomChangeEvent(atomOrigin: String, atomCategory: String) = {
     val event = new AtomChangeEvent
     event.setId(nextLong)
     event.setAtomId(nextLong)
-    event.setAtomOrigin(nextString)
-    event.setAtomType(atomType)
+    event.setAtomOrigin(atomOrigin)
+    event.setAtomCategory(atomCategory)
     event
   }
 

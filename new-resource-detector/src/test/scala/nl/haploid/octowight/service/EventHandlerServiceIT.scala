@@ -21,8 +21,8 @@ class EventHandlerServiceIT extends AbstractIT {
   "Event handler service" should "handle some events" in {
     val topic = TestData.topic
     eventConsumerService.reset(topic)
-    val event1 = TestData.atomChangeEvent(MockResourceDetector.AtomType)
-    val event2 = TestData.atomChangeEvent(MockResourceDetector.AtomType)
+    val event1 = TestData.atomChangeEvent(MockResourceDetector.AtomCategory)
+    val event2 = TestData.atomChangeEvent(MockResourceDetector.AtomCategory)
     val event3 = TestData.atomChangeEvent("jack")
     sendMessage(topic, event1)
     sendMessage(topic, event2)
@@ -33,7 +33,7 @@ class EventHandlerServiceIT extends AbstractIT {
 
   def sendMessage(topic: String, event: AtomChangeEvent) = {
     val message = jsonMapper.serialize(event)
-    log.debug(s"Send message: $message")
+    log.debug(s"Send message to $topic: $message")
     val record = new ProducerRecord[String, String](topic, message)
     kafkaProducer.send(record).get(5, TimeUnit.SECONDS)
   }

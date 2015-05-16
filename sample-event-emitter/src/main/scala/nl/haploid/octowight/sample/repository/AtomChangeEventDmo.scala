@@ -22,15 +22,15 @@ class AtomChangeEventDmo {
   @Column(name = "atom_origin")
   @BeanProperty var atomOrigin: String = _
 
-  @Column(name = "atom_type")
-  @BeanProperty var atomType: String = _
+  @Column(name = "atom_category")
+  @BeanProperty var atomCategory: String = _
 
   def toAtomChangeEvent = {
-    val event = new AtomChangeEvent
-    event.setId(getId)
-    event.setAtomId(getAtomId)
-    event.setAtomOrigin(getAtomOrigin)
-    event.setAtomType(getAtomType)
-    event
+    val e = new AtomChangeEvent
+    e.setId(getId)
+    e.setAtomId(getAtomId)
+    e.setAtomOrigin(getAtomOrigin)
+    e.setAtomCategory(getAtomCategory)
+    e
   }
 }

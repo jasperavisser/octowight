@@ -13,9 +13,7 @@ object ResourceElementDmo {
 
   def apply(resource: Resource[_], atom: Atom) = {
     val d = new ResourceElementDmo
-    d.setAtomId(atom.id)
-    d.setAtomOrigin(atom.origin)
-    d.setAtomType(atom.typ)
+    d.setAtom(AtomDmo(atom))
     d.setResourceId(resource.getId)
     d.setResourceType(resource.getType)
     d
@@ -29,9 +27,7 @@ class ResourceElementDmo {
   @BeanProperty var id: String = _
   @BeanProperty var resourceId: lang.Long = _
   @BeanProperty var resourceType: String = _
-  @BeanProperty var atomId: lang.Long = _
-  @BeanProperty var atomOrigin: String = _
-  @BeanProperty var atomType: String = _
+  @BeanProperty var atom: AtomDmo = _
 
   override def equals(that: Any) = EqualsBuilder.reflectionEquals(this, that, false)
 

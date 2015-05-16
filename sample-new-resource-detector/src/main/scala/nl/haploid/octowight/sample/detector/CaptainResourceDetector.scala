@@ -19,7 +19,7 @@ object CaptainResourceDetector {
 class CaptainResourceDetector extends ResourceDetector {
   @Autowired protected val roleDmoRepository: RoleDmoRepository = null
 
-  override def getAtomTypes = List(RoleDmo.AtomType)
+  override def getAtomCategories = List(RoleDmo.AtomCategory)
 
   @Transactional(readOnly = true)
   override def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot] = {

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
 @Service
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+// TODO: @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 class EventConsumerService {
   protected[this] val log = LoggerFactory.getLogger(getClass)
 
@@ -55,7 +55,7 @@ class EventConsumerService {
       .toIterable
     log.debug(s"Consumed ${events.size} events")
     events
-      .groupBy(f => (f.getAtomId, f.getAtomOrigin, f.getAtomType))
+      .groupBy(e => (e.getAtomId, e.getAtomOrigin, e.getAtomCategory))
       .map { case (_, similarEvents) => similarEvents.head }
       .toSet
   }
@@ -68,6 +68,7 @@ class EventConsumerService {
   def commit() = consumerConnector.commitOffsets()
 
   def reset(topic: String) = {
+    log.warn(s"Reset consumer to topic $topic")
     this.topic = topic
     consumerConnectorOption match {
       case Some(consumerConnector) => consumerConnector.shutdown()

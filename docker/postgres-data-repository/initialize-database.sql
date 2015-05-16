@@ -8,14 +8,14 @@ create table octowight.atom_change_event(
 	id bigint not null primary key default nextval('octowight.event_sequence'),
 	atom_id bigint not null,
 	atom_origin varchar(256) not null,
-	atom_type varchar(256) not null
+	atom_category varchar(256) not null
 );
 
 -- Create atom change event trigger functions
-create or replace function log_atom_change_event(atom_id bigint, atom_origin varchar(256), atom_type varchar(256))
+create or replace function log_atom_change_event(atom_id bigint, atom_origin varchar(256), atom_category varchar(256))
 	returns void as $$ begin
-		insert into octowight.atom_change_event(id, atom_id, atom_origin, atom_type)
-			values(nextval('octowight.event_sequence'), atom_id, atom_origin, atom_type);
+		insert into octowight.atom_change_event(id, atom_id, atom_origin, atom_category)
+			values(nextval('octowight.event_sequence'), atom_id, atom_origin, atom_category);
 	end; $$ language plpgsql;
 
 -- Create person table

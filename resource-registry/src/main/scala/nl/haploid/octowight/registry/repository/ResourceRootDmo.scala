@@ -14,15 +14,13 @@ object ResourceRootDmo {
   val VersionSequence = "resourceVersion"
 
   def apply(resourceRoot: ResourceRoot) = {
-    val resourceRootDmo = new ResourceRootDmo
-    resourceRootDmo.setAtomId(resourceRoot.getAtomId)
-    resourceRootDmo.setAtomOrigin(resourceRoot.getAtomOrigin)
-    resourceRootDmo.setAtomType(resourceRoot.getAtomType)
-    resourceRootDmo.setResourceId(resourceRoot.getResourceId)
-    resourceRootDmo.setResourceType(resourceRoot.getResourceType)
-    resourceRootDmo.setTombstone(resourceRoot.getTombstone)
-    resourceRootDmo.setVersion(resourceRoot.getVersion)
-    resourceRootDmo
+    val d = new ResourceRootDmo
+    d.setRoot(AtomDmo(resourceRoot))
+    d.setResourceId(resourceRoot.getResourceId)
+    d.setResourceType(resourceRoot.getResourceType)
+    d.setTombstone(resourceRoot.getTombstone)
+    d.setVersion(resourceRoot.getVersion)
+    d
   }
 }
 
@@ -34,10 +32,7 @@ class ResourceRootDmo {
   // TODO: resource id + type must be unique (index?)
   @BeanProperty var resourceId: lang.Long = _
   @BeanProperty var resourceType: String = _
-  // TODO: nested AtomDmo
-  @BeanProperty var atomId: lang.Long = _
-  @BeanProperty var atomOrigin: String = _
-  @BeanProperty var atomType: String = _
+  @BeanProperty var root: AtomDmo = _
   @BeanProperty var tombstone: Boolean = false
   @BeanProperty var version: lang.Long = _
 

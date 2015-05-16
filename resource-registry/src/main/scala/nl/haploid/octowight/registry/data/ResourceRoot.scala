@@ -14,31 +14,32 @@ object ResourceRoot {
     val r = new ResourceRoot
     r.setAtomId(event.getAtomId)
     r.setAtomOrigin(event.getAtomOrigin)
-    r.setAtomType(event.getAtomType)
+    r.setAtomCategory(event.getAtomCategory)
     r.setResourceType(resourceType)
     r
   }
 
   def apply(resourceRootDmo: ResourceRootDmo) = {
-    val resourceRoot = new ResourceRoot
-    resourceRoot.setAtomId(resourceRootDmo.getAtomId)
-    resourceRoot.setAtomOrigin(resourceRootDmo.getAtomOrigin)
-    resourceRoot.setAtomType(resourceRootDmo.getAtomType)
-    resourceRoot.setResourceId(resourceRootDmo.getResourceId)
-    resourceRoot.setResourceType(resourceRootDmo.getResourceType)
-    resourceRoot.setTombstone(resourceRootDmo.getTombstone)
-    resourceRoot.setVersion(resourceRootDmo.getVersion)
-    resourceRoot
+    val r = new ResourceRoot
+    r.setAtomId(resourceRootDmo.getRoot.getId)
+    r.setAtomOrigin(resourceRootDmo.getRoot.getOrigin)
+    r.setAtomCategory(resourceRootDmo.getRoot.getCategory)
+    r.setResourceId(resourceRootDmo.getResourceId)
+    r.setResourceType(resourceRootDmo.getResourceType)
+    r.setTombstone(resourceRootDmo.getTombstone)
+    r.setVersion(resourceRootDmo.getVersion)
+    r
   }
 }
 
-class ResourceRoot extends ResourceIdentifier {
+class ResourceRoot extends ResourceIdentifier with Atomizable {
 
   @BeanProperty var resourceId: lang.Long = _
   @BeanProperty var resourceType: String = _
+  // TODO: use Atom, also Type->Category
   @BeanProperty var atomId: lang.Long = _
   @BeanProperty var atomOrigin: String = _
-  @BeanProperty var atomType: String = _
+  @BeanProperty var atomCategory: String = _
   @BeanProperty var tombstone: Boolean = false
   @BeanProperty var version: lang.Long = _
 
@@ -46,11 +47,13 @@ class ResourceRoot extends ResourceIdentifier {
 
   override def getType: String = resourceType
 
-  def key = s"$getAtomOrigin:$getAtomType/$getAtomId->$getResourceType"
+  def key = s"$getAtomOrigin:$getAtomCategory/$getAtomId->$getResourceType"
 
   override def equals(that: Any) = EqualsBuilder.reflectionEquals(this, that, false)
 
   override def hashCode = HashCodeBuilder.reflectionHashCode(this, false)
 
   override def toString = ToStringBuilder.reflectionToString(this)
+
+  override def toAtom: Atom = new Atom(getAtomId, getAtomOrigin, getAtomCategory)
 }

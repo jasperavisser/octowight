@@ -8,7 +8,7 @@ import nl.haploid.octowight.registry.data.{Atom, Atomizable}
 import scala.beans.BeanProperty
 
 object RoleDmo {
-  val AtomType = "role"
+  val AtomCategory = "role"
 }
 
 @Entity
@@ -30,5 +30,5 @@ class RoleDmo extends Atomizable {
   @Transient
   @BeanProperty var origin: String = null
 
-  override def toAtom = new Atom(id, origin, RoleDmo.AtomType)
+  override def toAtom = new Atom(id, origin, RoleDmo.AtomCategory)
 }

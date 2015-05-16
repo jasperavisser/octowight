@@ -20,29 +20,29 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
     ReflectionTestUtils.setField(resourceDetectorsService, "detectors", util.Collections.singletonList(mockDetector))
   }
 
-  "Resource detectors service" should "get detectors for atom type" in {
+  "Resource detectors service" should "get detectors for atom category" in {
     val expectedDetectors = List(mockDetector)
-    val atomType = "kinsey"
+    val atomCategory = "kinsey"
     expecting {
-      mockDetector.getAtomTypes andReturn List("crane", atomType) once()
+      mockDetector.getAtomCategories andReturn List("crane", atomCategory) once()
     }
     whenExecuting(mockDetector) {
-      val actualDetectors = resourceDetectorsService.getDetectorsForAtomType(atomType)
+      val actualDetectors = resourceDetectorsService.getDetectorsForAtomCategory(atomCategory)
       actualDetectors should be(expectedDetectors)
     }
   }
 
   "Resource detectors service" should "detect resources" in {
-    val atomType = "harris"
-    val event1 = TestData.atomChangeEvent(atomType)
+    val atomCategory = "harris"
+    val event1 = TestData.atomChangeEvent(atomCategory)
     val event2 = TestData.atomChangeEvent("calvet")
     val atomGroup = new AtomGroup
     atomGroup.setAtomOrigin(event1.getAtomOrigin)
-    atomGroup.setAtomType(event1.getAtomType)
+    atomGroup.setAtomCategory(event1.getAtomCategory)
     val events = List(event1, event2)
     val expectedResourceRoots = List(TestData.resourceRoot(96l))
     expecting {
-      mockDetector.getAtomTypes andReturn List("holloway", atomType) once()
+      mockDetector.getAtomCategories andReturn List("holloway", atomCategory) once()
       mockDetector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(mockDetector) {

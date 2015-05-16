@@ -11,7 +11,7 @@ class EventChannelServiceIT extends AbstractIT {
   "Channel" should "send an event" in {
     val event = TestData.atomChangeEvent
     val future = eventChannelService.sendEvent(event)
-    future.get(5, TimeUnit.SECONDS) should not be null
+    Option(future.get(5, TimeUnit.SECONDS)) should not be None
   }
 
   "Channel" should "send multiple events" in {

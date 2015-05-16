@@ -6,9 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 trait ResourceElementDmoRepository extends MongoRepository[ResourceElementDmo, String] {
 
-  def findByAtomIdAndAtomTypeAndAtomOrigin(atomId: lang.Long, atomType: String, atomOrigin: String): ResourceElementDmo
+  def findByAtomIdAndAtomCategoryAndAtomOrigin(atomId: lang.Long, atomCategory: String, atomOrigin: String): ResourceElementDmo
 
-  def findByAtomIdInAndAtomTypeAndAtomOrigin(atomId: lang.Iterable[lang.Long], atomType: String, atomOrigin: String): util.List[ResourceElementDmo]
+  def findByAtomIdInAndAtomCategoryAndAtomOrigin(atomId: lang.Iterable[lang.Long], atomCategory: String, atomOrigin: String): util.List[ResourceElementDmo]
 
   def deleteByResourceTypeAndResourceId(resourceType: String, resourceId: lang.Long): Long
 }

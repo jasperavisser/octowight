@@ -14,7 +14,7 @@ object TestData {
     val event = new AtomChangeEvent
     event.setAtomId(atomId)
     event.setAtomOrigin(name)
-    event.setAtomType(PersonDmo.AtomType)
+    event.setAtomCategory(PersonDmo.AtomCategory)
     event
   }
 
@@ -37,7 +37,7 @@ object TestData {
     resourceRoot.setResourceType(nextString)
     resourceRoot.setAtomId(nextLong)
     resourceRoot.setAtomOrigin(nextString)
-    resourceRoot.setAtomType(nextString)
+    resourceRoot.setAtomCategory(nextString)
     resourceRoot
   }
 
