@@ -30,7 +30,7 @@ object ResourceRoot {
 case class ResourceRoot
 (
   resourceId: lang.Long,
-  resourceCollection: String, // TODO: collection
+  resourceCollection: String,
   root: Atom,
   tombstone: Boolean = false,
   version: lang.Long

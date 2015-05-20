@@ -7,6 +7,7 @@ import nl.haploid.octowight.registry.repository.{AtomDmo, ResourceRootDmo, Resou
 import nl.haploid.octowight.sample.data.CaptainResource
 import nl.haploid.octowight.sample.repository.{PersonDmoRepository, RoleDmo, RoleDmoRepository}
 import nl.haploid.octowight.sample.{AbstractTransactionalIT, TestData}
+import org.hamcrest.Matchers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
@@ -48,5 +49,6 @@ class CaptainControllerIT extends AbstractTransactionalIT {
     mockMvc.perform(MockMvcRequestBuilders.get(s"/captain/${resourceRootDmoWithId.resourceId}"))
       .andExpect(MockMvcResultMatchers.status.isOk)
       .andExpect(MockMvcResultMatchers.content.contentType(MediaType.APPLICATION_JSON))
+      .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(personDmo.getName)))
   }
 }

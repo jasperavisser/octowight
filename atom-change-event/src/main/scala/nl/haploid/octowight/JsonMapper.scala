@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility
 import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 
 import scala.util.{Failure, Success, Try}
 
 class JsonMapException(message: String, cause: Throwable = null) extends RuntimeException(message, cause)
 
 class JsonMapper {
-  private[this] val mapper = new ObjectMapper
+  private[this] val mapper = new ObjectMapper with ScalaObjectMapper
   mapper.registerModule(DefaultScalaModule)
   mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
 

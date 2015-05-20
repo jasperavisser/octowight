@@ -21,7 +21,7 @@ class DirtyResourceProducerServiceTest extends AbstractTest {
 
   "Dirty resource producer" should "send dirty resource" in {
     val expectedFuture = mock[Future[RecordMetadata]]
-    val resourceRoot = TestData.resourceRoot(451l)
+    val resourceRoot = TestData.resourceRoot(TestData.nextLong)
     val message = "joy"
     expecting {
       jsonMapper.serialize(resourceRoot) andReturn message once()

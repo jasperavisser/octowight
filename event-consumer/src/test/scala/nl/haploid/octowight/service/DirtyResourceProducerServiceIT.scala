@@ -9,7 +9,7 @@ class DirtyResourceProducerServiceIT extends AbstractIT {
   @Autowired private[this] val dirtyResourceProducerService: DirtyResourceProducerService = null
 
   "Dirty resource producer" should "send dirty resource" in {
-    val resourceRoot = TestData.resourceRoot(555l)
+    val resourceRoot = TestData.resourceRoot(TestData.nextLong)
     val future = dirtyResourceProducerService.sendDirtyResource(resourceRoot)
     Option(future.get(5, TimeUnit.SECONDS)) should not be None
   }
