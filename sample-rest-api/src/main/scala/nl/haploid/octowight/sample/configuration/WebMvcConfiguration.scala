@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.{EnableWebMvc, WebMvcCo
 @EnableWebMvc
 class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
-  override def configureMessageConverters(converters: util.List[HttpMessageConverter[_]]) {
+  override def configureMessageConverters(converters: util.List[HttpMessageConverter[_]]) = {
     val converter = new MappingJackson2HttpMessageConverter
     val objectMapper = new ObjectMapper with ScalaObjectMapper
     objectMapper.registerModule(DefaultScalaModule)
