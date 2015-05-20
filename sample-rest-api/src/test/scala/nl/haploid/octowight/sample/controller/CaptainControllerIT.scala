@@ -14,19 +14,20 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
 
 class CaptainControllerIT extends AbstractTransactionalIT {
-  @Autowired private[this] val controller: CaptainController = null
   @Autowired private[this] val personDmoRepository: PersonDmoRepository = null
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
+  @Autowired private[this] val webApplicationContext: WebApplicationContext = null
 
   private[this] val tempResourceRootDmos = new util.ArrayList[ResourceRootDmo]
   private[this] var mockMvc: MockMvc = null
 
   override def beforeEach() = {
     super.beforeEach()
-    this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build
     roleDmoRepository.deleteAllInBatch()
     personDmoRepository.deleteAllInBatch()
   }

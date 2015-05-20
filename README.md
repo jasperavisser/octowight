@@ -22,6 +22,12 @@ Install *boot2docker* from http://boot2docker.io/
 ## Installation
 TODO: How to install, run IT, run apps
 
+To run the sample apps:
+```bash
+bash bin/it/build-images.sh && bash bin/it/start-containers.sh
+bash bin/sample/build-images.sh && bash bin/sample/start-containers.sh
+```
+
 ## Design principles
 TODO: Design principles
 TODO: Adopt names from EDA

@@ -10,9 +10,10 @@ import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+import org.springframework.web.servlet.config.annotation.{EnableWebMvc, WebMvcConfigurerAdapter}
 
 @Configuration
+@EnableWebMvc
 class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
   override def configureMessageConverters(converters: util.List[HttpMessageConverter[_]]) {
