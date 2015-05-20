@@ -25,6 +25,8 @@ class CaptainResourceFactoryTest extends AbstractTest {
       captainResource.id should be(resourceRoot.resourceId)
       captainResource.atoms should have size 2
       captainResource.version should be(resourceRoot.version)
+      captainResource.model.id should be(personDmo.getId)
+      captainResource.model.name should be(personDmo.getName)
     }
   }
 }

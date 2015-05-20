@@ -6,13 +6,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class CaptainModelSerializer extends ModelSerializer[CaptainModel] {
-  def serialize(model: CaptainModel) = {
-    val jsonMapper = new JsonMapper
-    jsonMapper.serialize(model)
-  }
+  val jsonMapper = new JsonMapper
 
-  def deserialize(body: String, modelClass: Class[CaptainModel]) = {
-    val jsonMapper = new JsonMapper
-    jsonMapper.deserialize(body, modelClass)
-  }
+  def serialize(model: CaptainModel) = jsonMapper.serialize(model)
+
+  def deserialize(body: String, modelClass: Class[CaptainModel]) = jsonMapper.deserialize(body, modelClass)
 }

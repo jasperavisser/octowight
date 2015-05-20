@@ -5,10 +5,6 @@ import java.util.Properties
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration, FilterType}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
-@Configuration
-@ComponentScan(basePackages = Array("nl.haploid.octowight"), excludeFilters = Array(
-  new ComponentScan.Filter(`type` = FilterType.REGEX, pattern = Array("nl.haploid.octowight.registry.*"))
-))
 object TestConfiguration {
 
   @Bean def propertyPlaceholderConfigurer = {
@@ -24,4 +20,8 @@ object TestConfiguration {
   }
 }
 
+@Configuration
+@ComponentScan(basePackages = Array("nl.haploid.octowight"), excludeFilters = Array(
+  new ComponentScan.Filter(`type` = FilterType.REGEX, pattern = Array("nl.haploid.octowight.registry.*"))
+))
 class TestConfiguration
