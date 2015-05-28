@@ -10,8 +10,9 @@ object TestData {
 
   def nextLong: Long = new Random().nextLong
 
+  // TODO: must be a nicer way to say that id is unused
   def atomChangeEventDmo =
-    new AtomChangeEventDmo(id = null, atomId = nextLong, atomOrigin = AtomLocus, atomCategory = AtomCategory)
+    new AtomChangeEventDmo(id = 666, atomId = nextLong, atomOrigin = AtomLocus, atomCategory = AtomCategory)
 
   def topic = nextString
 

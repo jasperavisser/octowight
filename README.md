@@ -64,6 +64,9 @@ TODO: Adopt names from EDA
 ### Maven
 * http://stackoverflow.com/questions/24705877/cant-get-maven-to-recognize-java-1-8
 
+### Slick
+* http://slick.typesafe.com/doc/3.0.0/
+
 ## TODO
 
 ### Presentation

@@ -13,39 +13,43 @@ class SlickIT extends AbstractIT {
   @Autowired private[this] val dataSource: DataSource = null
 
   class PersonTable(tag: Tag) extends Table[(Long, String)](tag, Some("octowight"), "person") {
-    def id = column[Long]("id", O.PrimaryKey)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def name = column[String]("name")
 
     def * = (id, name)
   }
-  
+
+  val persons = TableQuery[PersonTable]
+
   class RoleTable(tag: Tag) extends Table[(Long, Long, String)](tag, Some("octowight"), "role") {
-    def id = column[Long]("id", O.PrimaryKey)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def person = column[Long]("person")
 
     def name = column[String]("name")
 
-    def personForeignKey = foreignKey("", person, persons)(_.id)
-
     def * = (id, person, name)
   }
 
   val roles = TableQuery[RoleTable]
-  val persons = TableQuery[PersonTable]
 
   "All roles" should "be listed" in {
     val database = Database.forDataSource(dataSource)
     try {
 
+      database.run(roles +=(-666L, 7L, "cabin boy"))
+
       Await.result({
+
         val query = for {
           role <- roles
-          person <- persons
+          person <- persons if person.id === role.person
         } yield (person.name, role.name)
 
-        database.stream(query.result).foreach(r => println(s"NOTE: ${r._1} is a ${r._2}"))
+        database.stream(query.result)
+          .foreach(row => println(s"NOTE: ${row._1} is a ${row._2}"))
+
       }, Duration.Inf)
 
 

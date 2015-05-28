@@ -15,6 +15,7 @@
 		<docker-maven.skip>false</docker-maven.skip>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<postgresql.version>9.2-1004-jdbc41</postgresql.version>
+		<slick.version>3.0.0</slick.version>
 	</properties>
 
 	<dependencies>
@@ -52,6 +53,11 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.slick</groupId>
+			<artifactId>slick_${scala.version.minor}</artifactId>
+			<version>${slick.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>

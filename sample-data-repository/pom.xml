@@ -14,7 +14,7 @@
 	<properties>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<postgresql.version>9.2-1004-jdbc41</postgresql.version>
-		<jooq.version>3.6.1</jooq.version>
+		<slick.version>3.0.0</slick.version>
 	</properties>
 
 	<dependencies>
@@ -34,14 +34,9 @@
 			<version>${bonecp.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq</artifactId>
-			<version>${jooq.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.typesafe.slick</groupId>
 			<artifactId>slick_${scala.version.minor}</artifactId>
-			<version>3.0.0</version>
+			<version>${slick.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
