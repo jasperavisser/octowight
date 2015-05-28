@@ -14,6 +14,7 @@
 	<properties>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<postgresql.version>9.2-1004-jdbc41</postgresql.version>
+		<jooq.version>3.6.1</jooq.version>
 	</properties>
 
 	<dependencies>
@@ -31,6 +32,16 @@
 			<groupId>com.jolbox</groupId>
 			<artifactId>bonecp-spring</artifactId>
 			<version>${bonecp.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>${jooq.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.slick</groupId>
+			<artifactId>slick_${scala.version.minor}</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -53,5 +64,44 @@
 	<build>
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
+
+		<plugins>
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>3.6.1</version>
+
+				<executions>
+					<execution>
+						<id>generate-h2</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<jdbc>
+								<driver>org.postgresql.Driver</driver>
+								<url>jdbc:postgresql://localhost:5432/postgres</url>
+								<user>postgres</user>
+								<password>postgres</password>
+							</jdbc>
+							<generator>
+								<database>
+									<inputSchema>octowight</inputSchema>
+								</database>
+								<generate>
+									<instanceFields>true</instanceFields>
+									<pojos>true</pojos>
+								</generate>
+								<target>
+									<packageName>org.jooq.example.db.h2</packageName>
+									<directory>target/generated-sources/jooq-h2</directory>
+								</target>
+							</generator>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>

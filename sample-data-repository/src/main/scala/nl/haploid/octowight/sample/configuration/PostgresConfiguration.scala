@@ -4,10 +4,13 @@ import javax.persistence.EntityManagerFactory
 import javax.sql.DataSource
 
 import com.jolbox.bonecp.BoneCPDataSource
+import org.jooq.impl.{DataSourceConnectionProvider, DefaultConfiguration}
+import org.jooq.{ConnectionProvider, SQLDialect}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.{Bean, Configuration, PropertySources}
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import org.springframework.orm.jpa.{JpaTransactionManager, LocalContainerEntityManagerFactoryBean}
 import org.springframework.transaction.PlatformTransactionManager
@@ -53,4 +56,17 @@ class PostgresConfiguration {
     manager.setEntityManagerFactory(entityManagerFactory)
     manager
   }
+
+//  @Bean def transactionAwareDataSourceProxy(dataSource: DataSource): TransactionAwareDataSourceProxy =
+//    new TransactionAwareDataSourceProxy(dataSource)
+//
+//  @Bean def connectionProvider(transactionAwareDataSourceProxy: TransactionAwareDataSourceProxy): ConnectionProvider =
+//    new DataSourceConnectionProvider(transactionAwareDataSourceProxy)
+//
+//  @Bean def defaultConfiguration(connectionProvider: ConnectionProvider): DefaultConfiguration = {
+//    val configuration = new DefaultConfiguration
+//    configuration.setSQLDialect(SQLDialect.POSTGRES)
+//    configuration.setConnectionProvider(connectionProvider)
+//    configuration
+//  }
 }

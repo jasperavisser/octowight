@@ -32,6 +32,9 @@ bash bin/sample/build-images.sh && bash bin/sample/start-containers.sh
 TODO: Design principles
 TODO: Adopt names from EDA
 
+### Terminology
+* Atom: 
+
 ### Assumptions
 * Each resource has a single atom that represents its main component
 * Each atom represents no more than a single resource of any given type
