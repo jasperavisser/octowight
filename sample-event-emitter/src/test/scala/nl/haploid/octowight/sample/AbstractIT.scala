@@ -17,8 +17,6 @@ import slick.driver.PostgresDriver.api._
 abstract class AbstractIT extends FlatSpec with BeforeAndAfterEach with BeforeAndAfterAll with ShouldMatchers {
   @Autowired private[this] val dataSource: DataSource = null
 
-  // TODO: with transaction, rollback
-  // TODO: get rid of entity manager, JPA, hibernate
   lazy val database = Database.forDataSource(dataSource)
 
   override def beforeEach() = new TestContextManager(this.getClass).prepareTestInstance(this)
