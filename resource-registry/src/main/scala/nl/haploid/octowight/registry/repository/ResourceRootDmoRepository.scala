@@ -13,4 +13,7 @@ trait ResourceRootDmoRepository extends MongoRepository[ResourceRootDmo, lang.Lo
   def findByResourceCollectionAndTombstone(resourceCollection: String, tombstone: Boolean): util.List[ResourceRootDmo]
 
   def findByResourceCollectionAndResourceId(resourceCollection: String, resourceId: lang.Long): ResourceRootDmo
+
+  // TODO: test
+  def findByResourceCollectionAndResourceIdIn(resourceCollection: String, resourceId: util.List[lang.Long]): util.List[ResourceRootDmo]
 }

@@ -15,7 +15,7 @@ class EventHandlerService {
   @Autowired private[this] val dirtyResourceProducerService: DirtyResourceProducerService = null
 
   def detectNewResources(batchSize: Int) = {
-    log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
+    log.debug(s"Poll for atom change events on ${eventConsumerService.topic}")
     val eventsByGroup = eventConsumerService.consumeDistinctEvents()
       .groupBy(_.atomGroup)
     val count = eventsByGroup

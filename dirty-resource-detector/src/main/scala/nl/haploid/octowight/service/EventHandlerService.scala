@@ -17,7 +17,7 @@ class EventHandlerService {
   // TODO: batch size is unused
   // TODO: test
   def detectDirtyResources(batchSize: Int) = {
-    log.debug(s"Poll for atom change events on ${eventConsumerService.getTopic}")
+    log.debug(s"Poll for atom change events on ${eventConsumerService.topic}")
     val eventsByGroup: Map[AtomGroup, Iterable[AtomChangeEvent]] = eventConsumerService.consumeDistinctEvents()
       .groupBy(_.atomGroup)
     val count = eventsByGroup

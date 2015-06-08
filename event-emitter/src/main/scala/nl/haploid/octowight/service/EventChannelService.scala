@@ -2,8 +2,9 @@ package nl.haploid.octowight.service
 
 import java.util.concurrent.{Future, TimeUnit}
 
+import nl.haploid.octowight.kafka.KafkaProducerFactory
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
+import org.apache.kafka.clients.producer.{ProducerRecord, RecordMetadata}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.stereotype.Service
@@ -14,8 +15,10 @@ class EventChannelService {
 
   @Value("${octowight.kafka.topic.events}") private[this] val topic: String = null
 
-  @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Autowired private[this] val kafkaProducerFactory: KafkaProducerFactory = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
+
+  private[this] lazy val kafkaProducer = kafkaProducerFactory.kafkaProducer
 
   def sendEvents(events: Traversable[AtomChangeEvent]): Traversable[RecordMetadata] = {
     log.debug(s"Send ${events.size} messages")

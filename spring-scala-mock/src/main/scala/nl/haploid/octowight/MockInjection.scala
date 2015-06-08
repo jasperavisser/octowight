@@ -12,7 +12,7 @@ object MockInjection {
 }
 
 trait MockInjection {
-  private[this] lazy val log: Logger = LoggerFactory.getLogger(getClass)
+  private[this] val log: Logger = LoggerFactory.getLogger(getClass)
 
   private[this] val mockeds: Map[Class[_], Field] = getFieldsByAnnotation(getClass, classOf[Mocked])
   private[this] val testeds: Map[Class[_], Field] = getFieldsByAnnotation(getClass, classOf[Tested])
@@ -32,10 +32,8 @@ trait MockInjection {
     }
     testeds.foreach {
       case (testedType, testedField) =>
-        if (Option(testedField.get(this)).isEmpty) {
-          log.debug(s"Inject mock instance of ${testedType.getCanonicalName} into ${this.getClass.getCanonicalName}")
-          testedField.set(this, createPartialMockInstance(testedField))
-        }
+        log.debug(s"Inject mock instance of ${testedType.getCanonicalName} into ${this.getClass.getCanonicalName}")
+        testedField.set(this, createPartialMockInstance(testedField))
         injectMocks(testedField.get(this))
     }
   }

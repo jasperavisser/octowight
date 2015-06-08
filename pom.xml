@@ -11,11 +11,13 @@
         <module>dirty-resource-detector</module>
         <module>event-consumer</module>
         <module>event-emitter</module>
+	<module>kafka-beans</module>
         <module>new-resource-detector</module>
         <module>resource-registry</module>
         <module>sample-data-repository</module>
         <module>sample-event-emitter</module>
         <module>sample-new-resource-detector</module>
+        <module>sample-resource-builder</module>
         <module>sample-rest-api</module>
         <module>spring-scala-mock</module>
     </modules>

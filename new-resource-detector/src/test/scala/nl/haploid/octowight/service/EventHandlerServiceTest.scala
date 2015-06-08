@@ -6,9 +6,6 @@ import nl.haploid.octowight._
 import nl.haploid.octowight.registry.data.ResourceRoot
 import nl.haploid.octowight.registry.service.ResourceRegistryService
 import org.apache.kafka.clients.producer.RecordMetadata
-import org.easymock.EasyMock
-import org.slf4j.Logger
-import org.springframework.test.util.ReflectionTestUtils
 
 class EventHandlerServiceTest extends AbstractTest {
   @Tested private val eventHandlerService: EventHandlerService = null
@@ -16,12 +13,6 @@ class EventHandlerServiceTest extends AbstractTest {
   @Mocked private[this] val resourceDetectorsService: ResourceDetectorsService = null
   @Mocked private[this] val resourceRegistryService: ResourceRegistryService = null
   @Mocked private[this] val dirtyResourceProducerService: DirtyResourceProducerService = null
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    val log = EasyMock.createMock(classOf[Logger])
-    ReflectionTestUtils.setField(eventHandlerService, "log", log)
-  }
 
   "Event handler service" should "detect new resources" in {
     val topic = TestData.nextString
@@ -40,7 +31,7 @@ class EventHandlerServiceTest extends AbstractTest {
     val recordMetadata1 = new RecordMetadata(null, 1, 1)
     val recordMetadata2 = new RecordMetadata(null, 2, 2)
     expecting {
-      eventConsumerService.getTopic andReturn topic once()
+      eventConsumerService.topic andReturn topic once()
       eventConsumerService.consumeDistinctEvents() andReturn events once()
       resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category1), Set(event1, event2)) andReturn resourceRoots once()
       resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category2), Set(event3)) andReturn List() once()

@@ -6,7 +6,7 @@ import kafka.message.MessageAndMetadata
 import scala.util.{Success, Try}
 
 class KafkaStreamIterator(stream: KafkaStream[Array[Byte], Array[Byte]]) extends Iterator[MessageAndMetadata[Array[Byte], Array[Byte]]] {
-  val iterator = stream.iterator()
+  lazy val iterator = stream.iterator()
 
   var nextValue: MessageAndMetadata[Array[Byte], Array[Byte]] = _
 

@@ -2,6 +2,7 @@ package nl.haploid.octowight.registry.data
 
 import java.lang
 
+// TODO: deprecated
 abstract class Resource[M <: Model] {
 
   def atoms: Traversable[Atom]

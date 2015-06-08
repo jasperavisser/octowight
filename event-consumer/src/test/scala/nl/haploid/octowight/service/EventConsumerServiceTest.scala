@@ -1,79 +1,64 @@
 package nl.haploid.octowight.service
 
-import _root_.kafka.consumer.{ConsumerIterator, ConsumerTimeoutException, KafkaStream}
-import _root_.kafka.javaapi.consumer.ConsumerConnector
-import _root_.kafka.message.MessageAndMetadata
 import nl.haploid.octowight._
-import nl.haploid.octowight.kafka.KafkaConsumerFactory
-import org.easymock.EasyMock
+import nl.haploid.octowight.kafka.{KafkaConsumer, KafkaConsumerFactory}
+import org.springframework.test.util.ReflectionTestUtils
 
 class EventConsumerServiceTest extends AbstractTest {
-  @Tested val eventConsumerService = EasyMock.createMockBuilder(classOf[EventConsumerService])
-    .addMockedMethod("consumerConnector")
-    .addMockedMethod("stream")
-    .createMock()
+  @Tested private[this] val eventConsumerService: EventConsumerService = null
   @Mocked private[this] val kafkaConsumerFactory: KafkaConsumerFactory = null
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
+  private[this] val topic = TestData.topic
+
   override def beforeEach() = {
     super.beforeEach()
-    EasyMock.reset(eventConsumerService)
+    //    EasyMock.reset(eventConsumerService)
+    ReflectionTestUtils.setField(eventConsumerService, "topic", topic)
   }
 
-  "Event consumer" should "consume a message" in {
-    val stream = mock[KafkaStream[Array[Byte], Array[Byte]]]
-    val iterator = mock[ConsumerIterator[Array[Byte], Array[Byte]]]
-    val messageAndMetaData = mock[MessageAndMetadata[Array[Byte], Array[Byte]]]
-
+  it should "consume a message" in {
+    val kafkaConsumer = mock[KafkaConsumer]
     val expectedEvent = TestData.atomChangeEvent("rick")
     val message = TestData.message
     expecting {
-      eventConsumerService.stream andReturn stream once()
-      stream.iterator andReturn iterator once()
-      iterator.next andReturn messageAndMetaData once()
-      messageAndMetaData.message andReturn message.getBytes once()
+      kafkaConsumerFactory.kafkaConsumer(topic) andReturn kafkaConsumer once()
+      kafkaConsumer.nextMessage andReturn message once()
       jsonMapper.deserialize(message, classOf[AtomChangeEvent]) andReturn expectedEvent once()
     }
-    whenExecuting(eventConsumerService, stream, iterator, messageAndMetaData, jsonMapper) {
+    whenExecuting(kafkaConsumerFactory, jsonMapper, kafkaConsumer) {
       val actualEvent = eventConsumerService.consumeEvent
       actualEvent should be(expectedEvent)
     }
   }
 
-  "Event consumer" should "consume multiple messages" in {
-    val stream = mock[KafkaStream[Array[Byte], Array[Byte]]]
-    val iterator = mock[ConsumerIterator[Array[Byte], Array[Byte]]]
-    val messageAndMetaData = mock[MessageAndMetadata[Array[Byte], Array[Byte]]]
-
+  it should "consume multiple messages" in {
+    val kafkaConsumer = mock[KafkaConsumer]
     val event1 = TestData.atomChangeEvent("carol")
     val event2 = TestData.atomChangeEvent("daryl")
     val message1 = TestData.message
     val message2 = TestData.message
+    val messages = Iterable(message1, message2)
     val expectedEvents = Set(event1, event2)
     expecting {
-      eventConsumerService.stream andReturn stream once()
-      stream.iterator andReturn iterator once()
-      iterator.next andReturn messageAndMetaData once()
-      messageAndMetaData.message andReturn message1.getBytes once()
+      kafkaConsumerFactory.kafkaConsumer(topic) andReturn kafkaConsumer once()
+      kafkaConsumer.nextMessages(100) andReturn messages once()
       jsonMapper.deserialize(message1, classOf[AtomChangeEvent]) andReturn event1 once()
-      iterator.next andReturn messageAndMetaData once()
-      messageAndMetaData.message andReturn message2.getBytes once()
       jsonMapper.deserialize(message2, classOf[AtomChangeEvent]) andReturn event2 once()
-      iterator.next andThrow new ConsumerTimeoutException once()
     }
-    whenExecuting(eventConsumerService, stream, iterator, messageAndMetaData, jsonMapper) {
+    whenExecuting(kafkaConsumerFactory, kafkaConsumer, jsonMapper) {
       val actualEvents = eventConsumerService.consumeDistinctEvents()
       actualEvents should be(expectedEvents)
     }
   }
 
-  "Event consumer" should "commit stream offset" in {
-    val kafkaConsumer = mock[ConsumerConnector]
+  it should "commit stream offset" in {
+    val kafkaConsumer = mock[KafkaConsumer]
     expecting {
-      eventConsumerService.consumerConnector andReturn kafkaConsumer once()
-      kafkaConsumer.commitOffsets() once()
+      kafkaConsumerFactory.kafkaConsumer(topic) andReturn kafkaConsumer once()
+      kafkaConsumer.commit once()
     }
-    whenExecuting(kafkaConsumer, eventConsumerService) {
+    whenExecuting(kafkaConsumerFactory, kafkaConsumer) {
       eventConsumerService.commit()
     }
   }

@@ -3,15 +3,26 @@ package nl.haploid.octowight.service
 import java.util.concurrent.TimeUnit
 
 import nl.haploid.octowight.detector.MockResourceDetector
+import nl.haploid.octowight.kafka.KafkaProducerFactory
 import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper, TestData}
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.util.ReflectionTestUtils
 
 class EventHandlerServiceIT extends AbstractIT {
   @Autowired private[this] val eventHandlerService: EventHandlerService = null
   @Autowired private[this] val eventConsumerService: EventConsumerService = null
-  @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
+  @Autowired private[this] val kafkaProducerFactory: KafkaProducerFactory = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
+
+  private[this] lazy val kafkaProducer = kafkaProducerFactory.kafkaProducer
+
+  private[this] val topic = TestData.topic
+
+  override def beforeEach() = {
+    super.beforeEach()
+    ReflectionTestUtils.setField(eventConsumerService, "topic", topic)
+  }
 
   "Event handler service" should "handle no events" in {
     val actualCount = eventHandlerService.detectNewResources(10)
@@ -19,8 +30,6 @@ class EventHandlerServiceIT extends AbstractIT {
   }
 
   "Event handler service" should "handle some events" in {
-    val topic = TestData.topic
-    eventConsumerService.reset(topic)
     val event1 = TestData.atomChangeEvent(MockResourceDetector.AtomCategory)
     val event2 = TestData.atomChangeEvent(MockResourceDetector.AtomCategory)
     val event3 = TestData.atomChangeEvent("jack")
