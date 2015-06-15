@@ -6,8 +6,6 @@ import _root_.kafka.message.MessageAndMetadata
 import nl.haploid.octowight._
 import nl.haploid.octowight.kafka.KafkaConsumerFactory
 import org.easymock.EasyMock
-import org.slf4j.Logger
-import org.springframework.test.util.ReflectionTestUtils
 
 class EventConsumerServiceTest extends AbstractTest {
   @Tested val eventConsumerService = EasyMock.createMockBuilder(classOf[EventConsumerService])
@@ -20,7 +18,6 @@ class EventConsumerServiceTest extends AbstractTest {
   override def beforeEach() = {
     super.beforeEach()
     EasyMock.reset(eventConsumerService)
-    ReflectionTestUtils.setField(eventConsumerService, "log", mock[Logger])
   }
 
   "Event consumer" should "consume a message" in {

@@ -12,7 +12,7 @@ object MockInjection {
 }
 
 trait MockInjection {
-  private[this] val log: Logger = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log: Logger = LoggerFactory.getLogger(getClass)
 
   private[this] val mockeds: Map[Class[_], Field] = getFieldsByAnnotation(getClass, classOf[Mocked])
   private[this] val testeds: Map[Class[_], Field] = getFieldsByAnnotation(getClass, classOf[Tested])

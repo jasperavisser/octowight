@@ -13,7 +13,7 @@ import org.springframework.test.context.{ContextConfiguration, TestContextManage
 @ContextConfiguration(classes = Array(classOf[TestConfiguration], classOf[MongoConfiguration]),
   loader = classOf[AnnotationConfigContextLoader])
 abstract class AbstractIT extends FlatSpec with BeforeAndAfterEach with ShouldMatchers {
-  protected var log = LoggerFactory.getLogger(getClass)
+  protected lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val mongoConfiguration: MongoConfiguration = null
 

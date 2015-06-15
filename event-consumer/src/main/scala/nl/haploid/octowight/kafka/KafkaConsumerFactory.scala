@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 
 @Component
 class KafkaConsumerFactory {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val consumerConfig: ConsumerConfig = null
 

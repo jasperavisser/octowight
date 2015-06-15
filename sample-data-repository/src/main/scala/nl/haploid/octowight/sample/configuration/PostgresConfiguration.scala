@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources(value = Array())
 class PostgresConfiguration {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Value("${octowight.postgres.hostname}") private[this] val hostname: String = null
   @Value("${octowight.postgres.port}") private[this] val port: Int = 0

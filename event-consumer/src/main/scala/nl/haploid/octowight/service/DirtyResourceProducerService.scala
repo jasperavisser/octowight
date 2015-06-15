@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class DirtyResourceProducerService {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Value("${octowight.kafka.topic.resources.dirty}") private[this] val topic: String = null
 

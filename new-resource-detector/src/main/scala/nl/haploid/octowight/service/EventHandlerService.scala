@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class EventHandlerService {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val eventConsumerService: EventConsumerService = null
   @Autowired private[this] val resourceDetectorsService: ResourceDetectorsService = null

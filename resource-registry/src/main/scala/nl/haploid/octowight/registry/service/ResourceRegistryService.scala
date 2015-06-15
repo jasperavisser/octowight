@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 
 @Service
 class ResourceRegistryService {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null

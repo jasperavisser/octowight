@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 import scala.util.{Success, Try}
 
 abstract class AbstractResourceService[M <: Model, R <: Resource[M]] {
-  val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val modelCacheService: ModelCacheService[M, R] = null
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null

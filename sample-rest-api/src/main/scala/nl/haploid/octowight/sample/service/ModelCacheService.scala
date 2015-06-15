@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ModelCacheService[M <: Model, R <: Resource[M]] {
-  val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val modelSerializer: ModelSerializer[M] = null
   @Autowired private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null

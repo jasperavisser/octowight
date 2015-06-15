@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 
 class EventConsumerServiceIT extends AbstractIT {
-  private[this] val log = LoggerFactory.getLogger(getClass)
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val eventConsumerService: EventConsumerService = null
   @Autowired private[this] val kafkaProducer: KafkaProducer[String, String] = null
