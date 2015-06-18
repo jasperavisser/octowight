@@ -1,4 +1,4 @@
-package nl.haploid.octowight.sample.service
+package nl.haploid.octowight.registry.service
 
 import nl.haploid.octowight.registry.data.{Atom, ResourceIdentifier}
 import nl.haploid.octowight.registry.repository.{ResourceElementDmo, ResourceElementDmoRepository}
@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service
 
 import scala.collection.JavaConverters._
 
-// TODO: move to resource-registry
-// TODO: IT
 @Service
 class ResourceElementRegistryService {
   @Autowired private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null

@@ -1,6 +1,7 @@
 package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.registry.service.ResourceElementRegistryService
 import nl.haploid.octowight.sample.Resource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

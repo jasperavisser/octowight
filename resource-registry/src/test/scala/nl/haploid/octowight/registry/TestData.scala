@@ -2,7 +2,7 @@ package nl.haploid.octowight.registry
 
 import java.util.{Random, UUID}
 
-import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
+import nl.haploid.octowight.registry.data.{ResourceIdentifier, Atom, ResourceRoot}
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 
@@ -50,4 +50,6 @@ object TestData {
   def resourceModelDmoId = new ResourceModelDmoId(resourceId = nextLong, resourceCollection = nextString)
 
   def atomGroup = new AtomGroup(origin = TestData.nextString, category = TestData.nextString)
+
+  def resourceIdentifier = new ResourceIdentifier(collection = nextString, id = nextLong)
 }

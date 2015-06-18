@@ -1,6 +1,7 @@
 package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
+import nl.haploid.octowight.registry.service.ResourceElementRegistryService
 import nl.haploid.octowight.sample.builder.ResourceBuilder
 import nl.haploid.octowight.sample.{AbstractTest, ExistingResource, TestData}
 import nl.haploid.octowight.{Mocked, Tested}

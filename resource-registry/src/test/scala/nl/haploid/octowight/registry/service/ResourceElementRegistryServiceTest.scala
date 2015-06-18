@@ -1,8 +1,8 @@
-package nl.haploid.octowight.sample.service
+package nl.haploid.octowight.registry.service
 
+import nl.haploid.octowight.{Tested, Mocked}
+import nl.haploid.octowight.registry.{AbstractTest, TestData}
 import nl.haploid.octowight.registry.repository.{ResourceElementDmo, ResourceElementDmoRepository}
-import nl.haploid.octowight.sample.{AbstractTest, TestData}
-import nl.haploid.octowight.{Mocked, Tested}
 
 import scala.collection.JavaConverters._
 
