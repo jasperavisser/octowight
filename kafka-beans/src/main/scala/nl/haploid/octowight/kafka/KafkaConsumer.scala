@@ -8,10 +8,8 @@ import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConverters._
 
-// TODO: re-use in other projects!
 // TODO: IT
 class KafkaConsumer(val consumerConfig: ConsumerConfig, val topic: String) {
-
   protected[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   lazy val stream: KafkaStream[Array[Byte], Array[Byte]] = {
