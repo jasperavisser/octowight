@@ -25,6 +25,12 @@ docker run -d --name ${NEW_RESOURCE_DETECTOR_NAME} \
 	--link=${MONGO_RESOURCE_REGISRY_NAME}:mongo-resource-registry \
 	--link=${ZOOKEEPER_NAME}:zookeeper \
 	sample-new-resource-detector
+docker run -d --name ${RESOURCE_BUILDER_NAME} \
+	--link=${KAFKA_BROKER_NAME}:kafka-broker \
+	--link=${POSTGRES_DATA_REPOSITORY_NAME}:postgres-data-repository \
+	--link=${MONGO_RESOURCE_REGISRY_NAME}:mongo-resource-registry \
+	--link=${ZOOKEEPER_NAME}:zookeeper \
+	sample-resource-builder
 docker run -d --name ${REST_API_NAME} \
 	--publish=8080:8080 \
 	--link=${POSTGRES_DATA_REPOSITORY_NAME}:postgres-data-repository \

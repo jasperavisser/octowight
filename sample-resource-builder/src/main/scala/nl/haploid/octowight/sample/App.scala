@@ -15,7 +15,7 @@ object App {
   def main(args: Array[String]): Unit = SpringApplication.run(classOf[App])
 }
 
-@ComponentScan(basePackages = Array("nl.haploid.octowight"))
+@ComponentScan(basePackages = Array("nl.haploid.octowight.sample"))
 @EnableAutoConfiguration
 class App {
   @Autowired private[this] val dirtyResourceConsumerService: DirtyResourceConsumerService = null

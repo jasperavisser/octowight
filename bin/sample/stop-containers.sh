@@ -7,4 +7,5 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 removeContainer ${DIRTY_RESOURCE_DETECTOR_NAME}
 removeContainer ${EVENT_EMITTER_NAME}
 removeContainer ${NEW_RESOURCE_DETECTOR_NAME}
+removeContainer ${RESOURCE_BUILDER_NAME}
 removeContainer ${REST_API_NAME}
