@@ -9,6 +9,12 @@ Add this line to */etc/init/docker.conf*
 ```bash
 DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
 ```
+### Fedora
+Add this line to  */etc/sysconfig/docker*
+
+```bash
+OPTIONS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
+```
 ### Mac OS
 Install *greadlink*
 

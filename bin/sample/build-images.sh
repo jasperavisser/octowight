@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+set -e
 
 # Build artifacts
 pushd ../..
