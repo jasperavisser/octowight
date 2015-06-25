@@ -21,12 +21,12 @@ class KafkaConsumer(val consumerConfig: ConsumerConfig, val topic: String) {
     streamsPerTopic.get(topic).get(0)
   }
 
-  def commit() = consumerConnector.commitOffsets()
-
-  def consumerConnector: ConsumerConnector = {
+  lazy val consumerConnector: ConsumerConnector = {
     log.debug(s"Create kafka consumer for ${consumerConfig.zkConnect}")
     Consumer.createJavaConsumerConnector(consumerConfig)
   }
+
+  def commit() = consumerConnector.commitOffsets()
 
   def nextMessage = new String(stream.iterator().next().message())
 
