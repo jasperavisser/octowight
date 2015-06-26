@@ -1,10 +1,10 @@
 package nl.haploid.octowight.sample.builder
 
 import nl.haploid.octowight.JsonMapper
-import nl.haploid.octowight.registry.data.{ResourceIdentifier, Atom, ResourceRoot}
+import nl.haploid.octowight.registry.data.{Atom, ResourceIdentifier, ResourceRoot}
+import nl.haploid.octowight.sample.Resource
 import nl.haploid.octowight.sample.data.CaptainModel
 import nl.haploid.octowight.sample.repository.RoleDmoRepository
-import nl.haploid.octowight.sample.{ExistingResource, MissingResource, Resource}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -28,10 +28,10 @@ class CaptainResourceBuilder extends ResourceBuilder {
         val personDmo = roleDmo.getPerson
         personDmo.setOrigin(resourceRoot.root.origin)
         val model = new CaptainModel(id = personDmo.getId, name = personDmo.getName)
-        val resource = new ExistingResource(resourceIdentifier = resourceIdentifier, model = jsonMapper.serialize(model))
+        val resource = new Resource(resourceIdentifier = resourceIdentifier, model = jsonMapper.serialize(model), tombstone = false)
         (resource, List(personDmo.toAtom, roleDmo.toAtom))
       case None =>
-        val resource = new MissingResource(resourceIdentifier = resourceIdentifier)
+        val resource = new Resource(resourceIdentifier = resourceIdentifier, model = "", tombstone = true)
         (resource, List())
     }
   }

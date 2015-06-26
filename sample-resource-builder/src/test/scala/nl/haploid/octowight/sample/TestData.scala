@@ -13,7 +13,7 @@ object TestData {
 
   def nextString = UUID.randomUUID.toString
 
-  def resource = new ExistingResource(resourceIdentifier = resourceIdentifier, model = nextString)
+  def resource = new Resource(resourceIdentifier = resourceIdentifier, model = nextString, tombstone = false)
 
   def resourceIdentifier = new ResourceIdentifier(collection = nextString, id = nextLong)
 
