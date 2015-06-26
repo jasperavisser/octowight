@@ -1,7 +1,7 @@
 package nl.haploid.octowight.sample.configuration
 
 import nl.haploid.octowight.JsonMapper
-import org.springframework.context.annotation.{Bean, Configuration}
+import org.springframework.context.annotation.{Bean, Configuration, PropertySource}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.scheduling.annotation.EnableScheduling
 
@@ -12,6 +12,7 @@ object AppConfiguration {
 
 @Configuration
 @EnableScheduling
+@PropertySource(value = Array("file:./local.properties"), ignoreResourceNotFound = true)
 class AppConfiguration {
 
   @Bean def jsonMapper = new JsonMapper
