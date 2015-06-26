@@ -6,8 +6,10 @@ import nl.haploid.octowight.sample.data.CaptainModel
 import nl.haploid.octowight.sample.repository.RoleDmoRepository
 import nl.haploid.octowight.sample.{ExistingResource, MissingResource, Resource}
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
+@Component
 class CaptainResourceBuilder extends ResourceBuilder {
   @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
