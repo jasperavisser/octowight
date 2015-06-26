@@ -44,9 +44,8 @@ class KafkaConsumerIT extends AbstractIT with OneInstancePerTest {
     kafkaConsumer1.nextMessage should be(message1)
     kafkaConsumer1.commit()
     kafkaConsumer1.shutdown()
-    // TODO:
-    //    val kafkaConsumer2 = kafkaConsumerFactory.kafkaConsumer(topic)
-    //    kafkaConsumer2.nextMessage should be(message2)
-    //    kafkaConsumer2.shutdown()
+    val kafkaConsumer2 = kafkaConsumerFactory.kafkaConsumer(topic)
+    kafkaConsumer2.nextMessage should be(message2)
+    kafkaConsumer2.shutdown()
   }
 }
