@@ -7,7 +7,6 @@ import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
-// TODO: IT
 @Component
 class KafkaProducerFactory {
   @Value("${octowight.kafka.hostname}") private[this] val kafkaHostname: String = null

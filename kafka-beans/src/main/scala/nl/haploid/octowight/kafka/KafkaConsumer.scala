@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConverters._
 
-// TODO: IT
 class KafkaConsumer(val consumerConfig: ConsumerConfig, val topic: String) {
   protected[this] lazy val log = LoggerFactory.getLogger(getClass)
 
