@@ -1,9 +1,9 @@
 package nl.haploid.octowight.sample.service
 
-import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
+import nl.haploid.octowight.registry.data.{ResourceMessage, Atom, ResourceRoot}
 import nl.haploid.octowight.registry.service.ResourceElementRegistryService
 import nl.haploid.octowight.sample.builder.ResourceBuilder
-import nl.haploid.octowight.sample.{AbstractTest, Resource, TestData}
+import nl.haploid.octowight.sample.{AbstractTest, TestData}
 import nl.haploid.octowight.{Mocked, Tested}
 
 class ResourceBuilderServiceTest extends AbstractTest {
@@ -22,9 +22,9 @@ class ResourceBuilderServiceTest extends AbstractTest {
     val atoms1: Iterable[Atom] = Iterable(TestData.atom, TestData.atom)
     val atoms2: Iterable[Atom] = Iterable(TestData.atom, TestData.atom)
     val atoms3: Iterable[Atom] = Iterable(TestData.atom, TestData.atom)
-    val resource1: Resource = TestData.resource
-    val resource2: Resource = TestData.resource
-    val resource3: Resource = TestData.resource
+    val resource1: ResourceMessage = TestData.resource
+    val resource2: ResourceMessage = TestData.resource
+    val resource3: ResourceMessage = TestData.resource
     val resourceAndAtoms1 = (resource1, atoms1)
     val resourceAndAtoms2 = (resource2, atoms2)
     val resourceAndAtoms3 = (resource3, atoms3)

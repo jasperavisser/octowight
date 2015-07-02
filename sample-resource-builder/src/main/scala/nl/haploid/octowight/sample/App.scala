@@ -1,6 +1,6 @@
 package nl.haploid.octowight.sample
 
-import nl.haploid.octowight.registry.data.{ResourceIdentifier, ResourceRoot}
+import nl.haploid.octowight.registry.data.{ResourceMessage, ResourceIdentifier, ResourceRoot}
 import nl.haploid.octowight.registry.repository.ResourceRootDmoRepository
 import nl.haploid.octowight.sample.service.{DirtyResourceConsumerService, ResourceBuilderService, ResourceProducerService}
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,7 +36,7 @@ class App {
     // TODO: we don't need ResourceRoot, just a tuple class (resourceIdentifier -> atom)
     val resourceRootsByCollection: Map[String, Iterable[ResourceRoot]] = resourceRoots
       .groupBy(_.resourceCollection)
-    val resources: Iterable[Resource] = resourceBuilderService.buildResources(resourceRootsByCollection)
+    val resources: Iterable[ResourceMessage] = resourceBuilderService.buildResources(resourceRootsByCollection)
     resourceProducerService.send(resources)
     dirtyResourceConsumerService.commit()
   }

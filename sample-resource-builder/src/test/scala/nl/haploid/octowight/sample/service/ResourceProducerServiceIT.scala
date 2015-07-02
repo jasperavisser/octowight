@@ -2,7 +2,8 @@ package nl.haploid.octowight.sample.service
 
 import nl.haploid.octowight.JsonMapper
 import nl.haploid.octowight.kafka.KafkaConsumerFactory
-import nl.haploid.octowight.sample.{AbstractIT, Resource, TestData}
+import nl.haploid.octowight.registry.data.ResourceMessage
+import nl.haploid.octowight.sample.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 
 class ResourceProducerServiceIT extends AbstractIT {
@@ -14,11 +15,11 @@ class ResourceProducerServiceIT extends AbstractIT {
   it should "send" in {
     val resource1 = TestData.resource
     val resource2 = TestData.resource
-    val expectedResources: Iterable[Resource] = Iterable(resource1, resource2)
+    val expectedResources: Iterable[ResourceMessage] = Iterable(resource1, resource2)
     resourceProducerService.send(expectedResources)
     val kafkaConsumer = kafkaConsumerFactory.kafkaConsumer(topic)
     val actualResources = kafkaConsumer.nextMessages(3)
-      .map(jsonMapper.deserialize(_, classOf[Resource]))
+      .map(jsonMapper.deserialize(_, classOf[ResourceMessage]))
     actualResources should be(expectedResources)
   }
 }

@@ -1,8 +1,7 @@
 package nl.haploid.octowight.sample
 
 import java.util.{Random, UUID}
-
-import nl.haploid.octowight.registry.data.{Atom, ResourceIdentifier, ResourceRoot}
+import nl.haploid.octowight.registry.data.{ResourceMessage, Atom, ResourceIdentifier, ResourceRoot}
 import nl.haploid.octowight.sample.repository.RoleDmo
 
 object TestData {
@@ -13,7 +12,7 @@ object TestData {
 
   def nextString = UUID.randomUUID.toString
 
-  def resource = new Resource(resourceIdentifier = resourceIdentifier, model = nextString, tombstone = false)
+  def resource = new ResourceMessage(resourceIdentifier = resourceIdentifier, model = nextString, tombstone = false)
 
   def resourceIdentifier = new ResourceIdentifier(collection = nextString, id = nextLong)
 

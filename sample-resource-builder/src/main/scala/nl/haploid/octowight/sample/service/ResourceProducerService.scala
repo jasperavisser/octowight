@@ -4,7 +4,7 @@ import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight.JsonMapper
 import nl.haploid.octowight.kafka.KafkaProducerFactory
-import nl.haploid.octowight.sample.Resource
+import nl.haploid.octowight.registry.data.ResourceMessage
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
@@ -21,7 +21,7 @@ class ResourceProducerService {
   private[this] lazy val kafkaProducer: KafkaProducer[String, String] =
     kafkaProducerFactory.kafkaProducer
 
-  def send(resources: Iterable[Resource]): Unit = {
+  def send(resources: Iterable[ResourceMessage]): Unit = {
     val futures: Iterable[Future[RecordMetadata]] = resources map {
       resource => {
         val message = jsonMapper.serialize(resource)
