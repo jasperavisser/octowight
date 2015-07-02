@@ -1,7 +1,9 @@
 #!/bin/bash
 
+export DOCKER_HOST="tcp://0.0.0.0:4243"
+
 # Configure docker host
-if which boot2docker 2>1 >/dev/null; then
+if which boot2docker 2>&1 >/dev/null; then
     $(boot2docker shellinit)
     export DOCKER_HOST_IP=$(boot2docker ip)
 else
