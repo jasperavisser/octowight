@@ -5,3 +5,5 @@
 /data/
 /target/
 /local.properties
+.cache-main
+.cache-tests
