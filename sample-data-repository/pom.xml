@@ -19,7 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>nl.haploid</groupId>
-			<artifactId>resource-registry</artifactId>
+			<artifactId>sample-data-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
