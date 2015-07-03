@@ -3,8 +3,9 @@ package nl.haploid.octowight.sample.data
 import nl.haploid.octowight.sample.AbstractIT
 import org.springframework.beans.factory.annotation.Autowired
 
-class CaptainModelSerializerIT extends AbstractIT {
-  @Autowired private[this] val captainModelSerializer: CaptainModelSerializer = null
+class JsonModelSerializerIT extends AbstractIT {
+
+  @Autowired private[this] val captainModelSerializer: JsonModelSerializer[CaptainModel] = null
 
   "Captain model serializer" should "serialize a model" in {
     val id = 1234L
