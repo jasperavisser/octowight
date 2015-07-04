@@ -1,0 +1,31 @@
+kafkaBroker:
+  image: wurstmeister/kafka:0.8.2.0
+  ports:
+  - 9092:9092
+  env_file:
+  - bootstrap.env
+  volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+
+pgbouncer:
+  image: mbentley/ubuntu-pgbouncer
+  ports:
+  - 5432:6432
+  environment:
+    PG_ENV_POSTGRESQL_USER: postgres
+    PG_ENV_POSTGRESQL_PASS: postgres
+
+resourceRegistry:
+  image: mongo:3.0.2
+  ports:
+  - 27017:27017
+
+sampleDataRepository:
+  image: postgres-data-repository-it
+  ports:
+  - 6432:5432
+
+zookeeper:
+  image: wurstmeister/zookeeper
+  ports:
+  - 2181:2181

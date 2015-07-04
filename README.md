@@ -28,11 +28,28 @@ Install *boot2docker* from http://boot2docker.io/
 ## Installation
 TODO: How to install, run IT, run apps
 
+To bootstrap the project, copy the file *bootstrap.env.template* to *bootstrap.env* and edit it to match your configuration.
+
+To build the project:
+```bash
+bash bin/infrastructure/build-images.sh
+docker-compose -f infrastructure.yml up -d
+mvn clean install
+```
+
 To run the sample apps:
 ```bash
-bash bin/it/build-images.sh && bash bin/it/start-containers.sh
-bash bin/sample/build-images.sh && bash bin/sample/start-containers.sh
+bash bin/infrastructure/build-images.sh
+bash bin/sample/build-images.sh
+docker-compose up -d
 ```
+
+To run the integration tests in an IDE:
+```bash
+bash bin/infrastructure/build-images.sh
+docker-compose -f infrastructure.yml up -d
+```
+then simply start your IT with an environment variable DOCKER_HOST_IP that points to your docker host.
 
 ## Design principles
 TODO: Design principles

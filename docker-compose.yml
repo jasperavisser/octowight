@@ -1,0 +1,57 @@
+kafkaBroker:
+  extends:
+    file: common.yml
+    service: kafkaBroker
+  links:
+  - zookeeper:zk
+
+resourceRegistry:
+  extends:
+    file: common.yml
+    service: resourceRegistry
+
+pgbouncer:
+  extends:
+    file: common.yml
+    service: pgbouncer
+  links:
+  - sampleDataRepository:pg
+
+sampleDataRepository:
+  extends:
+    file: common.yml
+    service: sampleDataRepository
+
+zookeeper:
+  extends:
+    file: common.yml
+    service: zookeeper
+
+dirtyResourceDetector:
+  image: dirty-resource-detector
+  links:
+  - kafkaBroker:kafka-broker
+  - resourceRegistry:mongo-resource-registry
+  - zookeeper:zookeeper
+
+sampleEventEmitter:
+  image: sample-event-emitter
+  links:
+  - kafkaBroker:kafka-broker
+  - sampleDataRepository:postgres-data-repository
+
+sampleNewResourceDetector:
+  image: sample-new-resource-detector
+  links:
+  - kafkaBroker:kafka-broker
+  - resourceRegistry:mongo-resource-registry
+  - sampleDataRepository:postgres-data-repository
+  - zookeeper:zookeeper
+
+sampleResourceBuilder:
+  image: sample-resource-builder
+  links:
+  - kafkaBroker:kafka-broker
+  - resourceRegistry:mongo-resource-registry
+  - sampleDataRepository:postgres-data-repository
+  - zookeeper:zookeeper

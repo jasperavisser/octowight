@@ -5,4 +5,4 @@ COMMAND="$1"
 
 . it/names.sh
 
-docker exec -it ${POSTGRES_DATA_REPOSITORY_NAME} psql -U postgres postgres -c "${COMMAND}"
+docker exec -it octowight_sampleDataRepository_1 psql -U postgres postgres -c "${COMMAND}"

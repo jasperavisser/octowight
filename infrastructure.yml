@@ -1,0 +1,28 @@
+kafkaBroker:
+  extends:
+    file: common.yml
+    service: kafkaBroker
+  links:
+  - zookeeper:zk
+
+pgbouncer:
+  extends:
+    file: common.yml
+    service: pgbouncer
+  links:
+  - sampleDataRepository:pg
+
+resourceRegistry:
+  extends:
+    file: common.yml
+    service: resourceRegistry
+
+sampleDataRepository:
+  extends:
+    file: common.yml
+    service: sampleDataRepository
+
+zookeeper:
+  extends:
+    file: common.yml
+    service: zookeeper

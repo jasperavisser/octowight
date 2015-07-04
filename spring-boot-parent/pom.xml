@@ -23,7 +23,6 @@
 		<!-- Plugins -->
 		<docker-maven.skip>true</docker-maven.skip>
 		<docker.image.name>${project.artifactId}</docker.image.name>
-		<docker.reuse.it>false</docker.reuse.it>
 
 		<!-- Versions -->
 		<docker-maven-plugin.version>0.0.21</docker-maven-plugin.version>
@@ -259,46 +258,6 @@
 						</resource>
 					</resources>
 				</configuration>
-			</plugin>
-
-			<!-- Start containers with dependencies during IT -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>start-it-containers</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<skip>${skipTests}</skip>
-							<workingDirectory>${project.basedir}/../bin/it/</workingDirectory>
-							<executable>bash</executable>
-							<arguments>
-								<argument>start-containers.sh</argument>
-								<argument>${docker.reuse.it}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop-it-containers</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<skip>${skipTests}</skip>
-							<workingDirectory>${project.basedir}/../bin/it/</workingDirectory>
-							<executable>bash</executable>
-							<arguments>
-								<argument>stop-containers.sh</argument>
-								<argument>${docker.reuse.it}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
