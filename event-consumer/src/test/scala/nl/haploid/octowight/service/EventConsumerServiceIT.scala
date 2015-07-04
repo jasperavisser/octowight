@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import nl.haploid.octowight.kafka.KafkaProducerFactory
 import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper, TestData}
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.junit.Rule
 import org.junit.rules.Timeout
 import org.slf4j.LoggerFactory
@@ -25,6 +25,8 @@ class EventConsumerServiceIT extends AbstractIT {
 
   private[this] val topic = TestData.topic
 
+  behavior of "Event consumer service"
+
   override def beforeEach() = {
     log.info(s"Topic is $topic")
     super.beforeEach()
@@ -39,15 +41,15 @@ class EventConsumerServiceIT extends AbstractIT {
   }
 
   it should "consume a message" in {
-    val expectedEvent = TestData.atomChangeEvent("joan")
+    val expectedEvent = TestData.atomChangeEvent(TestData.nextString)
     sendMessage(topic, expectedEvent)
     val actualEvent = eventConsumerService1.consumeEvent
     actualEvent should be(expectedEvent)
   }
 
   it should "consume multiple messages" in {
-    val event1 = TestData.atomChangeEvent("bob")
-    val event2 = TestData.atomChangeEvent("benson")
+    val event1 = TestData.atomChangeEvent(TestData.nextString)
+    val event2 = TestData.atomChangeEvent(TestData.nextString)
     val expectedEvents = Set(event1, event2)
     sendMessage(topic, event1)
     sendMessage(topic, event2)

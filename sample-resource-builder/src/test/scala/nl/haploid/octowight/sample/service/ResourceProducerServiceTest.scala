@@ -34,6 +34,8 @@ class ResourceProducerServiceTest extends AbstractTest {
 
   val topic: String = TestData.nextString
 
+  behavior of "Resource producer service"
+
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(resourceProducerService, "topic", topic)

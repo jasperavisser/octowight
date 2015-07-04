@@ -10,6 +10,8 @@ class ResourceElementRegistryServiceTest extends AbstractTest {
   @Tested private[this] val resourceElementRegistryService: ResourceElementRegistryService = null
   @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
 
+  behavior of "Resource element registry service"
+
   it should "save resource elements" in {
     val resourceIdentifier = TestData.resourceIdentifier
     val atom1 = TestData.atom

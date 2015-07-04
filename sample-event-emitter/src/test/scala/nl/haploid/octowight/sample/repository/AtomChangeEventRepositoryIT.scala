@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 class AtomChangeEventRepositoryIT extends AbstractIT {
   @Autowired private[this] val atomChangeEventDmoRepository: AtomChangeEventDmoRepository = null
 
-  "Atom change event repository" should "find all events" in {
+  behavior of "Atom change event repository"
+
+  it should "find all events" in {
     atomChangeEventDmoRepository.deleteAll()
     val event = TestData.atomChangeEventDmo
     atomChangeEventDmoRepository.saveAndFlush(event)

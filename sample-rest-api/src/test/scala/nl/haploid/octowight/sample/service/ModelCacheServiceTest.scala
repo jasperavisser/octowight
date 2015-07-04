@@ -13,13 +13,15 @@ class ModelCacheServiceTest extends AbstractTest {
   @Mocked private[this] val modelSerializer: ModelSerializer[MockModel] = null
   @Mocked private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
 
+  behavior of "Model cache service"
+
   override def beforeEach() = {
     super.beforeEach()
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(modelCacheService, "log", log)
   }
 
-  "Model cache service" should "get a model" in {
+  it should "get a model" in {
     val resourceRoot = TestData.resourceRoot
     val resourceModelId = new ResourceModelDmoId(resourceRoot.resourceId, resourceRoot.resourceCollection)
     resourceModelId should not be null
@@ -38,7 +40,7 @@ class ModelCacheServiceTest extends AbstractTest {
     }
   }
 
-  "Model cache service" should "put a new model" in {
+  it should "put a new model" in {
     val resource = TestData.mockResource(Set())
     val model = mock[MockModel]
     val body = TestData.nextString

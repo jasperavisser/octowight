@@ -11,9 +11,10 @@ class EventConsumerServiceTest extends AbstractTest {
 
   private[this] val topic = TestData.topic
 
+  behavior of "Event consumer service"
+
   override def beforeEach() = {
     super.beforeEach()
-    //    EasyMock.reset(eventConsumerService)
     ReflectionTestUtils.setField(eventConsumerService, "topic", topic)
   }
 
@@ -34,8 +35,8 @@ class EventConsumerServiceTest extends AbstractTest {
 
   it should "consume multiple messages" in {
     val kafkaConsumer = mock[KafkaConsumer]
-    val event1 = TestData.atomChangeEvent("carol")
-    val event2 = TestData.atomChangeEvent("daryl")
+    val event1 = TestData.atomChangeEvent(TestData.nextString)
+    val event2 = TestData.atomChangeEvent(TestData.nextString)
     val message1 = TestData.message
     val message2 = TestData.message
     val messages = Iterable(message1, message2)

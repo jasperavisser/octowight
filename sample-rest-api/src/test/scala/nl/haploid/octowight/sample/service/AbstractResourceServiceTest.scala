@@ -17,13 +17,15 @@ class AbstractResourceServiceTest extends AbstractTest {
   @Mocked private[this] val resourceElementDmoRepository: ResourceElementDmoRepository = null
   @Mocked private[this] val resourceFactory: ResourceFactory[MockResource] = null
 
+  behavior of "Abstract resource service"
+
   override def beforeEach() = {
     super.beforeEach()
     val log = EasyMock.createMock(classOf[Logger])
     ReflectionTestUtils.setField(resourceService, "log", log)
   }
 
-  "Abstract resource service" should "get model from origin" in {
+  it should "get model from origin" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
       .addMockedMethod("collection")
       .addMockedMethod("getResourceRoot")
@@ -53,7 +55,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
   }
 
-  "Abstract resource service" should "get model from cache" in {
+  it should "get model from cache" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
       .addMockedMethod("collection")
       .addMockedMethod("getResourceRoot")
@@ -78,7 +80,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
   }
 
-  "Abstract resource service" should "get all models" in {
+  it should "get all models" in {
     val abstractResourceService = withMocks(EasyMock.createMockBuilder(classOf[MockResourceService])
       .addMockedMethod("getModelOption")
       .createMock())
@@ -107,7 +109,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
   }
 
-  "Abstract resource service" should "get resource root" in {
+  it should "get resource root" in {
     val resourceId = TestData.nextLong
     val resourceCollection = TestData.nextString
     val resourceRootDmo = TestData.resourceRootDmo
@@ -121,7 +123,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
   }
 
-  "Abstract resource service" should "save resource elements" in {
+  it should "save resource elements" in {
     val atom1 = TestData.atom
     val atom2 = TestData.atom
     val resource = TestData.mockResource(Set(atom1, atom2))
@@ -137,7 +139,7 @@ class AbstractResourceServiceTest extends AbstractTest {
     }
   }
 
-  "Abstract resource service" should "tombstone a resource" in {
+  it should "tombstone a resource" in {
     val resourceRoot = TestData.resourceRoot
     val resourceRootDmo = TestData.resourceRootDmo
     val tombstonedResourceRootDmo = resourceRootDmo.copy(tombstone = true)

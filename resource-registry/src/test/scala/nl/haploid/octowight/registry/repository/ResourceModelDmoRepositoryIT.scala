@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 class ResourceModelDmoRepositoryIT extends AbstractIT {
   @Autowired private[this] val resourceModelDmoRepository: ResourceModelDmoRepository = null
 
-  "Resource model DMO repository" should "find one" in {
+  behavior of "Resource model repository"
+
+  it should "find one" in {
     val expectedResourceModelDmo = TestData.resourceModelDmo
     resourceModelDmoRepository.save(expectedResourceModelDmo)
     val actualResourceModelDmo = resourceModelDmoRepository.findOne(expectedResourceModelDmo.id)

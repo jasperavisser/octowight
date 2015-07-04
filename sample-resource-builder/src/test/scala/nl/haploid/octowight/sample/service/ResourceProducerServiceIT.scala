@@ -12,7 +12,9 @@ class ResourceProducerServiceIT extends AbstractIT {
   @Autowired private[this] val jsonMapper: JsonMapper = null
   @Value("${octowight.kafka.topic.resources.built}") private[this] val topic: String = null
 
-  it should "send" in {
+  behavior of "Resource producer service"
+
+  it should "send resources" in {
     val resource1 = TestData.resource
     val resource2 = TestData.resource
     val expectedResources: Iterable[ResourceMessage] = Iterable(resource1, resource2)

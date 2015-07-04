@@ -22,17 +22,19 @@ class EasyMockInjectionTest extends FlatSpec with EasyMockInjection with ShouldM
 
   override def beforeEach() = injectMocks()
 
-  "Mocked objects" should "be injected into test instance" in {
+  behavior of "Easy mock injection"
+
+  it should "inject mocks into test instance" in {
     collaborator1 should not be null
     collaborator2 should not be null
   }
 
-  "Mocked objects" should "be injected into fields of test subject" in {
+  it should "inject mocks into fields of test subject" in {
     testSubjectSuper.collaborator1 should not be null
     testSubjectSuper.collaborator2 should not be null
   }
 
-  "Mocked objects" should "be injected into super class fields of test subject" in {
+  it should "inject mocks into super class fields of test subject" in {
     testSubject.collaborator1 should not be null
     testSubject.collaborator2 should not be null
   }

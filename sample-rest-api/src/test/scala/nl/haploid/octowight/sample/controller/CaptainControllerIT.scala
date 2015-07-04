@@ -25,6 +25,8 @@ class CaptainControllerIT extends AbstractTransactionalIT {
   private[this] val tempResourceRootDmos = new util.ArrayList[ResourceRootDmo]
   private[this] var mockMvc: MockMvc = null
 
+  behavior of "Captain controller"
+
   override def beforeEach() = {
     super.beforeEach()
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build
@@ -37,7 +39,7 @@ class CaptainControllerIT extends AbstractTransactionalIT {
     super.afterEach()
   }
 
-  "Captain controller" should "get a captain" in {
+  it should "get a captain" in {
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
     val roleDmo = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResource.ResourceCollection))
     val resourceRootDmo = new ResourceRootDmo(

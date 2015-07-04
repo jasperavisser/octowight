@@ -6,6 +6,8 @@ import nl.haploid.octowight.AbstractTest
 
 class KafkaStreamIteratorTest extends AbstractTest {
 
+  behavior of "Kafka stream iterator"
+
   it should "iterate over a kafka stream" in {
     val stream = mock[KafkaStream[Array[Byte], Array[Byte]]]
     val iterator = mock[ConsumerIterator[Array[Byte], Array[Byte]]]

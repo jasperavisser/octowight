@@ -13,6 +13,8 @@ class DirtyResourceConsumerServiceIT extends AbstractIT {
   @Autowired private[this] val jsonMapper: JsonMapper = null
   @Value("${octowight.kafka.topic.resources.dirty}") private[this] val topic: String = null
 
+  behavior of "Dirty resource consumer service"
+
   it should "consume resource identifiers" in {
     val resourceIdentifier1 = new ResourceIdentifier(collection = TestData.nextString, id = TestData.nextLong)
     val resourceIdentifier2 = new ResourceIdentifier(collection = TestData.nextString, id = TestData.nextLong)

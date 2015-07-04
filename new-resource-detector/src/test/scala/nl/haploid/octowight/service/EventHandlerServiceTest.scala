@@ -14,7 +14,9 @@ class EventHandlerServiceTest extends AbstractTest {
   @Mocked private[this] val resourceRegistryService: ResourceRegistryService = null
   @Mocked private[this] val dirtyResourceProducerService: DirtyResourceProducerService = null
 
-  "Event handler service" should "detect new resources" in {
+  behavior of "Event handler service"
+
+  it should "detect new resources" in {
     val topic = TestData.nextString
     val origin = TestData.nextString
     val category1 = TestData.nextString

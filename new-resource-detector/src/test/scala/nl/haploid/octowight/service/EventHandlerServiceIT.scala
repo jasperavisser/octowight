@@ -19,17 +19,19 @@ class EventHandlerServiceIT extends AbstractIT {
 
   private[this] val topic = TestData.topic
 
+  behavior of "Event handler service"
+
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(eventConsumerService, "topic", topic)
   }
 
-  "Event handler service" should "handle no events" in {
+  it should "handle no events" in {
     val actualCount = eventHandlerService.detectNewResources(10)
     actualCount should be(0)
   }
 
-  "Event handler service" should "handle some events" in {
+  it should "handle some events" in {
     val event1 = TestData.atomChangeEvent(MockResourceDetector.AtomCategory)
     val event2 = TestData.atomChangeEvent(MockResourceDetector.AtomCategory)
     val event3 = TestData.atomChangeEvent("jack")

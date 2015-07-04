@@ -18,6 +18,8 @@ class DirtyResourceConsumerServiceTest extends AbstractTest {
 
   private[this] val topic = DirtyResourceConsumerServiceTest.Topic
 
+  behavior of "Dirty resource consumer service"
+
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(dirtyResourceConsumerService, "topic", topic)

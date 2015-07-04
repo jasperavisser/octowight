@@ -9,7 +9,9 @@ class CaptainResourceFactoryTest extends AbstractTest {
   @Tested private[this] val captainResourceFactory: CaptainResourceFactory = null
   @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
 
-  "Captain resource factory" should "build from a resource root" in {
+  behavior of "Captain resource factory"
+
+  it should "build from a resource root" in {
     val roleDmo = mock[RoleDmo]
     val resourceRoot = TestData.resourceRoot
     val personDmo = TestData.personDmo

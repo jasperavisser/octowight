@@ -13,11 +13,13 @@ class CaptainResourceDetectorTest extends AbstractTest {
   @Tested private[this] val detector: CaptainResourceDetector = null
   @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
 
-  "Captain resource detector" should "have an atom category" in {
+  behavior of "Captain resource detector"
+
+  it should "have an atom category" in {
     detector.atomCategories should have size 1
   }
 
-  "Captain resource detector" should "detect captains" in {
+  it should "detect captains" in {
     val detector = withMocks(EasyMock.createMockBuilder(classOf[CaptainResourceDetector])
       .addMockedMethod("findRolesById")
       .addMockedMethod("isCaptain")
@@ -42,7 +44,7 @@ class CaptainResourceDetectorTest extends AbstractTest {
     }
   }
 
-  "Captain resource detector" should "get roles by id" in {
+  it should "get roles by id" in {
     val event1 = TestData.atomChangeEvent
     val event2 = TestData.atomChangeEvent
     val events = List(event1, event2)
@@ -60,7 +62,7 @@ class CaptainResourceDetectorTest extends AbstractTest {
     }
   }
 
-  "Captain resource detector" should "recognize a captain" in {
+  it should "recognize a captain" in {
     val personDmo = mock[PersonDmo]
     val roleDmo1 = TestData.roleDmo(personDmo, "harpooner")
     val roleDmo2 = TestData.roleDmo(personDmo, CaptainResourceDetector.RoleType)

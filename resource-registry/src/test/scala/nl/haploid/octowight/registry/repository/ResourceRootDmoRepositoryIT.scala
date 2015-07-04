@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired
 class ResourceRootDmoRepositoryIT extends AbstractIT {
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
 
-  "Resource root DMO repository" should "find by atom id, type & origin" in {
+  behavior of "Resource root repository"
+
+  it should "find by atom id, type & origin" in {
     resourceRootDmoRepository.deleteAll()
     val dmo = TestData.resourceRootDmo
     val expectedDmo = resourceRootDmoRepository.save(dmo)
@@ -18,7 +20,7 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     println(actualDmo)
   }
 
-  "Resource root DMO repository" should "find by resource collection" in {
+  it should "find by resource collection" in {
     resourceRootDmoRepository.deleteAll()
     val dmo1 = TestData.resourceRootDmo("willow")
     val dmo2 = TestData.resourceRootDmo("oz")
@@ -29,7 +31,7 @@ class ResourceRootDmoRepositoryIT extends AbstractIT {
     actualDmos should be(expectedDmos)
   }
 
-  "Resource root DMO repository" should "find by resource collection & id" in {
+  it should "find by resource collection & id" in {
     resourceRootDmoRepository.deleteAll()
     val dmo1 = TestData.resourceRootDmo("willow")
     val dmo2 = TestData.resourceRootDmo("oz")

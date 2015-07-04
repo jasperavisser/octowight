@@ -11,6 +11,8 @@ class KafkaConsumerIT extends AbstractIT with OneInstancePerTest {
 
   private[this] val topic = TestData.nextString
 
+  behavior of "Kafka consumer"
+
   it should "get the next N messages" in {
     val message1 = TestData.nextString
     val message2 = TestData.nextString
@@ -33,7 +35,7 @@ class KafkaConsumerIT extends AbstractIT with OneInstancePerTest {
     kafkaConsumer.shutdown()
   }
 
-  it should "commit" in {
+  it should "commit offsets" in {
     val message1 = TestData.nextString
     val message2 = TestData.nextString
     val kafkaProducer = kafkaProducerFactory.kafkaProducer

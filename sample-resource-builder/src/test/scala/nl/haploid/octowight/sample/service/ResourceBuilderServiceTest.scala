@@ -11,6 +11,8 @@ class ResourceBuilderServiceTest extends AbstractTest {
   @Mocked private[this] val resourceBuilders: ResourceBuilders = null
   @Mocked private[this] val resourceElementRegistryService: ResourceElementRegistryService = null
 
+  behavior of "Resource builders service"
+
   it should "build resources" in {
     val collection1 = TestData.nextString
     val collection2 = TestData.nextString

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 class SequenceServiceIT extends AbstractIT {
   @Autowired private[this] val sequenceService: SequenceService = null
 
-  "Sequence service" should "get the next value from a sequence" in {
+  behavior of "Sequence service"
+
+  it should "get the next value from a sequence" in {
     val key = s"test-${TestData.nextString}"
     sequenceService.nextValue(key) should be(0)
     sequenceService.nextValue(key) should be(1)

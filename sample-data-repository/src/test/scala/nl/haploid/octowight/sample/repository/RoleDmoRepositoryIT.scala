@@ -7,7 +7,9 @@ class RoleDmoRepositoryIT extends AbstractTransactionalIT {
   @Autowired private[this] val personDmoRepository: PersonDmoRepository = null
   @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
 
-  "Role DMO repository" should "find all" in {
+  behavior of "Role repository"
+
+  it should "find all" in {
     roleDmoRepository.deleteAll()
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
     val roleDmo = TestData.roleDmo(personDmo, "cleaner")

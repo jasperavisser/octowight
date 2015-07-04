@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired
 class EventChannelServiceIT extends AbstractIT {
   @Autowired private[this] val eventChannelService: EventChannelService = null
 
-  "Channel" should "send an event" in {
+  behavior of "Event channel service"
+
+  it should "send an event" in {
     val event = TestData.atomChangeEvent
     val future = eventChannelService.sendEvent(event)
     Option(future.get(5, TimeUnit.SECONDS)) should not be None
   }
 
-  "Channel" should "send multiple events" in {
+  it should "send multiple events" in {
     val results = eventChannelService.sendEvents(List(TestData.atomChangeEvent, TestData.atomChangeEvent))
     results should have size 2
   }

@@ -8,6 +8,8 @@ import org.easymock.EasyMock
 
 class KafkaConsumerTest extends AbstractTest {
 
+  behavior of "Kafka consumer"
+
   it should "get the next N messages" in {
     val kafkaConsumer = EasyMock.createMockBuilder(classOf[KafkaConsumer])
       .addMockedMethod("stream")

@@ -6,7 +6,9 @@ import org.easymock.EasyMock
 
 class ResourceDetectorsServiceTest extends AbstractTest {
 
-  "Resource detectors service" should "get detectors for atom category" in {
+  behavior of "Resource detectors service"
+
+  it should "get detectors for atom category" in {
     val resourceDetectorsService = EasyMock.createMockBuilder(classOf[ResourceDetectorsService])
       .addMockedMethod("detectors")
       .createMock()
@@ -25,7 +27,7 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     }
   }
 
-  "Resource detectors service" should "detect resources" in {
+  it should "detect resources" in {
     val resourceDetectorsService = EasyMock.createMockBuilder(classOf[ResourceDetectorsService])
       .addMockedMethod("detectorsForAtomCategory", classOf[String])
       .createMock()

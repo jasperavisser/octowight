@@ -8,6 +8,8 @@ class KafkaConsumerFactoryIT extends AbstractIT {
 
   private[this] val topic = TestData.nextString
 
+  behavior of "Kafka consumer factory"
+
   it should "build a kafka consumer" in {
     kafkaConsumerFactory.kafkaConsumer(topic) should not be null
   }

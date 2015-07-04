@@ -12,7 +12,9 @@ class CaptainResourceDetectorIT extends AbstractTransactionalIT {
   @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
   @PersistenceContext private[this] val entityManager: EntityManager = null
 
-  "Captain resource detector" should "get roles by id" in {
+  behavior of "Captain resource detector"
+
+  it should "get roles by id" in {
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
     val roleDmo1 = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, "first mate"))
     roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, "harpooner"))
@@ -23,7 +25,7 @@ class CaptainResourceDetectorIT extends AbstractTransactionalIT {
     dmosById.get(roleDmo1.getId).orNull should be(roleDmo1)
   }
 
-  "Captain resource detector" should "detect captains" in {
+  it should "detect captains" in {
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)
     val dmo1 = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, CaptainResourceDetector.RoleType))
     val dmo2 = roleDmoRepository.saveAndFlush(TestData.roleDmo(personDmo, "deckhand"))

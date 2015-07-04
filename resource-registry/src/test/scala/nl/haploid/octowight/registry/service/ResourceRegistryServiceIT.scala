@@ -9,13 +9,15 @@ class ResourceRegistryServiceIT extends AbstractIT {
   @Autowired private[this] val resourceRegistryService: ResourceRegistryService = null
   @Autowired private[this] val resourceRootDmoRepository: ResourceRootDmoRepository = null
 
-  "Resource registry service" should "save a new resource" in {
+  behavior of "Resource registry service"
+
+  it should "save a new resource" in {
     val resourceRoot = resourceRegistryService.saveResource(TestData.resourceRoot).getOrElse(fail())
     resourceRoot.resourceId should not be null
     resourceRoot.version should not be null
   }
 
-  "Resource registry service" should "mark resources as dirty" in {
+  it should "mark resources as dirty" in {
     val resourceRootDmo = resourceRootDmoRepository.save(TestData.resourceRootDmo)
     val atomGroup = TestData.atomGroup
     val atomChangeEvent1 = TestData.atomChangeEvent(atomGroup)

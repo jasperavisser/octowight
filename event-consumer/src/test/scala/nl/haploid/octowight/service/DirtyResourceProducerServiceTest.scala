@@ -14,17 +14,19 @@ class DirtyResourceProducerServiceTest extends AbstractTest {
   @Mocked private[this] val kafkaProducerFactory: KafkaProducerFactory = null
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
+  behavior of "Dirty resource producer service"
+
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(dirtyResourceProducerService, "topic", TestData.topic)
   }
 
-  "Dirty resource producer" should "send dirty resource" in {
+  it should "send a dirty resource" in {
     val kafkaProducer = mock[KafkaProducer[String, String]]
     val expectedFuture = mock[Future[RecordMetadata]]
     val resourceRoot = TestData.resourceRoot(TestData.nextLong)
     val resourceIdentifier = new ResourceIdentifier(collection = resourceRoot.resourceCollection, id = resourceRoot.resourceId)
-    val message = "joy"
+    val message = TestData.nextString
     expecting {
       kafkaProducerFactory.kafkaProducer andReturn kafkaProducer once()
       jsonMapper.serialize(resourceIdentifier) andReturn message once()

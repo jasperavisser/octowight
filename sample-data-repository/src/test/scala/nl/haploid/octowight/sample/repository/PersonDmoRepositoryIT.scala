@@ -10,7 +10,9 @@ class PersonDmoRepositoryIT extends AbstractTransactionalIT {
   @Autowired private[this] val roleDmoRepository: RoleDmoRepository = null
   @PersistenceContext private[this] val entityManager: EntityManager = null
 
-  "Person DMO repository" should "find all" in {
+  behavior of "Person repository"
+
+  it should "find all" in {
     roleDmoRepository.deleteAll()
     personDmoRepository.deleteAll()
     val personDmo = personDmoRepository.saveAndFlush(TestData.personDmo)

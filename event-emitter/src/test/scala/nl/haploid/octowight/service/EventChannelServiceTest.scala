@@ -13,6 +13,8 @@ class EventChannelServiceTest extends AbstractTest {
   @Mocked private[this] val kafkaProducerFactory: KafkaProducerFactory = null
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
+  behavior of "Event channel service"
+
   override def beforeEach() = {
     super.beforeEach()
     ReflectionTestUtils.setField(eventChannelService, "topic", TestData.topic)

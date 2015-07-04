@@ -11,6 +11,8 @@ class CaptainResourceBuilderTest extends AbstractTest {
   @Mocked private[this] val roleDmoRepository: RoleDmoRepository = null
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
+  behavior of "Captain resource builder"
+
   it should "build resources" in {
     val resourceRoot1 = TestData.resourceRoot
     val resourceRoot2 = TestData.resourceRoot
