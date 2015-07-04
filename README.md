@@ -49,7 +49,7 @@ To run the integration tests in an IDE:
 bash bin/infrastructure/build-images.sh
 docker-compose -f infrastructure.yml up -d
 ```
-then simply start your IT with an environment variable DOCKER_HOST_IP that points to your docker host.
+then simply start your IT with an environment variable INFRASTRUCTURE_HOST that points to your docker host.
 
 ## Design principles
 TODO: Design principles

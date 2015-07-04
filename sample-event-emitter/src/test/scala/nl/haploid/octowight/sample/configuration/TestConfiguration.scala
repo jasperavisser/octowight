@@ -13,13 +13,13 @@ object TestConfiguration {
   @Bean def propertyPlaceholderConfigurer = {
     val configurer = new PropertySourcesPlaceholderConfigurer
     val properties = new Properties
-    val dockerHostIp = System.getenv("DOCKER_HOST_IP")
-    properties.setProperty("octowight.postgres.hostname", dockerHostIp)
+    val infrastructureHost = Option(System.getenv("INFRASTRUCTURE_HOST")).getOrElse("localhost")
+    properties.setProperty("octowight.postgres.hostname", infrastructureHost)
     properties.setProperty("octowight.postgres.port", "5432")
     properties.setProperty("octowight.postgres.database", "postgres")
     properties.setProperty("octowight.postgres.username", "postgres")
     properties.setProperty("octowight.kafka.topic.events", TestData.topic)
-    properties.setProperty("octowight.kafka.hostname", dockerHostIp)
+    properties.setProperty("octowight.kafka.hostname", infrastructureHost)
     properties.setProperty("octowight.kafka.port", "9092")
     configurer.setProperties(properties)
     configurer

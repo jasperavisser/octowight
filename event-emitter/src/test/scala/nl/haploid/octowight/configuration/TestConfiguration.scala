@@ -11,9 +11,9 @@ object TestConfiguration {
   @Bean def propertyPlaceholderConfigurer = {
     val configurer = new PropertySourcesPlaceholderConfigurer
     val properties = new Properties
-    val dockerHostIp = System.getenv("DOCKER_HOST_IP")
+    val infrastructureHost = Option(System.getenv("INFRASTRUCTURE_HOST")).getOrElse("localhost")
     properties.setProperty("octowight.kafka.topic.events", TestData.topic)
-    properties.setProperty("octowight.kafka.hostname", dockerHostIp)
+    properties.setProperty("octowight.kafka.hostname", infrastructureHost)
     properties.setProperty("octowight.kafka.port", "9092")
     configurer.setProperties(properties)
     configurer

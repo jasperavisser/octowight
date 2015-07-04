@@ -17,8 +17,8 @@ object TestConfiguration {
 
   private[this] def properties = {
     val properties = new Properties
-    val dockerHostIp = System.getenv("DOCKER_HOST_IP")
-    properties.setProperty("octowight.registry.mongo.hostname", dockerHostIp)
+    val infrastructureHost = Option(System.getenv("INFRASTRUCTURE_HOST")).getOrElse("localhost")
+    properties.setProperty("octowight.registry.mongo.hostname", infrastructureHost)
     properties.setProperty("octowight.registry.mongo.port", "27017")
     properties.setProperty("octowight.registry.mongo.database", s"integration-test-${TestData.nextString}")
     properties
