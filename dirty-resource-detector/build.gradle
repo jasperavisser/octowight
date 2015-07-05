@@ -1,3 +1,5 @@
+apply plugin: 'spring-boot'
+
 dependencies {
     compile project(':event-consumer')
     compile 'org.aspectj:aspectjweaver'

@@ -1,5 +1,7 @@
+apply plugin: "spring-boot"
+
 dependencies {
-    compile project(':event-emitter')
+    compile project(":event-emitter")
     compile libraries.spring_data_jpa
-    testCompile project(':spring-scala-mock')
+    testCompile project(":spring-scala-mock")
 }

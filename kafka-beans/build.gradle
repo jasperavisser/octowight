@@ -1,5 +1,5 @@
 dependencies {
     compile libraries.kafka_consumer
     compile libraries.kafka_producer
-    testCompile project(':spring-scala-mock')
+    testCompile project(":spring-scala-mock")
 }

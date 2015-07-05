@@ -1,6 +1,6 @@
 dependencies {
-    compile project(':atom-change-event')
-    compile 'org.mongodb:mongo-java-driver'
-    compile 'org.springframework.data:spring-data-mongodb'
-    testCompile project(':spring-scala-mock')
+    compile project(":atom-change-event")
+    compile "org.mongodb:mongo-java-driver"
+    compile "org.springframework.data:spring-data-mongodb"
+    testCompile project(":spring-scala-mock")
 }

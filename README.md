@@ -82,8 +82,8 @@ TODO: Adopt names from EDA
 * http://wurstmeister.github.io/kafka-docker/
 * http://kafka.apache.org/documentation.html
 
-### Maven
-* http://stackoverflow.com/questions/24705877/cant-get-maven-to-recognize-java-1-8
+### Gradle
+* https://github.com/spring-gradle-plugins/dependency-management-plugin
 
 ## TODO
 
