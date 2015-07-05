@@ -55,7 +55,6 @@ subprojects {
         compile "org.scala-lang:scala-library:2.11.6"
         compile "org.scala-lang:scala-compiler:2.11.6"
         compile "org.springframework.boot:spring-boot-starter:1.2.5.RELEASE"
-        testCompile "junit:junit"
         testCompile "org.easymock:easymock:3.3.1"
         testCompile "org.scalatest:scalatest_2.11:2.2.4"
         testCompile "org.springframework:spring-test"
@@ -83,15 +82,17 @@ subprojects {
         }
     }
 
-    task test(dependsOn: ["testClasses"], type: JavaExec, overwrite: true) {
+    task spec(dependsOn: ["testClasses"], type: JavaExec) {
         main = "org.scalatest.tools.Runner"
         args = ["-R", "build/classes/test", "-o", "-u", "build/reports/", "-l", "org.scalatest.tags.Slow"]
         classpath = sourceSets.test.runtimeClasspath
     }
 
-    task IT(dependsOn: ["testClasses"], type: JavaExec, overwrite: true) {
+    task IT(dependsOn: ["testClasses"], type: JavaExec) {
         main = "org.scalatest.tools.Runner"
         args = ["-R", "build/classes/test", "-o", "-u", "build/reports/"]
         classpath = sourceSets.test.runtimeClasspath
     }
+
+    tasks.check.dependsOn(spec)
 }
