@@ -1,4 +1,5 @@
 apply plugin: "spring-boot"
+apply from: "../docker.gradle"
 
 dependencies {
     compile project(":new-resource-detector")

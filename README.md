@@ -34,7 +34,7 @@ To build the project:
 ```bash
 bash bin/infrastructure/build-images.sh
 docker-compose -f infrastructure.yml up -d
-mvn clean install
+gradle assemble
 ```
 
 To run the sample apps:
@@ -74,7 +74,6 @@ TODO: Adopt names from EDA
 * https://docs.docker.com/reference/builder/
 * http://boot2docker.io/
 * http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
-* https://github.com/spotify/docker-maven-plugin
 * https://docs.docker.com/compose/yml/
 
 ### Kafka
@@ -84,6 +83,10 @@ TODO: Adopt names from EDA
 
 ### Gradle
 * https://github.com/spring-gradle-plugins/dependency-management-plugin
+* https://github.com/Transmode/gradle-docker
+
+### Spring
+* https://spring.io/guides/gs/spring-boot-docker/
 
 ## TODO
 

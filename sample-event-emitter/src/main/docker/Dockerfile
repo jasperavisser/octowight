@@ -3,8 +3,8 @@ FROM oracle-java8
 RUN useradd -ms /bin/bash app
 USER app
 
-ADD app /opt/app
-WORKDIR /opt/app
+ADD *.jar /opt/app/
+WORKDIR /opt/app/
 
 ENV OCTOWIGHT_KAFKA_HOSTNAME=kafka-broker \
 	OCTOWIGHT_KAFKA_PORT=9092 \

@@ -1,7 +1,8 @@
-apply plugin: 'spring-boot'
+apply plugin: "spring-boot"
+apply from: "../docker.gradle"
 
 dependencies {
-    compile project(':event-consumer')
-    compile 'org.aspectj:aspectjweaver'
-    testCompile project(':spring-scala-mock')
+    compile project(":event-consumer")
+    compile "org.aspectj:aspectjweaver"
+    testCompile project(":spring-scala-mock")
 }
