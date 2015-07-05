@@ -6,5 +6,9 @@
 /data/
 /target/
 /local.properties
-.cache-main
-.cache-tests
+
+.cache-main/
+.cache-tests/
+.gradle/
+build/
+

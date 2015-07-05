@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':new-resource-detector')
+    compile project(':sample-data-repository')
+    compile 'org.aspectj:aspectjweaver'
+    testCompile project(':spring-scala-mock')
+}

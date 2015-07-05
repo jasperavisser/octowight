@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':atom-change-event')
+    compile project(':kafka-beans')
+    testCompile project(':spring-scala-mock')
+}

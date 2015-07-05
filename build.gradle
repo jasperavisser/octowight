@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE')
+    }
+}
+
+apply plugin: 'idea'
+
+ext.libraries = [
+        jackson        : [
+                'com.fasterxml.jackson.core:jackson-annotations:2.5.1',
+                'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.1'
+
+        ],
+        kafka_consumer : [
+                dependencies.create('org.apache.kafka:kafka_2.11:0.8.2.1') {
+                    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+                },
+                dependencies.create('com.101tec:zkclient:0.3') {
+                    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+                    exclude group: 'log4j', module: 'log4j'
+                },
+                'com.yammer.metrics:metrics-core:2.2.0'
+        ],
+        kafka_producer : 'org.apache.kafka:kafka-clients:0.8.2.1',
+        spring_data_jpa: [
+                'com.jolbox:bonecp-spring:0.8.0.RELEASE',
+                'org.aspectj:aspectjweaver',
+                'org.hibernate:hibernate-entitymanager',
+                'org.postgresql:postgresql:9.2-1004-jdbc41',
+                'org.springframework:spring-orm',
+                'org.springframework.data:spring-data-commons',
+                'org.springframework.data:spring-data-jpa'
+
+        ]
+]
+
+subprojects {
+    group 'nl.haploid'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'scala'
+    apply plugin: 'spring-boot'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    // TODO: apply spring boot plugin only to selected modules
+    // TODO: build docker images
+    // TODO: distinguish IT
+
+    dependencies {
+        compile 'org.scala-lang:scala-library:2.11.6'
+        compile 'org.scala-lang:scala-compiler:2.11.6'
+        compile libraries.jackson
+        compile 'org.springframework.boot:spring-boot-starter'
+        testCompile 'junit:junit'
+        testCompile 'org.springframework:spring-test'
+        testCompile 'org.scalatest:scalatest_2.11:2.2.4'
+        testCompile 'org.easymock:easymock:3.3.1'
+    }
+
+    task spec(dependsOn: ['testClasses'], type: JavaExec) {
+        main = 'org.scalatest.tools.Runner'
+        args = ['-R', 'build/classes/test', '-o', '-u', 'build/reports/']
+        classpath = sourceSets.test.runtimeClasspath
+    }
+}

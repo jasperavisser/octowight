@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':event-consumer')
+    compile 'org.aspectj:aspectjweaver'
+    testCompile project(':spring-scala-mock')
+}

@@ -75,6 +75,7 @@ TODO: Adopt names from EDA
 * http://boot2docker.io/
 * http://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html
 * https://github.com/spotify/docker-maven-plugin
+* https://docs.docker.com/compose/yml/
 
 ### Kafka
 * http://www.quora.com/Which-one-is-better-for-durable-messaging-with-good-query-features-RabbitMQ-or-Kafka
