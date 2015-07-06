@@ -40,7 +40,7 @@ gradle assemble
 To run the sample apps:
 ```bash
 bash bin/infrastructure/build-images.sh
-bash bin/sample/build-images.sh
+gradle buildDocker
 docker-compose up -d
 ```
 
