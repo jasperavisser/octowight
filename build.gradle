@@ -37,11 +37,14 @@ ext.libraries = [
         ]
 ]
 
-subprojects {
+allprojects {
     group "nl.haploid"
     version "1.0-SNAPSHOT"
 
     apply plugin: "idea"
+}
+
+subprojects {
     apply plugin: "scala"
     apply plugin: "io.spring.dependency-management"
 
