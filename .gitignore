@@ -1,14 +1,11 @@
 /bootstrap.env
-/*.iml
-/.idea/
-/.project
-/.settings/
-/data/
-/target/
 /local.properties
 
 .cache-main/
 .cache-tests/
 .gradle/
+.idea/
+.project
+.settings/
+*.iml
 build/
-
