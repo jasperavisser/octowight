@@ -35,6 +35,8 @@ To build the project:
 bash bin/infrastructure/build-images.sh
 docker-compose -f infrastructure.yml up -d
 gradle assemble
+# and to run the integration tests
+gradle IT
 ```
 
 To run the sample apps:
