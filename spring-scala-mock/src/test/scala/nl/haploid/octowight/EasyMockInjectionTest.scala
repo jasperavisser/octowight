@@ -1,5 +1,7 @@
 package nl.haploid.octowight
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, ShouldMatchers}
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -14,6 +16,7 @@ class Collaborator1
 
 class Collaborator2
 
+@RunWith(classOf[JUnitRunner])
 class EasyMockInjectionTest extends FlatSpec with EasyMockInjection with ShouldMatchers with BeforeAndAfterEach {
   @Tested val testSubjectSuper: TestSubjectSuper = null
   @Tested val testSubject: TestSubject = null

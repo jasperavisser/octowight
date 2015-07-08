@@ -28,20 +28,20 @@ zookeeper:
     service: zookeeper
 
 dirtyResourceDetector:
-  image: dirty-resource-detector
+  image: octowight/dirty-resource-detector
   links:
   - kafkaBroker:kafka-broker
   - resourceRegistry:mongo-resource-registry
   - zookeeper:zookeeper
 
 sampleEventEmitter:
-  image: sample-event-emitter
+  image: octowight/sample-event-emitter
   links:
   - kafkaBroker:kafka-broker
   - sampleDataRepository:postgres-data-repository
 
 sampleNewResourceDetector:
-  image: sample-new-resource-detector
+  image: octowight/sample-new-resource-detector
   links:
   - kafkaBroker:kafka-broker
   - resourceRegistry:mongo-resource-registry
@@ -49,7 +49,7 @@ sampleNewResourceDetector:
   - zookeeper:zookeeper
 
 sampleResourceBuilder:
-  image: sample-resource-builder
+  image: octowight/sample-resource-builder
   links:
   - kafkaBroker:kafka-broker
   - resourceRegistry:mongo-resource-registry

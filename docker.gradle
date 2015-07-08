@@ -5,6 +5,7 @@ group = "octowight"
 task buildDocker(type: Docker, dependsOn: build) {
     push = false
     applicationName = jar.baseName
+    tagVersion = "latest"
     dockerfile = file("src/main/docker/Dockerfile")
     doFirst {
         copy {
