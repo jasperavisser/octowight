@@ -23,4 +23,4 @@ ENV OCTOWIGHT_KAFKA_HOSTNAME=kafka-broker \
 	OCTOWIGHT_ZOOKEEPER_HOSTNAME=zookeeper \
 	OCTOWIGHT_ZOOKEEPER_PORT=2181
 
-ENTRYPOINT ["java", "-jar", "*.jar"]
+CMD ["java", "-jar", "sample-new-resource-detector-1.0-SNAPSHOT.jar"]

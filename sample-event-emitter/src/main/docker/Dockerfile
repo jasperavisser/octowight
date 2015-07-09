@@ -14,4 +14,4 @@ ENV OCTOWIGHT_KAFKA_HOSTNAME=kafka-broker \
 	OCTOWIGHT_POSTGRES_USERNAME=postgres \
 	OCTOWIGHT_POSTGRES_DATABASE=postgres
 
-ENTRYPOINT ["java", "-jar", "*.jar"]
+CMD ["java", "-jar", "sample-event-emitter-1.0-SNAPSHOT.jar"]
