@@ -43,9 +43,7 @@ allprojects {
 
     apply plugin: "idea"
     apply plugin: "scala"
-}
 
-subprojects {
     apply plugin: "io.spring.dependency-management"
 
     repositories {
@@ -64,6 +62,10 @@ subprojects {
         testCompile "org.springframework:spring-test"
     }
 
+
+}
+
+subprojects {
     dependencyManagement {
         dependencies {
             dependency("com.101tec:zkclient:0.3") {
