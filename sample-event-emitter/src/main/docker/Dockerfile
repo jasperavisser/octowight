@@ -14,4 +14,4 @@ ENV OCTOWIGHT_KAFKA_HOSTNAME=kafka-broker \
 	OCTOWIGHT_POSTGRES_USERNAME=postgres \
 	OCTOWIGHT_POSTGRES_DATABASE=postgres
 
-ENTRYPOINT ["java", "-cp", "/opt/app/*", "nl.haploid.octowight.sample.App"]
+ENTRYPOINT ["java", "-jar", "*.jar"]

@@ -23,4 +23,4 @@ ENV OCTOWIGHT_KAFKA_HOSTNAME=kafka-broker \
 	OCTOWIGHT_ZOOKEEPER_HOSTNAME=zookeeper \
 	OCTOWIGHT_ZOOKEEPER_PORT=2181
 
-ENTRYPOINT ["java", "-cp", "/opt/app/*", "nl.haploid.octowight.sample.App"]
+ENTRYPOINT ["java", "-jar", "*.jar"]
