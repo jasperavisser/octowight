@@ -1,7 +1,9 @@
 /bootstrap.env
 /local.properties
 
-.cache-main/
+.cache-main
+.cahce-main/
+.cache-tests
 .cache-tests/
 .gradle/
 .idea/
@@ -9,3 +11,4 @@
 .settings/
 *.iml
 build/
+.classpath
