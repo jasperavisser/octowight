@@ -55,3 +55,10 @@ sampleResourceBuilder:
   - resourceRegistry:mongo-resource-registry
   - sampleDataRepository:postgres-data-repository
   - zookeeper:zookeeper
+
+sampleResourceCache:
+  image: octowight/sample-resource-cache
+  links:
+  - kafkaBroker:kafka-broker
+  - resourceRegistry:mongo-resource-registry
+  - zookeeper:zookeeper
