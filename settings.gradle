@@ -1,8 +1,8 @@
-include 'atom-change-event'
-include 'dirty-resource-detector'
-include 'event-consumer'
-include 'event-emitter'
-include 'kafka-beans'
-include 'new-resource-detector'
-include 'resource-registry'
-include 'spring-scala-mock'
+include "atom-change-event"
+include "dirty-resource-detector"
+include "event-consumer"
+include "event-emitter"
+include "kafka-beans"
+include "new-resource-detector"
+include "resource-registry"
+include "spring-scala-mock"

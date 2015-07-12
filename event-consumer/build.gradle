@@ -1,6 +1,6 @@
 dependencies {
-    compile project(':atom-change-event')
-    compile project(':kafka-beans')
-    compile project(':resource-registry')
-    testCompile project(':spring-scala-mock')
+    compile project(":atom-change-event")
+    compile project(":kafka-beans")
+    compile project(":resource-registry")
+    testCompile project(":spring-scala-mock")
 }
