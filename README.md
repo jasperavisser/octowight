@@ -26,32 +26,28 @@ sudo ln -s /usr/local/bin/greadlink /usr/local/bin/readlink
 Install *boot2docker* from http://boot2docker.io/
 
 ## Installation
-TODO: How to install, run IT, run apps
 
-To bootstrap the project, copy the file *bootstrap.env.template* to *bootstrap.env* and edit it to match your configuration.
+### Bootstrap
+Copy the file *bootstrap.env.template* to *bootstrap.env* and edit it to match your configuration.
 
-To build the project:
+### Build 
 ```bash
-bash bin/infrastructure/build-images.sh
-docker-compose -f infrastructure.yml up -d
 gradle assemble
-# and to run the integration tests
+```
+
+### Start infrastructure containers
+```bash
+bash bin/build-images.sh
+docker-compose -f infrastructure.yml up -d
+```
+
+### Run integration tests
+```bash
 gradle IT
 ```
 
-To run the sample apps:
-```bash
-bash bin/infrastructure/build-images.sh
-gradle buildDocker
-docker-compose up -d
-```
-
-To run the integration tests in an IDE:
-```bash
-bash bin/infrastructure/build-images.sh
-docker-compose -f infrastructure.yml up -d
-```
-then simply start your IT with an environment variable INFRASTRUCTURE_HOST that points to your docker host.
+### Run integration tests in IDE
+Run \*IT.scala with environment variable *INFRASTRUCTURE_HOST = your docker host* (usually localhost).
 
 ## Design principles
 TODO: Design principles
@@ -89,12 +85,3 @@ TODO: Adopt names from EDA
 
 ### Spring
 * https://spring.io/guides/gs/spring-boot-docker/
-
-## TODO
-
-### Presentation
-Explain:
-	abstract idea
-	tie-ins to other ideas
-	moving parts
-	assumptions
