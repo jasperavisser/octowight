@@ -1,5 +1,21 @@
 # octowight [![Build Status](https://travis-ci.org/jasperavisser/octowight.svg?branch=master)](https://travis-ci.org/jasperavisser/octowight) [![Codacy Badge](https://www.codacy.com/project/badge/9541b85030e24d1b9b170e19cec3b0d5)](https://www.codacy.com/app/jasper-a-visser/octowight)
-TODO
+Octowight is a mechanism for the event-driven population of a REST API.
+
+## Modules
+
+### Skeleton apps
+- **dirty-resource-detector** = skeleton app that detects which REST resources have changed
+- **event-emitter** = skeleton app for emitting changes in the original data
+- **new-resource-detector** = skeleton app that detects new REST resources
+
+These skeleton apps are intended to be extended to read from your specific data source, and build REST resources of your specific type.
+
+### Libraries
+- **atom-change-event** = data transfer objects that represent changes in the original data
+- **event-consumer** = Spring beans for consuming changes in the original data
+- **kafka-beans** = Spring beans for interfacing with Kafka
+- **resource-registry** = interface with a resource registry
+- **spring-scala-mock** = tools for mocking Spring beans in scalatest
 
 ## Requirements
 
