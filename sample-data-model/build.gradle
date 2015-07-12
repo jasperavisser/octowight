@@ -1,4 +1,0 @@
-dependencies {
-    compile project(":resource-registry")
-    testCompile project(":spring-scala-mock")
-}

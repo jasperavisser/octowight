@@ -1,9 +1,0 @@
-apply plugin: "spring-boot"
-apply from: "../docker.gradle"
-
-dependencies {
-    compile project(":kafka-beans")
-    compile project(":sample-data-model")
-    //compile "org.aspectj:aspectjweaver"
-    testCompile project(":spring-scala-mock")
-}
