@@ -2,7 +2,7 @@ package nl.haploid.octowight.registry.service
 
 import java.lang.Long
 
-import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.registry.data.{ResourceIdentifier, ResourceRoot}
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 import org.slf4j.LoggerFactory
@@ -33,6 +33,16 @@ class ResourceRegistryService {
     resourceElementDmos.asScala
       .flatMap(element => findResourceRootDmo(element))
       .map(markResourceDirty)
+  }
+
+  def findResourceRoots(resourceIdentifiersByCollection: Map[String, Iterable[ResourceIdentifier]]): Map[String, Iterable[ResourceRoot]] = {
+    val resourceRoots: Iterable[ResourceRoot] = resourceIdentifiersByCollection flatMap {
+      case (collection, identifiers) =>
+        val ids = identifiers.map(_.id)
+        resourceRootDmoRepository.findByResourceCollectionAndResourceIdIn(collection, ids.toList.asJava).asScala
+          .map(ResourceRoot(_))
+    }
+    resourceRoots.groupBy(_.resourceCollection)
   }
 
   private[this] def findResourceRootDmo(resourceRoot: ResourceRoot): ResourceRootDmo = {

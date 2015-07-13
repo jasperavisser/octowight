@@ -7,6 +7,7 @@ Octowight is a mechanism for the event-driven population of a REST API.
 - **dirty-resource-detector** = skeleton app that detects which REST resources have changed
 - **event-emitter** = skeleton app for emitting changes in the original data
 - **new-resource-detector** = skeleton app that detects new REST resources
+- **resource-builder** = skeleton app for building REST resources
 
 These skeleton apps are intended to be extended to read from your specific data source, and build REST resources of your specific type.
 
