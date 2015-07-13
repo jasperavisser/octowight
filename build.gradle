@@ -12,31 +12,6 @@ buildscript {
 
 apply plugin: "idea"
 
-ext.libraries = [
-        jackson        : [
-                "com.fasterxml.jackson.core:jackson-annotations",
-                "com.fasterxml.jackson.module:jackson-module-scala_2.11"
-        ],
-        kafka_consumer : [
-                "org.apache.kafka:kafka_2.11",
-                "com.101tec:zkclient",
-                "com.yammer.metrics:metrics-core"
-        ],
-        kafka_producer : [
-                "org.apache.kafka:kafka-clients"
-        ],
-        spring_data_jpa: [
-                "com.jolbox:bonecp-spring",
-                "org.aspectj:aspectjweaver",
-                "org.hibernate:hibernate-entitymanager",
-                "org.postgresql:postgresql",
-                "org.springframework:spring-orm",
-                "org.springframework.data:spring-data-commons",
-                "org.springframework.data:spring-data-jpa"
-
-        ]
-]
-
 allprojects {
     group "nl.haploid"
     version "1.0-SNAPSHOT"
@@ -51,21 +26,6 @@ allprojects {
         mavenCentral()
     }
 
-    dependencies {
-        compile libraries.jackson
-        compile "org.scala-lang:scala-library:2.11.6"
-        compile "org.scala-lang:scala-compiler:2.11.6"
-        compile "org.springframework.boot:spring-boot-starter:1.2.5.RELEASE"
-        testCompile "junit:junit"
-        testCompile "org.easymock:easymock:3.3.1"
-        testCompile "org.scalatest:scalatest_2.11:2.2.4"
-        testCompile "org.springframework:spring-test"
-    }
-
-
-}
-
-subprojects {
     dependencyManagement {
         dependencies {
             dependency("com.101tec:zkclient:0.3") {
@@ -74,19 +34,36 @@ subprojects {
             }
             dependency "com.fasterxml.jackson.core:jackson-annotations:2.5.1"
             dependency "com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.1"
-            dependency "com.jolbox:bonecp-spring:0.8.0.RELEASE"
             dependency "com.yammer.metrics:metrics-core:2.2.0"
             dependency("org.apache.kafka:kafka_2.11:0.8.2.1") {
                 exclude "org.slf4j:slf4j-log4j12"
             }
             dependency "org.apache.kafka:kafka-clients:0.8.2.1"
-            dependency "org.postgresql:postgresql:9.2-1004-jdbc41"
+            dependency "org.easymock:easymock:3.3.1"
+            dependency "org.scala-lang:scala-library:2.11.6"
+            dependency "org.scala-lang:scala-compiler:2.11.6"
+            dependency "org.scalatest:scalatest_2.11:2.2.4"
         }
 
         imports {
             mavenBom "org.springframework.boot:spring-boot-dependencies:1.2.5.RELEASE"
         }
     }
+
+    dependencies {
+        compile "com.fasterxml.jackson.core:jackson-annotations"
+        compile "com.fasterxml.jackson.module:jackson-module-scala_2.11"
+        compile "org.scala-lang:scala-library"
+        compile "org.scala-lang:scala-compiler"
+        compile "org.springframework.boot:spring-boot-starter"
+        testCompile "junit:junit"
+        testCompile "org.easymock:easymock"
+        testCompile "org.scalatest:scalatest_2.11"
+        testCompile "org.springframework:spring-test"
+    }
+}
+
+subprojects {
 
     test {
         exclude "**/*IT.class"

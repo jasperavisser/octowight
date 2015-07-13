@@ -1,5 +1,7 @@
 dependencies {
-    compile libraries.kafka_consumer
-    compile libraries.kafka_producer
+    compile "org.apache.kafka:kafka_2.11"
+    compile "com.101tec:zkclient"
+    compile "com.yammer.metrics:metrics-core"
+    compile "org.apache.kafka:kafka-clients"
     testCompile project(":spring-scala-mock")
 }
