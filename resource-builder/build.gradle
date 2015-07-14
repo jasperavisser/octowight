@@ -1,5 +1,3 @@
-apply plugin: "spring-boot"
-
 dependencies {
     compile project(":atom-change-event")
     compile project(":kafka-beans")
