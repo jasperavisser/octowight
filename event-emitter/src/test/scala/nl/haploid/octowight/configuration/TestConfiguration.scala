@@ -3,7 +3,7 @@ package nl.haploid.octowight.configuration
 import java.util.Properties
 
 import nl.haploid.octowight.{JsonMapper, TestData}
-import org.springframework.context.annotation.{Bean, ComponentScan, Configuration, FilterType}
+import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
 object TestConfiguration {
@@ -21,9 +21,7 @@ object TestConfiguration {
 }
 
 @Configuration
-@ComponentScan(basePackages = Array("nl.haploid.octowight"), excludeFilters = Array(
-  new ComponentScan.Filter(`type` = FilterType.ASSIGNABLE_TYPE, value = Array(classOf[AppConfiguration]))
-))
+@ComponentScan(basePackages = Array("nl.haploid.octowight"))
 class TestConfiguration {
 
   @Bean def jsonMapper = new JsonMapper
