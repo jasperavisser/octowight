@@ -26,12 +26,20 @@ Add this line to */etc/init/docker.conf*
 ```bash
 DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
 ```
+If you have a firewall running, execute the following commands as root:
+```bash
+firewall-cmd --permanent --zone=trusted --add-interface=docker0
+firewall-cmd --permanent --zone=trusted --add-port=4243/tcp
+```
+
 ### Fedora
 Add this line to  */etc/sysconfig/docker*
 
 ```bash
 OPTIONS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'
 ```
+If you have a firewall running, see firewall config in previous (Linux) section.
+
 ### Mac OS
 Install *greadlink*
 
