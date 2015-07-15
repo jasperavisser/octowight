@@ -1,8 +1,9 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.newresourcedetector
 
 import java.lang
 import java.util.{Random, UUID}
 
+import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
 
 object TestData {

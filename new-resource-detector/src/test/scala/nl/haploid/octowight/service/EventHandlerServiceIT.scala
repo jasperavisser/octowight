@@ -4,7 +4,8 @@ import java.util.concurrent.TimeUnit
 
 import nl.haploid.octowight.detector.MockResourceDetector
 import nl.haploid.octowight.kafka.KafkaProducerFactory
-import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper, TestData}
+import nl.haploid.octowight.newresourcedetector.TestData
+import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.util.ReflectionTestUtils

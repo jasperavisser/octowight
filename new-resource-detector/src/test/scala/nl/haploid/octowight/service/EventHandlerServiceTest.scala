@@ -17,16 +17,16 @@ class EventHandlerServiceTest extends AbstractTest {
   behavior of "Event handler service"
 
   it should "detect new resources" in {
-    val topic = TestData.nextString
-    val origin = TestData.nextString
-    val category1 = TestData.nextString
-    val category2 = TestData.nextString
-    val event1 = TestData.atomChangeEvent(origin, category1)
-    val event2 = TestData.atomChangeEvent(origin, category1)
-    val event3 = TestData.atomChangeEvent(origin, category2)
+    val topic = newresourcedetector.TestData.nextString
+    val origin = newresourcedetector.TestData.nextString
+    val category1 = newresourcedetector.TestData.nextString
+    val category2 = newresourcedetector.TestData.nextString
+    val event1 = newresourcedetector.TestData.atomChangeEvent(origin, category1)
+    val event2 = newresourcedetector.TestData.atomChangeEvent(origin, category1)
+    val event3 = newresourcedetector.TestData.atomChangeEvent(origin, category2)
     val events: Set[AtomChangeEvent] = Set(event1, event2, event3)
-    val resourceRoot1: ResourceRoot = TestData.resourceRoot(TestData.nextLong)
-    val resourceRoot2: ResourceRoot = TestData.resourceRoot(TestData.nextLong)
+    val resourceRoot1: ResourceRoot = newresourcedetector.TestData.resourceRoot(newresourcedetector.TestData.nextLong)
+    val resourceRoot2: ResourceRoot = newresourcedetector.TestData.resourceRoot(newresourcedetector.TestData.nextLong)
     val resourceRoots = List(resourceRoot1, resourceRoot2)
     val future1 = mock[Future[RecordMetadata]]
     val future2 = mock[Future[RecordMetadata]]

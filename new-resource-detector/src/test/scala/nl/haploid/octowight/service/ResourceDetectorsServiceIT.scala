@@ -36,11 +36,11 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
 
   it should "detect resources" in {
     val atomCategory = "harris"
-    val event1 = TestData.atomChangeEvent(atomCategory)
-    val event2 = TestData.atomChangeEvent("calvet")
+    val event1 = newresourcedetector.TestData.atomChangeEvent(atomCategory)
+    val event2 = newresourcedetector.TestData.atomChangeEvent("calvet")
     val atomGroup = new AtomGroup(origin = event1.atomOrigin, category = event1.atomCategory)
     val events = List(event1, event2)
-    val expectedResourceRoots = List(TestData.resourceRoot(TestData.nextLong))
+    val expectedResourceRoots = List(newresourcedetector.TestData.resourceRoot(newresourcedetector.TestData.nextLong))
     expecting {
       mockDetector.atomCategories andReturn List("holloway", atomCategory) once()
       mockDetector.detect(events) andReturn expectedResourceRoots once()
