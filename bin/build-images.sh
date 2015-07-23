@@ -6,4 +6,5 @@ set -e
 pushd ../docker
 docker build --tag oracle-java8 oracle-java8
 docker build --tag kafka-monitor kafka-monitor
+docker build --tag restheart restheart
 popd
