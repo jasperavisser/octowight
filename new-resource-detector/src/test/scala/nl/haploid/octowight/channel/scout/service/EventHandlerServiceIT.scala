@@ -2,11 +2,11 @@ package nl.haploid.octowight.channel.scout.service
 
 import java.util.concurrent.TimeUnit
 
-import nl.haploid.octowight.channel.scout.TestData
 import nl.haploid.octowight.channel.scout.detector.MockResourceDetector
+import nl.haploid.octowight.channel.scout.{AbstractIT, TestData}
+import nl.haploid.octowight.consumer.service.EventConsumerService
 import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
-import nl.haploid.octowight.service.EventConsumerService
-import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper}
+import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

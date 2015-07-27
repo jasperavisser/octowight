@@ -1,8 +1,8 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.consumer.service
 
 import java.util.concurrent.TimeUnit
 
-import nl.haploid.octowight.{AbstractIT, TestData}
+import nl.haploid.octowight.consumer.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class DirtyResourceProducerServiceIT extends AbstractIT {

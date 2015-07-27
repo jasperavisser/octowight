@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.consumer.service
 
 import nl.haploid.octowight.kafka.consumer.KafkaConsumerFactory
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}

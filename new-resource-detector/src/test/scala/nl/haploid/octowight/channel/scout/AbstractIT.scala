@@ -1,7 +1,7 @@
 package nl.haploid.octowight.channel.scout
 
 import nl.haploid.octowight.channel.scout.configuration.TestConfiguration
-import nl.haploid.octowight.configuration.KafkaConfiguration
+import nl.haploid.octowight.consumer.configuration.KafkaConfiguration
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner

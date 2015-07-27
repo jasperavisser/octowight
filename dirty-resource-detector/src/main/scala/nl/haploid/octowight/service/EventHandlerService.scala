@@ -1,5 +1,6 @@
 package nl.haploid.octowight.service
 
+import nl.haploid.octowight.consumer.service.{DirtyResourceProducerService, EventConsumerService}
 import nl.haploid.octowight.registry.service.ResourceRegistryService
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 import org.slf4j.LoggerFactory

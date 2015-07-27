@@ -3,9 +3,9 @@ package nl.haploid.octowight.channel.scout.service
 import java.util.concurrent.Future
 
 import nl.haploid.octowight.channel.scout.{AbstractTest, TestData}
+import nl.haploid.octowight.consumer.service.{DirtyResourceProducerService, EventConsumerService}
 import nl.haploid.octowight.registry.data.ResourceRoot
 import nl.haploid.octowight.registry.service.ResourceRegistryService
-import nl.haploid.octowight.service.{DirtyResourceProducerService, EventConsumerService}
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup, Mocked, Tested}
 import org.apache.kafka.clients.producer.RecordMetadata
 

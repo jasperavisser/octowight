@@ -1,7 +1,8 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.consumer
 
 import java.util.{Random, UUID}
 
+import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
 
 object TestData {

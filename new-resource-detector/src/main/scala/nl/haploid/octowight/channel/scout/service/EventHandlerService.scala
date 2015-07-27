@@ -1,7 +1,7 @@
 package nl.haploid.octowight.channel.scout.service
 
+import nl.haploid.octowight.consumer.service.{DirtyResourceProducerService, EventConsumerService}
 import nl.haploid.octowight.registry.service.ResourceRegistryService
-import nl.haploid.octowight.service.{EventConsumerService, DirtyResourceProducerService}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

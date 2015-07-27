@@ -1,9 +1,10 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.consumer.service
 
 import java.util.concurrent.TimeUnit
 
+import nl.haploid.octowight.consumer.{AbstractIT, TestData}
 import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
-import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper, TestData}
+import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.junit.Rule
 import org.junit.rules.Timeout

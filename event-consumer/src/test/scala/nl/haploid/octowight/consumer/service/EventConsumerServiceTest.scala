@@ -1,6 +1,7 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.consumer.service
 
 import nl.haploid.octowight._
+import nl.haploid.octowight.consumer.{AbstractTest, TestData}
 import nl.haploid.octowight.kafka.consumer.{KafkaConsumer, KafkaConsumerFactory}
 import org.springframework.test.util.ReflectionTestUtils
 
