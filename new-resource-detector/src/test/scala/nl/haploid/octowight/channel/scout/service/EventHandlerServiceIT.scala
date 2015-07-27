@@ -1,16 +1,20 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.channel.scout.service
 
 import java.util.concurrent.TimeUnit
 
-import nl.haploid.octowight.detector.MockResourceDetector
+import nl.haploid.octowight.channel.scout.TestData
+import nl.haploid.octowight.channel.scout.detector.MockResourceDetector
 import nl.haploid.octowight.kafka.KafkaProducerFactory
-import nl.haploid.octowight.newresourcedetector.TestData
+import nl.haploid.octowight.service.EventConsumerService
 import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.ProducerRecord
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.util.ReflectionTestUtils
 
 class EventHandlerServiceIT extends AbstractIT {
+  private[this] lazy val log = LoggerFactory.getLogger(getClass)
+
   @Autowired private[this] val eventHandlerService: EventHandlerService = null
   @Autowired private[this] val eventConsumerService: EventConsumerService = null
   @Autowired private[this] val kafkaProducerFactory: KafkaProducerFactory = null

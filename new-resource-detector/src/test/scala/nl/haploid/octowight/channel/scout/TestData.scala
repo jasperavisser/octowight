@@ -1,4 +1,4 @@
-package nl.haploid.octowight.newresourcedetector
+package nl.haploid.octowight.channel.scout
 
 import java.lang
 import java.util.{Random, UUID}

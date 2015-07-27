@@ -1,4 +1,4 @@
-package nl.haploid.octowight.detector
+package nl.haploid.octowight.channel.scout.detector
 
 import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.registry.data.ResourceRoot

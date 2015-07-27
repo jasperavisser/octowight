@@ -1,9 +1,10 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.channel.scout.service
 
 import java.util
 
-import nl.haploid.octowight._
-import nl.haploid.octowight.detector.ResourceDetector
+import nl.haploid.octowight.channel.scout.detector.ResourceDetector
+import nl.haploid.octowight.{AtomGroup, Mocked, EasyMockInjection}
+import nl.haploid.octowight.channel.scout.{TestData, AbstractIT}
 import org.scalatest.mock.EasyMockSugar
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.annotation.DirtiesContext
@@ -36,11 +37,11 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
 
   it should "detect resources" in {
     val atomCategory = "harris"
-    val event1 = newresourcedetector.TestData.atomChangeEvent(atomCategory)
-    val event2 = newresourcedetector.TestData.atomChangeEvent("calvet")
+    val event1 = TestData.atomChangeEvent(atomCategory)
+    val event2 = TestData.atomChangeEvent("calvet")
     val atomGroup = new AtomGroup(origin = event1.atomOrigin, category = event1.atomCategory)
     val events = List(event1, event2)
-    val expectedResourceRoots = List(newresourcedetector.TestData.resourceRoot(newresourcedetector.TestData.nextLong))
+    val expectedResourceRoots = List(TestData.resourceRoot(TestData.nextLong))
     expecting {
       mockDetector.atomCategories andReturn List("holloway", atomCategory) once()
       mockDetector.detect(events) andReturn expectedResourceRoots once()

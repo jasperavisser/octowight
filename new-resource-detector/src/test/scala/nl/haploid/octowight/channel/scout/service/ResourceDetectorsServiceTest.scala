@@ -1,7 +1,8 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.channel.scout.service
 
-import nl.haploid.octowight._
-import nl.haploid.octowight.detector.ResourceDetector
+import nl.haploid.octowight.AtomGroup
+import nl.haploid.octowight.channel.scout.detector.ResourceDetector
+import nl.haploid.octowight.channel.scout.{AbstractTest, TestData}
 import org.easymock.EasyMock
 
 class ResourceDetectorsServiceTest extends AbstractTest {
@@ -32,11 +33,11 @@ class ResourceDetectorsServiceTest extends AbstractTest {
       .addMockedMethod("detectorsForAtomCategory", classOf[String])
       .createMock()
     val detector = mock[ResourceDetector]
-    val event1 = newresourcedetector.TestData.atomChangeEvent("draper")
-    val event2 = newresourcedetector.TestData.atomChangeEvent("pryce")
+    val event1 = TestData.atomChangeEvent("draper")
+    val event2 = TestData.atomChangeEvent("pryce")
     val atomGroup = new AtomGroup(origin = event1.atomOrigin, category = event1.atomCategory)
     val events = List(event1, event2)
-    val expectedResourceRoots = List(newresourcedetector.TestData.resourceRoot(null))
+    val expectedResourceRoots = List(TestData.resourceRoot(null))
     expecting {
       resourceDetectorsService.detectorsForAtomCategory("draper") andReturn List(detector) once()
       detector.detect(events) andReturn expectedResourceRoots once()

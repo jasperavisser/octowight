@@ -1,9 +1,9 @@
-package nl.haploid.octowight.configuration
+package nl.haploid.octowight.channel.scout.configuration
 
 import java.util.Properties
 
 import nl.haploid.octowight.JsonMapper
-import nl.haploid.octowight.newresourcedetector.TestData
+import nl.haploid.octowight.channel.scout.TestData
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
