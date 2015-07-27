@@ -1,4 +1,4 @@
-package nl.haploid.octowight.configuration
+package nl.haploid.octowight.emitter.configuration
 
 import kafka.consumer.ConsumerConfig
 import org.springframework.context.annotation.{Bean, Configuration}

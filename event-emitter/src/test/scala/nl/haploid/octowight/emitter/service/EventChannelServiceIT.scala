@@ -1,8 +1,8 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.emitter.service
 
 import java.util.concurrent.TimeUnit
 
-import nl.haploid.octowight.{AbstractIT, TestData}
+import nl.haploid.octowight.emitter.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class EventChannelServiceIT extends AbstractIT {

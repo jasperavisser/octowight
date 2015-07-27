@@ -1,6 +1,8 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.emitter
 
 import java.util.{Random, UUID}
+
+import nl.haploid.octowight.AtomChangeEvent
 
 object TestData {
   val AtomCategory = nextString

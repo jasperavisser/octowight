@@ -1,8 +1,9 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.emitter.service
 
 import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight._
+import nl.haploid.octowight.emitter.{TestData, AbstractTest}
 import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import org.easymock.EasyMock

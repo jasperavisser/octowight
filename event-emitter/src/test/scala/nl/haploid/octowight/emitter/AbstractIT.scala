@@ -1,6 +1,6 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.emitter
 
-import nl.haploid.octowight.configuration.{KafkaConfiguration, TestConfiguration}
+import nl.haploid.octowight.emitter.configuration.{TestConfiguration, KafkaConfiguration}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.tags.Slow
