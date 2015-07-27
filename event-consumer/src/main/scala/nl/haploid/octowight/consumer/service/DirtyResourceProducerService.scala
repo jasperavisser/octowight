@@ -3,24 +3,19 @@ package nl.haploid.octowight.consumer.service
 import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight.JsonMapper
-import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
+import nl.haploid.octowight.kafka.producer.KafkaOutChannel
 import nl.haploid.octowight.registry.data.{ResourceIdentifier, ResourceRoot}
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
+import org.apache.kafka.clients.producer.{ProducerRecord, RecordMetadata}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.stereotype.Service
 
 @Service
-class DirtyResourceProducerService {
+class DirtyResourceProducerService extends KafkaOutChannel {
   private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Value("${octowight.kafka.topic.resources.dirty}") private[this] val topic: String = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
-  @Autowired private[this] val kafkaProducerFactory: KafkaProducerFactory = null
-
-  // TODO: move me to a KafkaOut trait
-  private[this] lazy val kafkaProducer: KafkaProducer[String, String] =
-    kafkaProducerFactory.kafkaProducer
 
   def sendDirtyResource(resourceRoot: ResourceRoot) = {
     val resourceIdentifier = new ResourceIdentifier(collection = resourceRoot.resourceCollection, id = resourceRoot.resourceId)

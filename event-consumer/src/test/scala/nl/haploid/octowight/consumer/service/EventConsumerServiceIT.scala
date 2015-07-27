@@ -3,7 +3,7 @@ package nl.haploid.octowight.consumer.service
 import java.util.concurrent.TimeUnit
 
 import nl.haploid.octowight.consumer.{AbstractIT, TestData}
-import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
+import nl.haploid.octowight.kafka.producer.KafkaOutChannel
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.junit.Rule
@@ -12,17 +12,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.util.ReflectionTestUtils
 
-class EventConsumerServiceIT extends AbstractIT {
+class EventConsumerServiceIT extends AbstractIT with KafkaOutChannel {
   private[this] lazy val log = LoggerFactory.getLogger(getClass)
 
   @Autowired private[this] val eventConsumerService1: EventConsumerService = null
   @Autowired private[this] val eventConsumerService2: EventConsumerService = null
-  @Autowired private[this] val kafkaProducerFactory: KafkaProducerFactory = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
 
   @Rule val globalTimeout = new Timeout(10, TimeUnit.SECONDS)
-
-  private[this] lazy val kafkaProducer = kafkaProducerFactory.kafkaProducer
 
   private[this] val topic = TestData.topic
 
