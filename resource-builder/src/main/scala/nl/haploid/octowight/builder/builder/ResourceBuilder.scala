@@ -1,6 +1,6 @@
-package nl.haploid.octowight.builder
+package nl.haploid.octowight.builder.builder
 
-import nl.haploid.octowight.registry.data.{ResourceMessage, Atom, ResourceRoot}
+import nl.haploid.octowight.registry.data.{Atom, ResourceMessage, ResourceRoot}
 
 trait ResourceBuilder {
 

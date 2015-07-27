@@ -1,5 +1,6 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.builder
 
+import nl.haploid.octowight.EasyMockInjection
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner

@@ -1,9 +1,9 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.builder.service
 
+import nl.haploid.octowight.builder.TestData
 import nl.haploid.octowight.kafka.{KafkaConsumer, KafkaConsumerFactory}
 import nl.haploid.octowight.registry.data.ResourceIdentifier
-import nl.haploid.octowight.{AbstractTest, TestData}
-import nl.haploid.octowight.{JsonMapper, Mocked, Tested}
+import nl.haploid.octowight.{AbstractTest, JsonMapper, Mocked, Tested}
 import org.springframework.test.util.ReflectionTestUtils
 
 object DirtyResourceConsumerServiceTest {

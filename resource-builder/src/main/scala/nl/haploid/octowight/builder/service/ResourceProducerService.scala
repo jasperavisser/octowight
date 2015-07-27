@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.builder.service
 
 import java.util.concurrent.{Future, TimeUnit}
 

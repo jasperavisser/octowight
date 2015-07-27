@@ -1,8 +1,8 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.builder.service
 
 import java.util
 
-import nl.haploid.octowight.builder.ResourceBuilder
+import nl.haploid.octowight.builder.builder.ResourceBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

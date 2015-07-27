@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.builder.service
 
 import nl.haploid.octowight.registry.data.{ResourceIdentifier, ResourceMessage, ResourceRoot}
 import nl.haploid.octowight.registry.service.ResourceRegistryService

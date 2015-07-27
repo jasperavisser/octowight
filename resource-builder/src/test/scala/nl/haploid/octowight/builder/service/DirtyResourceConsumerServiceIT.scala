@@ -1,9 +1,8 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.builder.service
 
-import nl.haploid.octowight.JsonMapper
 import nl.haploid.octowight.kafka.KafkaProducerFactory
 import nl.haploid.octowight.registry.data.ResourceIdentifier
-import nl.haploid.octowight.{AbstractIT, TestData}
+import nl.haploid.octowight.{AbstractIT, JsonMapper, TestData}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 

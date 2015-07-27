@@ -1,4 +1,4 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.builder
 
 import java.util.{Random, UUID}
 

@@ -1,9 +1,9 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.builder.service
 
 import nl.haploid.octowight.JsonMapper
+import nl.haploid.octowight.builder.{AbstractIT, TestData}
 import nl.haploid.octowight.kafka.KafkaConsumerFactory
 import nl.haploid.octowight.registry.data.ResourceMessage
-import nl.haploid.octowight.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 
 class ResourceProducerServiceIT extends AbstractIT {
