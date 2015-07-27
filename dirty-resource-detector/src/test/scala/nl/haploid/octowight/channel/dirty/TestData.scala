@@ -1,4 +1,4 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.channel.dirty
 
 import java.util.UUID
 

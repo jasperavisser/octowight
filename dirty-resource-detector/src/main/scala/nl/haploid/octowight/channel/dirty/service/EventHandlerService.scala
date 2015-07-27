@@ -1,4 +1,4 @@
-package nl.haploid.octowight.service
+package nl.haploid.octowight.channel.dirty.service
 
 import nl.haploid.octowight.consumer.service.{DirtyResourceProducerService, EventConsumerService}
 import nl.haploid.octowight.registry.service.ResourceRegistryService

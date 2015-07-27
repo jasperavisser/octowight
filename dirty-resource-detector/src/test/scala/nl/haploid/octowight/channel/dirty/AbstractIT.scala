@@ -1,6 +1,6 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.channel.dirty
 
-import nl.haploid.octowight.configuration.TestConfiguration
+import nl.haploid.octowight.channel.dirty.configuration.TestConfiguration
 import nl.haploid.octowight.consumer.configuration.KafkaConfiguration
 import org.junit.runner.RunWith
 import org.scalatest._

@@ -1,6 +1,6 @@
-package nl.haploid.octowight
+package nl.haploid.octowight.channel.dirty
 
-import nl.haploid.octowight.service.EventHandlerService
+import nl.haploid.octowight.channel.dirty.service.EventHandlerService
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

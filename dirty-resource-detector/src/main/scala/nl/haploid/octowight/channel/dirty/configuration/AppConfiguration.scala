@@ -1,7 +1,7 @@
-package nl.haploid.octowight.configuration
+package nl.haploid.octowight.channel.dirty.configuration
 
 import nl.haploid.octowight.JsonMapper
-import org.springframework.context.annotation.{PropertySource, Bean, Configuration}
+import org.springframework.context.annotation.{Bean, Configuration, PropertySource}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.scheduling.annotation.EnableScheduling
 
