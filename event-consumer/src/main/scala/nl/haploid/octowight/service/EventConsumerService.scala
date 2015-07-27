@@ -1,6 +1,6 @@
 package nl.haploid.octowight.service
 
-import nl.haploid.octowight.kafka.KafkaConsumerFactory
+import nl.haploid.octowight.kafka.consumer.KafkaConsumerFactory
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}

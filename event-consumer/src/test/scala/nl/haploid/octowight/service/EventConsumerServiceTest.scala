@@ -1,7 +1,7 @@
 package nl.haploid.octowight.service
 
 import nl.haploid.octowight._
-import nl.haploid.octowight.kafka.{KafkaConsumer, KafkaConsumerFactory}
+import nl.haploid.octowight.kafka.consumer.{KafkaConsumer, KafkaConsumerFactory}
 import org.springframework.test.util.ReflectionTestUtils
 
 class EventConsumerServiceTest extends AbstractTest {

@@ -1,6 +1,7 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.consumer
 
-import nl.haploid.octowight.{AbstractIT, TestData}
+import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
+import nl.haploid.octowight.kafka.{AbstractIT, TestData}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.scalatest.OneInstancePerTest
 import org.springframework.beans.factory.annotation.Autowired

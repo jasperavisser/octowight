@@ -1,7 +1,7 @@
 package nl.haploid.octowight.builder.service
 
 import nl.haploid.octowight.JsonMapper
-import nl.haploid.octowight.kafka.KafkaConsumerFactory
+import nl.haploid.octowight.kafka.consumer.KafkaConsumerFactory
 import nl.haploid.octowight.registry.data.ResourceIdentifier
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.stereotype.Service

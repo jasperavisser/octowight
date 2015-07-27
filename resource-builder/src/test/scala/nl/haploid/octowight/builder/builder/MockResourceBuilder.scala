@@ -1,6 +1,6 @@
 package nl.haploid.octowight.builder.builder
 
-import nl.haploid.octowight.TestData
+import nl.haploid.octowight.builder.TestData
 import nl.haploid.octowight.registry.data.{Atom, ResourceMessage, ResourceRoot}
 import org.springframework.stereotype.Component
 

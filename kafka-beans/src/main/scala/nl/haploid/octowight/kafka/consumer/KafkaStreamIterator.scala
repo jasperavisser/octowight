@@ -1,4 +1,4 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.consumer
 
 import kafka.consumer.KafkaStream
 import kafka.message.MessageAndMetadata

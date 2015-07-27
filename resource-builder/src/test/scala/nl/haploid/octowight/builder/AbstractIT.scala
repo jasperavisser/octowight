@@ -1,7 +1,6 @@
 package nl.haploid.octowight.builder
 
-import nl.haploid.octowight.builder.configuration.KafkaConfiguration
-import nl.haploid.octowight.configuration.TestConfiguration
+import nl.haploid.octowight.builder.configuration.{KafkaConfiguration, TestConfiguration}
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner

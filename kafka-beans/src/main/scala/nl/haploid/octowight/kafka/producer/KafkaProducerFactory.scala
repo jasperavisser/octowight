@@ -1,4 +1,4 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.producer
 
 import java.util.Properties
 

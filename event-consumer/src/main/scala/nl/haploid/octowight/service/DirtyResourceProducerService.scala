@@ -3,7 +3,7 @@ package nl.haploid.octowight.service
 import java.util.concurrent.{Future, TimeUnit}
 
 import nl.haploid.octowight.JsonMapper
-import nl.haploid.octowight.kafka.KafkaProducerFactory
+import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
 import nl.haploid.octowight.registry.data.{ResourceIdentifier, ResourceRoot}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import org.slf4j.LoggerFactory
@@ -18,6 +18,7 @@ class DirtyResourceProducerService {
   @Autowired private[this] val jsonMapper: JsonMapper = null
   @Autowired private[this] val kafkaProducerFactory: KafkaProducerFactory = null
 
+  // TODO: move me to a KafkaOut trait
   private[this] lazy val kafkaProducer: KafkaProducer[String, String] =
     kafkaProducerFactory.kafkaProducer
 

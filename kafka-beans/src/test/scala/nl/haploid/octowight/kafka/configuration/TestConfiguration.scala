@@ -1,9 +1,9 @@
-package nl.haploid.octowight.configuration
+package nl.haploid.octowight.kafka.configuration
 
 import java.util.Properties
 
 import kafka.consumer.ConsumerConfig
-import nl.haploid.octowight.TestData
+import nl.haploid.octowight.kafka.TestData
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer

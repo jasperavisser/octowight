@@ -1,9 +1,9 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.consumer
 
 import kafka.consumer.{ConsumerIterator, KafkaStream}
 import kafka.javaapi.consumer.ConsumerConnector
 import kafka.message.MessageAndMetadata
-import nl.haploid.octowight.{AbstractTest, TestData}
+import nl.haploid.octowight.kafka.{AbstractTest, TestData}
 import org.easymock.EasyMock
 
 class KafkaConsumerTest extends AbstractTest {

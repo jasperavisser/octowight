@@ -1,8 +1,8 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.consumer
 
 import kafka.consumer.{ConsumerIterator, KafkaStream}
 import kafka.message.MessageAndMetadata
-import nl.haploid.octowight.AbstractTest
+import nl.haploid.octowight.kafka.AbstractTest
 
 class KafkaStreamIteratorTest extends AbstractTest {
 

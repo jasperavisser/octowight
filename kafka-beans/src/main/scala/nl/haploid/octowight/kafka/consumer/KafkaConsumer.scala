@@ -1,4 +1,4 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.consumer
 
 import java.lang
 

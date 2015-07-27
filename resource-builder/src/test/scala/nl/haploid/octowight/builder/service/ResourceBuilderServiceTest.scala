@@ -1,10 +1,10 @@
 package nl.haploid.octowight.builder.service
 
-import nl.haploid.octowight.builder.TestData
 import nl.haploid.octowight.builder.builder.ResourceBuilder
+import nl.haploid.octowight.builder.{AbstractTest, TestData}
 import nl.haploid.octowight.registry.data.{Atom, ResourceMessage, ResourceRoot}
 import nl.haploid.octowight.registry.service.ResourceElementRegistryService
-import nl.haploid.octowight.{AbstractTest, Mocked, Tested}
+import nl.haploid.octowight.{Mocked, Tested}
 
 class ResourceBuilderServiceTest extends AbstractTest {
   @Tested private[this] val resourceBuilderService: ResourceBuilderService = null

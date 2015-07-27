@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import nl.haploid.octowight.channel.scout.TestData
 import nl.haploid.octowight.channel.scout.detector.MockResourceDetector
-import nl.haploid.octowight.kafka.KafkaProducerFactory
+import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
 import nl.haploid.octowight.service.EventConsumerService
 import nl.haploid.octowight.{AbstractIT, AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.ProducerRecord

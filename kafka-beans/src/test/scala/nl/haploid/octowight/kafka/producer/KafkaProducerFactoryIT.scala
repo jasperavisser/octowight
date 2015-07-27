@@ -1,6 +1,6 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.producer
 
-import nl.haploid.octowight.AbstractIT
+import nl.haploid.octowight.kafka.AbstractIT
 import org.springframework.beans.factory.annotation.Autowired
 
 class KafkaProducerFactoryIT extends AbstractIT {

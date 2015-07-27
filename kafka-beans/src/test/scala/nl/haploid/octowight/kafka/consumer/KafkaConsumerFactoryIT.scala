@@ -1,6 +1,6 @@
-package nl.haploid.octowight.kafka
+package nl.haploid.octowight.kafka.consumer
 
-import nl.haploid.octowight.{TestData, AbstractIT}
+import nl.haploid.octowight.kafka.{AbstractIT, TestData}
 import org.springframework.beans.factory.annotation.Autowired
 
 class KafkaConsumerFactoryIT extends AbstractIT {

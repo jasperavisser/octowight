@@ -2,7 +2,7 @@ package nl.haploid.octowight.service
 
 import java.util.concurrent.{Future, TimeUnit}
 
-import nl.haploid.octowight.kafka.KafkaProducerFactory
+import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
 import nl.haploid.octowight.{AtomChangeEvent, JsonMapper}
 import org.apache.kafka.clients.producer.{ProducerRecord, RecordMetadata}
 import org.slf4j.LoggerFactory

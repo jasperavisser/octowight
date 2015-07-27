@@ -3,7 +3,7 @@ package nl.haploid.octowight.service
 import java.util.concurrent.Future
 
 import nl.haploid.octowight._
-import nl.haploid.octowight.kafka.KafkaProducerFactory
+import nl.haploid.octowight.kafka.producer.KafkaProducerFactory
 import nl.haploid.octowight.registry.data.ResourceIdentifier
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import org.easymock.EasyMock
