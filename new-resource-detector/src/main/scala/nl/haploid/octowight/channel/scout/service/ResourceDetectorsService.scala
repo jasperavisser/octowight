@@ -15,7 +15,8 @@ class ResourceDetectorsService {
 
   def detectors = _detectors.asScala.toList
 
-  def detectorsForAtomCategory(atomCategory: String) = detectors.filter(_.atomCategories.contains(atomCategory))
+  def detectorsForAtomCategory(atomCategory: String) =
+    detectors.filter(_.atomCategories.contains(atomCategory))
 
   def detectResources(atomGroup: AtomGroup, events: Traversable[AtomChangeEvent]) =
     detectorsForAtomCategory(atomGroup.category).flatMap(_.detect(events))

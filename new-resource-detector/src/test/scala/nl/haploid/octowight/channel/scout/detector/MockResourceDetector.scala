@@ -12,7 +12,7 @@ object MockResourceDetector {
 @Component
 class MockResourceDetector extends ResourceDetector {
 
-  override def atomCategories = List(MockResourceDetector.AtomCategory)
+  override def atomCategories = Set(MockResourceDetector.AtomCategory)
 
   override def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot] =
     events.map(ResourceRoot(_, MockResourceDetector.ResourceCollection))

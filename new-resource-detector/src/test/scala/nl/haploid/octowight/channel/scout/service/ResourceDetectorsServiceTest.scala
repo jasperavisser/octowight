@@ -19,8 +19,8 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val atomCategory = "sterling"
     expecting {
       resourceDetectorsService.detectors andReturn List(detector1, detector2) once()
-      detector1.atomCategories andReturn List(atomCategory) once()
-      detector2.atomCategories andReturn List("cooper") once()
+      detector1.atomCategories andReturn Set(atomCategory) once()
+      detector2.atomCategories andReturn Set("cooper") once()
     }
     whenExecuting(resourceDetectorsService, detector1, detector2) {
       val actualDetectors = resourceDetectorsService.detectorsForAtomCategory(atomCategory)
@@ -37,7 +37,7 @@ class ResourceDetectorsServiceTest extends AbstractTest {
     val event2 = TestData.atomChangeEvent("pryce")
     val atomGroup = new AtomGroup(origin = event1.atomOrigin, category = event1.atomCategory)
     val events = List(event1, event2)
-    val expectedResourceRoots = List(TestData.resourceRoot(null))
+    val expectedResourceRoots = List(TestData.resourceRoot(123L))
     expecting {
       resourceDetectorsService.detectorsForAtomCategory("draper") andReturn List(detector) once()
       detector.detect(events) andReturn expectedResourceRoots once()

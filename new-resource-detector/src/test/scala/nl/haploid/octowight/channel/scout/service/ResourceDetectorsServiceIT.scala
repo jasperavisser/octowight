@@ -27,7 +27,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
     val expectedDetectors = List(mockDetector)
     val atomCategory = "kinsey"
     expecting {
-      mockDetector.atomCategories andReturn List("crane", atomCategory) once()
+      mockDetector.atomCategories andReturn Set("crane", atomCategory) once()
     }
     whenExecuting(mockDetector) {
       val actualDetectors = resourceDetectorsService.detectorsForAtomCategory(atomCategory)
@@ -43,7 +43,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
     val events = List(event1, event2)
     val expectedResourceRoots = List(TestData.resourceRoot(TestData.nextLong))
     expecting {
-      mockDetector.atomCategories andReturn List("holloway", atomCategory) once()
+      mockDetector.atomCategories andReturn Set("holloway", atomCategory) once()
       mockDetector.detect(events) andReturn expectedResourceRoots once()
     }
     whenExecuting(mockDetector) {

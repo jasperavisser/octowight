@@ -5,7 +5,7 @@ import nl.haploid.octowight.registry.data.ResourceRoot
 
 trait ResourceDetector {
 
-  def atomCategories: List[String]
+  def atomCategories: Set[String]
 
   def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot]
 }

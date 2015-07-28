@@ -1,7 +1,5 @@
 package nl.haploid.octowight.registry.service
 
-import java.lang.Long
-
 import nl.haploid.octowight.registry.data.{ResourceIdentifier, ResourceRoot}
 import nl.haploid.octowight.registry.repository._
 import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
@@ -27,7 +25,7 @@ class ResourceRegistryService {
   }
 
   def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: Iterable[AtomChangeEvent]) = {
-    val atomIds = atomChangeEvents.map(_.atomId)
+    val atomIds = atomChangeEvents.map(event => Long.box(event.atomId))
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(
       atomIds.asJava, atomGroup.category, atomGroup.origin)
     resourceElementDmos.asScala
@@ -38,7 +36,7 @@ class ResourceRegistryService {
   def findResourceRoots(resourceIdentifiersByCollection: Map[String, Iterable[ResourceIdentifier]]): Map[String, Iterable[ResourceRoot]] = {
     val resourceRoots: Iterable[ResourceRoot] = resourceIdentifiersByCollection flatMap {
       case (collection, identifiers) =>
-        val ids = identifiers.map(_.id)
+        val ids = identifiers.map(identifier => Long.box(identifier.id))
         resourceRootDmoRepository.findByResourceCollectionAndResourceIdIn(collection, ids.toList.asJava).asScala
           .map(ResourceRoot(_))
     }

@@ -1,6 +1,5 @@
 package nl.haploid.octowight.channel.scout
 
-import java.lang
 import java.util.{Random, UUID}
 
 import nl.haploid.octowight.AtomChangeEvent
@@ -10,7 +9,7 @@ object TestData {
 
   def nextLong: Long = new Random().nextLong
 
-  def resourceRoot(resourceId: lang.Long) =
+  def resourceRoot(resourceId: Long) =
     new ResourceRoot(resourceId = resourceId, resourceCollection = nextString, root = atom, version = null)
 
   def atom = new Atom(nextLong, nextString, nextString)
