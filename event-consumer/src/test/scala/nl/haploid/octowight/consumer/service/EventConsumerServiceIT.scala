@@ -21,7 +21,7 @@ class EventConsumerServiceIT extends AbstractIT with KafkaOutChannel {
 
   @Rule val globalTimeout = new Timeout(10, TimeUnit.SECONDS)
 
-  private[this] val topic = TestData.topic
+  private[this] val topic = TestData.nextString
 
   behavior of "Event consumer service"
 

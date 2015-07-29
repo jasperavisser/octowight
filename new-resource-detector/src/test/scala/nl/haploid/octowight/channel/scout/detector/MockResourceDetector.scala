@@ -1,7 +1,7 @@
 package nl.haploid.octowight.channel.scout.detector
 
-import nl.haploid.octowight.AtomChangeEvent
-import nl.haploid.octowight.registry.data.ResourceRoot
+import nl.haploid.octowight.AtomGroup
+import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
 import org.springframework.stereotype.Component
 
 object MockResourceDetector {
@@ -14,6 +14,11 @@ class MockResourceDetector extends ResourceDetector {
 
   override def atomCategories = Set(MockResourceDetector.AtomCategory)
 
-  override def detect(events: Traversable[AtomChangeEvent]): Traversable[ResourceRoot] =
-    events.map(ResourceRoot(_, MockResourceDetector.ResourceCollection))
+  override def detect(atomGroup: AtomGroup, atomIds: Set[Long]): Set[ResourceRoot] =
+    atomIds.map(atomId =>
+      new ResourceRoot(
+        resourceId = null, resourceCollection = MockResourceDetector.ResourceCollection, version = null,
+        root = Atom(id = atomId, group = atomGroup)
+      )
+    )
 }

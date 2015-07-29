@@ -10,7 +10,7 @@ class EventConsumerServiceTest extends AbstractTest {
   @Mocked private[this] val kafkaConsumerFactory: KafkaConsumerFactory = null
   @Mocked private[this] val jsonMapper: JsonMapper = null
 
-  private[this] val topic = TestData.topic
+  private[this] val topic = TestData.nextString
 
   behavior of "Event consumer service"
 
@@ -22,7 +22,7 @@ class EventConsumerServiceTest extends AbstractTest {
   it should "consume a message" in {
     val kafkaConsumer = mock[KafkaConsumer]
     val expectedEvent = TestData.atomChangeEvent("rick")
-    val message = TestData.message
+    val message = TestData.nextString
     expecting {
       kafkaConsumerFactory.kafkaConsumer(topic) andReturn kafkaConsumer once()
       kafkaConsumer.nextMessage andReturn message once()
@@ -38,8 +38,8 @@ class EventConsumerServiceTest extends AbstractTest {
     val kafkaConsumer = mock[KafkaConsumer]
     val event1 = TestData.atomChangeEvent(TestData.nextString)
     val event2 = TestData.atomChangeEvent(TestData.nextString)
-    val message1 = TestData.message
-    val message2 = TestData.message
+    val message1 = TestData.nextString
+    val message2 = TestData.nextString
     val messages = Iterable(message1, message2)
     val expectedEvents = Set(event1, event2)
     expecting {

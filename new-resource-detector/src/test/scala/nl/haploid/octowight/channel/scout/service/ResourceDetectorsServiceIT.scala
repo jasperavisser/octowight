@@ -3,8 +3,8 @@ package nl.haploid.octowight.channel.scout.service
 import java.util
 
 import nl.haploid.octowight.channel.scout.detector.ResourceDetector
-import nl.haploid.octowight.{AtomGroup, Mocked, EasyMockInjection}
-import nl.haploid.octowight.channel.scout.{TestData, AbstractIT}
+import nl.haploid.octowight.channel.scout.{AbstractIT, TestData}
+import nl.haploid.octowight.{AtomGroup, EasyMockInjection, Mocked}
 import org.scalatest.mock.EasyMockSugar
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.annotation.DirtiesContext
@@ -24,7 +24,7 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
   }
 
   it should "get detectors for atom category" in {
-    val expectedDetectors = List(mockDetector)
+    val expectedDetectors = Set(mockDetector)
     val atomCategory = "kinsey"
     expecting {
       mockDetector.atomCategories andReturn Set("crane", atomCategory) once()
@@ -39,15 +39,15 @@ class ResourceDetectorsServiceIT extends AbstractIT with EasyMockSugar with Easy
     val atomCategory = "harris"
     val event1 = TestData.atomChangeEvent(atomCategory)
     val event2 = TestData.atomChangeEvent("calvet")
-    val atomGroup = new AtomGroup(origin = event1.atomOrigin, category = event1.atomCategory)
-    val events = List(event1, event2)
-    val expectedResourceRoots = List(TestData.resourceRoot(TestData.nextLong))
+    val atomGroup = new AtomGroup(origin = event1.origin, category = event1.category)
+    val atomIds = Set(event1.id, event2.id)
+    val expectedResourceRoots = Set(TestData.resourceRoot(TestData.nextLong))
     expecting {
       mockDetector.atomCategories andReturn Set("holloway", atomCategory) once()
-      mockDetector.detect(events) andReturn expectedResourceRoots once()
+      mockDetector.detect(atomGroup, atomIds) andReturn expectedResourceRoots once()
     }
     whenExecuting(mockDetector) {
-      val actualResourceRoots = resourceDetectorsService.detectResources(atomGroup, events)
+      val actualResourceRoots = resourceDetectorsService.detectResources(atomGroup, atomIds)
       actualResourceRoots should be(expectedResourceRoots)
     }
   }

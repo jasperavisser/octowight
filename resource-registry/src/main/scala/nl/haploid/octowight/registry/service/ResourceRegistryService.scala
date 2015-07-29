@@ -25,7 +25,7 @@ class ResourceRegistryService {
   }
 
   def markResourcesDirty(atomGroup: AtomGroup, atomChangeEvents: Iterable[AtomChangeEvent]) = {
-    val atomIds = atomChangeEvents.map(event => Long.box(event.atomId))
+    val atomIds = atomChangeEvents.map(event => Long.box(event.id))
     val resourceElementDmos = resourceElementDmoRepository.findByAtomIdInAndAtomCategoryAndAtomOrigin(
       atomIds.asJava, atomGroup.category, atomGroup.origin)
     resourceElementDmos.asScala

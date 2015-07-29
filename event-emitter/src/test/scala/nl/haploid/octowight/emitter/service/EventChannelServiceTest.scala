@@ -18,7 +18,7 @@ class EventChannelServiceTest extends AbstractTest {
 
   override def beforeEach() = {
     super.beforeEach()
-    ReflectionTestUtils.setField(eventChannelService, "topic", TestData.topic)
+    ReflectionTestUtils.setField(eventChannelService, "topic", TestData.nextString)
   }
 
   it should "send events" in {
@@ -30,8 +30,8 @@ class EventChannelServiceTest extends AbstractTest {
     val events = List(event1, event2)
     expecting {
       kafkaProducerFactory.kafkaProducer andReturn kafkaProducer once()
-      val message1 = TestData.message
-      val message2 = TestData.message
+      val message1 = TestData.nextString
+      val message2 = TestData.nextString
       val recordMetadata1 = new RecordMetadata(null, 1, 1)
       val recordMetadata2 = new RecordMetadata(null, 2, 2)
       jsonMapper.serialize(event1) andReturn message1 once()

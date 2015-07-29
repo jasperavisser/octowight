@@ -21,19 +21,12 @@ class EventConsumerService {
 
   def commit() = kafkaConsumer.commit()
 
-  def consumeEvent = {
-    val message = kafkaConsumer.nextMessage
-    parseMessage(message)
-  }
+  def consumeEvent: AtomChangeEvent = parseMessage(kafkaConsumer.nextMessage)
 
   def consumeDistinctEvents(): Set[AtomChangeEvent] = {
-    val events = kafkaConsumer.nextMessages(limit)
-      .map(parseMessage)
+    val events = kafkaConsumer.nextMessages(limit).map(parseMessage)
     log.debug(s"Consumed ${events.size} events")
-    events
-      .groupBy(e => (e.atomId, e.atomOrigin, e.atomCategory))
-      .map { case (_, similarEvents) => similarEvents.head }
-      .toSet
+    events.toSet
   }
 
   protected def parseMessage(message: String) = {

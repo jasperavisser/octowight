@@ -29,7 +29,7 @@ class EventHandlerServiceTest extends AbstractTest {
     val events: Set[AtomChangeEvent] = Set(event1, event2, event3)
     val resourceRoot1: ResourceRoot = TestData.resourceRoot(TestData.nextLong)
     val resourceRoot2: ResourceRoot = TestData.resourceRoot(TestData.nextLong)
-    val resourceRoots = List(resourceRoot1, resourceRoot2)
+    val resourceRoots = Set(resourceRoot1, resourceRoot2)
     val future1 = mock[Future[RecordMetadata]]
     val future2 = mock[Future[RecordMetadata]]
     val recordMetadata1 = new RecordMetadata(null, 1, 1)
@@ -37,8 +37,8 @@ class EventHandlerServiceTest extends AbstractTest {
     expecting {
       eventConsumerService.topic andReturn topic once()
       eventConsumerService.consumeDistinctEvents() andReturn events once()
-      resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category1), Set(event1, event2)) andReturn resourceRoots once()
-      resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category2), Set(event3)) andReturn List() once()
+      resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category1), Set(event1.id, event2.id)) andReturn resourceRoots once()
+      resourceDetectorsService.detectResources(new AtomGroup(origin = origin, category = category2), Set(event3.id)) andReturn Set() once()
       resourceRegistryService.saveResource(resourceRoot1) andReturn Some(resourceRoot1) once()
       resourceRegistryService.saveResource(resourceRoot2) andReturn Some(resourceRoot2) once()
       dirtyResourceProducerService.sendDirtyResource(resourceRoot1) andReturn future1 once()

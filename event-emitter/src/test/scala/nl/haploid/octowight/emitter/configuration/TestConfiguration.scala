@@ -13,7 +13,7 @@ object TestConfiguration {
     val configurer = new PropertySourcesPlaceholderConfigurer
     val properties = new Properties
     val infrastructureHost = Option(System.getenv("INFRASTRUCTURE_HOST")).getOrElse("localhost")
-    properties.setProperty("octowight.kafka.topic.events", TestData.topic)
+    properties.setProperty("octowight.kafka.topic.events", TestData.nextString)
     properties.setProperty("octowight.kafka.hostname", infrastructureHost)
     properties.setProperty("octowight.kafka.port", "9092")
     configurer.setProperties(properties)

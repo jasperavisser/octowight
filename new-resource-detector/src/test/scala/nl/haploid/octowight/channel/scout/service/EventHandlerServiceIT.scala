@@ -19,7 +19,7 @@ class EventHandlerServiceIT extends AbstractIT with KafkaOutChannel {
   @Autowired private[this] val eventConsumerService: EventConsumerService = null
   @Autowired private[this] val jsonMapper: JsonMapper = null
 
-  private[this] val topic = TestData.topic
+  private[this] val topic = TestData.nextString
 
   behavior of "Event handler service"
 

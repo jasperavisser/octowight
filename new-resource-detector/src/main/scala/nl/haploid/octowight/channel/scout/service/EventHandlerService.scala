@@ -1,5 +1,6 @@
 package nl.haploid.octowight.channel.scout.service
 
+import nl.haploid.octowight.{AtomChangeEvent, AtomGroup}
 import nl.haploid.octowight.consumer.service.{DirtyResourceProducerService, EventConsumerService}
 import nl.haploid.octowight.registry.service.ResourceRegistryService
 import org.slf4j.LoggerFactory
@@ -17,8 +18,9 @@ class EventHandlerService {
 
   def detectNewResources(batchSize: Int) = {
     log.debug(s"Poll for atom change events on ${eventConsumerService.topic}")
-    val eventsByGroup = eventConsumerService.consumeDistinctEvents()
+    val eventsByGroup: Map[AtomGroup, Set[Long]] = eventConsumerService.consumeDistinctEvents()
       .groupBy(_.atomGroup)
+      .mapValues(_.map(_.id))
     val count = eventsByGroup
       .flatMap { case (atomGroup, atomChangeEvents) => resourceDetectorsService.detectResources(atomGroup, atomChangeEvents) }
       .flatMap(resourceRegistryService.saveResource)

@@ -19,7 +19,7 @@ class DirtyResourceProducerServiceTest extends AbstractTest {
 
   override def beforeEach() = {
     super.beforeEach()
-    ReflectionTestUtils.setField(dirtyResourceProducerService, "topic", TestData.topic)
+    ReflectionTestUtils.setField(dirtyResourceProducerService, "topic", TestData.nextString)
   }
 
   it should "send a dirty resource" in {

@@ -2,19 +2,12 @@ package nl.haploid.octowight.registry.data
 
 import java.lang
 
-import nl.haploid.octowight.AtomChangeEvent
 import nl.haploid.octowight.registry.repository.ResourceRootDmo
 
 object ResourceRoot {
 
-  def apply(event: AtomChangeEvent, resourceCollection: String) = {
-    val atom: Atom = new Atom(event.atomId, event.atomOrigin, event.atomCategory)
-    new ResourceRoot(
-      resourceId = null,
-      resourceCollection = resourceCollection,
-      root = atom,
-      version = null)
-  }
+  def apply(root: Atom, resourceCollection: String) =
+    new ResourceRoot(resourceId = null, resourceCollection = resourceCollection, root = root, version = null)
 
   def apply(resourceRootDmo: ResourceRootDmo) = {
     val atom = new Atom(resourceRootDmo.root.id, resourceRootDmo.root.origin, resourceRootDmo.root.category)

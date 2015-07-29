@@ -16,6 +16,5 @@ object TestData {
 
   def resourceIdentifier = new ResourceIdentifier(collection = nextString, id = nextLong)
 
-  def resourceRoot =
-    new ResourceRoot(resourceId = nextLong, resourceCollection = "captain", root = atom, version = nextLong)
+  def resourceRoot = new ResourceRoot(resourceId = nextLong, resourceCollection = "captain", root = atom, version = nextLong)
 }

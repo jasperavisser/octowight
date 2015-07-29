@@ -7,19 +7,14 @@ import nl.haploid.octowight.registry.data.{Atom, ResourceRoot}
 
 object TestData {
 
+  def atom = new Atom(nextLong, nextString, nextString)
+
+  def atomChangeEvent(atomCategory: String) = AtomChangeEvent(id = nextLong, origin = nextString, category = atomCategory)
+
   def nextLong: Long = new Random().nextLong
+
+  def nextString = UUID.randomUUID.toString
 
   def resourceRoot(resourceId: Long) =
     new ResourceRoot(resourceId = resourceId, resourceCollection = nextString, root = atom, version = null)
-
-  def atom = new Atom(nextLong, nextString, nextString)
-
-  def message = nextString
-
-  def topic = nextString
-
-  def atomChangeEvent(atomCategory: String) =
-    new AtomChangeEvent(id = nextLong, atomId = nextLong, atomOrigin = nextString, atomCategory = atomCategory)
-
-  def nextString = UUID.randomUUID.toString
 }
