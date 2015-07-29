@@ -29,7 +29,7 @@ case class ResourceRoot
   version: lang.Long
   ) extends Atomizable {
 
-  def key = s"${root.origin}:${root.category}/${root.id}->$resourceCollection"
+  def toResourceIdentifier = new ResourceIdentifier(collection = resourceCollection, id = resourceId)
 
   override def toAtom: Atom = new Atom(root.id, root.origin, root.category)
 }
